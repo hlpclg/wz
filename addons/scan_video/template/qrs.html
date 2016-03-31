@@ -1,0 +1,120 @@
+{template 'common/header'}
+<script type="text/javascript" src="resource/js/lib/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="resource/js/lib/jquery-ui-1.10.3.min.js"></script>
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('qrmanage', array('op' => 'post'))}">添加二维码</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('qrmanage', array('op' => 'display'))}">管理二维码</a></li>
+</ul>
+{if $operation == 'post'}
+<style type='text/css'>
+	.tab-pane {padding:20px 0 20px 0;}
+</style>
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				选择门店
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">公众号</label>
+					<div class="col-sm-9 col-xs-12">
+						<select name="acid" class="form-control">
+							{loop $acidarr $ac}
+							<option value="{$ac['acid']}"{if $ac['acid'] == $_GPC['acid']} selected="selected"{/if} {if $ac['level'] != 4}disabled{/if}>{$ac['name']} {if $ac['level'] != 4}[不是认证服务号]{/if}</option>
+							{/loop}
+						</select>
+					</div>
+				</div>
+				{if isset($qr)}
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span>选择门店</label>
+						<div class="col-sm-6 col-xs-6">
+							<select id="qr-dpt" name="qr-dpt" class="form-control">
+								<option selected="selected" value="{$qr['dptid']}">{$qr['sv_dpt_name']}</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span>选择视频</label>
+						<div class="col-sm-6 col-xs-6">
+							<select id="qr-video" name="qr-video" class="form-control">
+								<option selected="selected" value="{$qr['videoid']}">{$qr['sv_video_name']}</option>
+							</select>
+						</div>
+					</div>
+				{else}
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span>选择门店</label>
+					<div class="col-sm-6 col-xs-6">
+						<select id="qr-dpt" name="qr-dpt" class="form-control">
+							{loop $dpts $key $item}
+								<option value="{$item['sv_dpt_id']}">{$item['sv_dpt_name']}</option>
+							{/loop}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span>选择视频</label>
+					<div class="col-sm-6 col-xs-6">
+						<select id="qr-video" name="qr-video"  class="form-control">
+							{loop $videos $key $item}
+								<option value="{$item['sv_video_id']}">{$item['sv_video_name']}</option>
+							{/loop}
+						</select>
+					</div>
+				</div>
+				{/if}
+				<div class="form-group ">
+					<input type="submit" name="submit" value="生成二维码" class="btn btn-primary col-lg-1" style="margin-left:200px;" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</div>
+			</div>
+		</div>
+		
+	</form>
+</div>
+
+{elseif $operation == 'display'}
+
+<div class="main">
+	
+<style>
+.label{cursor:pointer;}
+</style>
+<div class="panel panel-default">
+	<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:50px;">ID</th>
+					<th style="min-width:150px;">门店名称</th>
+					<th style="min-width:150px;">视频名称</th>
+					<th style="min-width:150px;">关联关键字</th>
+					<th style="min-width:150px;">二维码</th>
+					<th style="min-width:150px;">扫描次数</th>
+					<th style="width:200px;">最后编辑时间</th>
+					<!-- <th style="text-align:right; min-width:120px;">操作</th> -->
+				</tr>
+			</thead>
+			<tbody>
+				{loop $qrs $key $item}
+				<tr>
+					<td>{php echo ($key+1);}</td>
+					<td><span class="text-info">{$item['dptName']} </span></td>
+					<td><span class="text-info">{$item['videoName']} </span></td>
+					<td><span class="text-info">{$item['keyword']} </span></td>
+					<td><span class="text-info">{if (is_array($item['hasQr']))}<a target="_blank" href="{php echo 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='.urlencode($item['hasQr']['ticket']);}">查看</a>{else}<span style="color:red;" title="关联关键字已被修改">关联关键字已被修改</span>{/if} </span></td>
+					<td><span class="text-info"><a href="{php echo $this->createWebUrl('info',array());}">查看说明</a> </span></td>
+					<td title="{php echo date('Y-m-d H:i:s', $item['sv_qr_time']);}">{php echo date('Y-m-d H:i:s', $item['hasQr']['createtime']);}</td>
+				</tr>
+				{/loop}
+			</tbody>
+			
+		</table>
+	</div>
+</div>
+</div>
+
+{/if}
+{template 'common/footer'}

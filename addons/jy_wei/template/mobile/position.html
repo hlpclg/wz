@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="{MODULE_URL}/template/mobile/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="{MODULE_URL}/template/mobile/css/animate.min.css">
+<link rel="stylesheet" type="text/css" href="{MODULE_URL}/template/mobile/css/base.css" />
+<link rel="stylesheet" type="text/css" href="{MODULE_URL}/template/mobile/css/wxy-animation.css" />
+	<title>{$company['name']}-招聘</title>
+    <style type="text/css">
+    	html,body
+    	{
+    		margin: 0;
+    		padding: 0;
+    		width: 100%;
+    		height: 100%;
+    		background-color: #000;
+    		position: relative;
+    	}
+    	.swiper-container {
+		    width: 100%;
+		    height: 100%;
+    		background-color: #48cfaf;
+    		max-width: 640px;
+		}
+		.swiper-slide{position: relative;width: 100%;height: 100%}
+	
+		/* 第四个页面样式 */
+		.page4-title{
+			width: 100%;
+			color: #fff;
+			padding: 6% 0;
+			background-color: rgba(0,0,0,0.2);
+			position: relative;
+			margin-bottom: 7%;
+			margin-top: 5%;
+			text-align: center;
+		}
+		.page4-title div{font-size: 24px;font-weight: bold;}
+		.page4-text{width: 90%;margin-left: 5%;color: #fff;line-height: 26px;font-size: 18px}
+
+		/* 倒数第二个页面 */
+		.page-daoshu2{
+			width: 80%;
+			margin-left: 10%;
+			margin-top: 6%;
+			border-radius: 10px;
+			text-align: center;
+			background-color: rgba(0,0,0,0.2);
+			padding-bottom: 10px;
+		}
+		.page-daoshu2-title{
+			width: 100%;
+			font-size: 30px;
+			color: #fff;
+			padding: 10px 0;
+			border-bottom: 1px solid #fff;
+			margin-bottom: 2%
+		}
+		.page-daoshu2-input{
+			width: 85%;
+			border:none;
+			font-size: 20px;
+			margin-top: 3%;
+			border-radius: 5px;
+			padding: 5px;
+		}
+		.page-daoshu2-select{
+			width: 88%;
+			border:none;
+			font-size: 20px;
+			margin-top: 3%;
+			border-radius: 5px;
+			padding: 5px;
+		}
+		.page-daoshu2-submit{
+			width: 88%;
+			margin-left: 6%;
+			background-color: #fff;
+			text-align: center;
+			padding: 5px 0;
+			border-radius: 5px;
+			font-size: 20px;
+			margin-top: 3%;
+			margin-bottom: 10%
+		}
+		.camplogo{
+			width: 80px;
+			height: 80px;
+			border-radius: 50%;
+			margin-top: 7%;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="index-arrow-down" style="z-index:200"></div>
+	<div class="swiper-container">
+    <div class="swiper-wrapper">
+
+        <div class="swiper-slide">
+        	<div class="page4-title ani" swiper-animate-effect="fadeInRight" swiper-animate-duration="1.5s" swiper-animate-delay="0s"><div>{$position['name']}</div></div>
+
+        	<div class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="1.5s" swiper-animate-delay="1s">
+        		<div class="page4-text">{php echo htmlspecialchars_decode($position['description'])}</div>
+        	</div>
+        </div>
+
+        <!-- 倒数第二个页面 -->
+        
+        <div class="swiper-slide" style="text-align:center">
+        	<img class="camplogo" src="{$_W['attachurl']}{$company['logo']}">
+        	<div class="page-daoshu2">
+        		<div class="page-daoshu2-title">诚挚邀请</div>
+        		<form id="form"  method="POST">
+	        		<input name="name" class="page-daoshu2-input ani" swiper-animate-effect="fadeIn" swiper-animate-duration="0.3s" swiper-animate-delay="0s" type="text" placeholder="姓名"/>
+	        		<input name="phone" class="page-daoshu2-input ani" swiper-animate-effect="fadeIn" swiper-animate-duration="0.3s" swiper-animate-delay="0.3s" type="text" placeholder="手机"/>
+	        		<input name="payment" class="page-daoshu2-input ani" swiper-animate-effect="fadeIn" swiper-animate-duration="0.3s" swiper-animate-delay="0.6s" type="text" placeholder="期望工资"/>
+	        		<select name="positionid" class="page-daoshu2-select ani" swiper-animate-effect="fadeIn" swiper-animate-duration="0.3s" swiper-animate-delay="0.9s">
+	        		{loop $positions $key $item}
+	        			<option value="{$item['id']}" {if $item['id']==$position['id']}selected{/if}>{$item['name']}</option>
+	        		{/loop}
+	        		</select>
+                    <input id="submit" style="display:none" name="submit" type="submit" value="保存" />
+                    <input type="hidden" name="token" value="{$_W['token']}" />
+                    <input type="hidden" name="id" value="{$id}" />
+					<input type="hidden" name="companyid" value="{$company['id']}" />
+				</form>
+        		<div class="page-daoshu2-submit ani" swiper-animate-effect="fadeIn" swiper-animate-duration="0.3s" swiper-animate-delay="1.2s" onclick="submit();">提交</div>
+        	</div>
+        </div>
+    </div>
+	</div> 
+	<!-- 箭头 -->
+	<div class="index-arrow-down"></div>
+	<script src="{MODULE_URL}/template/mobile/js/swiper.min.js"></script>
+    <script src="{MODULE_URL}/template/mobile/js/animate.min.js"></script>
+	<script>        
+	var mySwiper = new Swiper ('.swiper-container', {
+		direction: 'vertical',
+		onInit: function(swiper){
+		    swiperAnimateCache(swiper);
+		    swiperAnimate(swiper);
+		},
+		onSlideChangeEnd: function(swiper){
+		    swiperAnimate(swiper);
+		}
+	});
+	function submit(){
+		document.getElementById('submit').click();
+	}
+	</script>
+
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    {php $signPackage=$_W['account']['jssdkconfig'];}   
+    <script>
+
+        var appid = '{$_W['account']['jssdkconfig']['appId']}';
+        var timestamp = '{$_W['account']['jssdkconfig']['timestamp']}';
+        var nonceStr = '{$_W['account']['jssdkconfig']['nonceStr']}';
+        var signature = '{$_W['account']['jssdkconfig']['signature']}';
+
+        wx.config({
+            debug: false,   
+            appId: appid,
+            timestamp: timestamp,
+            nonceStr: nonceStr,
+            signature: signature,
+            jsApiList: ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo',]
+        });
+
+        wx.ready(function () {
+            var shareData = {
+                {if empty($company['sharetitle'])}
+                title:"九烨微招聘",
+                {else}
+                title: "{$position['name']}-{$company['sharetitle']}",
+                {/if}
+                desc: "{$company['sharedescription']}",
+                link: "{php echo $_W['siteroot'].'app/'.substr($this->createMobileUrl('position',array('id'=>$position['id'])),2)}",
+                imgUrl: "{$_W['attachurl']}{$company['shareimage']}",
+                trigger: function (res) {},
+                complete: function (res) {},
+                success: function (res) {},
+                cancel: function (res) {},
+                fail: function (res) {}
+            };
+            wx.onMenuShareTimeline(shareData);
+            wx.onMenuShareAppMessage(shareData);
+            wx.onMenuShareQQ(shareData);
+            wx.onMenuShareWeibo(shareData);
+        });
+    </script>
+</body>
+</html>

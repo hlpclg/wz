@@ -1,0 +1,90 @@
+{template 'header'}
+<style>
+	body{background:#d2e6e9;}
+	.panel{margin:.5em; border:none;}
+	.panel-info>.panel-heading {background: -webkit-gradient(linear, 0 0, 100% 0, from(#ebebeb), to(#f3f9fa), color-stop(30%, #f5f9f9)); color:#666666; border:none;}
+	a{color:#666666;}a:hover{color: #3ebacc;}
+	.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{color: #3ebacc;}
+	.actions{margin:.8em auto;}
+	.nav.nav-tabs{margin-bottom:.8em;}
+	.btn.btn-primary{background: #56c6d6; color: #FFF; border: 0;}
+</style>
+<div class="ng-cloak panel panel-info ng-container" ng-controller="loginPanel">
+	<div class="panel-heading">
+		<h3 class="text-center" style="margin: 10px 0">全民自拍比赛<br></h3>
+	</div>
+		<div class="panel-body">
+			<form name="theform" method="post" role="form" ng-submit="login();">
+				<div class="form-group has-feedback" ng-class="{'has-error': label.basic.error}">
+					<label class="control-label sr-only"></label>
+					<input ng-model="ret.basic.nickname" type="text" class="form-control" placeholder="{php echo $setting['shen_name']}">
+					<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="label.basic.error"></span>
+				</div>
+				<div class="form-group has-feedback" ng-class="{'has-error': label.basic.error}">
+					<label class="control-label sr-only"></label>
+					<input ng-model="ret.basic.school" type="text" class="form-control" placeholder="{php echo $setting['bao_name']}">
+					<span class="glyphicon glyphicon-remove form-control-feedback" ng-show="label.basic.error"></span>
+				</div>
+				<div class="form-group has-feedback" ">
+					<select ng-model="ret.basic.sex" class="form-control">						<option value ="1">男</option>						  <option value ="0">女</option>						  						<option value ="3">请选择性别</option>
+					</select>
+				</div>
+				<div class="form-group has-feedback" >
+					<label class="control-label sr-only"></label>
+					<div style="margin:0px auto;text-align:center;padding:0px;">
+					<img style="width:50%;" src="{php echo $register['src_img']}">
+					</div>
+				</div>
+				<input type="hidden" name="uid" value="{php echo $register['uid']}"/>
+				<button id="send" type="submit" class="btn btn-lg btn-primary btn-block">确定报名</button>
+			</form>
+	
+		</div>
+</div>
+<script>
+<!--
+	require(['angular', 'bootstrap', 'util'], function(angular, $, u){
+		angular.module('app', []).controller('loginPanel', function($scope, $http){
+			$scope.label = {
+				basic: {
+					error: false
+				},
+				running: false
+			};
+			$scope.ret = {
+				basic: {
+					nickname : '',
+					school : '',
+					sex : 3
+				},
+			};
+			$scope.login = function(){
+				if($scope.label.running) {
+					return;
+				}
+				var ret = $scope.ret;
+				var mode = 'basic' ;
+				if(ret[mode].nickname == '' || ret[mode].school == '' || ret[mode].sex == '') {
+					$scope.label[mode].error = true;
+					return;
+				}
+				$scope.label[mode].error = false;
+
+				$scope.label.running = true;
+				var params = angular.copy(ret[mode]);
+				params.mode = mode;
+				$http.post(location.href, params).success(function(dat){
+					if(dat != 'success') {
+						u.message(dat);
+					} else {
+						window.location.href="{php echo $this->createMobileUrl('index')}";
+					}
+					$scope.label.running = false;
+				});
+			};
+		});
+		angular.bootstrap(document, ['app']);
+	});
+//-->
+</script>
+{template 'common/footer'}

@@ -1,0 +1,131 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+  <li {if $op == 'display'}class="active"{/if}>
+    <a href="{php echo $this->createWebUrl('project', array('op' => 'display'))}">包厢管理</a>
+  </li>
+  <li {if $op == 'post'}class="active"{/if}>
+    <a href="{php echo $this->createWebUrl('project', array('op' => 'post'))}">新增包厢</a>
+  </li>
+</ul>
+{if $op == 'post'}
+<div>
+<h4 align=center></h4>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data" >
+	<input type="hidden" name="id" value="{$item['id']}">
+  
+	<table class="tb">
+		<tr>
+			<th>排序</th>
+			<td>
+				<input type='text' name='sort' value="{$item['sort']}"/> 
+			</td>
+		</tr>
+		<tr>
+			<th>包厢名称</th>
+			<td><input type='text' name='ser_name' value="{$item['ser_name']}"/> </td>
+		</tr>
+		<tr>
+			<th>选择分店:</th>
+			<td>
+				<select name='classify_id'>
+					<option value='-1'>请选择</option>
+					{loop $classify $class}
+					<option value='{$class['id']}' {if $item['classify_id'] == $class['id']}selected{/if}>{$class['ser_window']}</option>
+					{/loop}
+				</select>
+			</td>
+		</tr>
+		<!-- <tr>
+			<th>学时:</th>
+			<td><input type='text' name='hours' value="{$item['hours']}"/></td>
+		</tr> -->
+		<tr>
+			<th>包厢描述:</th>
+			<td>
+				<input type='text' name='kbox' value="{$item['kbox']}"/>				
+			</td>
+		</tr>
+		<tr>
+			<th>一口价:</th>
+			<td>
+				<input type='text' name='price' value="{$item['price']}"/>默认单位:RMB				
+			</td>
+		</tr>
+		<tr>
+			<th>包厢图片:</th>
+			<td>{php echo tpl_form_field_image('classify_picurl', $item['classify_picurl'])}</td>
+		</tr>
+		<tr>
+			<th>是否可预约</th>
+			<td>
+				<select name='ishow'>
+					<option value='-1'>请选择</option>
+					<option value='1' {if $item['ishow'] == '1'}selected{/if}>是</option>
+					<option value='2' {if $item['ishow'] == '2'}selected{/if}>否</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>总预约人数</th>
+			<td>
+				<input type='text' name='total' value='{$item['total']}' /> 
+				(不可预约的，不用填写)
+			</td>
+		</tr>
+		<tr>
+			<th>包厢介绍</th>
+			<td>
+				<textarea style="height:400px; width:100%;" class="span7 richtext-clone" name="project_info" cols="70" id="reply-add-text">{$item['project_info']}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td>
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+	</table>
+</form>
+</div>
+  <script type="text/javascript">
+<!--
+  var category = {php echo json_encode($children)};
+  kindeditor($('.richtext-clone'));
+//-->
+</script>
+{elseif $op == 'display'}
+<div style="padding:15px;">
+  <table class="table table-hover">
+    <thead class="navbar-inner">
+      <tr>
+        <th>序号</th>
+        <th>显示顺序</th>
+        <th>包厢名称</th>
+        <th>所属ktv</th>
+        <th>包厢描述</th>
+        <th>价格(RMB)</th>
+        <th>操作</th>
+  </tr>
+</thead>
+{loop $list $item}
+<tr>
+  <td>{$item['id']}</td>
+  <td>{$item['sort']}</td>
+  <td>{$item['ser_name']}</td>
+  <td>{$item['classify_name']}</td>
+  <td>{$item['kbox']}</td>
+  <td>{$item['price']}</td>
+  <td>
+    <a href="{php echo $this->createWebUrl('project',array('id' => $item['id'] ,'op' => 'post'))}">编辑
+    </a>
+    <a href="{php echo $this->createWebUrl('project',array('id' => $item['id'],'op' => 'delete'))}">删除
+    </a>
+  </td>
+</tr>
+{/loop}
+</table>
+</div>
+{/if}
+
+{template 'common/footer'}

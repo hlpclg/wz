@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>{$systeminfo['shopname']}</title>
+<link href="./source/modules/eorder/template/css/footer.css" rel="stylesheet" type="text/css">
+<link href="./source/modules/eorder/template/css/base.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="./source/modules/eorder/template/css/card.css" media="all">
+<link href="./source/modules/eorder/template/css/wap.css" rel="stylesheet" type="text/css">
+<link href="./source/modules/eorder/template/css/myOrder.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="./source/modules/eorder/template/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="./source/modules/eorder/template/js/page.js"></script>
+<script type='text/javascript' src="./source/modules/eorder/template/js/touchslider.min.js"></script>
+<script type='text/javascript' src="./source/modules/eorder/template/js/klass.min.js"></script>
+<script type='text/javascript' src="./source/modules/eorder/template/js/photoswipe.jquery-3.0.5.min.js"></script>
+<script type='text/javascript' src="./source/modules/eorder/template/js/jsAddress.js"></script>
+</head>
+<body>
+<div class="channel-nav two-nav ">
+
+    <ul>
+       <li class="active"><a href="{php echo $this->createMobileUrl('zaixianchong')}">在线充值</a></li>
+      <li class=""><a href="{php echo $this->createMobileUrl('chongzhi')}">充值卡充值</a></li>
+    </ul>
+ </div>
+<!--<div class="p10" style="background:#fff"> <p style="color:#f7ba5b;font-size:14px"><span>小e提示：充1000返还260；充500返还100</span></p></div> 
+<br> -->
+<div class="order_item">
+  <div class="p10">
+    <img src="{$_W['attachurl']}{$systeminfo['czlogo']}" style="width:100%;">
+  </div>
+	<div class="clear"></div>
+	    	<form  action="{php echo $this->createMobileUrl('tocharge')}" onsubmit = "return check_form_1();" method = "POST">
+     	<div class="input-text">
+			<input type = "number" name = "chargecost" id = "charge_money_1" value = "" placeholder = "请输入充值金额" >
+		 </div>
+    	<div class="borderD"></div>
+		 <!-- <h3 class="p10" style="padding-bottom:0">支付方式</h3> -->
+      	<div class="borderD p10">
+          <img src = "./source/modules/eorder/template/images/icon-weixin-pay.png"/> 微信支付 
+          <span class="pull-right orange_color"><input id = "weixin_pay" type = "radio" name = "paytype" value = "2" checked></input></span>
+          <div style="width:60%"><small>已支持</small></div>
+        </div>
+        <div class="borderD p10">
+          <img src = "./source/modules/eorder/template/images/icon-weixin-pay.png"/> 支付宝支付 
+          <span class="pull-right orange_color"><input id = "weixin_pay" type = "radio" name = "paytype" value = "3" checked></input></span>
+          <div style="width:60%"><small>已支持</small></div>
+        </div>
+          	<div class="item_list_btn">
+    		<div class="wx_confirm_btns">
+    			<a href = "{php echo $this->createMobileUrl('usercenter')}" class="cancel_link"> 取 消</a>
+    	 		<button type = "submit"  value = "确定" id = "submit_pay" > 确 定</button>
+    		</div>
+    	</div>
+    	<!--  提示信息-->
+    </form> 
+</div>
+<div id="codFloat" style="display:none" class="cod" style="height:60px">
+    <div class="wx_mask"></div>
+     	<div class="wx_confirm ">
+       	 	<div class="wx_confirm_inner" id="wx_confirm_float">
+        		<div class="wx_confirm_hd">
+           			<div class="wx_confirm_tit" id = "show_mes">32422</div>
+         		</div>
+        	</div>
+    	</div>
+  	</div>
+ </div>
+<script>
+/* 	$(document).ready(
+		function (){
+			$("#showcard").click(
+				function(){
+					var submitData = {
+							sncode : $("#charge_money").val().trim()
+					};
+				if($("#charge_money").val().trim() == ""){
+					alert_1("请输入充值卡密码");
+					return false;
+				}
+				$.post("user_kac.htm",submitData,
+						function (data){
+							if(data.message.state == 1){
+								alertToUrl(
+									data.message.msg,
+									"user_kac.htm");
+							}else{
+								alert_1(data.message.msg);
+							}
+				},"json")
+		});
+	}); */
+	$("#windowclosebutton").click(function() {
+		$("#windowcenter").slideUp(500);
+
+	});
+	$("#alertclose").click(function() {
+		$("#windowcenter").slideUp(500);
+
+	});
+	function hide_res(){
+    	$("#codFloat").hide();
+  	}
+  	function show_res(){
+    	setTimeout("hide_res()",2000);
+ 	 }
+	function alert_1(title) {
+		$("#show_mes").html(title);
+    	$("#codFloat").show();
+    	show_res();
+	}
+	function alertToUrl(title, url) {
+/* 		if (title == '') {
+        	window.location.href = url;
+        }else{
+       		alert_1(title);
+          setTimeout("window.location.href='" + url + "'", 500);
+        	//window.location.href = url;
+      	} */
+	}
+function check_form_1(){
+	var charge_money = $("#charge_money_1").val().trim();
+	if(charge_money == ""){
+		alert_1("请您输入充值金额");
+		return false;
+	}else if(charge_money <= 0){
+		alert_1("请您正确输入充值金额");
+		return false;
+	}else if(charge_money > 99999999){
+    alert_1("请您输入合理金额")
+    return false;
+  }
+	$("#submit_pay").attr("disabled",true);
+}
+</script>
+<footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                	<a href="{php echo $this->createMobileUrl('index')}"><span class=" home-index">首页</span></a>
+                	<a href="{php echo $this->createMobileUrl('ordering')}"><span class=" Order-index">订单</span></a>
+                	<a href="{php echo $this->createMobileUrl('usercenter')}"><span class="card-index-active">我的</span></a>
+              </div>
+        </div>
+    </div>
+</footer>
+<div style="display:none">
+	
+</div>
+</body>
+</html>

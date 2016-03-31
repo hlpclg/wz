@@ -1,0 +1,157 @@
+{template 'common/header'}
+<script type="text/javascript" src="../addons/meepo_weixiangqin/template/jquery-1.7.2.min.js"></script>
+<script>
+	function selectall(obj, name){
+		$('input[name="'+name+'[]"]:checkbox').each(function() {
+			$(this).attr("checked", $(obj).attr('checked') ? true : false);
+		});
+	}
+</script>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo $this->createWebUrl('chatcontent')}">聊天记录</a></li>
+	<li><a href="{php echo $this->createWebUrl('tjapply')}">推荐记录</a></li>
+	<li><a href="{php echo $this->createWebUrl('payrecord')}">充值记录</a></li>
+	<li><a href="{php echo $this->createWebUrl('baoyuerecord')}">包月记录</a></li>
+	<li><a href="{php echo $this->createWebUrl('Exchangerecord')}">兑换记录</a></li>
+	<li><a href="{php echo $this->createWebUrl('photolist')}">图片管理</a></li>
+    <li><a href="{php echo $this->createWebUrl('set')}">基本设置</a></li>
+</ul>
+<div class="panel panel-default">
+
+	<div class="panel-heading">筛选</div>
+	<div class="panel-body">
+		<form action="./index.php" method="get" class="form-horizontal" role="form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+			<input type="hidden" name="m" value="meepo_weixiangqin" />
+			<input type="hidden" name="do" value="chatcontent" />
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">发送者昵称</label>
+				<div class="col-xs-12 col-sm-8 col-lg-9">
+					<input class="form-control" name="nickname" value="{$nickname}" type="text"  placeholder="请输入发送者昵称">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">接收者昵称</label>
+				<div class="col-xs-12 col-sm-8 col-lg-9">
+					<input class="form-control" name="tonickname" value="{$tonickname}" type="text"  placeholder="请输入接收者昵称">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class=" col-xs-12 col-sm-2 col-lg-2">
+					<input type="submit"  value="搜索" class="btn btn-success  btn-block" />
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="main" id="table-list">
+			<form action="" method="post" onsubmit="">
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead class="navbar-inner">
+						<tr>
+							<th style="width:10%;" class="row-first">选择</th>
+							<th style="width:10%;">发送者昵称<i></i></th>
+							<th class="row-hover" style="width:20%">接收者昵称<i></i></th>
+							<th style="width:40%;">发送内容</th>
+							<th style="width:20%;">时间<i></i></th>
+							
+						</tr>
+						</thead>
+						<tbody>
+						{loop $list $row}
+						<tr>
+							<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+							<td class="row-hover">
+								<img width="50" src="{$row['senderavatar']}" class="avatar" />
+								<div class="mainContent">
+									<div class="nickname"><a href="{php echo $this->createWebUrl('list', array('keyword' =>$row['sendernickname'] , 'isshow' =>'1'))}">{$row['sendernickname']}</a></div>
+								</div>
+							</td>
+							<td class="row-hover">
+								<img width="50" src="{if preg_match('/http:(.*)/',$userinfo[$row['geter']]['avatar'])}{$userinfo[$row['geter']]['avatar']} {else if preg_match('/images(.*)/',$userinfo[$row['geter']]['avatar'])} {$_W['attachurl']}{$userinfo[$row['geter']]['avatar']}     {else}{MEEPORES}/static/friend/images/cdhn80.jpg{/if}" class="avatar" />
+								<div class="mainContent">
+									<div class="nickname"><a href="{php echo $this->createWebUrl('list', array('keyword' =>$userinfo[$row['geter']]['nickname'], 'isshow' =>'1'))}">{$userinfo[$row['geter']]['nickname']}</a></div>
+								</div>
+							</td>
+							<td>
+							{if strexists($row['content'],"meepoxiangqin")}
+							  <img src="{$_W['attachurl']}{$row['content']}" width="80px" height="80px"/>
+							{elseif strexists($row['content'],"http")}
+							     <img src="{$row['content']}" width="80px" height="80px"/>
+							{else}
+							{$row['content']}
+							{/if}
+							</td>
+							<td>{php echo date("Y-m-d H:i:s", $row['stime'])}</td>
+							
+							<td style="font-size:12px; color:#666;">
+								<div style="margin-bottom:10px;"><img src="{$_W['attachurl']}{$row['url']}" height=100px width=100px></div>
+							</td>
+							
+						</tr>
+						{/loop}
+						</tbody>
+					</table>
+					{if !empty($list)}
+					<table class="table">
+						<tr>
+							<td style="width:50px;" class="row-first"><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+							<td colspan="4">
+								<input type="submit" name="delete" value="删除" class="btn btn-primary" />
+								<input type="hidden" name="token" value="{$_W['token']}" />
+							</td>
+						</tr>
+					</table>
+					{/if}
+					{$pager}
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script>
+require(['jquery'], function($){
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+});
+</script>
+
+
+{template 'common/footer'}

@@ -1,0 +1,113 @@
+
+<div class="row span8">
+    <div class="col-xs-2 col-md-2 template_picker">
+        <div class="thumbnail" style="text-align:center;width:90px;" title="点击打开新窗口查看大图">
+            <img class="showTip" style="height:100px;overflow:hidden;"
+                 bigimg="../addons/amouse_weicard/ui/images/detail_tpl1.jpg"
+                 src="../addons/amouse_weicard/ui/images/detail_tpl1.jpg" alt="默认列表一">
+             <span style="display:block;white-space: nowrap;text-overflow:ellipsis; overflow:hidden">
+                      模板1(默认)
+            </span>
+            <!--<div class="radio">
+                <label>
+                    <input type="radio" name="tpl" value="1" {if $reply['tpl']=='1'}
+                    checked="checked"{/if}>选择
+                </label>
+            </div>-->
+        </div>
+    </div>
+
+    <div class="col-xs-2 col-md-2 template_picker">
+        <div class="thumbnail" style="text-align:center;width:90px;" title="点击打开新窗口查看大图">
+            <img class="showTip" style="height:100px;overflow:hidden;"
+                 bigimg="../addons/amouse_weicard/ui/images/style1.png"
+                 src="../addons/amouse_weicard/ui/images/style1.png" alt="版式二">
+             <span style="display:block;white-space: nowrap;text-overflow:ellipsis; overflow:hidden">
+                      版式二
+            </span>
+
+            <!--<div class="radio">
+                <label>
+                    <input type="radio" name="tpl" value="2" {if $reply['tpl']=='2'}
+                    checked="checked"{/if}>选择
+                </label>
+            </div>-->
+        </div>
+    </div>
+
+    <div class="col-xs-2 col-md-2 template_picker">
+        <div class="thumbnail" style="text-align:center;width:90px;" title="点击打开新窗口查看大图">
+            <img class="showTip" style="height:100px;overflow:hidden;"
+                 bigimg="../addons/amouse_weicard/ui/images/style2.png"
+                 src="../addons/amouse_weicard/ui/images/style2.png" alt="版式三">
+             <span style="display:block;white-space: nowrap;text-overflow:ellipsis; overflow:hidden">
+                     版式三
+            </span>
+
+            <!--<div class="radio">
+                <label>
+                    <input type="radio" name="tpl" value="3" {if $reply['tpl']=='3'}
+                    checked="checked"{/if}>选择
+                </label>
+            </div>-->
+        </div>
+    </div>
+
+    <div class="col-xs-2 col-md-2 template_picker">
+        <div class="thumbnail" style="text-align:center;width:90px;" title="点击打开新窗口查看大图">
+            <img class="showTip" style="height:100px;overflow:hidden;"
+                 bigimg="../addons/amouse_weicard/ui/images/style3.png"
+                 src="../addons/amouse_weicard/ui/images/style3.png" alt="默认列表一">
+             <span style="display:block;white-space: nowrap;text-overflow:ellipsis; overflow:hidden">
+                    版式四
+            </span>
+
+            <!--<div class="radio">
+                <label>
+                    <input type="radio" name="tpl" value="4" {if $reply['tpl']=='4'}
+                    checked="checked"{/if}>选择
+                </label>
+            </div>-->
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function () {
+            // 预览图
+            var x = 10;
+            var y = 20;
+            $(".showTip").mouseover(function (e) {
+                this.myTitle = this.title;
+                this.title = "";
+                var imgtip = "<div id='showTip'><img src='" + $(this).attr("bigimg") + "' width='300' alt='预览图'/><\/div>"; //创建 div 元素
+                $("body").append(imgtip); //把它追加到文档中
+                if (e.pageX + 300 > $(window).width()) {
+                    x = 10;
+                } else {
+                    x = $(window).width() - 310;
+                }
+                $("#showTip").css({
+                    "z-index": 9999,
+                    "position" : "fixed",
+                    "top": (10) + "px",
+                    "left": x + "px"
+                }).show("fast");   //设置x坐标和y坐标，并且显示
+            }).mouseout(function () {
+                        this.title = this.myTitle;
+                        $("#showTip").remove();  //移除
+                    }).mousemove(function (e) {
+                        $("#showTip").css({
+                            "z-index": 9999,
+                            "position" : "fixed",
+                            "top": (10) + "px",
+                            "left": x + "px"
+                        });
+                    });
+
+            $(".template_picker").click(function(e) {
+                $(this).find('input').attr('checked', 'checked');
+            });
+        });
+    </script>
+
+</div>

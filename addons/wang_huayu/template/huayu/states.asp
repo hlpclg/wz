@@ -1,0 +1,1 @@
+document.write('<a class="btn-weak" href="/login/login.asp">µÇÂ¼</a> <space></space> <a class="btn-weak" href="/login/register.asp">×¢²á</a>');document.getElementById('gwc').className='icon3';

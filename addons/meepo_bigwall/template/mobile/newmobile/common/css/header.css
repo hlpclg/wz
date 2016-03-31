@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+.header{width: 910px; height: 96px; margin: 0 auto; padding-top: 26px;}
+.header h3{width: 220px; line-height: 96px; float: left;}
+.header h3 img{vertical-align: middle;}
+.QRcode{text-align: right; float: right;}
+.wordScroll{ width:576px; height:96px; text-align: center; background: url(../images/hWordScroll.png) no-repeat center top; float: left; overflow: hidden; cursor: default;}
+.scrollBox{width: 460px; height: 96px; float: left;}
+.scrollBox ul{width: auto; height: auto; overflow: hidden; margin-top: 10px;}
+.scrollBox li{height: 85px; line-height: 38px; font-size: 24px;}
+.num{width: 105px; height: 67px; line-height: 35px; font-size: 18px; padding: 14px 5px; float: right;}
+.num p{font-size: 24px;}

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, width=device-width">
+    <meta name="screen-orientation" content="portrait">
+    <title>{$reply['title']}</title>
+    <link href="{RES}mobile/boat/App_Content/Game/Boats/style/index.css?v=2" rel="stylesheet" />
+    <style>
+        #gamepanel {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        .loading-bar {
+            background: none repeat scroll 0 0 rgba(0,0,0,0.3);
+            height: 1px;
+            margin: 10px auto;
+            width: 80%;
+        }
+
+        .loading-bar span {
+            display: block;
+            height: 1px;
+            width: 0%;
+            background: #2187e7;
+            box-shadow: 0 0 10px 1px rgba(0, 198, 255, 0.7);
+            -webkit-box-shadow: 0 0 10px 1px rgba(0, 198, 255, 0.7);
+        }
+
+        #loader-em {
+            line-height: 1;
+            font-style: normal;
+            color: #2187e7;
+            font-size: 10px;
+            text-shadow: 0 0 10px rgba(0, 198, 255, 0.7);
+            -webkit-text-shadow: 0 0 10px rgba(0, 198, 255, 0.7);
+        }
+    </style>
+    {php echo register_jssdk(false);}
+</head>
+<body>
+    <div id="loader">
+        <em id="loader-em">0</em>
+        <div class="loading-bar">
+            <span id="l-bar"></span>
+        </div>
+    </div>
+    <div id="cover" style="background: url({$cover}) #045F77 0 0 no-repeat;background-size: 100% auto;">
+        <img src="{RES}mobile/boat/App_Content/Game/Boats/style/images/logo.png" id="logo" />
+        <footer>
+            <a href="#" class="btn-start" data-action="goGamePage" style="display:none;"></a>
+            <p><a href="{php echo $this->createMobileUrl('rank', array('id' => $id), true)}" style="color:#fff;font-size: 20px">活动介绍</a></p>
+            <p><a href="{if !empty($reply['copyrighturl'])}{$reply['copyrighturl']}{else}#{/if}" style="color:#fff;">{if empty($reply['copyright'])}{$_W['account']['name']}{else}{$reply['copyright']}{/if}</a></p>
+        </footer>
+    </div>
+    <div id="container" style="display:none;">
+        <div id="box-guide"></div>
+        <!--比赛区域-->
+        <div id="gamepanel">
+            <header>
+                <div class="score-wrap">
+                    <div></div>
+                    <p id="score">0个</p>
+                </div>
+                <div class="timer-wrap">
+                    <div></div>
+                    <p id="timer">{$gametime}秒</p>
+                </div>
+                <div class="dis-wrap">
+                    <div>
+                        <h5 id="distance-bar"></h5>
+                    </div>
+                    <span></span>
+                    <p id="distance">0公里</p>
+                </div>
+            </header>
+            <canvas id="stage" width="320" height="300"></canvas>
+        </div>
+        <span id="timer-add">+1秒</span>
+        <a href="#" id="btn-game-pause" data-action="gameGo">
+            <span>点击继续</span>
+        </a>
+        <!--弹出层-排行-->
+        <div class="pop-box" id="box-rank">
+            <h1>排行榜</h1>
+            <div class="pop-content">
+                <ul class="ul-rank">
+                    <div class="tip">
+                        加载中...
+                    </div>
+                </ul>
+            </div>
+            <a href="#" class="pop-a-share" data-action="share">喊上小伙伴一起玩吧！</a>
+            <a href="#" class="pop-a-close" title="关闭" data-action="closePop"></a>
+        </div>
+        <!--弹出层-规则-->
+        <div class="pop-box" id="box-rule">
+            <h1>规则</h1>
+            <div class="pop-content">
+                {php echo htmlspecialchars_decode($reply['rule']);}
+            </div>
+            <a href="#" class="pop-a-share" data-action="share">喊上小伙伴一起玩吧！</a>
+            <a href="#" class="pop-a-close" title="关闭" data-action="closePop"></a>
+        </div>
+        <!--弹出层-奖项-->
+        <div class="pop-box" id="box-prize">
+            <h1>奖项</h1>
+            <div class="pop-content">
+                {php echo htmlspecialchars_decode($reply['award']);}
+            </div>
+            <a href="#" class="pop-a-share" data-action="share">喊上小伙伴一起玩吧！</a>
+            <a href="#" class="pop-a-close" title="关闭" data-action="closePop"></a>
+        </div>
+       
+        <div class="light-box">
+            <img src="{RES}mobile/boat/App_Content/Game/Boats/style/images/light-2.png" />
+        </div>
+        <!--弹出层-提交-->
+        <div class="pop-box pop-box-1" id="box-submit">
+            <h1>抢粽大侠</h1>
+            <div class="pop-content">
+                划行了<em id="result-distance">0</em>米<br />
+                抢到了<em id="result-count">0</em>个粽子<br />
+                击败了<em id="beyound-count">0</em>的对手<br />
+                <p>姓名<input type="text" id="txt-name" value="{$fans['username']}" /></p>
+                <p>电话<input type="text" id="txt-tel" value="{$fans['tel']}" /></p>
+                <div>
+                    <a href="#" class="btn-submit-1" data-action="submit"></a>
+                    <a href="#" class="btn-replay-1" data-action="replay"></a>
+                </div>
+            </div>
+            <a href="#" class="pop-a-share" data-action="share">喊上小伙伴一起玩吧！</a>
+            <a href="#" class="pop-a-close" title="关闭" data-action="closePop"></a>
+            <input type="hidden" id="ruleid" name="ruleid" value="{$id}"/>
+            <input type="hidden" id="weid" name="weid" value="{$weid}"/>
+        </div>
+        <!--底部菜单-->
+        <div class="menu-wrap">
+            <div class="btn-list btn-list-open">
+                <a href="#" class="btn-replay" data-action="replay"></a>
+                <a href="#" class="btn-rule" data-action="showRule"></a>
+                <a href="#" class="btn-prize" data-action="showPrize"></a>
+                <a href="#" class="btn-rank" data-action="showRank"></a>
+            </div>
+            <div class="btn-list">
+            </div>
+            <a href="#" class="menu-switch" data-action="switchMenu"></a>
+        </div>
+        <!--音乐-->
+        <a href="#" class="btn-audio on" data-action="muteMusic">
+        </a>
+        <audio preload="auto" controls id="audio-bg" src="{RES}mobile/boat/App_Content/Game/Boats/style/images/bg.mp3" loop="loop"></audio>
+        <audio preload="auto" controls id="audio-sound" src=""></audio>
+        <audio preload="auto" controls id="audio-hit" src="{RES}mobile/boat/App_Content/Game/Boats/style/images/hit.mp3"></audio>
+        <!--遮罩-->
+        <div class="mask"></div>
+
+        <div class="post-tip">正在提交...</div>
+        <a class="div-share" href="#" data-action="hideThis"></a>
+    </div>
+    <script>
+    //服务端返回配置
+    var gameConfig = {
+        time: '{$gametime}' //15秒
+        , level: '{$gamelevel}' // 难度级别:  1入门，2简单 3正常 4难 5超难
+        , count: '-1' // 提交次数：-1不限
+    };
+
+    //路径
+        window.baseUrl = '{RES}mobile/boat/App_Content/Game/Boats/';
+    </script>
+    <script>
+        (function () {
+            //自适应
+            var domStage = document.getElementById('stage');
+            var w = window.innerWidth;
+
+            if (w < 240) {
+                w = 240;
+            }
+            if (w > 800) {
+                w = 360;
+            }
+            window.stageScale = w / 320;
+            domStage.setAttribute('style', 'transform:scale(' + stageScale + ');-webkit-transform:scale(' + stageScale + ');');
+
+            var h = window.innerHeight;
+            var stageH = h / stageScale;
+            domStage.setAttribute('height', stageH);
+            domStage.style.marginTop = (h - stageH) / 2 + 'px';
+            window.stageH = stageH;
+
+            //图片加载器
+            var Loader = {
+                imgBase: baseUrl + 'style/images/'
+                , imgList: 'ball.png,bar.png,box-bg-1.png,box-bg.png,btn-0.png,btn-1.png,btn-replay.png,btn-start.png,bg.jpg,btn-submit.png,cover.jpg,ami-1.png,ami-2.png,header-bg.png,logo.png,player.png,player-1.png,startbg.png,bg.mp3,win.mp3,fail.mp3,hit.mp3'.split(',')
+                , count: 1
+                , domTxt: document.getElementById('loader-em')
+                , bar: document.getElementById('l-bar')
+                , loaded: 0
+                , load: function () {
+                    var _this = this;
+                    if (_this.imgList.length == 0) {
+                        document.getElementById('loader').style.display = 'none';
+                        var btn = document.getElementsByClassName('btn-start')[0];
+                        btn.style.display = 'inline-block';
+                        btn.className = 'btn-start show';
+                        return;
+                    }
+                    var img = new Image();
+                    img.src = _this.imgBase + _this.imgList[0];
+                    img.onload = img.onerror = function () {
+                        img.onload = img.onerror = null;
+                        _this.imgList = _this.imgList.splice(1);
+                        _this.loaded++;
+                        var per = Math.floor(100 * _this.loaded / _this.count) + '%';
+                        _this.domTxt.innerHTML = per;
+                        _this.bar.style.width = per;
+                        setTimeout(function () {
+                            _this.load();
+                        }, 1);
+                        img = null;
+                    }
+                }
+                , init: function () {
+                    this.count = this.imgList.length;
+                    this.load();
+                }
+            };
+            Loader.init();
+        })();
+    </script>
+
+    <script src="{RES}mobile/boat/App_Content/Game/Boats/lib/sea.js?v=2"></script>
+    <script>
+        seajs.config({
+            base: baseUrl,
+            //base: "/",
+            alias: {
+                "zepto": "lib/zepto.seajs.js"
+            }
+        });
+        seajs.use("script/index.js?v=10");
+    </script>
+
+    <script>
+        wx.ready(function () {
+            sharedata = {
+                title: '{$share_title}',
+                desc: '{$share_desc}',
+                link: '{$share_url}',
+                imgUrl: '{$share_image}',
+                success: function(){
+                    var ruleid = $("#ruleid").val();
+                    var weid = $("#weid").val();
+                    var url = 'index.php?i='+weid+'&c=entry&id='+ruleid+'&do=share&m=weisrc_dragonboat#';
+                    $.ajax
+                    ({
+                        url: url,
+                        type:'POST',
+                        data: {},
+                        dataType:'json',
+                        error: function () {
+                            alert('网络通讯异常，请稍后再试！');
+                        },
+                        success: function (result) {
+                            alert(result.msg);
+                        }
+                    });
+                },
+                cancel: function(){
+                    //alert('cancel');
+                }
+            };
+            wx.onMenuShareAppMessage(sharedata);
+            wx.onMenuShareTimeline(sharedata);
+        });
+    </script>
+</body>
+</html>

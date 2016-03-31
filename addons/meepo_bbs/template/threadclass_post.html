@@ -1,0 +1,134 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li><a href="{php echo $this->createWebUrl('threadclass');}">主题列表</a></li>
+    {if empty($setting['typeid'])}
+    <li class="active"><a href="{php echo $this->createWebUrl('threadclass', array('foo'=>'create'));}">新增主题</a></li>
+    {else}
+    <li class="active"><a href="{php echo $this->createWebUrl('threadclass', array('foo'=>'create', 'id'=>$setting['typeid']));}">编辑主题</a></li>
+    {/if}
+</ul>
+<script>
+    require(['jquery', 'angular', 'util', 'underscore'], function($, angular, u, _){
+
+        $(function(){
+            angular.module('app', []).controller('custom', function($scope, $http) {
+                $scope.submit = function() {
+                    var message = '';
+                    
+                    if(message) {
+                        u.message(message);
+                    } else {
+                        $('#theform')[0].submit();
+                    }
+                };
+            });
+            angular.bootstrap(document, ['app']);
+        });
+    });
+
+</script>
+<div class="clearfix">
+    <form id="theform" class="form form-horizontal ng-cloak" action="" method="post" ng-controller="custom">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+              <a class="btn btn-default" href="{php echo $this->createWebUrl('threadclass')}">板块列表</a>
+				<a class="btn btn-success" href="{php echo $this->createWebUrl('threadclass', array('foo'=>'create'))}">新增版块</a>
+				<a class="btn btn-default" href="{php echo $this->createWebUrl('credit')}">快捷操作</a>
+            </div>
+            <div class="panel-body">
+            	
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">所属主题</label>
+                    <div class="col-sm-5">
+                    	<select name="fid" class="form-control" style="border: none;">
+                    	<option value="0" {if empty($setting['fid'])}selected{/if}>顶级主题</option>
+		                   {loop $cats $cat}
+		                   
+		            		<option value="{$cat['typeid']}" {if $cat['typeid']==$setting['fid']}selected{/if}>|{$cat['name']}</option>
+		            			{loop $cat['ch'] $ca}
+		            				<option value="{$ca['typeid']}" {if $ca['typeid']==$setting['fid']}selected{/if}>--|{$ca['name']}</option>
+		            			{/loop}
+		            		{/loop}
+		            	</select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">主题名字</label>
+                    <div class="col-sm-5">
+                        <input class="form-control" type="text" name="name" value="{$setting['name']}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">显示顺序</label>
+                    <div class="col-sm-5">
+                        <input class="form-control" type="text" name="displayorder" value="{$setting['displayorder']}"/>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span>可查看的会员组</label>
+					<div class="col-sm-9 col-xs-12">
+					
+					<div class="btn-group" data-toggle="buttons">
+					  
+					  <label class="btn btn-default {if in_array(-1, (array)$setting['look_group'])}active{/if}">
+					    <input type="checkbox" name="look_group[]" value="-1"  {if in_array(-1, (array)$setting['look_group'])}checked{/if}>游客(或未关注)
+					  </label>
+					  {if $group}
+					  {loop $group $li}
+					  <label class="btn btn-default {if in_array($li['groupid'], (array)$setting['look_group'])}active{/if}">
+					    <input type="checkbox" name="look_group[]" value="{php echo $li['groupid']}"  {if in_array($li['groupid'], (array)$setting['look_group'])}checked{/if}>{$li['title']}
+					  </label>
+					  {/loop}
+					  {/if}
+					</div>
+					
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span>可发帖的会员组</label>
+					<div class="col-sm-9 col-xs-12">
+					<div class="btn-group" data-toggle="buttons">
+					  
+					  <label class="btn btn-default {if in_array(-1, (array)$setting['post_group'])}active{/if}">
+					    <input type="checkbox" name="post_group[]" value="-1"  {if in_array(-1, (array)$setting['post_group'])}checked{/if}>游客(或未关注)
+					  </label>
+					  {if $group}
+					  {loop $group $li}
+					  <label class="btn btn-default {if in_array($li['groupid'], (array)$setting['post_group'])}active{/if}">
+					    <input type="checkbox" name="post_group[]" value="{php echo $li['groupid']}" {if in_array($li['groupid'], (array)$setting['post_group'])}checked{/if}>{$li['title']}
+					  </label>
+					  {/loop}
+					  {/if}
+					</div>
+					</div>
+				</div>
+				
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">主题图标</label>
+                    <div class="col-sm-5">
+                        {php echo tpl_form_field_image('icon',$setting['icon'])}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">主题简介</label>
+                    <div class="col-sm-5">
+                    <textarea name="content" class="form-control">{$setting['content']}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-md-2 col-lg-1">
+                        <input type="button" value="保存" class="btn btn-primary btn-block" ng-click="submit();" />
+                        <input type="hidden" name="token" value="{$_W['token']}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </form>
+</div>
+{template 'common/footer'}

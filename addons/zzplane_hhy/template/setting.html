@@ -1,0 +1,82 @@
+{template 'common/header'}
+<div class="main">
+	<form class="form-horizontal form" id="" action="" method="post">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				分享设置
+			</div>
+			<div class="panel-body">
+		
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">分享图标</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo tpl_form_field_image('share_img',$settings['share_img'])}
+					</div>
+				</div>
+
+		
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">分享标题</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id="share_title" class="form-control span7" placeholder="" name="share_title" value="{$settings['share_title']}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">分享描述</label>
+					<div class="col-sm-9 col-xs-12">
+						<textarea style="height:60px;" name="share_desc" class="form-control span7" cols="60">{$settings['share_desc']}</textarea>
+					</div>
+				</div>
+
+			</div>
+			
+			
+			
+			
+			<div class="panel-heading">
+				引导设置
+			</div>
+			<div class="panel-body">
+		
+						
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">引导标题</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id="yindao_title" class="form-control span7" placeholder="例如：关注我们" name="yindao_title" value="{$settings['yindao_title']}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">引导链接</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id="yindao_link" class="form-control span7" placeholder="" name="yindao_link" value="{$settings['yindao_link']}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+					<div class="col-sm-9 col-xs-12">
+						温馨提示：引导链接请加上http://，否则将可能出错
+					</div>
+				</div>
+				
+
+			</div>
+
+
+			
+		</div>
+
+		<div class="form-group col-sm-12">
+			<input name="token" type="hidden" value="{$_W['token']}" />
+			<input type="submit" class="btn btn-primary col-lg-1" name="submit" value="提交" />
+		</div>
+	</form>
+</div>
+
+<script language='javascript'>
+require(['jquery', 'util'], function($, u) {
+	$(function() {
+
+	});
+});
+</script>
+{template 'common/footer'}

@@ -1,0 +1,34 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo $curr_url.'&op=post';}">添加印象</a></li>
+    <li><a href="{php echo $curr_url.'&op=list';}">印象管理</a></li>
+</ul>
+<div class="main">
+  <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+    <h4>添加印象</h4>
+    <table class="tb">
+      <tbody>
+        <tr>
+          <td>印象名称</td>
+          <td><input type="text" id="" class="span5" placeholder="" name="title" value="{$item['title']}"></td>
+        </tr>
+        
+        <tr>
+          <td>显示顺序</td>
+          <td><input type="text" id="" class="span1" placeholder="" name="sort" value="{if $item['sort']}{$item['sort']}{else}0{/if}"></td>
+        </tr>
+        
+        <tr>
+          <th>印象数</th>
+          <td><input type="text" id="" class="span3" placeholder="" name="num" value="{$item['num']}"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+            <input type="hidden" name="id" value="{$item['id']}" /></td></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+{template 'common/footer'}

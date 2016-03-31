@@ -1,0 +1,55 @@
+{template 'common/header'}
+<script>
+  
+  
+    
+</script>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo $this->createWebUrl('group')}">分类列表</a></li>
+	<li ><a href="{php echo $this->createWebUrl('groupAdd')}"><i class="fa fa-plus"></i> 添加分类</a></li>
+</ul>
+<div class="main">
+    
+  
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				分类列表
+			</div>
+			<div class="panel-body">
+                           
+
+				<table class="table table-hover"  style="width:100%;z-index:-10;" cellspacing="0" cellpadding="0">
+					<thead class="navbar-inner">
+						<tr>
+							<th style="width:90px;">分类名称</th>
+							<th style="width:80px;">分类图片</th>
+							<th style="width:50px;">创建时间</th>
+							<th style="width:60px;">操作</th>
+						</tr>
+					</thead>
+					{loop $list $value}
+					<tr>
+						<td>{$value[name]}</td>
+					
+						<td><img src="../attachment/{$value[images]}" style=" width: 50px; height: 50px"/></td>
+						<td>{php echo date('Y-m-d H:i:s',$value[create_time])}</td>
+						<td>
+							<a href="{php echo $this->createWebUrl('editgroup',array('id'=>$value[id]))}">编辑</a>
+							|<a href="{php echo $this->createWebUrl('deletegroup',array('id'=>$value[id]))}" onclick="return confirm('确认是否删除？')">删除</a>
+						</td>
+					</tr>
+					{/loop}
+				</table>
+				<div style=" text-align: center">{$pagination}</div>
+				
+			</div>
+			
+		</div>
+		
+		<div class="form-group col-sm-12">
+			<input name="token" type="hidden" value="{$_W['token']}" />
+		
+		</div>
+	
+</div>
+{template 'common/footer'}

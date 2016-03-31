@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Category categoryName="炮炮兵" description="炮炮兵" displayOrder="100" isEnabled="true" emotionMaxHeight="80" emotionMaxWidth="80">
+        <Emotion code="201" description="喜欢" fileName="炮炮兵最新qq表情1.gif" />
+        <Emotion code="202" description="爱" fileName="炮炮兵最新qq表情2.gif" />
+        <Emotion code="203" description="我来了" fileName="炮炮兵最新qq表情3.gif" />
+        <Emotion code="204" description="微笑" fileName="炮炮兵最新qq表情4.gif" />
+        <Emotion code="205" description="嗯" fileName="炮炮兵最新qq表情5.gif" />
+        <Emotion code="206" description="我有表" fileName="炮炮兵最新qq表情6.gif" />
+        <Emotion code="207" description="" fileName="炮炮兵最新qq表情7.gif" />
+        <Emotion code="208" description="" fileName="炮炮兵最新qq表情8.gif" />
+        <Emotion code="209" description="" fileName="炮炮兵最新qq表情9.gif" />
+        <Emotion code="210" description="" fileName="炮炮兵最新qq表情10.gif" />
+        <Emotion code="211" description="" fileName="炮炮兵最新qq表情11.gif" />
+        <Emotion code="212" description="" fileName="炮炮兵最新qq表情12.gif" />
+        <Emotion code="213" description="" fileName="炮炮兵最新qq表情13.gif" />
+        <Emotion code="214" description="" fileName="炮炮兵最新qq表情14.gif" />
+        <Emotion code="215" description="" fileName="炮炮兵最新qq表情15.gif" />
+        <Emotion code="216" description="" fileName="炮炮兵最新qq表情16.gif" />
+        <Emotion code="217" description="" fileName="炮炮兵最新qq表情17.gif" />
+        <Emotion code="218" description="不要" fileName="炮炮兵最新qq表情18.gif" />
+        <Emotion code="219" description="" fileName="炮炮兵最新qq表情19.gif" />
+        <Emotion code="220" description="" fileName="炮炮兵最新qq表情20.gif" />
+</Category>

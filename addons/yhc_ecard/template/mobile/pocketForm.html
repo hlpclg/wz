@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {if empty($item)}
+    <title>添加名片</title>
+    {else}
+    <title>修改名片</title>
+    {/if}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+    <link rel="stylesheet" href="../addons/yhc_ecard/template/mobile/styles/all-min.css">
+    {php echo register_jssdk(false);} 
+</head>
+<body class="form">
+    <div class="header">
+        <a href="javascript:;" onclick="updateAvatar()">
+            <img id="avatar" src="{$avatar}" class="avatar">
+        </a>
+    </div>
+    <form id="form">
+        <div class="weui_cells weui_cells_form">
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">姓名</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="text" placeholder="请输入姓名" name="name" value="{$item['name']}">
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">移动电话</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="text" placeholder="请输入移动电话" name="mobile" value="{$item['mobile']}">
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">工作电话</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="text" placeholder="请输入工作电话" name="phone" value="{$item['phone']}">
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">工作地址</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="text" placeholder="请输入工作地址" name="address" value="{$item['address']}">
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">电子邮箱</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="text" placeholder="请输入电子邮箱" name="email" value="{$item['email']}">
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">公司</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="text" placeholder="请输入公司" name="company" value="{$item['company']}">
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">职位</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="text" placeholder="请输入职位" name="position" value="{$item['position']}">
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">网站</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input class="weui_input" type="text" placeholder="请输入网站" name="website" value="{$item['website']}">
+                </div>
+            </div>
+        </div>
+        <div class="page button spacing">
+            <a href="javascript:;" class="weui_btn weui_btn_primary" onclick="save()">保存</a>
+        </div>
+        <input type="hidden" name="serverid">
+        <input type="hidden" name="id" value="{$item['id']}">
+    </form>
+    <script src="https://res.wx.qq.com/open/libs/zepto/1.1.6/zepto.js"></script>
+    <script src="../addons/yhc_ecard/template/mobile/scripts/base-min.js"></script>
+    <script src="../addons/yhc_ecard/template/mobile/scripts/form-min.js"></script>
+    <script>
+    function save(){
+        if(!$("input[name=name]").val()){
+            showAlert("请输入姓名");
+            return;
+        }
+
+        $.ajax({
+            url : "{php echo $this->createMobileUrl("pocketUpdate")}",
+            type : "post",
+            dataType : "json",
+            data : $("#form").serialize(),
+            success : function(json){
+                if(json.success){
+                    showToast("已保存" , function(){
+                        {if empty($item["id"])}
+                        location.href = "{php echo $this->createMobileUrl("pocketList")}";
+                        {else}
+                        location.href = "{php echo $this->createMobileUrl("pocketView",array("id" => $item["id"]),true)}";
+                        {/if}
+                    });
+                }
+            }
+        });
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+{template 'common/header'}
+{if $do == 'module'}
+<ol class="breadcrumb" style="padding:5px 0;">
+	<li><a href="./?refresh"><i class="fa fa-cogs"></i> &nbsp; 扩展功能</a></li>
+	<li><a href="{url 'home/welcome/ext' array('m' => $module['name'])}">{$types[$module['type']]['title']}模块 - {$module['title']}</a></li>
+	<li class="active">{$entry['title']}</li>
+</ol>
+{/if}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="?{$_SERVER['QUERY_STRING']}">插件入口</a></li>
+</ul>
+<style type="text/css">
+	.help-block em{display:inline-block;width:10em;font-weight:bold;font-style:normal;}
+</style>
+<script>
+require(['angular.sanitize', 'bootstrap', 'underscore', 'util'], function(angular, $, _, util){
+	angular.module('app', ['ngSanitize']).controller('replyForm', function($scope, $http){});
+	angular.bootstrap(document, ['app']);
+});
+</script>
+<div class="alert alert-info">
+这里显示的是插件菜单入口，请将下面的链接直接放到多客服插件配置中
+</div>
+<div class="clearfix ng-cloak" ng-controller="replyForm">
+	<form id="reply-form" class="form-horizontal form" action="?{$_SERVER['QUERY_STRING']}" method="post" enctype="multipart/form-data">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				插件地址 
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">直接URL</label>
+					<div class="col-sm-9 col-xs-12 ">
+						<input type="text" class="form-control" readonly="readonly" value="{$url}" />
+				<span class="help-block">
+					<strong>直接指向到入口的URL。您可以在多客服插件中使用。</strong>
+				</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="alert alert-info">
+			插件配置说明：
+		</div>
+		<div>
+			步骤1：<img src="{$images}step1.png" width="600"/><br>
+			步骤2：<img src="{$images}step2.png" width="600"/><br>
+			之后将上面的插件地址填入插件URL并保存之后重启多客服客户端即可
+		</div>
+		
+		
+	</form>
+</div>
+{template 'common/footer'}

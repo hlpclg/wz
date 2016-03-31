@@ -1,0 +1,60 @@
+{template 'common/header'}
+<div class="alert alert-block alert-new">
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data" >
+	<input type="hidden" name="reply_id" value="{$reply['id']}">
+  
+	<table class="tb">
+		<tr>
+			<th>标题</th>
+			<td>
+				<input type='text' name='title' value="{$reply['title']}"/> 
+			</td>
+		</tr>
+		<tr>
+			<th>封面</th>
+			<td>{php echo tpl_form_field_image('picurl', $reply['picurl'])}</td>
+		</tr>
+		<tr>
+			<th>KTV:</th>
+			<td><input type='text' name='department' value="{$reply['department']}"/> </td>
+		</tr>
+		<tr>
+			<th>简介头部图片:</th>
+			<td>{php echo tpl_form_field_image('info_picurl', $reply['info_picurl'])}</td>
+		</tr>
+		<tr>
+			<th>订单页头部图片:</th>
+			<td>{php echo tpl_form_field_image('order_picurl', $reply['order_picurl'])}</td>
+		</tr>
+		<tr>
+			<th>订单预约说明:</th>
+			<td>
+				<textarea style="height:400px; width:100%;" class="span7 richtext-clone" name="order_info" cols="70" id="reply-add-text">{$reply['order_info']}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<th>公司电话:</th>
+			<td>
+				<input type='text'  name='cosmtment_phone' value="{$reply['cosmtment_phone']}"/>
+			</td>
+		</tr>
+		<tr>
+			<th>地址</th>
+			<th><input  type='text' name='address' value="{$reply['address']}"/></th>
+		</tr>
+		<tr>
+			<th>KTV简介</th>
+			<td>
+				<textarea style="height:400px; width:100%;" class="span7 richtext-clone" name="cosmtment_info" cols="70" id="reply-add-text">{$reply['cosmtment_info']}</textarea>
+			</td>
+		</tr>
+	</table>
+</form>
+</div>
+  <script type="text/javascript">
+<!--
+  var category = {php echo json_encode($children)};
+  kindeditor($('.richtext-clone'));
+//-->
+</script>
+{template 'common/footer'}

@@ -1,0 +1,40 @@
+{template 'header'}
+{template 'mslide'}
+
+<style type="text/css">
+.home-box div  center{
+	color:#666666;
+	font-size:10px;
+	margin-top:15px;
+}
+
+</style>
+
+
+{loop $list $row}
+<a style='border-radius: 3px;width:33%;height:30px;border-right:1px solid white;margin-left:1px;line-height:30px;float:left;color:white;text-align:center;display:block;background:{if $pcate == $row['id']}#0193dd{else}#323232{/if};' href="{php echo $this->createMobileUrl('home',array('pcate' => $row['id']))}"  >&nbsp;&nbsp;&nbsp;{$row['title']}</a>
+{/loop}
+
+<div class="home-box" style="margin-top:50px;">
+{loop $children[$pcate] $item}
+	<a href="{$item['url']}">
+		<div style='background:{$item['bgcolor']}'>
+			<i class="{$item['icon']}"></i>
+			<center>{$item['title']}</center>
+		</div>
+	</a>
+{/loop}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+{template 'footer'}

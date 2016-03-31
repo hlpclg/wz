@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<title>{$systeminfo['shopname']}-价目表</title> 
+<style type="text/css">
+  body {
+    padding: 0;
+    margin: 0;
+  }
+  .header img {
+    width: 100%;
+  } 
+  table {
+    width: 100%;
+    border-collapse: 0;
+    border-spacing: 0;
+    border-radius: 20px 20px 0 0;
+    text-align: center;
+    font-size: 0.76em;
+    word-break: break-all;
+    word-wrap: break-word;
+
+  }
+  .red-style {
+    color: #ff4699;
+  }
+  .blue-style {
+    background: #6dc9ff;
+    height: 42px;
+    color: #fff;
+    font-size: 1.2em;
+  }
+  .blue-style2 {
+    color: #1aa4f2;
+    padding: 1em 0.7em;
+    border-right: 1px solid #6dc9ff;
+    line-height: 22px;
+
+  }
+  .jiage-table {
+    border-radius: 20px 20px 0 0;
+    border: 1px solid #6dc9ff;
+    border-top: 0;
+    margin: 0 10px;
+  }
+  .content table td div {
+    padding-bottom: 4px;
+  }
+  .tex-cen {
+    text-align: center;
+  }
+  h4 {
+    background: #6dc9ff;
+    height: 42px;
+    font-size: 1.1em;
+    font-weight: normal;
+    padding: 0;
+    color: #fff;
+    line-height: 42px;
+    margin: 0;
+    text-align: center;
+  }
+  .back-link{
+    /*background: #fff;*/
+    
+    width: 70px;
+    line-height: 34px;
+    color: #666;
+    background: #ddd;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    float: right;
+    border-radius: 6px;
+    position: fixed;
+    right: 10px;
+    opacity: 0.9;
+    bottom: 10px;
+  }
+</style>
+</head> 
+<body>
+  <div class="header tex-cen">
+    <!--  <a href="index.htm" class="back-link">返 回</a> -->
+    <img src="{$_W['attachurl']}{$systeminfo['jiamupic']}" />
+    <div class="jiage-table">
+      <table>
+        <tr>
+          <td class="blue-style" style="border-radius:20px 0 0 0">9元区</td>
+          <td class="blue-style">19元区</td>
+          <td class="blue-style" style="border-radius:0px 20px 0 0">29元区</td>
+        </tr>
+        <tr>
+          <td class="blue-style2">夏装：含配件</td>
+          <td class="blue-style2" >
+            春秋外套
+            <div>西服夹克</div>
+          </td>
+          <td class="blue-style2" style="border:0">冬装大衣，外套
+            <div>羽绒服</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="content">
+    <div style="height:20px"></div>
+    <div class="bags">
+      <h4>99元袋装件洗</h4>
+      <div>
+        <table>
+          <tr>
+            <td class="blue-style2" style="width:44%;text-align:justify">通常可装下25件衬衫或14条西裤</td>
+            <td class="blue-style2" align="left" >
+              <div  class="red-style">不包括：</div>
+              <div class="red-style">医用衣物/婚纱/鞋包/皮衣</div>
+            </td>
+            
+          </tr>
+        </table>
+      <h4>9元区</h4>
+      <div>
+        <table>
+          <tr>
+            <td class="blue-style2" style="width:44%;text-align:justify">夏装（衬衫、T恤、裤装长短裙等轻薄款，含：领带、围巾等配件）</td>
+            <td class="blue-style2" align='left'>
+              <div class="red-style">长裤/短裤</div>
+              <div class="red-style">长裙/短裙</div>
+              <div>马甲/领带</div>
+              <div class="red-style">长短袖T恤/衬衫</div>
+              <div>帽子/休闲帽/围巾</div>
+              <div>秋衣/秋裤/丝巾/背心</div>
+              <div>针织背心衫</div>
+
+            </td>
+            
+          </tr>
+        </table>
+      <h4>19元区</h4>
+      <div>
+        <table>
+          <tr>
+            <td class="blue-style2" style="width:44%;text-align:justify">春秋装（西装、夹克等普通外套、连衣裙）</td>
+            <td class="blue-style2"  align='left'>
+              <div class="red-style">西服上衣/夹克</div>
+              <div>羊毛/羊绒/羽绒（马甲/背心）</div>
+              <div>棉睡衣/棉马甲</div>
+              <div class="red-style">毛衣/风衣</div>
+              <div>毛领/披肩</div>
+              <div>休闲服/牛仔上衣/运动上衣</div>
+              <div>冲锋衣</div>
+              <div>真丝衫/针织衫/亚麻上衣</div>
+              <div class="red-style">连衣裙</div>
+              <div class="red-style">羊绒/羊毛衫</div>
+            </td>
+            
+          </tr>
+        </table>
+      <h4>29元区</h4>
+      <div>
+        <table>
+          <tr>
+            <td class="blue-style2" style="width:44%;text-align:justify">冬装大衣外套（羽绒服、棉服、羊毛羊绒外套等，含：旗袍）</td>
+            <td class="blue-style2" align="left">
+              <div>棉服/棉夹克</div>
+              <div>睡袍</div>
+              <div class="red-style">羽绒服</div>
+              <div>羊绒外套/羊毛外套/毛呢外套</div>
+              <div>唐装/仿绒上衣</div>
+              <div>丝缎旗袍</div>
+            </td>
+            
+          </tr>
+      </table>
+      </div>
+    </div>
+    
+  </div>
+</body> 
+</html>

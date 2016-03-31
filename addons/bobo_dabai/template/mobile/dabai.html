@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>大白治疗师</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<!--讨论区滚动条begin-->
+<script src="{RES}js/jquery-2.0.0.min.js" type="text/javascript"></script>
+</head>
+<body style="margin:0;padding:0;margin:0 4px;">
+
+<div class="talk">
+	<p style="line-height:25px;font-size:20px;"><img src="{RES}images/dabai.jpg" style="width:25px;" />大白治疗师</p>
+	<hr color='gray'/>
+	</div>
+
+	<div id="ren" style="height:70px; display: none;">
+	<!-- 发送者 -->
+	<img style="width:70px; float:right;border:1px solid gray;" src="{RES}images/ren.png" />
+	<div id="renmsg" style="float:right; width:200px;border:1px solid gray;margin-right:15px;border-width: 1px;  border-style: solid;  border-radius: 8px; font-size:16px; line-height:30px;">
+		
+	</div>
+
+	</div>
+	<div id="bai" style="margin-top:20px;display: none;height:700px;  margin-bottom: 50px;">
+	<!-- 接收者 -->
+	<img style="width:70px; float:left;border:1px solid gray;" src="{RES}images/bai.jpg" />
+	<div id="baimsg" style="float:left; width:200px;border:1px solid gray;margin-top:5px;margin-left:15px;border-width: 1px;  border-style: solid;  border-radius: 8px; font-size:16px; line-height:30px;">
+		
+	</div>
+	</div>
+
+	<div style="position: fixed;left: 0;bottom: 0;height:50px;background: gray; width: 100%;">
+		<input id="msg" style="width: 80%;height: 35px; margin-top: 3px;margin-left: 3px;" type="text"   placeholder="输入聊天内容"  />
+		<input onclick="sendmsg();" style="width: 16%;height: 40px;" type="button" title="发送" value="发送" />
+	</div>
+
+<script type="text/javascript">
+function sendmsg(){
+	var msg=$("#msg").val();
+	if(msg==''){
+		alert('请输入聊天内容');
+		return false;
+	}
+	
+	$.ajax({
+	    url:"{php echo $this->createMobileUrl('showmsg', array())}",// 跳转到 action    
+	    data:{msg:msg},
+	    type:'post',
+	    dataType: 'json',
+	    success:function(data) {
+			if(data.code==100000){
+				$('#ren').show();
+				$('#bai').show();
+				$('#renmsg').html(msg);
+				$('#baimsg').html(data.text);
+			}
+	     }
+	});
+	
+}
+</script>
+</body>
+</html>

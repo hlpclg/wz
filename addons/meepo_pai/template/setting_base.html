@@ -1,0 +1,87 @@
+{template 'common/header'}
+{template 'nav_bar'}
+<div class="panel panel-default">
+	 <div class="panel-heading">
+     	{$panel_heading}
+     </div>
+	<div class="panel-body">
+		<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data" onsubmit="return formcheck(this)">			<div class="form-group">				<label class="col-xs-12 col-sm-3 col-md-2 control-label">身份名称</label>				<div class="col-sm-9">					<input type="text" class="form-control" name="shen_name" value="{php echo $setting['shen_name']}"/>				</div>			</div>			<div class="form-group">				<label class="col-xs-12 col-sm-3 col-md-2 control-label">地址名称</label>				<div class="col-sm-9">					<input type="text" class="form-control" name="bao_name" value="{php echo $setting['bao_name']}"/>				</div>			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">标题设置</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" name="title" value="{php echo $setting['title']}"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">投票是否重复计数</label>
+				<div class="col-sm-9">
+					<input type="checkbox" name="chongfu" value="{$setting['chongfu']}" {if $setting['chongfu']==1}checked{/if}/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">关注引导页面</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" name="share_url" value="{php echo $setting['share_url']}"/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">活动主办URL</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" name="zhuban_url" value="{php echo $setting['zhuban_url']}"/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">活动主办名</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" name="zhuban_title" value="{php echo $setting['zhuban_title']}"/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">开发团队URL</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" name="tuandui_url" value="{php echo $setting['tuandui_url']}"/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">开发团队名</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" name="tuandui_title" value="{php echo $setting['tuandui_title']}"/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">赞助单位URL</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" name="zanzhu_url" value="{php echo $setting['zanzhu_url']}"/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">赞助单位名</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" name="zanzhu_title" value="{php echo $setting['zanzhu_title']}"/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+				<div class="col-sm-9">
+					<input type="submit" class="btn btn-primary" value="提交"/>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>			
+<script type="text/javascript">
+	require(['jquery.ui', 'bootstrap.switch', 'util'], function($, $, u){
+		$(function(){
+			$(":checkbox[name='chongfu']").bootstrapSwitch();
+		});
+	});
+</script>
+{template 'common/footer'}

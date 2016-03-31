@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>{$title}</title>
+<link rel="stylesheet" type="text/css" href="/addons/wdl_anhao/template/mobile/css/base.css">
+<link rel="stylesheet" type="text/css" href="/addons/wdl_anhao/template/mobile/css/index2.css">
+<script src="/addons/wdl_anhao/template/mobile/js/jquery1.42.min.js"></script>
+<script>
+$(function () {
+    $("button").click(function () {
+        $("#bg").css({
+            display: "block", height: $(document).height()
+        });
+        var $box = $('.box');
+        $box.css({
+            //设置弹出层距离左边的位置
+            right: "10%",
+            //设置弹出层距离上面的位置
+            top: "5%",
+            display: "block"
+        });
+    });
+    //点击关闭按钮的时候，遮罩层关闭
+    $(".close").click(function () {
+        $("#bg,.box").css("display", "none");
+    });
+});
+</script>
+</head>
+<body>
+	<div id="sheet">
+		
+		<div class="prizes">
+			<div class="prizes-wrap">
+				<img src="/addons/wdl_anhao/template/mobile/images/send.png" width="100%">
+			</div>
+		</div>	
+		<div class="rules">
+			<div class="split"><img src="/addons/wdl_anhao/template/mobile/images/share.png"></div>
+			<div class="share-data">
+				<ul>
+					<li>{if $ewairenshuyqoqing==''}0{else}{$ewairenshuyqoqing}{/if}人</li>
+					<li>{if $ewairenshuyqoqing==''}0{else}{$ewairenshuyqoqing}{/if}次</li>
+					<li>{$ewanmax['max']}次</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="judge-rule">
+			<div class="rule-row">
+				<p class="emphasis">分享说明</p>
+				<p>1、点击下方按钮“分享给好友”，然后点击右上方“发送给朋友”，朋友点击获取的链接方可生效</p>
+				<p>2、每成功邀请一个好友获得一次“额外参与资格”</p>
+				<p>3、获得资格后再次发送暗号来获得新的编号，允许用户多个编号同时中奖</p>
+			</div>
+		</div>
+		<button style="background-color:#090;border:none;width:94%;margin-left:3%;height:40px;line-height:40px;border-radius:5px;font-size:18px;"><a href="javascript:void(0);" style="color:#fff">发送给朋友</a></button>
+		
+		<div id="bg"></div>
+		<div class="box" style="display:none">
+			<h2><a href="#" class="close">X</a></h2>
+			<img style="float:right; margin-top:-25px;" src="/addons/wdl_anhao/template/mobile/images/jt.png" width="50" height="23" />
+			<p>请点击右上角<br>选择"发送给朋友"<br>然后点击"发送"</p>
+			<div style="width:80px;height:80px;background-color:#fff;"><img src="/addons/wdl_anhao/template/mobile/images/028.png"width="100%" /></div> 
+		</div>
+	
+	</div>
+</body>
+<script>var require = { urlArgs: 'v={php echo date('YmdH');}' };</script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="{$_W['siteroot']}app/resource/js/require.js"></script>
+	<script src="{$_W['siteroot']}app/resource/js/app/config.js"></script>
+	<script type="text/javascript">
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+	// 是否启用调试
+	jssdkconfig.debug = false;
+	
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'showOptionMenu',
+		'closeWindow'
+	];
+
+	wx.config(jssdkconfig);
+	require(['jquery', 'util'], function($, util){
+		var sharedata = {
+	        "imgUrl" : "http://wanqizaixian3.gotoip2.com/addons/wdl_anhao/template/mobile/1.jpg",
+	        "link" : "{$share}",
+	        "desc" : "{$desc}",
+	        "title" : "{$title}"
+	    };		
+		
+		wx.ready(function () {
+			wx.showOptionMenu();
+			wx.onMenuShareAppMessage(sharedata);
+			wx.onMenuShareTimeline(sharedata);
+			wx.onMenuShareQQ(sharedata);
+			wx.onMenuShareWeibo(sharedata);
+			document.querySelector('#closeWindow').onclick = function () {
+                wx.closeWindow();
+            };
+		});		
+	});
+	</script>
+</html>

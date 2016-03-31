@@ -1,0 +1,66 @@
+{template 'common/header'}
+<script>
+  
+  
+    
+</script>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="{php echo $this->createWebUrl('list')}">商家列表</a></li>
+	<li ><a href="{php echo $this->createWebUrl('add')}"><i class="fa fa-plus"></i> 添加商户</a></li>
+</ul>
+<div class="main">
+    
+  
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				商户列表
+			</div>
+			<div class="panel-body">
+                              <form class="form-horizontal form" id="form2" action="{php echo $this->createWebUrl('refreshKefu')}" method="post">
+                              
+                              </form>
+
+				<table class="table table-hover"  style="width:100%;z-index:-10;" cellspacing="0" cellpadding="0">
+					<thead class="navbar-inner">
+						<tr>
+							<th style="width:60px;">商户名称</th>
+							<th style="width:60px;">分类</th>
+							<th style="width:80px;">电话</th>
+							<th style="width:50px;">地址</th>
+							<th style="width:30px;">状态</th>
+							<th style="width:30px;">排序</th>
+							<th style="width:60px;">操作</th>
+						</tr>
+					</thead>
+					{loop $list $value}
+					<tr>
+						<td>{$value[name]}</td>
+						<td>{$value[tname]}</td>
+						<td>
+							{$value[tel]}
+						</td>
+						<td>{$value[address]}</td>
+						<td>{if $value[status]==1}开启{else}隐藏{/if}</td>
+						<td>
+							{$value[orders]}
+						</td>
+						<td>
+							<a href="{php echo $this->createWebUrl('edit',array('id'=>$value[id]))}">编辑</a>
+							|<a href="{php echo $this->createWebUrl('delete',array('id'=>$value[id]))}" onclick="return confirm('确认是否删除？')">删除</a>
+						</td>
+					</tr>
+					{/loop}
+				</table>
+				<div style=" text-align: center">{$pagination}</div>
+				
+			</div>
+			
+		</div>
+		
+		<div class="form-group col-sm-12">
+			<input name="token" type="hidden" value="{$_W['token']}" />
+		
+		</div>
+	
+</div>
+{template 'common/footer'}

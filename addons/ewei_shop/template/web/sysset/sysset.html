@@ -1,0 +1,52 @@
+{template 'web/_header'}
+<div class="main">
+    <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" >
+        <input type='hidden' name='setid' value="{$set['id']}" />
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                系统设置
+            </div>
+            <div class="panel-body">
+                <ul class="nav nav-tabs" id="myTab">
+                    <li class="active"><a href="#tab_shop">商城设置</a></li>
+                    <li><a href="#tab_follow">引导及分享设置</a></li>
+                    <li><a href="#tab_notice">提醒及模板消息设置</a></li>
+                    <li><a href="#tab_trade">交易设置</a></li>
+                    <li><a href="#tab_pay">支付方式设置</a></li>
+                </ul>
+            </div> 
+            
+             <div class="tab-content">
+                    <div class="tab-pane  active" id="tab_shop">{template 'web/sysset/shop'}</div>
+                    <div class="tab-pane  " id="tab_follow">{template 'web/sysset/follow'}</div>
+                    <div class="tab-pane  " id="tab_notice">{template 'web/sysset/notice'}</div>
+                    <div class="tab-pane  " id="tab_trade">{template 'web/sysset/trade'}</div>
+                    <div class="tab-pane  " id="tab_pay">{template 'web/sysset/pay'}</div>
+             </div>
+         
+        </div>   
+        <div class="form-group col-sm-12">
+            <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+            <input type="hidden" name="token" value="{$_W['token']}" />
+            <input type="hidden" name="tab" value="{$_GPC['tab']}" />
+        </div>
+    </form>
+</div>
+ <script type="text/javascript">
+	$(function () {
+		$('#myTab a').click(function (e) {
+                                    var tab = $(this).attr('href').split('_')[1];
+                                   $(':hidden[name=tab]').val(tab);
+			e.preventDefault();
+			$(this).tab('show');
+		})
+                        {if !empty($_GPC['tab'])}
+                           $('#myTab li').removeClass('active');
+                           $("a[href='#tab_{$_GPC['tab']}']").parent().addClass('active');
+                           $('.tab-content div').removeClass('active');
+                           $("#tab_{$_GPC['tab']}").addClass('active');
+                        {/if}
+	});
+</script>
+
+{template 'common/footer'}

@@ -1,0 +1,179 @@
+{template 'common/header'}
+<script type='text/javascript' src='resource/js/lib/jquery-1.11.1.min.js'></script>
+<script type="text/javascript" src="../addons/ewei_shopping/images/jquery.gcjs.js"></script>
+<script type="text/javascript" src="../addons/ewei_shopping/images/jquery.form.js"></script>
+<script type="text/javascript" src="../addons/ewei_shopping/images/tooltipbox.js"></script>
+<style type="text/css">
+.red {float:left;color:red}
+.white{float:left;color:#fff}
+
+.tooltipbox {
+	background:#fef8dd;border:1px solid #c40808; position:absolute; left:0;top:0; text-align:center;height:20px;
+	color:#c40808;padding:2px 5px 1px 5px; border-radius:3px;z-index:1000;
+}
+.red { float:left;color:red}
+</style>
+<ul class="nav nav-tabs">
+	<li {if $operation == 'display'} class="active" {/if}><a href="{php echo $this->createWebUrl('awardmanage',array('op' =>'display'))}">奖品列表</a></li>
+	<li{if empty($adv['id']) && $operation == 'post'} class="active" {/if}><a href="{php echo $this->createWebUrl('awardmanage',array('op' =>'post'))}">添加奖品</a></li>
+	{if !empty($adv['id']) &&  $operation == 'post'}<li  class="active"><a href="{php echo $this->createWebUrl('awardmanage',array('op' =>'post','id'=>$adv['id']))}">编辑奖品</a></li>{/if}
+</ul>
+
+{if $operation == 'display'}
+<div class="main panel panel-danger">
+<div class="panel-heading ">
+  奖品列表  查看具体中奖情况 请移步规则列表中查看
+</div>
+	<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th>ID</th>
+					<th>所属活动名称</th>
+					<th>奖项</th>
+					<th>奖品名称</th>					
+					<th>奖品数量</th>
+					<th>中奖人数</th>
+					<th>准许重复中奖</th>
+					<th>内定粉丝ID</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $adv}
+				<tr>
+				    <td><span class="label label-danger">{$adv['id']}</span></td>
+					<td><span class="label label-success">{$adv['huodongname']}</span></td>
+					<td><span class="label label-info">{$adv['tag_name']}</span></td>
+					<td><span class="label label-warning">{$adv['luck_name']}</span></td>
+					<td><span class="label label-danger">{$adv['tagNum']}</span></td>
+					<td><span class="label label-danger">{$adv['num']}</span></td>
+					<td><span class="label label-danger">{if $adv['tag_exclude'] == '1'}否{else}是{/if}</span></td>
+					<th><span class="label label-danger">{if empty($adv['nd'])}无{else}{$adv['nd']}{/if}</span></th>
+					<td style="text-align:left;">
+						<a href="{php echo $this->createWebUrl('awardmanage', array('op' => 'post', 'id' => $adv['id']))}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="修改"><i class="fa fa-edit"></i></a>
+						<a href="{php echo $this->createWebUrl('awardmanage', array('op' => 'delete', 'id' => $adv['id']))}"class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="删除"><i class="fa fa-times"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+</div>
+<script>
+	require(['bootstrap'],function($){
+		$('.btn').hover(function(){
+			$(this).tooltip('show');
+		},function(){
+			$(this).tooltip('hide');
+		});
+	});
+</script>
+{elseif $operation == 'post'}
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit='return formcheck()'>
+		<input type="hidden" name="id" value="{$adv['id']}" />
+		<div class="panel panel-danger">
+			<div class="panel-heading">
+			
+			<strong>特别注意: </strong><br>
+			1  添加奖品前 请先到 <strong>规则列表内</strong>  添加相应的活动规则名称、关键词等 <br> <br>
+            2  添加完奖品信息后 点击编辑方可内定中奖粉丝！！<br> <br>
+			3  对于内定  最好是在抽奖前 到审核内容的人员列表内 将粉丝ID填写到内定处 <br><br>
+			4  若是 该奖项内定人数 > 1 请将ID 以英文逗号隔开来 且之间不能有空格<br><br>
+			5  每个粉丝ID 只能内定到一个奖项 也就是说 每个粉丝最多能内定一个奖项 <br><br>
+			6  内定只支持按奖项抽奖<br><br>
+            7  内定抽奖不是光彩的事  酌情使用
+
+			</div>
+			<div class="panel-body">
+			    <div class="form-group">
+				  <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label"><span class="label label-success">所属活动</span></label>
+				  <div class="col-sm-8 col-lg-10 col-xs-12">
+				  {if !empty($rids)}
+					<select name="rid" class="form-control">
+						{loop $rids $row}
+						<option value="{$row['rid']}" {if $adv['luckid'] === $row['rid']} selected="selected" {/if}>{$row['content']}</option>
+						{/loop}
+					</select>
+				  {else}
+				  请先到规则列表内 添加相应的活动名称
+				  {/if}
+					<span class="help-block">请选择活动名称</span>
+				 </div>
+			    </div>
+			   <div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span><span class="label label-success">奖项</span></label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id='tagname' name="tag_name" class="form-control" value="{$adv['tag_name']}" placeholder="请填写奖项名称"/>
+						<span class="help-block">如一等奖,二等奖等</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span><span class="label label-success">奖品名称</span></label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id='luck_name' name="luck_name" class="form-control" value="{$adv['luck_name']}" placeholder="请填写奖品名称" />
+						<span class="help-block">名称尽量简明扼要</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span><span class="label label-success">奖品总数</span></label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id='tagNum' name="tagNum" class="form-control" value="{$adv['tagNum']}" placeholder="请填写奖品总数 需为整数"/>
+						<span class="help-block">请填写整数</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span><span class="label label-success">是否准许此奖项重复中奖</span></label>
+					<div class="col-sm-9 col-xs-12">
+						<label class='radio-inline'>
+							<input type='radio' name='tag_exclude' value=1' {if $adv['tag_exclude']=='1'}checked{/if} /> 否
+						</label>
+						<label class='radio-inline'>
+							<input type='radio' name='tag_exclude' value=0' {if $adv['tag_exclude']=='0'}checked{/if} /> 是
+						</label>
+						<span class="help-block">是否准许此奖项重复中奖</span>
+					</div>
+				</div>
+				{if $id}
+                <div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="label label-danger">内定中奖粉丝ID</span></label>
+					<div class="col-sm-9 col-xs-12 col-md-6">
+						<input type="text" id='nd' name="nd" class="form-control" value="{$adv['nd']}" /><br>
+						<a href="{php echo $this->createWebUrl('awardmanage', array('id' => $id, 'op'=>'delnd'))}" class="btn btn-primary btn-sm active" role="button">如需修改内定ID 请先点击</a>
+						<span class="help-block"><strong>添加活动中未签到粉丝 该奖项内定将失效</strong>  请到审核内容里将内定者ID填写到此处 依次以英文逗号隔开 如21,22,23,28</span>
+					</div>
+				</div>
+				{/if}
+			</div>
+		</div>
+<div class="form-group col-sm-12">
+	<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+	</div>
+	</form>
+</div>
+
+<script language='javascript'>
+	function formcheck() {
+		if ($("#tagname").isEmpty()) {
+			Tip.focus("#tagname", "请填写奖项!");
+			return false;
+		}
+		if ($("#luck_name").isEmpty()) {
+			Tip.focus("#luck_name", "请填写奖品名称!");
+			return false;
+		}
+		if ($("#tagNum").isEmpty()) {
+			Tip.focus("#tagNum", "请填写奖品数量!");
+			return false;
+		}
+		return true;
+	}
+</script>
+{/if}
+{template 'common/footer'}
+

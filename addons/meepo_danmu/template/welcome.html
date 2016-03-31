@@ -1,0 +1,13 @@
+{template 'common/header'}
+{template 'nav_header'}
+<div class="clearfix welcome-container">
+	<div class="shortcut clearfix">
+	{loop $navs $nav}
+		<a href="{php echo $nav['href']}" title="{$nav['title']}">
+			<i class="{$nav['fa']}"></i>
+			<span>{$nav['title']}</span>
+		</a>
+	{/loop}
+	</div>
+</div>
+{template 'common/footer'}

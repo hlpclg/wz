@@ -1,0 +1,51 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#">人员管理</a></li>
+</ul>
+{if $op == 'post'}
+
+{elseif $op == 'display'}
+<div class="main">
+  <div class="category">
+    <form action="" method="post" onsubmit="return formcheck(this)">
+      <div class="panel panel-default">
+      <div class="panel-body table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th style="width:50px;"></th>
+            <th>头像</th>
+            <th>昵称</th>
+            <th>申请游戏号</th>
+            <th>状态</th>
+            <th>管理</th>
+          </tr>
+        </thead>
+        <tbody>
+        {loop $list $row}
+        <tr>
+          <td>{$row['id']}</td>
+          <td><img src="{$row['headimgurl']}" width="64" class="img-rounded" /></td>
+          <td>{$row['nickname']}</td>
+          <td>{$row['rid']}</td>
+          <td>{if $row['status']}<span class="label label-success">正常</span>{else}<span class="label label-default">待审核</span>{/if}</td>
+          <td style="text-align:right">
+          {if $row['status']}
+          <a href="{php echo $this->createWeburl('admin',array('op'=>'ok','rid'=>$rid,'id'=>$row['id'],'st'=>0))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="取消权限"><i class="fa fa-thumbs-o-down"></i></a>
+          {else}
+          <a href="{php echo $this->createWeburl('admin',array('op'=>'ok','rid'=>$rid,'id'=>$row['id'],'st'=>1))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="审核通过"><i class="fa fa-thumbs-o-up"></i></a>
+          {/if}
+          <a href="{php echo $this->createWeburl('admin',array('op'=>'delete','rid'=>$rid,'id'=>$row['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="删除" onclick="return confirm('确认删除此吗？删除不可恢复');return false;"><i class="fa fa-times"></i></a></td>
+        </tr>
+        {/loop}
+          </tbody>
+        
+      </table>
+    </form>
+  </div>
+</div>
+{$pager}
+</div>
+</div>
+{/if}
+{template 'common/footer'} 

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>{$systeminfo['shopname']}</title>
+
+<link href="./source/modules/eorder/template/css/footer.css" rel="stylesheet" type="text/css">
+<link href="./source/modules/eorder/template/css/base.css" rel="stylesheet" type="text/css">
+<link href="./source/modules/eorder/template/css/wap.css" rel="stylesheet" type="text/css">
+<link href="./source/modules/eorder/template/css/myOrder.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="./source/modules/eorder/template/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="./source/modules/eorder/template/js/jscommon.js"></script>
+</head>
+<body>
+  <!-- 我的订单 -->
+  <div class="channel-nav three-nav">
+    <ul>
+      <li class="active"><a href="{php echo $this->createMobileUrl('ordering', array('openid' => $item['id']))}">服务中</a></li>
+      <li class=""><a href="{php echo $this->createMobileUrl('orderend', array('openid' => $item['id']))}">已完成</a></li>
+    </ul>
+  </div>
+  <div class="myOrder">
+    
+    <!-- 订单服务中 -->
+    <div class="myOrder_list p10">
+      <ul>
+                <!-- ／end每个订单 -->
+      </ul>
+    </div>
+     </div>
+    <!-- ／我的订单 -->
+   <!-- 页脚导航-->
+<footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                	<a href="{php echo $this->createMobileUrl('index', array())}"><span class=" home-index">首页</span></a>
+                	<a href="{php echo $this->createMobileUrl('ordering', array('openid' => $item['id']))}"><span class=" Order-index-active">订单</span></a>
+                	<a href="{php echo $this->createMobileUrl('usercenter', array('openid' => $item['id']))}"><span class="card-index">我的</span></a>
+              </div>
+        </div>
+    </div>
+</footer>
+   <div style="display:none">
+	统计
+</div>    <!-- 展开与收缩 -->
+    <script type="text/javascript">
+    navList(12);
+    </script>
+    <!-- 选择框表单--> 
+    <script>
+    $(function() {
+      selectcont('.select01', '.selectBx');
+    });
+    function cancelorder(orderid,status){
+    	$("#orderid").val(orderid);
+    	$("#status").val(status);
+    	$("#codFloat").show();
+
+    }
+    function cancelorderok(){
+    	var orderid = $("#orderid").val();
+    	var status = $("#status").val();
+    	$("#codGoPay_2").attr("disabled",true); 
+    	$("#codGoPayCancel_2").attr("disabled",true); 
+    	//$("#codGoPay").attr("disabled",true);
+    	var link = "mobile.php?act=module&status="+status+"123"+orderid;
+        window.location.href=link;
+    }
+    function cancelno(){
+    	$("#codFloat").hide();
+    	return false;
+    }
+    function payorder(order_id,status){
+      var paytype = $("#paytype_"+order_id).val();
+      var link = "mobile.php?act=module&status="+status+"123"+paytype;
+      window.location.href=link;
+    }
+   
+    </script>
+    <!-- /选择框表单--> 
+    <div id="codFloat" style="display:none" class="cod">
+        <div class="wx_mask"></div>
+        <div class="wx_confirm">
+            <div class="wx_confirm_inner">
+                <div class="wx_confirm_hd">
+                    <div class="wx_confirm_tit">是否确认取消订单？</div>
+                </div>
+                <div class="wx_confirm_bd">
+                    
+                    <div class="wx_confirm_btns">                        
+                        <button type="cancel" onclick="javascript:cancelno()" id="codGoPayCancel_2">返回</button>
+                        <button type="submit" onclick="javascript:cancelorderok()" id="codGoPay_2">确认</button>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="orderid" name="orderid" value="">
+            <input type="hidden" id="status" name="status" value="">
+        </div>
+    </div> 
+  </body>
+  </html>

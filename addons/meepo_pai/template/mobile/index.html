@@ -1,0 +1,296 @@
+{template 'header'}
+<input type="hidden" value="{php echo $num_start}" name="num_start"/> 
+<style>
+.btn_zan {
+display: inline-block;
+padding: 6px 12px;
+margin-bottom: 0;
+font-size: 14px;
+font-weight: normal;
+/* line-height: 1.42857143; */
+text-align: center;
+white-space: nowrap;
+vertical-align: middle;
+cursor: pointer;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+background-image: url({TEMPLATE_PATH}images/good.png);
+background-size: 25px;
+background-position: 50% 45%;
+background-repeat: no-repeat;
+border: 1px solid transparent;
+border-radius: 32px;
+width: 64px;
+height: 64px;
+background-color: #428bca;
+border-color: #357ebd;
+</style>
+<div class="container2 projects">
+    <h3 class="text-center" style="margin: 10px 0">全民自拍比赛<br></h3>
+<div class="row">
+    <div id="user0" class="col-xs-6 col-md-6 pxbox">
+        <div class="thumbnail">
+            <div class="imgheight">
+            	<a class="votebtn" href="javascript:void(0)">
+            	<img class="thumb" src="{if $newvote[0]['src_img']}{php echo $newvote[0]['src_img']}{else}{TEMPLATE_PATH}images/Preloader_4.gif{/if}"></a><s></s>
+            </div>
+            <div class="caption" style="padding-bottom: 0px;">
+                <p style="text-align: center;"><span class="nickname">{$newvote[0]['nickname']}</span> <span class="school">{$newvote[0]['school']}</span></p>
+                <p class="text-center"><a href="javascript:void(0)" who=0 class="btn_zan" role="button"><span class="num" style="margin:0,auto !important; padding:0,auto !important; color:#fff; font-size:6px;">{$newvote[0]['num']}</span></a></p>
+
+            </div>
+        </div>
+        <p class="report"><a class="reportBtn" who="0" href="javascript:void(0)">举报</a></p>
+    </div>
+    <div id="user1" class="col-xs-6 col-md-6 pxbox">
+        <div class="thumbnail">
+            <div class="imgheight">
+            	<a class="votebtn" href="javascript:void(0)">
+            	<img class="thumb" src="{if $newvote[1]['src_img']}{php echo $newvote[1]['src_img']}{else}{TEMPLATE_PATH}images/Preloader_4.gif{/if}"></a>
+            </div>
+            <div class="caption" style="padding-bottom: 0px">
+                <p style="text-align: center;"><span class="nickname">{$newvote[1]['nickname']}</span> <span class="school">{$newvote[1]['school']}</span></p>
+                <p class="text-center"><a href="javascript:void(0)" who=1  class="btn_zan" role="button"><small class="num" style="margin:0,auto !important; padding:0,auto !important; color:#fff; font-size:3px;">{$newvote[1]['num']}</small></a></p>
+            </div>
+        </div>
+        <p class="report"><a class="reportBtn" who="1" href="javascript:void(0)">举报</a></p>
+    </div>
+</div>
+<div style="margin:5px"><button type="button" id="pass" class="btn btn-primary btn-block btn-lg" style="display: block;margin: 0 auto;">跳过</button></div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="subscribe" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    接下来更精彩
+                </h4>
+            </div>
+            <div class="modal-body">
+                你已经预览了约10%的自拍，还有90%更加精彩的自拍等你浏览<br><br>请在 {$wx_name} 微信底部菜单中打开浏览
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" href="{$setting['share_url']}">
+                    下一步
+                </a>
+            </div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="ReportModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        选择举报的原因
+                    </h4>
+                </div>
+                <div class="modal-body">
+				<form id="reportForm" action="#">
+					<input id="badguy" type="hidden" name="id" value="null">
+
+                    <label class="radio-inline">
+                        <input type="radio" name="repoer_reason" id="inlineRadio2" checked value="0"> 虚假
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="repoer_reason" id="inlineRadio1" value="1"> 色情
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="repoer_reason" id="inlineRadio3" value="2"> 侵犯肖像权
+                    </label>
+
+                    <textarea id="report_content" name="report_content" class="form-control" style="margin: 10px 0" placeholder="详细举报原因" rows="2"></textarea>
+
+                    <input id="contact" name="contact" type="text" class="form-control" placeholder="输入你的联系方式">
+                </form>
+				<div class="report_status"></div>
+				</div>
+                <div class="modal-footer">
+                    <a id="SubmitReport" class="btn btn-primary" href="javascript:void(0)">
+                       	 确定
+                    </a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <p class="text-center"><small>点击赞按钮选择你支持的照片</small></p>
+    <p class="text-center"><a href="{php echo $copy['yindao']['url']}" class="btn btn-primary" role="button">{$copy['yindao']['title']}</a></p>	<div class="footinfo">    <p class="text-center"><small>活动主办：<a href="{php echo $setting['zhuban_url']}">{$setting['zhuban_title']}</a></small></p>    <p class="text-center"><small>开发团队：<a href="{php echo $setting['tuandui_url']}">{php echo $setting['tuandui_title']}</a></small></p>    <p class="text-center"><small>赞助单位：<a href="{php echo $setting['zanzhu_url']}">{php echo $setting['zanzhu_title']}</a></small></p>
+</div>
+<div class="container">
+    <div class="mask" >
+    </div>
+    <div class="tip"> <img width="160px" style="margin-right: 10px" src="{TEMPLATE_PATH}images/wechatshare.png"></div>
+</div>
+<script>
+<!--
+require(['angular', 'bootstrap', 'util'], function(angular, $, u){
+	$(function(){
+		voteTime = 0;
+		function SetImg($img, thumb_img){
+				$img.attr("src", "{TEMPLATE_PATH}images/Preloader_4.gif");
+		        var img = new Image();
+		        $(img).load(function() {
+		            $img.attr("src", $(this).attr("src"));
+		        }).error(function() {}).attr("src", thumb_img);
+			}
+		function newvote(){
+			var Url = "{php echo $this->createMobileUrl('index',array('act'=>'newvote'))}";
+	        var data = {
+	            sex: {php echo $sex},
+	        };
+	        if (typeof mugen != "undefined" && mugen == 1) data.mugen = 1;
+	        $.ajax({
+	            type: "POST",
+	            url: Url,
+	            data: data,
+	            dataType: "json",
+	            error: function(request) {
+	                console.log("Connection error");
+	            },
+	            success: function(data) {
+	                switch (data.status) {
+	                case 8000:
+	                    SetImg($("#user0 .thumb"), data.content[0].src_img);
+	                    $("#user0 .nickname").html(data.content[0].nickname);
+	                    $("#user0 .school").html(data.content[0].school);												$("#user0 .num").html(data.content[0].num);
+	                    SetImg($("#user1 .thumb"), data.content[1].src_img);
+	                    $("#user1 .nickname").html(data.content[1].nickname);
+	                    $("#user1 .school").html(data.content[1].school);												$("#user1 .num").html(data.content[1].num);
+	                    break;
+	                case 8102:
+	                    SetImg($("#user0 .thumb"), data.content[0].src_img);
+	                    $("#user0 .nickname").html(data.content[0].nickname);
+	                    $("#user0 .school").html(data.content[0].school);
+	                    SetImg($("#user1 .thumb"), data.content[1].src_img);
+	                    $("#user1 .nickname").html(data.content[1].nickname);
+	                    $("#user1 .school").html(data.content[1].school);
+	                    console.log("exceed");
+	                    break;
+	                default:
+	                    console.log("default")
+	                }
+	            }
+	        });
+		}
+		 function vote(id){
+			var Url = "{php echo $this->createMobileUrl('index',array('act'=>'vote'))}";
+	        var data = {
+	            id: id
+	        };
+	        if (typeof mugen != "undefined" && mugen == 1) data.mugen = 1;
+	        $.ajax({
+	            type: "POST",
+	            url: Url,
+	            data: data,
+	            dataType: "json",
+	            error: function(request) {
+	                console.log("Connection error");
+	            },
+	            success: function(data) {
+	                switch (data.status) {
+	                case 8100:
+	                    console.log("投票成功");
+	                    newvote();
+	                    break;
+	                case 8104:
+	                    console.log("已经投票成功");
+	                    newvote();
+	                    break;
+	                case 8102:
+	                    $('#subscribe').modal('show');
+	                    console.log("exceed");
+	                    break;
+	                default:
+	                    console.log("跳过");
+		                newvote();
+		                break;
+	                }
+	            }
+	        });
+		}
+		function report(data){
+					var Url = "{php echo $this->createMobileUrl('index',array('act'=>'report'))}";
+		       
+		        		$.ajax({
+			            type: "POST",
+			            url: Url,
+			            data: data,
+			            error: function(request) {
+		                console.log("Connection error");
+		           		},
+		           		dataType: "json",
+		            success: function(data) {
+		                switch (data.status) {
+		                case 8300:
+		                    console.log(data.msg);
+		                    $("#SubmitReport").text("举报成功");
+		                    t = setTimeout(function() {
+		                        $('#ReportModal').modal('hide');
+		                        $('#report_content').val("");
+		                        $("#SubmitReport").text("确定");
+		                    },
+		                    1000);
+		                    break;
+		                default:
+		                    console.log("default")
+		                }
+		            }
+		        });
+
+			}
+		 	$(".btn_zan").click(function() {
+		        $(this).clone().addClass("floatBtn").appendTo($(this).parent()).animate({
+		            bottom:
+		            '150px',
+		            opacity: '0.5'
+		        },
+		        500,
+		        function() {
+		            $(this).remove();
+		            vote($(this).attr("who"));
+		            voteTime++;
+		            if (voteTime == 20 && typeof(localStorage.morethan20time) == 'undefined') {
+		                $(".container").show();
+		                localStorage.morethan20time = true;
+		            }
+		        });
+		    });
+
+		 	$(".votebtn").click(function() {
+		        $(this).parent().parent().find('a.btn_zan').click()
+		    }); 
+		 	$("#pass").click(function() {
+		        vote( - 1);
+		    });
+		 	$(".reportBtn").click(function() {
+		        $("#badguy").val($(this).attr("who"));
+		        $('#ReportModal').modal('show');
+		    });
+		    $("#SubmitReport").click(function() {
+		        var data = $("#reportForm").serializeArray();
+		        report(data);
+		    });
+		    $(".container").click(function() {
+		        $(this).hide();
+		    }) ;
+		    
+	});
+});
+//-->
+</script>
+{template 'footer_bar'}
+{template 'common/footer'}

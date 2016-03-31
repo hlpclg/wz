@@ -1,0 +1,100 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>{$systeminfo['shopname']}</title>
+<link href="../addons/water_super/template/css/index.css" rel="stylesheet" type="text/css">
+ <link href="../addons/water_super/template/css/shouye.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../addons/water_super/template/js/jquery-1.8.2.min.js"></script>
+<style media="all and (orientation:landscape)" type="text/css">
+  .container {
+    padding-bottom: 55px;
+  }
+
+</style>
+<style media="all and (orientation:landscape)" type="text/css">
+  .container {
+    padding-bottom: 35px;
+  }
+
+</style>
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	WeixinJSBridge.call('hideOptionMenu');
+});
+</script>
+</head>
+<body style="background: rgb(0,180,255);">
+
+<div class="container" id="container">
+    <div class="header-nav">
+      <span class = "color-white server-link" id = "area"><a href='{php echo $this->createMobileUrl('Fuwufw')}'  ontouchstart="">服务范围</a></span>
+      <span class = "color-white price-link" id = "pay"><a href ='{if $isjmmb =="1" }{php echo $this->createMobileUrl('jiamu')}{else}{$systeminfo['goodsinfourl']}{/if}' ontouchstart="">价目</a></span>
+    </div>
+
+    <table>
+
+      <tr>
+        <td style="vertical-align:middle;text-align:center;padding-top:30px">
+          <p class="index-title">{$systeminfo['shopname']}</p>
+          <div class="container-box">
+            <div class="app-content-box" >
+                <div class="first-round" id ="firsr-round">
+                    <em class="first-step">1</em>
+                    <em class="two-step">2</em>
+                    <em class="three-step">3</em>
+                    <div class="two-round">
+                        <span class="hujiao-xiadan">{$systeminfo['xc1']}</span>
+                        <span class="zhuanye-qingxi">{$systeminfo['xc2']}</span>
+                        <span class="guajian-songhui">{$systeminfo['xc3']}</span>
+                        <div class="border1"></div>
+                        <div class="border2"></div>
+                        <div class="border3"></div>
+                    </div>  
+                  <a class="xiadan-link" href="{php echo $this->createMobileUrl('confirmfee')}" >
+                    <div class="inside-round" ontouchstart="">一键下单
+                    <div class="quekou-border"></div>
+                    </div>
+                  </a>
+              </div>
+            </div>
+          </div>
+          <div style="height:20px;"></div>
+          <p class="indextitle">{$systeminfo['indexad']}</p>
+          <br>
+        </td>
+      </tr> 
+      
+    </table>
+    
+</div>
+
+<script type="text/javascript">
+  $("#container,td").height($(window).height() - 51);
+   
+</script>
+
+<!-- 页脚导航-->
+<footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                	<a href="{php echo $this->createMobileUrl('index')}"><span class=" home-index-active">首页</span></a>
+                	<a href="{php echo $this->createMobileUrl('ordering', array('openid' => $openid))}"><span class=" Order-index">订单</span></a>
+                	<a href="{php echo $this->createMobileUrl('usercenter', array('openid' => $openid))}"><span class="card-index">我的</span></a>
+              </div>
+        </div>
+    </div>
+</footer>
+</body>
+
+</html>
+

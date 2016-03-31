@@ -1,0 +1,232 @@
+<!doctype html>
+<html> 
+<head>
+    <title>{$weicard[name]}的微名片</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" media="screen" href="../addons/amouse_weicard/ui/css/cardMobile.css?r9590">
+</head>
+<body>
+	<div class="layout2">
+		<div class="banner" style="">
+            <div class="no-topImg"></div>
+		</div>
+		<div class="main">
+			<div class="name">
+				<div class="img" style="background-image: url({$weicard[headimg]})"></div>
+				<h1>{$weicard[name]}</h1>
+				<p>{$weicard[department]}|{$weicard[job]}</p>
+			</div>
+			<ul class="list">
+				<li class="unitName">
+					<div>单位名称</div>
+					<div>{$weicard['company']}</div>
+				</li>
+				<li class="mobilePhone " data-tel="{$weicard['mobile']}">
+					<div>移动电话</div>
+					<div>{$weicard['mobile']}</div>
+				</li>
+				<li class="email" data-mail="{$weicard['email']}">
+					<div>电子邮箱</div>
+					<div>{$weicard['email']}</div>
+				</li>
+                {if $weicard[weixin]}
+                <li class="weixin">
+                    <div>微信</div>
+                    <div>{$weicard['weixin']}</div>
+                </li>
+                {/if}
+                {if $weicard[qq]}
+                <li class="qq" data-qq="{$weicard['qq']}">
+                    <div>QQ</div>
+                    <span>{$weicard['qq']}</span>
+                </li>
+                {/if}
+                {if $weicard[address]}
+                <li class="cardAddress " data-url="">
+                    <div>单位地址</div>
+                    <div><span>{$weicard[address]}</span></div>
+                </li>
+                {/if}
+			</ul>
+            
+            <div class="handka-copyright">
+                <p>技术支持:
+                    <a href="{$setting['guanzhuUrl']}">
+                        {if empty($setting['copyright'])}{$_W['account']['name']} {else}{$setting['copyright']}{/if}
+                    </a>
+                </p>
+            </div>
+            
+		</div>
+		<div class="bottom">
+            <span class="show-qr-button"><i class="icon-qrcode"></i>显示二维码</span>
+            <span class="wx-shareto"><i class="icon-pencil"></i>我要制作</span>
+		</div>
+		<div class="show-qr" align="center">
+            <img src="{php echo $this->getQRImage2($weicard['id'],$weicard['openid'] );}" style="height:80%; width:80%;"/>
+			<i class="icon-cancel-circle"></i>
+		</div>
+		<div class="tip-shareto">
+			<img src="../addons/amouse_weicard/ui/images/tip-shareto.png" />
+			<i class="icon-cancel-circle"></i>
+		</div>
+
+		<div class="tip-nosite" style="background-image:url(../addons/amouse_weicard/ui/images/tip-nosite.png)">
+			<i class="icon-cancel-circle"></i>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../addons/amouse_weicard/ui/js/ender-card-mobile.min.js?r9590"></script>
+<script type="text/javascript">
+    $(function() {
+
+        $('.show-qr-button').on('click', function(e) {
+            $('.show-qr').show().find('i').one('click', function(e) {
+                $(this).parent().hide();
+            });
+        });
+
+
+        $('[data-adjustHeight]').each(function(){
+                var $this = $(this);
+                var index = $this.index();
+                var $other;
+                if(index % 2 == 0){
+                    $other = $this.next();
+                }else{
+                    $other = $this.prev();
+                }
+
+                if($other.length <= 0)
+                    return;
+
+                var thisH = $this.height();
+                var otherH = $other.height();
+                var height = Math.max(thisH, otherH);
+
+                if(thisH != otherH){
+                    $this.height(height);
+                    $other.height(height);
+                }
+            });
+            $('[data-longinfo]').on('click', function(e){
+                var title = $(this).data('longinfo');
+                var content = $(this).find('span').html();
+                var $longInfo = $('[data-block="longInfo"]');
+                $longInfo.find('h3').html(title + ' :');
+                $longInfo.find('p').html(content);
+
+                $longInfo.show();
+                $longInfo.find('[data-action="closeTip"]').one('click', function(e){
+                    $longInfo.hide();
+                });
+
+            });
+        $('[data-action="navUrl"]').on('click', function(e){
+            var withUrl = {
+                weixinPub: '',
+                sinaweibo: '',
+                txweibo: ''
+            };
+            var type = $(this).data('field');
+            var url = withUrl[type]
+            if(url){
+                window.open(url);
+            }
+        });
+
+        $('[data-tel]').on('click', function(e) {
+            var tel = $(this).data('tel') + '';
+            if (tel) {
+                var tmp = tel.split('-');
+                if(tmp.length > 2){
+                    tmp = tmp.splice(0, 2);
+                    tel = tmp.join('-');
+                }else if(tmp.length == 2 && tmp[0].length > 4){
+                    tel = tmp[0];
+                }
+                location.href = "tel:" + tel;
+            }
+        });
+        $('[data-mail]').on('click', function(e){
+            var email = $(this).data('mail');
+            if(email){
+                location.href = 'mailto:' + email;
+            }
+        });
+         $('[data-qq]').on('click', function(e){
+            var qq = $(this).data('qq');
+            if(qq){
+                location.href = 'mqqwpa://im/chat?chat_type=wpa&uin='+qq+'&version=1&src_type=web&web_src=http://b.qq.com';
+            }
+        });
+        $('[data-url]').on('click', function(e) {
+            var url = $(this).data('url');
+            if (url) {
+                location.href = url;
+                return ;
+            }
+            if ($(this).is('.website')) {
+                $('.tip-nosite').show().one('click', function(e){
+                    $(this).hide();
+                });
+            }
+        });
+        $('.cardAddress').on('click', function(e) {
+            location.href = 'http://api.map.baidu.com/marker?output=html&src=handka&location=coordinate&title=intertid&content='.replace('coordinate', ''.split(',').reverse().join(','));
+        });
+
+        $('.wx-shareto').on('click', function(e){
+            var makeLink = '{$setting['guanzhuUrl']}';
+            if(makeLink){
+                location.href = makeLink;
+            }else{
+                var redUrl = '/mobile?referId=';
+                if(device.isWeixin){
+                    redUrl = '{$setting['guanzhuUrl']}'
+                }
+                location.href = redUrl;
+            }
+        });
+
+       /* $('.download-vcf').on('click', function(e){
+            if (device.os.android || device.os.ios) {
+                location.href = '/assets/card/download-tip.html#/files/card/b49c0f8607bc49de9c137a00dd01f4e1/vcard/e653ab447f124996b6edec9ba4b2bb3e';
+            } else {
+                location.href = '/files/card/b49c0f8607bc49de9c137a00dd01f4e1/vcard/e653ab447f124996b6edec9ba4b2bb3e';
+            }
+        })*/
+
+    });
+</script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script language='javascript'>
+    <?php
+        $jssdk = new JSSDK();
+        $signPackage = $jssdk->GetSignPackage();
+    ?>
+    wx.config({
+        debug:false,
+        appId: "{$_W['account']['appid_share']}",
+        timestamp: {$signPackage["timestamp"]},
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            'onMenuShareTimeline','onMenuShareAppMessage','onMenuShareWeibo'
+        ]
+    });
+    var shareMeta = {
+        imgUrl:"{$shareimg}",
+        link:"{$sharelink}",
+        desc:"{$weicard['company']}",
+        title:"{$weicard['name']}"
+    };
+    wx.ready(function(){
+        wx.onMenuShareTimeline(shareMeta);
+        wx.onMenuShareAppMessage(shareMeta);
+        wx.onMenuShareWeibo(shareMeta);
+    });
+</script>
+
+</html>

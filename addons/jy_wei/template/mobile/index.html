@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<link rel="stylesheet" type="text/css" href="{MODULE_URL}/template/mobile/css/idangerous.swiper.css" />
+<link rel="stylesheet" type="text/css" href="{MODULE_URL}/template/mobile/css/base.css" />
+<link rel="stylesheet" type="text/css" href="{MODULE_URL}/template/mobile/css/wxy-animation.css" />
+<title>{$company['title']}</title>
+
+</head>
+
+<body>
+	<div id="bodybox">
+    	<div class="swiper-container"  style="background-image: url({$_W['attachurl']}{$company['banner']}); width:100%">
+            <div class="swiper-wrapper">
+            	<!-- page1 -->
+                <div class="swiper-slide swiper-slide-bg commen"> 
+                	<div class="index-slogan jiuye">
+                        <span>{$company['name']}</span>
+                        <img src="{MODULE_URL}/template/mobile/images/niuren.png" width="100%" />
+                    </div>
+                    
+                    <div class="index_logo jiuye">
+                    	<!-- <img src="{MODULE_URL}/template/mobile/images/Cgo8PFT6nR2AEMKgAACESBueViE807.png" /> -->
+                        <img src="{$_W['attachurl']}{$company['logo']}" />
+                    </div>
+                    <div class="index-arrow-down"></div>
+                </div>
+                
+                <!-- page2 -->
+                <div class="swiper-slide swiper-slide-bg commen"> 
+                	<div class="company-slogan jiuye">
+                        <span>{$company['propagenda']}</span>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="company-word jiuye clearfix">
+                        {loop $label $key $item}
+                        <div class="company-keyword">{$item['name']}</div>
+                        {/loop}
+					</div>
+                    <div class="white-tri company-tri" id="company-tri"></div>
+                    
+                    <div class="white-block company-white-block">
+                       	<div class="company-logo-circle jiuye">
+                            <img class="company-logo" src="{$_W['attachurl']}{$company['logo']}" />
+                        </div>
+                        {loop $newkeyword $key $item}
+                        <div class="company-icon{$keywordcss[$newkeywordcss[$key]]} jiuye">
+                            <p>{$keyword[$item]['name']}</p>
+                        </div>
+                        {/loop}
+                    </div>
+                    <div class="arrow-down"></div>
+                </div>
+                
+                <!-- page3 -->
+                <div class="swiper-slide swiper-slide-bg"> 
+                	<img src="{$_W['attachurl']}{$company['banner']}" width="100%" />
+					<div class="white-tri intro-tri"></div>
+                    
+                    <div class="white-block">
+                        <p class="intro-title jiuye">
+                            <span>{$company['shortname']}</span>
+                            <img src="{MODULE_URL}/template/mobile/images/future-company.png" />
+                        </p>
+                        <p class="intro-content content jiuye">{$company['description']}</p>
+                    </div>
+                    
+                    <div class="intro-tri-div"></div>
+                    <div class="arrow-down"></div>
+                </div>
+                
+                <!-- page4 -->
+                <div class="swiper-slide swiper-slide-bg"> 
+                	<div class="avatar_icons">
+                        <i class="ui jiuye"></i>
+                        <i class="pm jiuye"></i>
+                        <i class="rd jiuye"></i>
+                        <i class="mkt jiuye"></i>
+                    </div>
+                    <div class="white-tri intro-tri"></div>
+                    
+                    <div class="white-block">
+                        <p class="intro-title jiuye">
+                            <span>招聘职位</span>
+                        </p>
+                        <div class="position_name">
+                        {loop $position $key $item}
+                        <a href="{php echo $_W['siteroot'].'app/'.substr($this->createMobileUrl('position',array('id'=>$item['id'])),2)}" target="_blank"><p class="jiuye">{$item['name']}</p><span class="jiuye">{$item['payment']}</span></a>
+                        {/loop}
+                        </div>
+                        {if !empty($company['url'])}
+                        <a href="{$company['url']}" target="_blank"><div class="more_positions jiuye">查看该公司全部在招职位</div></a>
+                        {/if}
+                    </div>
+                    <div class="intro-tri-div"></div>
+                    <div class="arrow-down"></div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="{MODULE_URL}/template/mobile/js/idangerous.swiper-2.1.min.js"></script>
+<script>
+var mySwiper = new Swiper('.swiper-container',{
+	mode:"vertical",
+	
+	onFirstInit:function(swiper, direction) {
+		      var index = swiper.activeIndex;
+		      var height = $(window).innerHeight();
+		      var obj = $(".swiper-slide");
+		      obj.not(".swiper-slide-visible").find(".jiuye").addClass('hide');
+		      obj.eq(index).find(".jiuye").removeClass("hide");
+	},
+	onSlideChangeEnd:function(swiper, direction)
+	{
+		var index = swiper.activeIndex;
+		var obj = $(".swiper-slide");
+		obj.eq(index).siblings().find(".jiuye").addClass("hide");
+		obj.eq(index).find(".jiuye").removeClass("hide");
+	}
+  });
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    {php $signPackage=$_W['account']['jssdkconfig'];}   
+    <script>
+
+        var appid = '{$_W['account']['jssdkconfig']['appId']}';
+        var timestamp = '{$_W['account']['jssdkconfig']['timestamp']}';
+        var nonceStr = '{$_W['account']['jssdkconfig']['nonceStr']}';
+        var signature = '{$_W['account']['jssdkconfig']['signature']}';
+
+        wx.config({
+            debug: false,   
+            appId: appid,
+            timestamp: timestamp,
+            nonceStr: nonceStr,
+            signature: signature,
+            jsApiList: ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo',]
+        });
+
+        wx.ready(function () {
+            var shareData = {
+                {if empty($company['sharetitle'])}
+                title:"九烨微招聘",
+                {else}
+                title: "{$company['sharetitle']}",
+                {/if}
+                desc: "{$company['sharedescription']}",
+                link: "{php echo $_W['siteroot'].'app/'.substr($this->createMobileUrl('index',array('id'=>$company['id'])),2)}",
+                imgUrl: "{$_W['attachurl']}{$company['shareimage']}",
+                trigger: function (res) {},
+                complete: function (res) {},
+                success: function (res) {},
+                cancel: function (res) {},
+                fail: function (res) {}
+            };
+            wx.onMenuShareTimeline(shareData);
+            wx.onMenuShareAppMessage(shareData);
+            wx.onMenuShareQQ(shareData);
+            wx.onMenuShareWeibo(shareData);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+{template 'common/header'}
+<div style="display:none">
+	<img width="300" style="margin:0px auto;" src="../addons/sunshine_gaokaotoutiao/common/title.jpg"/>
+</div>
+<div class="container" style="font-size:14px;">
+<h3>{$sucai['title']}</h3>
+<div style="border-bottom: 1px dashed grey;font-size: 12px;color: grey;">发布于{$sucai['add_time']}</div>
+<br>
+{if $sucai['img_url']}
+	<img width="300" style="margin:0px auto;display:block;" src="{$sucai['img_url']}"/>
+	<br><br>
+{/if}
+<div style="font-size: 16px;text-indent:25px">{$sucai['content']}</div>
+<br>
+<a  id="link" class="builder_a" href="{php echo $this->createMobileUrl('Index')}">我也要上头条</a>
+<br>
+<a  class="builder_a" href="javascript:void(0);" onclick="Sunshine.shareClick()">开启炫耀模式</a>
+<br>
+<a  class="builder_a" href="javascript:void(0);"  onclick="$('#share_modal').modal('show');">点击大冒险</a>
+<br>
+<div id="mcover" onclick="$(this).hide()" style="display: none;">
+    <img src="../addons/sunshine_gaokaotoutiao/common/guide.png">
+</div>
+
+
+<div class="modal fade" id="share_modal">
+	<div class="modal-dialog" style="z-index:10000">
+		<div class="modal-content">
+			<div class="modal-header">
+				指纹识别<button type="button" style="float:right;" class="btn btn-default" data-dismiss="modal">Close</button>
+				<label class="help-block"></label>
+			</div>
+			<div class="modal-body">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+					苹果、安卓手机请长按下方二维码，点击“识别二维码”关注【{$_W['account']['name']}】
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<img class="img-responsive" src="{$_W['account']['qrcode']}">
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+</div>
+<style type="text/css">
+.builder_a {
+	display:block;
+	width:70%;
+	height:50px;
+	margin:10px auto 0;
+	text-align:center;
+	background-color:#e60012;
+	text-decoration:none;
+	line-height:50px;
+	color:#fff;
+	font-size:16pt;
+	border-radius:6px
+}
+#mcover {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.7);
+	display: none;
+	z-index: 20000;
+}
+
+#mcover img {
+	position: fixed;
+	right: 18px;
+	top: 5px;
+	width: 260px;
+	height: 180px;
+	z-index: 20001;
+}
+</style>
+</div>
+<script src="../addons/sunshine_gaokaotoutiao/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$("title").html("{$sucai['title']}");
+// author:穿越的一只小猪
+// qq:947233713
+// site:osinger.com
+var Sunshine = (function(){
+	var shareClick = function() {
+		$("#mcover").show();
+	};
+	var attention = function() {
+		window.location.href="{php echo $this->createMobileUrl('share')}";
+	};
+	return {
+		attention:attention,
+		shareClick:shareClick
+	}
+}());
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="panel panel-default">
+    <div class="panel-heading">
+        设置
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">接口地址</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="zhuanfa_url" class="form-control" placeholder="" name="zhuanfa_url" value="{$reply['url']}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">token</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="zhuanfa_token" class="form-control" placeholder="" name="zhuanfa_token" value="{$reply['token']}">
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'util'], function($, u){
+        $(function(){
+            
+        });
+    });
+    window.initReplyController = function($scope) {
+        
+    };
+    window.validateReplyForm = function(form, $, _, util, $scope) {
+        if (!form['zhuanfa_url'].value) {
+            util.message('请填写接口地址');
+            return false;
+        }
+        if (!form['zhuanfa_token'].value) {
+            util.message('请填写token');
+            return false;
+        }
+        return true;
+    };
+</script>

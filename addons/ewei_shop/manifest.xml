@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.6,0.7">
+	<application setting="false">
+		<name><![CDATA[人人商城]]></name>
+		<identifie><![CDATA[ewei_shop]]></identifie>
+		<version><![CDATA[11.12.5]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[人人商城分销,捌零网络www.j0515.com]]></ability>
+		<description><![CDATA[人人商城分销,捌零网络www.j0515.com]]></description>
+		<author><![CDATA[捌零网络]]></author>
+		<url><![CDATA[http://www.j0515.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="商城入口" do="shop" />
+			<entry title="订单入口" do="order" />
+			<entry title="购物车入口" do="cart" />
+			<entry title="我的收藏入口" do="favorite" />
+			<entry title="会员中心入口" do="member" />
+		</cover>
+		<menu>
+			<entry title="商城管理" do="shop" />
+			<entry title="会员管理" do="member" />
+			<entry title="订单管理" do="order" />
+		        <entry title="数据统计" do="statistics" />
+		        <entry title="插件中心" do="plugins" />
+			<entry title="系统设置" do="sysset" />
+		</menu>
+	</bindings>
+	<install><![CDATA[install.php]]></install>
+	<uninstall><![CDATA[uninstall.php]]></uninstall>
+	<upgrade><![CDATA[upgrade.php]]></upgrade>
+</manifest>

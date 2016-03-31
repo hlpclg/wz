@@ -1,0 +1,89 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('company', array('op'=>'display'));}">公司列表</a></li>
+	<li><a href="{php echo $this->createWebUrl('company', array('op'=>'set'));}">添加公司</a></li>
+</ul>
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" id="form">
+		<div class="panel panel-default">
+			<div class="panel-heading">微招聘 - 公司列表</div>
+			<div class="panel-body">
+				<div class="table-responsive panel-body">
+					<table class="table table-hover" style="min-width: 300px;">
+						<thead class="navbar-inner">
+							<tr>
+								<th width="5%">ID</th>
+								<th>标题</th>
+								<th>名称(简称)</th>
+								<th width="5%">Logo</th>
+								<th width="10%">Banner</th>
+								<th>宣传语</th>
+								<th>简介</th>
+								<th>分享标题</th>
+								<th width="10%">分享图片</th>
+								<th>分享描述</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							{loop $cache $key $item}
+							<tr>
+								<td>{$item['id']}</td>
+								<td>{$item['title']}</td>
+								<td><a href="{php echo $this->createWebUrl('company', array('op'=>'set', 'id'=>$item['id']));}" class="btn btn-default btn-info" data-toggle="tooltip" data-placement="top" title="" data-original-title="编辑">{$item['name']}({$item['shortname']})</a></td>
+								<td><img style="width:100%" src="{$_W['attachurl']}{$item['logo']}"/></td>
+								<td><img style="width:100%" src="{$_W['attachurl']}{$item['banner']}"/></td>
+								<td>{$item['propagenda']}</td>
+								<td>{$item['description']}</td>
+								<td>{$item['sharetitle']}</td>
+								<td><img style="width:100%" src="{$_W['attachurl']}{$item['shareimage']}"/></td>
+								<td>{$item['sharedescription']}</td>
+								<td>
+									<a onclick="showQrcode({$item['id']})" class="btn btn-default btn-info" data-original-title="二维码"><i class="fa fa-qrcode"></i></a>
+									<a onclick="if(!confirm('删除后将不可恢复,确定删除吗?')) return false;" href="{php echo $this->createWebUrl('company', array('op'=>'delete', 'id'=>$item['id']));}" class="btn btn-default btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="删除"><i class="fa fa-times"></i></a>
+								</td>
+							</tr>
+							{/loop}
+							{if empty($cache)}
+							<tr>
+								<td colspan="4">
+									尚未有公司
+								</td>
+							</tr>
+							{/if}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<div id="model" class="modal fade">  
+  	<div class="modal-dialog">  
+    	<div class="modal-content">  
+      		<div class="modal-header">  
+	        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>  
+	        	<h4 class="modal-title">二维码</h4>  
+	      	</div>  
+	      	<div class="modal-body">  
+	        	<canvas id="qrcode"></canvas>
+	      	</div>
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+	      	</div>  
+    	</div><!-- /.modal-content -->  
+  	</div><!-- /.modal-dialog -->  
+</div><!-- /.modal -->
+<script src="{MODULE_URL}/template/js/jquery-1.11.3.min.js"></script>
+<script src="{MODULE_URL}/template/js/jquery.qrcode-0.12.0.min.js"></script>
+<script type="text/javascript">
+function showQrcode(id){
+	$('#qrcode').qrcode({
+		"size": 100,
+    	"color": "#3a3",
+    	"text": "{$_W['siteroot']}app/{php echo substr($this->createMobileUrl('index'),2);}"+"&id="+id
+	});
+	$('#model').modal('show');
+}
+</script>
+{template 'common/footer'}

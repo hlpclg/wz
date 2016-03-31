@@ -1,0 +1,91 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>帮TA传情</title>
+
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+  <link rel="icon" type="image/png" href="assets/i/favicon.png">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
+  <meta name="msapplication-TileColor" content="#0e90d2">
+
+  <link rel="stylesheet" href="{$res_path}/css/amazeui.min.css">
+  <link rel="stylesheet" href="{$res_path}/css/app.css">
+  
+<style>
+
+
+
+
+
+</style>
+<script type='text/javascript' src='resource/js/lib/jquery-1.11.1.min.js'></script>
+<script type="text/javascript" src="{$res_path}/js/weixinapi.js"></script>
+<script type="text/javascript" src="{$res_path}/js/jquery.backstretch.js"></script>
+<script type="text/javascript" src="{$res_path}/js/amazeui.min.js"></script>
+
+</head>
+<body style="background-color:#E2B864">
+<div>
+<img src="{$res_path}/images/rank.jpg" width="100%">
+</div>
+<style>
+
+.rank_list {
+  background-color: rgba(255,240,245,0.5);
+  margin: 0 auto;
+  width: 90%;
+  height:300px;
+  padding: 0px;
+  border-radius: 10px;
+  border: 0px #CCC solid;
+}
+
+.rank_list li{
+  list-style: none;
+  line-height: 28px;
+  margin: 0px 20px;
+  border-bottom: 1px #999 dashed;
+}
+
+.leftspan {
+  
+}
+
+.rigthspan {
+  float: right;
+  color: #999;
+}
+</style>
+<ul class="rank_list">
+{loop $rank $key $p}
+  <li><span>No.{php echo $key+1} {$p['fromuser']}</span><span class="rigthspan">转发{$p['forward']}</span></li>
+{/loop}
+
+</ul>
+
+</body>
+
+</html>

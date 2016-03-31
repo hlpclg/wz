@@ -1,0 +1,40 @@
+{template 'common/header'}
+<div class="panel panel-danger">
+	<div class="panel-heading">
+		<strong>注意事项:</strong><br>
+		<font color=red>1:</font> 登录仅为未认证服务号与未认证订阅号设置 认证类号  请忽略！<br><br>
+		<font color=red>2:</font> 未认证服务号与未认证订 请输入正确的公众平台账号密码！<br><br>
+		<font color=red>3:</font> 若是提醒登录失败，请关闭账号保护功能 提示:未认证的公众号 一定要登录成功方可使用！<br><br>
+		<font color=red>4:</font> 若是使用过程中 总是提示网络超时 请管理员再次重新登录 若是偶发提示超时 请忽略！<br><br>
+
+	</div>
+	<form id="reply-form" class="form-horizontal form"  method="post" enctype="multipart/form-data">
+	<div class="panel-body">
+		
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span><span class="label label-danger">公众平台账号</span></label>
+			<div class="col-sm-9">
+				<input type="text"  class="form-control" name="username" value="{$wechat['username']}" placeholder="请输入微信平台公众平台账号">
+				<span class="help-block"><span class="label label-success">微信平台公众平台账号</span>
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span><span class="label label-danger">公众平台密码</span></label>
+			<div class="col-sm-9">
+				<input type="text"  class="form-control" name="pwd" placeholder="请输入微信平台公众平台密码">
+				<span class="help-block"><span class="label label-success">微信平台公众平台密码</span></span>
+			</div>
+		</div>
+	</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input name="submit" type="submit" value="登录" class="btn btn-primary" />
+				<input type="hidden" name="cookie" value="{$CANSHU['cookie']}" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</div>
+		</div>
+	</form>
+</div>
+
+{template 'common/footer'}

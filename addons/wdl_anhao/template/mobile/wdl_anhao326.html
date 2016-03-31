@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>{$reply['title']}</title>
+<link rel="stylesheet" type="text/css" href="/addons/wdl_anhao/template/mobile/css/base.css">
+<link rel="stylesheet" type="text/css" href="/addons/wdl_anhao/template/mobile/css/index2.css">
+<link rel="stylesheet" href="/addons/wdl_anhao/template/mobile/css/luara.css"/>
+<script src="/addons/wdl_anhao/template/mobile/js/jquery1.42.min.js"></script>
+<script src="/addons/wdl_anhao/template/mobile/js/jquery.luara.0.0.1.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('.judge-rule-display-more').bind('click',function(){
+			var $shower=$(this).next('.rule-extend');
+			if($shower.is(':visible')){
+				$shower.hide();
+			}else{
+				$shower.show();
+			}
+		});
+})
+
+    $(function(){
+        <!--调用Luara示例-->
+        $(".example").luara({width:"100%",height:"234",interval:2500,selected:"seleted"});
+
+    });
+</script>
+</head>
+<body>
+	<div id="sheet">
+		<div class="imgs">
+			<div class="status running">
+				<div class="inner">
+					暗号活动结束时间{php echo date('m月d日H点',$reply['end_time'])}
+				</div>
+			</div>
+			
+			<div class="cursors"></div>
+		</div>
+		<!--Luara图片切换骨架begin-->
+			<div class="example">
+				<ul>
+					<li><img src="/attachment/{$reply['headimage']}" height="234" alt="3"/></li>
+					<li><img src="/attachment/{$reply['headimage1']}" height="234" alt="4"/></li>
+					<li><img src="/attachment/{$reply['headimage2']}" height="234" alt="5"/></li>
+				</ul>
+				<ol>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ol>
+			</div>
+			<!--Luara图片切换骨架end-->
+		<div class="prizes">
+			<div class="prizes-wrap">
+				<ul>
+					<li>
+						<div class="prize-item">
+							<label><img src="/addons/wdl_anhao/template/mobile/images/prize-icon.png"> 随机奖</label>
+							<span class="prize-num"><em>一等奖</em><i>{if $first['fieldname']=='0'}无{else}{$first['fieldname']}{/if}位</i></span>
+							<span class="prize-name">{$first['fieldcontent']}</span>
+						</div>
+					</li>
+					{if $second['fieldname']==''}
+					{else}
+					<li>
+						<div class="prize-item">
+							<label><img src="/addons/wdl_anhao/template/mobile/images/prize-icon.png"> 随机奖</label>
+							<span class="prize-num"><em>二等奖</em><i>{$second['fieldname']}位</i></span>
+							<span class="prize-name">{$second['fieldcontent']}</span>
+						</div>
+					</li>
+					{/if}
+					{if $san['fieldname']==''}
+					{else}
+					<li>
+						<div class="prize-item">
+							<label><img src="/addons/wdl_anhao/template/mobile/images/prize-icon.png"> 随机奖</label>
+							<span class="prize-num"><em>三等奖</em><i>{$san['fieldname']}位</i></span>
+							<span class="prize-name">{$san['fieldcontent']}</span>
+						</div>
+					</li>
+					{/if}
+				</ul>
+			</div>
+		</div>	
+		<div class="rules">
+		<div class="split"><img src="/addons/wdl_anhao/template/mobile/images/secret-split.png"></div>
+		<div class="detail">
+			<div class="detail-box">
+				<div class="box-title">
+					<h3>参与方法</h3>
+				</div>
+				<div class="join-rules">
+					<ol>
+						<li><em>1</em><span class="single-line">关注微信
+							<input class="weixin-nick" value="武汉嗨生活"> 
+							<span class="paste"><img src="/addons/wdl_anhao/template/mobile/images/arrow-indicator.png"> 点击拷贝</span></span>
+						</li>
+						<li>
+							<em>2</em> 发送暗号 <span class="secret">{$reply['title']}</span> 获得专属编号，赢取精美礼品。</li>
+					</ol>
+				</div>
+			</div>				
+			<div class="detail-box">
+				<div class="box-title">
+					<h3>中奖规则</h3>
+				</div>
+				<div class="judge-rule">
+					<div class="rule-row">
+						<p>A:某用户参与活动获得编号</p>
+						<p>B:中国体彩排列5组成的数字</p>
+					</div>
+					<div class="judge-rule-display-more">
+							<a href="javascript:void(0);">+ 点击展开细则</a>
+					</div>
+	<div class="rule-extend hidden">
+      <div class="rule-row">
+        <p>1，|A-B|的绝对值最小者为中奖用户。</p>
+        <p>简单来说，举例：</p>
+        <p>小明参与天天有礼活动获得编号A（如A:88888），活动时间截至后，当天体彩排列5开奖号码B（如B：88888）. 即小明为当期天天有礼的中奖者。</p>
+      </div>
+      <div class="rule-row">
+		<p>2，当出现|A-B|的绝对值相同时，取数值较大的为中奖用户。</p>
+        <p>举例：</p>
+        <p>小红参与天天有礼活动获得编号A（如A:10000）,小明参与天天有礼活动获得编号C(如C:10004)。活动时间截至后，当天体彩排列5开奖号码B（如B：10002）. 即小明（如C：10004）为当期天天有礼的中奖者。</p>
+      </div>
+	  <div class="rule-row">
+        <p>3，如活动有多等奖或多个奖品，则按照上面2个公式依次计算出的对应奖项获奖用户。</p>
+        <p>举例：</p>
+		<p>某活动设一等奖一人，二等奖两人，三等奖两人。如当期体彩排列5的开奖号码B：12345。</p>
+		<p>那么</p>
+        <p>一等奖：首个中奖号（如A：12345）</p>
+		<p>二等奖：首个中奖号（如C:12346），首中奖号(如D:12344)</p>
+		<p>三等奖：首个中奖号(如F:12347)，首中奖号(如G:12343)</p>
+      </div>
+      <div class="rule-row">
+        <p>细则：</p>
+        <p>1）在活动规定的时间内发送暗号，会随机获得一注排列5的数字作为抽奖号码。</p>
+        <p>2）分享给好友时，需要再次点击暗号活动页面，额外赠送的抽奖编号自动生成。</p>
+        <p>3) 保证本活动公开透明：活动时间截至后，开奖以当天的体彩数字为准。中国体彩排列五开奖时间内每晚8：30—9点30。</p>
+      </div>
+	 </div>
+  </div>
+</div>
+</div>
+</div>
+	<div class="footer">
+		<p><a href="" title="微信抽奖">微信抽奖</a> 武汉嗨生活提供技术支持</p>
+	</div>
+</div>
+</body>
+</html>

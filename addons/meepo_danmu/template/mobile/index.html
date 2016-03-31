@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <title>{$title}</title>
+    <link rel="stylesheet" href="http://imlizhi-static.qiniudn.com/weixin/danmu/static/endcredits.css">
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?be3306c4f03e42f96d82f89d4808aa79";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+</head>
+
+<body>
+    <div id="content">
+    </div>
+
+    <script src="http://imlizhi-static.qiniudn.com/weixin/danmu/static/jquery-2.0.2.min.js"></script>
+
+    <script src="http://imlizhi-static.qiniudn.com/weixin/danmu/static/jquery.danmaku.js"></script>
+<script>
+
+
+    $(document).ready(function(){
+        var maskHeight = $(document).height();
+        var maskWidth = $(window).width();
+        $('#content').css({
+            'width': maskWidth,
+            'height': maskHeight
+        });
+        var date = new Date();
+        var hours = date.getHours();
+        var fontColor =  "";
+        console.log(hours);
+        if(hours  < 5  ||  hours > 18){
+            $("#content").css("backgroundImage","url(http://imlizhi-static.qiniudn.com/weixin/danmu/static/moon.jpg)");
+            fontColor =  "white";
+        }
+        else{
+            $("#content").css("backgroundImage","url(http://imlizhi-static.qiniudn.com/weixin/danmu/static/sun.jpg)");
+            fontColor =  "#525252";
+        }
+        $("#content").css("background-size","110% 100%");
+        var articleList = {php echo $articleList};
+      
+        var  gg = 0;
+        var getRandom = function(Min,Max){
+            var Range = Max - Min;
+            var Rand = Math.random();
+            return(Min + Math.round(Rand * Range));
+        }
+        for(var c = 0  ; c < 4; c++){
+            var index = getRandom(0,articleList.length-1);
+            var i = $('<div class="credits"><a href="' + articleList[index].url + '"> ' + articleList[index].title + '</a></div>');
+            $("#content").append(i);
+            i.danMaku({
+                    colorRanger:[fontColor],
+                    minFontSize:10,
+                    maxFontSize:35,
+                    left: maskWidth/4 + getRandom(0,maskWidth/2)
+                });
+            i.css("color",fontColor);
+
+        }
+        var a = setInterval(function(){
+            var index = getRandom(0,articleList.length-1);
+            console.log(index);
+            var i = $('<div class="credits"><a href="' + articleList[index].url + '"> ' + articleList[index].title + '</a></div>');
+            $("#content").append(i);
+                i.danMaku({
+                    colorRanger:[fontColor],
+                    minFontSize:10,
+                    maxFontSize:35,
+                });
+            i.css("color",fontColor);
+            if( 0)
+                clearInterval(a);
+        },1500)
+    });
+
+    function getRandomm(Min,Max)
+    {
+        var Range = Max - Min;
+        var Rand = Math.random();
+        return(Min + Math.round(Rand * Range));
+    }
+</script>
+</body>
+
+</html>

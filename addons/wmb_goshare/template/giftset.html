@@ -1,0 +1,209 @@
+{template 'common/header'}
+<style>
+.theme_list{overflow:hidden; padding-top:15px;}
+.theme_list li{border:1px #DDD solid; width:320px; float:left; margin-left:15px; margin-bottom:10px;}
+.theme_list li .theme_pic{display:block; width:320px; height:160px; overflow:hidden;}
+.theme_list li .theme_pic img{width:320px;}
+.theme_list li .theme_main{padding:10px; overflow:hidden;}
+.theme_list li .theme_main .theme_title{font-size:16px; height:20px; width:217px; overflow:hidden;}
+.theme_list li .theme_main .pull-left{color:#999;}
+</style>
+<ul class="nav nav-tabs">
+	<li><a href="javascript:history.go(-1);">返回</a></li>
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('giftset', array('op' => 'post'));}">添加奖品</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('giftset', array('op' => 'display'));}">管理奖品</a></li>
+</ul>
+{if $operation == 'post'}
+<div class="main">
+	<form action="" method="post" onsubmit="return checkpost(this)" class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="giftid" value="{$gift['id']}" />
+<div class="panel panel-default">
+    <div class="panel-heading">
+        奖品编辑
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">奖品名称</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" name="stdname" class="form-control" value="{$gift['stdname']}" placeholder="奖品名称" />
+            </div>
+        </div>
+		<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">奖品序号</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="sort" name="sort" class="form-control" value="{$gift['sort']}" placeholder="奖品排列序号，为空默认排序" />
+            </div>
+        </div>
+		<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">所属分组</label>
+            <div class="col-sm-9 col-xs-12">
+               	<select name="groupid" id="groupid"
+					class="form-control" style="float: left">
+					{loop $groups $group}
+						<option   value="{$group['id']}" {if $group['id'] == $gift['groupid']} selected = "selected" {/if} >{$group['groupname']}</option>
+				    {/loop}
+				</select> 
+				<script>
+					if ("{$gift['groupname']" != "") {
+						$("#groupid").value = "{$gift['groupname']}";
+					}
+				</script>
+            </div>
+        </div>
+		<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">奖品单位</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="unit" name="unit" class="form-control" value="{$gift['unit']}" />
+            </div>
+        </div>
+		<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">所需积分</label>
+            <div class="col-sm-9 col-xs-12">
+			   <input type="text" id="needscore" name="needscore" class="form-control" value="{$gift['needscore']}" />
+            </div>
+			
+        </div>
+		<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">奖品数量</label>
+            <div class="col-sm-9 col-xs-12">
+                 <input type="text" id="amount" name="amount" class="form-control" value="{$gift['amount']}" placeholder="奖品数量" />
+            </div>
+        </div>
+		<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">剩余数量</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" name="left" id="left" class="form-control" value="{$gift['left']}" placeholder="剩余数量" />
+            </div>
+        </div>
+		<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">奖品简介</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" name="desc" class="form-control" value="{$gift['desc']}" placeholder="奖品简介" />
+            </div>
+        </div>
+      
+    </div>
+</div>
+		
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input name="submit" type="submit" value="提交" class="btn btn-primary col-lg-1" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</div>
+      </div>
+		
+	</form>
+</div>
+<script type="text/javascript">
+	//kindeditor($('.richtext-clone'));
+</script>
+ 
+<script type="text/javascript">
+	function checkpost(form) {
+
+ 		if (!form['stdname'].value) {
+			$("input[name='stdname']").focus();
+			alert('主人，奖品名称不能为空');
+			return false;
+		}
+ 		
+ 		if (form['sort'].value) {
+		       var sort = $('#sort').val();
+		       if (sort.search(/^[0-9]*$/) == -1) {
+					alert('主人，请输入数字序号');
+					return false;
+				}
+		}
+ 		
+ 		
+ 		if (!form['groupid'].value) {
+			$("select[name='groupid']").focus();
+			alert('主人，先创建一个奖品分组吧');
+			return false;
+		}
+ 		if (!form['unit'].value) {
+			$("input[name='unit']").focus();
+			alert('主人，请输入奖品的单位，例如：份、个、斤');
+			return false;
+		}else{ 
+		       var mobile = $('#unit').val();
+		       if (mobile.search(/^[\u4e00-\u9fa5]{0,}$/) == -1) {
+					alert('主人，请输入正确的奖品单位，例如：份、个、斤');
+					return false;
+				}
+		}
+
+ 		if (!form['needscore'].value) {
+			$("input[name='needscore']").focus();
+			alert('主人，请输入兑换奖品所需要积分');
+			return false;
+		}else{ 
+		       var mobile = $('#needscore').val();
+		       if (mobile.search(/^\+?[1-9][0-9]*$/) == -1) {
+		    	   $("input[name='needscore']").focus();
+		    	   	alert('主人，请输入非零的正整数积分');
+					return false;
+				}
+		}		
+ 		if (!form['amount'].value) {
+			$("input[name='amount']").focus();
+			alert('主人，请输入奖品的数量');
+			return false;
+		}else{ 
+		       var mobile = $('#amount').val();
+		       if (mobile.search(/^\+?[1-9][0-9]*$/) == -1) {
+		    	   $("input[name='amount']").focus();
+		    	   	alert('主人，请输入非零的正整数数量');
+					return false;
+				}
+		}
+ 		if (!form['left'].value) {
+		}else{ 
+		       var left1 = $('#left').val();
+		       if (left1.search(/^\+?[1-9][0-9]*$/) == -1) {
+					alert('主人，请输入非零的正整数数量');
+					return false;
+				}
+		       var mobile = $('#amount').val();
+		       if(parseInt(left1)>parseInt(mobile)){ 
+		    	   alert('主人，剩余数量不能大于奖品总数');
+					return false;
+		       }
+		       
+		}
+ 		
+ 		
+		return true; 
+	}
+</script>
+ 
+{elseif $operation == 'display'}
+ <div class="main">
+	<div style="padding:15px;">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="min-width:100px;max-width:300px;">所属分组 </th>
+					<th style="min-width:100px;max-width:300px;">奖品序号 </th>
+					<th style="min-width:100px;max-width:300px;">奖品名称 </th>
+					<th style="text-align:right; min-width:60px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td style="min-width:100px;max-width:300px;">{$item['groupname']}</td>
+					<td style="max-width:10px;">{$item['sort']}</td>
+					<td style="max-width:10px;">{$item['stdname']}</td>
+					<td style="text-align:right; min-width:60px;">
+						<a href="{php echo $this->createWebUrl('giftset', array('op' => 'post','giftid' => $item['id']));}" title="编辑" class="btn btn-default"><i class="fa fa-edit"></i></a>
+						<a href="{php echo $this->CreateWebUrl('giftset', array('op' => 'delete','giftid' => $item['id']));}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" title="删除" class="btn btn-default"><i class="fa fa-times"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>
+{/if}
+{template 'common/footer'}

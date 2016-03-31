@@ -1,0 +1,21 @@
+{if empty($item)}
+{php $namesuffix = '-new[(wrapitemid)]';}
+{php $itemid = '(itemid)';}
+{else}
+{php $namesuffix = '['.$item['id'].']';}
+{php $itemid = 'wdl_anhao-item-' . $item['id'];}
+{/if}
+<tr id="line{$item['id']}">
+    <td><select class="form-control" name="item-type{$namesuffix}" {if $item['isdefault']==1} readonly="readonly"{/if} style="width:100px;">
+                
+            <option value="1" {if $item['type']==1} selected="selected" {/if}>一等奖</option>
+            <option value="2" {if $item['type']==2} selected="selected" {/if}>二等奖</option>
+            <option value="3" {if $item['type']==3} selected="selected" {/if}>三等奖</option>
+        </select>
+    </td>
+    <td>
+        <input name="item-fieldname{$namesuffix}" type="text" class="form-control wizard-ignore" value="{$item['fieldname']}" {if $item['isdefault']==1} readonly="readonly"{/if}></td>
+    <td>
+        <input name="item-fieldcontent{$namesuffix}" type="text"  class="form-control wizard-ignore" value="{$item['fieldcontent']}" {if $item['isdefault']==1} readonly="readonly"{/if}></td>
+
+</tr>

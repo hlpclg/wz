@@ -1,0 +1,52 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+  <li class="active"><a href="{php echo $curr_url.'&op=post';}">添加景点</a></li>
+  <li><a href="{php echo $curr_url.'&op=list';}">景点管理</a></li>
+</ul>
+<div class="main">
+  <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+    <h4>添加景点</h4>
+    <table class="tb">
+      <tbody>
+        <tr>
+          <td>景区名称</td>
+          <td><input type="text" id="" class="span5" placeholder="" name="title" value="{$item['title']}"></td>
+        </tr>
+        <tr>
+          <td>所属景区</td>
+          <td><select name="jid">
+          	{loop $jingqu $j}
+              <option value="{$j['id']}" {if $j['id']==$item['jid']}selected="selected"{/if}>{$j['title']}</option>
+            {/loop}
+            </select></td>
+        </tr>
+        <tr>
+          <td>简要描述</td>
+          <td><input type="text" id="" class="span5" placeholder="" name="jianjie1" value="{$item['jianjie1']}"></td>
+        </tr>
+        <tr>
+          <td>景点描述</td>
+          <td><input type="text" id="" class="span5" placeholder="" name="jianjie2" value="{$item['jianjie2']}"></td>
+        </tr>
+        <tr>
+          <td>显示顺序</td>
+          <td><input type="text" id="" class="span1" placeholder="" name="sort" value="{if $item['sort']}{$item['sort']}{else}0{/if}"></td>
+        </tr>
+        <tr>
+          <th>景点介绍</th>
+          <td><textarea style="height:100px;" class="span5" name="jianjie3" cols="50">{$item['jianjie3']}</textarea></td>
+        </tr>
+        <tr>
+          <td>景点图片</td>
+          <td>{php echo tpl_form_field_image('img', $item['img']);}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+            <input type="hidden" name="id" value="{$item['id']}" /></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+{template 'common/footer'}

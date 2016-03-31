@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="applicable-device" content="mobile" />
+<meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
+<title>外貌协会专家评分{$grade}</title>
+<link href="../addons/xhw_face/template/skcss/mvb_2.css" rel="stylesheet" type="text/css">
+<link href="http://cdn.staticfile.org/twitter-bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../addons/xhw_face/template/skcss/add2home_2.css" type="text/css" media="screen" />
+<script type="text/javascript" src="../addons/xhw_face/template/skcss/jquery-1.7.2.min.js"></script>
+</head>
+<style type="text/css">
+#mbutton{padding:15px 10px 15px 10px; overflow:hidden; border-bottom:1px #DDD solid;}
+#mbutton > span{float:right; display:inline-block; background:#58a3ff; border:1px #63a0eb solid; color:#FFF; height:30px; line-height:30px; padding:0 10px; margin-left:10px;}
+#mcover{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0, 0, 0, 0.7);display:none;z-index:20000;}
+#mcover img{position:fixed;right: 18px;top:5px;width:260px;height:180px;z-index:20001;}
+</style>
+<body>
+<div id="toptext"></div>
+<div class="main">
+  <div class="mahua">
+    <h2>哇！专家评分{$grade}分</h2>
+    <div class="content" id="content" ><p>
+<img src="{$picurl}" width="100%"/><br>
+<h4>照片编号{$id}</h4>{$description}
+</p></div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            {if $share== '1'}
+            <button onclick="$('#mcover').show()" type="button" class="btn btn-block btn-primary btn-lg">分享到朋友圈</button>
+            {else}
+            <button onclick="window.location.href='{$link}'" type="button" class="btn btn-block btn-primary btn-lg">我也要测试</button>
+            {/if}
+            <button onclick="tz()" type="button" class="btn btn-block btn-lg btn-success">照片排行榜</button><p></p>
+        </div>
+     </div>
+<div id="mcover" onclick="$(this).hide()"><img src="../addons/xhw_face/template/skcss/guide.png"></div>
+  </div>
+  <script>
+$(function() {
+    if(!navigator.userAgent.match(/Android/i)) {
+        $(".contacts").click(function() {
+            $('#mcover').show();
+            return false;
+        });
+    }
+});
+</script>
+  <script>
+function tz(){
+    window.location.href='{php echo $this->createmobileUrl('list',array('do'=>'list', 'id'=>$row['id']))}';
+}
+</script>
+{php require_once IA_ROOT."/addons/xhw_face/jssdk.class.php";$weixin = new jssdk($jie='0',$url='');$wx = $weixin->get_sign();}
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>  
+<script type="text/javascript">
+  wx.config({
+      appId: "{$wx['appId']}",
+      timestamp: {$wx['timestamp']},
+      nonceStr: "{$wx['nonceStr']}",
+      signature: "{$wx['signature']}",
+      jsApiList: [
+        'checkJsApi',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage'
+      ]
+  });
+  wx.ready(function () {
+  //分享朋友
+  wx.onMenuShareAppMessage({
+      title: '外貌协会专家对我的评分{$grade}分',
+      desc: '我在参加外貌协会相貌评分活动，上传两人照还能测夫妻相哦，你也来试试吧。',
+      link: "{php echo $_W['siteroot']."app/".$this->createmobileUrl('item',array('do'=>'itme', 'id'=>$id))}",
+      imgUrl: '{$picurl}',
+      trigger: function (res) {
+        //alert('用户点击发送给朋友');
+      },
+      success: function (res) {
+        //window.location.href =adurl;//分享成功回调
+      },
+      cancel: function (res) {
+       //window.location.href =adurl;//取消回调
+      },
+      fail: function (res) {
+        alert(JSON.stringify(res));//失败回调
+      }
+    });
+ //朋友圈
+  wx.onMenuShareTimeline({
+      title: '外貌协会专家对我的评分{$grade}分',
+      link: "{php echo $_W['siteroot']."app/".$this->createmobileUrl('item',array('do'=>'itme', 'id'=>$id))}",
+      imgUrl: '{$picurl}',
+      trigger: function (res) {
+        //alert('用户点击分享到朋友圈');
+      },
+      success: function (res) {
+          //window.location.href =adurl;
+      },
+      cancel: function (res) {
+          //window.location.href =adurl;
+      },
+      fail: function (res) {
+        alert(JSON.stringify(res));
+      }
+    });   
+    
+    
+  });
+</script>
+</body>
+</html>

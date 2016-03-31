@@ -1,0 +1,9 @@
+   {loop $list $key $row}
+                <tr class="{if ($pindex -1)* $psize + $key + 1<=3}top{else}two{/if}">
+                	<td>{php echo ($pindex -1)* $psize + $key + 1}</td>
+                    <td align='left'>
+                        {if !empty($row['headimgurl'])}<img src='{$row['headimgurl']}' style='width:30px;height:30px;margin-top:5px;' /> {/if}
+                             {$row['nickname']}</td>
+                    <td>{$row['score']}</td>
+                </tr>
+                {/loop}

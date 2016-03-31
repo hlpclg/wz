@@ -1,0 +1,235 @@
+{template 'common/header'}
+<style>
+.field label{float:left;margin:0 !important; width:140px;}
+</style>
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li><a href="{php echo $this->createWebUrl('list');}">防伪码列表</a></li>
+		<li class="active"><a href="{php echo $this->createWebUrl('create');}">生成防伪码</a></li>
+		<li><a href="{php echo $this->createWebUrl('insert');}">数据导入</a></li>
+		<li><a href="{php echo $this->createWebUrl('logs');}">查询记录</a></li>
+	</ul>
+	<div class="panel panel-info">
+		<div class="panel-heading">批量生成防伪码</div>
+		<div class="panel-body">
+			<form action="" method="post" class="form-horizontal" role="form" id="form1">
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">防伪码长度</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="slen" id="" type="text" value="10">&nbsp;&nbsp;建议8-20位以内 
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">防伪码前缀</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sStr" id="sStr" type="text" value="" onkeyup="checkstr(this.value)">&nbsp;&nbsp;<span id="txtHint">设置的防伪码前缀</span>
+				</div>		
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">防伪码规则</label>
+				<div class="col-sm-4">
+					<select class="form-control" name="rule">
+						<option value="3">前缀 + 字母 + 数字</option>
+						<option value="2">前缀 + 字母</option>
+						<option value="1">前缀 + 数字</option>
+					</select>
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">生成数量</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sNum" id="" type="text" value="100">&nbsp;&nbsp;一次过多，可能造成数据库变量，建议1000条以内
+				</div>		
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">产品名称</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sName" id="" type="text" value="">
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">生产厂家</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sFactory" id="" type="text" value="">
+				</div>
+					
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">积分类型</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="creditname" id="" type="text" value="">
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">积分值</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="creditnum" id="" type="text" value="">
+				</div>
+					
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">积分状态</label>
+				<div class="col-sm-4">
+					<input name="creditstatus" id="" type="radio" value="0" checked> 未发放
+					<input name="creditstatus" id="" type="radio" value="1"> 已发放
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">有效日期</label>
+				<div class="col-sm-4">
+					{php echo tpl_form_field_date('sTime_1', $value = array(), $withtime = true );}
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-8">
+					<input type="submit" name="submit" value="批量生成" class="btn btn-primary">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</div>		
+			</div>
+			</form>
+		</div>
+	</div>
+<script type="text/javascript">
+	require(['jquery', 'util'], function($, u){
+		$("#form1").submit(function(){
+			if(!$(":text[name='slen']").val()) {
+				u.message('抱歉，防伪码长度为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='sStr']").val() == '') {
+				u.message('抱歉，防伪码前缀必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='sStr']").val() != '') {
+				
+			}
+			if(!$("select[name='rule']").val()) {
+				u.message('请选择防伪码规则！', '', 'error');
+				return false;
+			}
+			if($(":text[name='sNum']").val() == '') {
+				u.message('抱歉，生成数量为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='sName']").val() == '') {
+				u.message('抱歉，产品名称为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='sFactory']").val() == '') {
+				u.message('抱歉，生成厂家为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='creditname']").val() == '') {
+				u.message('抱歉，积分类型为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='creditnum']").val() == '') {
+				u.message('抱歉，积分数为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			return true;
+		});
+	});
+	function checkstr(str){
+		var dat='';
+		$.ajax({
+			type: "POST",
+			url: "{php echo $this->createWebUrl('checkepre');}",
+			data: {sStr:str},
+			dataType: "json",
+			success: function(data){
+				if (data >= '1') {
+					document.getElementById("txtHint").innerHTML='<font color="red">数据库中已存在相同前缀的数据'+data+'条,请修改</font>';
+				}else{
+					document.getElementById("txtHint").innerHTML='<font color="green">当前防伪码前缀可用</font>';
+				}
+			}
+		});
+	}
+</script>
+	<div class="panel panel-info">
+		<div class="panel-heading">生成单个防伪码</div>
+		<div class="panel-body">
+			<form action="" method="post" class="form-horizontal" role="form" id="form2">
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">防伪码</label>
+				<div class="col-sm-8">
+					<input class="form-control" name="security" id="security" type="text" value=""onkeyup="checksecurity(this.value)">&nbsp;&nbsp;<span id="txtHint2">设置的防伪码</span>
+				</div>	
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">产品名称</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sName2" id="" type="text" value="">
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">生产厂家</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sFactory2" id="" type="text" value="">
+				</div>			
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">积分类型</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="creditname2" id="" type="text" value="">
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">积分值</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="creditnum2" id="" type="text" value="">
+				</div>
+					
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">积分状态</label>
+				<div class="col-sm-4">
+					<input name="creditstatus2" id="" type="radio" value="0" checked> 未发放
+					<input name="creditstatus2" id="" type="radio" value="1"> 已发放
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">有效日期</label>
+				<div class="col-sm-4">
+					{php echo tpl_form_field_date('sTime_2', $value = array(), $withtime = true );}
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-8">
+					<input type="submit" name="submitone" value="生成防伪码" class="btn btn-primary">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</div>		
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	require(['jquery', 'util'], function($, u){
+		$("#form2").submit(function(){
+			if(!$(":text[name='security']").val()) {
+				u.message('抱歉，防伪码为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='sName2']").val() == '') {
+				u.message('抱歉，产品名称为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='sFactory2']").val() == '') {
+				u.message('抱歉，生成厂家为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='creditname2']").val() == '') {
+				u.message('抱歉，积分类型为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='creditnum2']").val() == '') {
+				u.message('抱歉，积分数为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			return true;
+		});
+	});
+	function checksecurity(str){
+		var dat='';
+		$.ajax({
+			type: "POST",
+			url: "{php echo $this->createWebUrl('checkesecurity');}",
+			data: {security:str},
+			dataType: "json",
+			success: function(data){
+				if (data >= '1') {
+					document.getElementById("txtHint2").innerHTML='<font color="red">数据库中已存在该防伪码,请修改</font>';
+				}else{
+					document.getElementById("txtHint2").innerHTML='<font color="green">当前防伪码可用</font>';
+				}
+			}
+		});
+	}
+</script>
+{template 'common/footer'}

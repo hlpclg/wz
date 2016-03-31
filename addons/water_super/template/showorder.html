@@ -1,0 +1,149 @@
+{template 'common/header'}
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li {if $state =='0' } class="active"{/if}><a href="{php echo $this->createWebUrl('order');}">未处理</a></li>
+		<li {if $state =='1' } class="active"{/if}><a href="{php echo $this->createWebUrl('order',array('state' => '1'));}">已派单</a></li>
+		<li {if $state =='2' } class="active"{/if}><a href="{php echo $this->createWebUrl('order',array('state' => '2'));}">已收取</a></li>
+		<li {if $state =='3' } class="active"{/if}><a href="{php echo $this->createWebUrl('order',array('state' => '3'));}">清洗中</a></li>
+		<li {if $state =='4' } class="active"{/if}><a href="{php echo $this->createWebUrl('order',array('state' => '4'));}">归还中</a></li>
+		<li {if $state =='5' } class="active"{/if} ><a href="{php echo $this->createWebUrl('order',array('state' => '5'));}">已结束</a></li>
+		<li class="active"><a href="{php echo $this->createWebUrl('order',array('orderid' => $order['id']));}">订单详情</a></li>
+    </ul>
+</div>       
+<style>
+.table td span{display:inline-block;margin-top:4px;}
+.table td input{margin-bottom:0;}
+</style>
+<div class="clearfix">
+<form class="form-horizontal form" action="" method="post" enctype="multipart/form-data">
+    <div class="panel panel-default">
+        <div class="panel-heading">订单详情</div>
+        <div class="panel-body">
+                <input type="hidden" name="orderid" value="{$order['id']}">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">订单编号</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" disabled="disabled" placeholder=""  value="{$order['ordercode']}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">下单时间</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" disabled="disabled" placeholder=""  value="{$order['ordertime']}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">服务时间</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" disabled="disabled" placeholder=""  value="{$order['ordertime']}">
+                    </div>
+                </div>                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">用户姓名</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder=""  name="customername" value="{$order['customername']}">
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">联系方式</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder=""  name="customertel" value="{$order['customertel']}">
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">服务城市</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder=""  disabled="disabled" value="{$order['customercity']}">
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">服务区域</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" disabled="disabled"  value="{$order['customerarea']}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">详细地址</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder=""  name="xiangxdz" value="{$order['xiangxdz']}">
+                    </div>
+                </div>
+               <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">订单明细</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <textarea class="form-control" name="detail" rows="8" >{$order['detail']}</textarea>                       
+                    </div>
+                </div>                                
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">订单状态</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder="" disabled="disabled"  
+                        value="{if $order['orderstate'] == '0'}尚未派单{elseif $order['orderstate'] == '1'}已派单，工作人员取件途中{elseif $order['orderstate'] == '2'}工作人员上门取件成功{elseif $order['orderstate'] == '3'}正在清洗衣物{elseif $order['orderstate'] == '4'}清洗完毕，工作人员正在归还衣物{elseif $order['orderstate'] == '5'}客户收回衣物，订单结束{/if}">
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">订单金额</label>
+                    <div class="col-sm-8 col-xs-12">
+                        <input type="text" class="form-control" placeholder=""  name="ordercost" value="{$order['ordercost']}">
+                        <span class="help-block">当用户现金支付时可在此修改金额，提交之后下方的付款信息会自动更新</span>
+                        
+                    </div>
+                </div> 
+                <div class="form-group">
+                	<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label"><span style='color:red'>*</span>付款状态</label>
+                	<div class="col-sm-8 col-xs-12">
+                    <label class="checkbox">
+					  <input type="checkbox" name="paystate" value="1" {if $order['paystate']  == 1}checked="checked"{/if}>勾选则为已付款
+					</label>
+					 </div>
+                </div>
+                
+        </div>
+        <div class="panel-heading">订单状态</div>
+        <div class="panel-body">
+        	{if $order['orderstate'] != '0'}	<div class="form-group">
+                	<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label"><span style='color:red'>*</span>置为上个状态</label>
+                	<div class="col-sm-8 col-xs-12">
+                    <label class="checkbox">
+					  <input type="checkbox" id = "prostate" name="prostate" value="1" />返回上个订单状态
+					</label>
+					 </div>
+                </div>{/if}
+           {if $order['orderstate'] != '5'}     
+                <div class="form-group">
+                	<label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label"><span style='color:red'>*</span>置为下个状态</label>
+                	<div class="col-sm-8 col-xs-12">
+                    <label class="checkbox">
+					  <input type="checkbox" id = "nextstate"  name="nextstate" value="1" >返回下个订单状态
+					</label>
+					 </div>
+                </div>{/if}
+        </div> 
+    </div>
+    <div class="form-group">
+        <div class="col-sm-12">
+            <input name="submit" type="submit" value="信息修改" class="btn btn-primary col-lg-2" style="margin-right: 5px">
+        <input type="hidden" name="token" value="{$_W['token']}" />
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$("#nextstate").click(function(){
+		if($('#prostate').is(':checked')){
+			$("#prostate").attr("checked",false);
+		}
+		
+	});
+	$("#prostate").click(function(){
+		if($('#nextstate').is(':checked')){
+			$("#nextstate").attr("checked",false);
+		}
+	});
+	
+});
+
+</script>
+</div>
+{template 'common/footer'}

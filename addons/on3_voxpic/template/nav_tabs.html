@@ -1,0 +1,4 @@
+<ul class="nav nav-tabs">
+	<li {if $_GPC['do']==''||$_GPC['do']=='Indexsys'}class="active"{/if}><a href="{php echo $this->createWebUrl('Indexsys')}">首页</a></li>
+	<li {if $_GPC['do']=='Itemslist'}class="active"{/if}><a href="{php echo $this->createWebUrl('Itemslist')}">用户资源列表</a></li>
+</ul>

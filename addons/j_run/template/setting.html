@@ -1,0 +1,45 @@
+{template 'common/header'} 
+<script>
+require(['bootstrap.switch', 'util'], function($, u){
+	$(function(){
+		$('.make-switch').bootstrapSwitch();
+	});
+});
+</script>
+<div class="main">
+  <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+    <div class="panel panel-default">
+      <div class="panel-heading">参数设置</div>
+      <div class="panel-body">
+        <div class="form-group">
+          <!--<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">借用appid</label>
+            <div class="col-sm-9">
+              <input type="text" value="{$settings['key_appid']}" class="form-control"  name="key_appid">
+              <div class="help-block">请使用回车分开,默认</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">借用secret</label>
+            <div class="col-sm-9">
+              <input type="text" value="{$settings['key_secret']}" class="form-control"  name="key_secret">
+              <div class="help-block">请使用回车分开,默认</div>
+            </div>
+          </div>-->
+          <label class="col-xs-12 col-sm-3 col-md-2 control-label">关键字失效时间</label>
+          <div class="col-sm-9 form-inline">
+            <div class="input-group">
+              <input type="text" value="{$settings['key_wordtime']}" class="form-control"  name="key_wordtime">
+              <span class="input-group-addon">分钟</span> </div>
+            <div class="help-block">客户通过关键字触发图文进入游戏。这条图文的有效时间。防止客户在游戏结束后依旧可以进入。同时有利于保持客服消息的畅通。设置0为不限制。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-sm-12">
+      <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+      <input type="hidden" name="token" value="{$_W['token']}" />
+    </div>
+  </form>
+</div>
+{template 'common/footer'}

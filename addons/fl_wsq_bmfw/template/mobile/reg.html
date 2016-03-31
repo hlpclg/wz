@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title>申请加入</title>
+<link rel="stylesheet" href="{$css}style.css">
+<script src='{$js}jquery.js'></script>
+<script>
+	function dosub(){
+		var button=true;
+		$("input[type='text']").each(function(){
+			if(!$(this).val()){
+				button=false;
+			}
+		})
+		if(button){
+			$('#ff').submit();
+		}else{
+			alert("请填写完整信息");
+		}
+		
+	}
+</script>
+</head>
+
+<body>
+	<form id="ff"  method="post" action="{php echo $this->createMobileUrl('savereg')}" >
+<header>
+	<a href="apply.html"><div class="hea_lebtn hea_ren"></div></a>
+    <div class="hea_title">商户申请加入</div>
+    <div class="hea_ribtn hea_que" onclick="dosub()">确定</div>
+</header>
+<div class="shanghu_list">
+	<h2>申请表单</h2>
+    <ul>
+		<li>
+        	<div class="fl">商户名</div>
+            <div class="ri">
+				<input type="text" placeholder="赛维洗衣生活馆" name="name" required="required">
+            </div>
+        </li>
+		<li>
+        	<div class="fl">商铺电话</div>
+            <div class="ri">
+				<input type="text" placeholder="15004651784" name="tel" required="required">
+            </div>
+        </li>
+		<li>
+        	<div class="fl">店铺地址</div>
+            <div class="ri">
+				<input type="text" placeholder="格兰云天1期7号楼" name="address" required="required">
+            </div>
+        </li>
+		<li>
+        	<div class="fl">店铺分类</div>
+            <div class="ri">
+				<select name="tid">
+					<option value="0">请选择</option>
+					{loop $type $value}
+					<option value="{$value[id]}">{$value[name]}</option>
+					{/loop}
+				</select>
+            </div>
+        </li>
+		<li>
+        	<div class="fl">联系人</div>
+            <div class="ri">
+				<input type="text" placeholder="" name="contact_name" required="required">
+            </div>
+        </li>
+		<li>
+        	<div class="fl">联系电话</div>
+            <div class="ri">
+				<input type="text" placeholder="" name="contact_tel" required="required">
+            </div>
+        </li>
+		
+<!--        <li>
+        	<div class="fl">分类</div>
+            <div class="ri">
+            <select>
+              <option>活动</option>
+            </select>
+            </div>
+        </li>-->
+<!--        <li>
+        	<div class="fl">列表</div>
+            <div class="ri">
+            	<div><span class="scfj">上传附件</span></div>
+				<div class="scfj_img">
+                	<span><em></em>
+                    	<img src="images/weitoupiao.png">
+                    </span>
+                </div>
+            </div>
+        </li>-->
+        <li>
+        	<div class="fl">申请原因</div>
+            <div class="ri">
+				<textarea name="content" cols="" rows=""></textarea>
+            </div>
+        </li>
+<!--        <li>
+        	<div class="fl">关键词</div>
+            <div class="ri">
+				<input type="text" placeholder="年-月-日 时：分">
+            </div>
+        </li>-->
+<!--        <li>
+        	<div class="fl">排序</div>
+            <div class="ri">
+				<input type="text" placeholder="2">
+            </div>
+        </li>
+        <li>
+        	<div class="fl">推荐</div>
+            <div class="ri">
+            <select>
+              <option>推荐</option>
+            </select>
+            </div>
+        </li>-->
+<!--		<li>
+        	<div class="fl">时间</div>
+            <div class="ri">
+				<input type="text" placeholder="年-月-日 时：分">
+            </div>
+        </li>-->
+    </ul>
+</div>
+	</form>
+</body>
+</html>

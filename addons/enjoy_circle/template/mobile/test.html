@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>我的朋友圈</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link href="../addons/enjoy_circle/public/css/style.css" rel="stylesheet">
+    <script src="../addons/enjoy_circle/public/js/zepto.js"></script>
+    <script src="../addons/enjoy_circle/public/js/weixin.js"></script>
+</head>
+<body class="p_b50">
+<div class='grey-bg' ></div>
+
+    <header>
+        <img id="bg" src="img/bg.jpg">
+        <p id="user_name" class="data-name">enjoy</p>
+        <img id="avt" class="data-avt" src="img/a1.jpg">
+    </header>
+    <div id="main">
+        <div id="list">
+        <ul class="con-box">
+            <li>
+                <div class="po-avt-wrap">
+                    <img class="po-avt data-avt" src="img/a1.jpg">
+                </div>
+                <div class="po-cmt" rel="id1_list1" id="id1_list1">
+                    <div class="po-hd">
+                        <p class="po-name"><span class="data-name">enjoy</span></p>
+                        <p class="post">过两天开party，都有谁来咧？</p>
+                        <p class="time">刚刚</p><img class="c-icon" src="img/c.png"><a class="review">评论</a>
+                    </div>
+                    <div class="r"></div>
+                    <div class="cmt-wrap">
+ 
+                        <div class="cmt-list" id="id1">
+							<p ><span>杨幂：</span>好哇我参加~</p>
+							<p ><span>苍井空：</span>我带几个姐妹一起去。</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="po-avt-wrap">
+                    <img class="po-avt" src="img/a1.jpg">
+                </div>
+                <div class="po-cmt" rel="id2_list2" id="id2_list2">
+                    <div class="po-hd">
+                        <p class="po-name">苍井空</p>
+                        <p class="post">早上好，还是好困~<img src="img/c1.jpg"></p>
+                        <p class="time">2分钟前</p><img class="c-icon" src="img/c.png"><a class="review">评论</a>
+                    </div>
+                    <div class="r"></div>
+                    <div class="cmt-wrap">
+                        <div class="cmt-list" id="id2">
+                        <p ><span>陈赫：</span>怪我咯~</p>
+                        <p ><span>陈冠希：</span>怪我咯~</p>
+                        <p ><span class="data-name">enjoy</span><span>：</span>怪我咯~</p>
+                        <p ><span>苍井空</span>回复<span class="data-name">enjoy</span><span>：</span>知道就好！</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+        </ul>    
+    </div>
+ 
+    </div>
+	<div class="lodding"></div>
+	<!--评论输入-->
+	<div class="bottom_review">
+		<input type="text" value="" class="txt_review" /><div class="btn_box"><a class="submit_btn">发送</a></div>
+	</div>
+	
+	<script type="text/javascript" >
+	
+		// 下拉AJAX	
+        $.pagescroll.ajax_fn=function(){
+
+            $.ajax({
+                type: "post",
+                url: "../addons/enjoy_circle/public/js/json.js",
+                dataType: "json",
+                success: function (data) {
+                    var tempArr = [],HTML;
+                    $.pagescroll.index = $.pagescroll.index -1;
+                    if($.pagescroll.index == 0){
+                        $.pagescroll.setHtml("");
+                        return false;
+                    }
+                    $.each( data, function(index, content)
+                    {
+                        var inHtml = [" <li>",
+								"                <div class=\"po-avt-wrap\">",
+								"                    <img class=\"po-avt\" src="+content.poAvt+">",
+								"                </div>",
+								"                <div class=\"po-cmt\" rel="+content.id+" id="+content.id+">",
+								"                    <div class=\"po-hd\">",
+								"                        <p class=\"po-name\">"+content.poName+"</p>",
+								"                        <p class=\"post\">"+content.post.text+"<img src="+content.post.img+"></p>",
+								"                        <p class=\"time\">"+content.time+"</p><img class=\"c-icon\" src=\"img/c.png\"><a class=\"review\">评论</a>",
+								"                    </div>",
+								"                    <div class=\"r\" style='display:none'></div>",
+								"                    <div class=\"cmt-wrap\" >",
+								"					 <div id=" +content.id+'cmtwarp' +"></div>",
+								"                    </div>",
+								"                </div>",
+								"            </li>"].join("");
+                        tempArr.push(inHtml);
+
+                    });
+                    HTML = tempArr.join('');
+                    $.pagescroll.setHtml(HTML);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+
+       }
+
+        /*  page lodding  */
+       $.pagescroll.init(".con-box");
+	   
+	
+	   
+    </script>
+</body>
+</html>

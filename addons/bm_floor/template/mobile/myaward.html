@@ -1,0 +1,222 @@
+{template 'header'}
+<style>
+.header_img {
+position: relative;
+}
+.header_img div {
+background: rgba(0,0,0,0.5);
+width: 100%;
+line-height: 30px;
+position: absolute;
+bottom: 0px;
+color: #fff;
+text-align: center;
+}
+dd {
+border-bottom: 2px solid #5ac5d4;
+padding-bottom: 0px;
+background-repeat: no-repeat;
+margin-left: 1px;
+}
+</style>
+
+<a href="{$floor['url1']}" >
+<header class="header_img">
+<img src="{php echo $_W['attachurl'] . $floor['picture']; }" width="100%">
+<div>点击查看参加方法和游戏规则</div>
+</header>
+</a>
+
+<style>
+.nav_integral{
+	background:#88c5ce;
+}
+.nav_integral li{
+	background:-webkit-gradient(linear, 0 0, 0 00%, from(#ffffff), to(#eeeeee)) no-repeat;
+	-webkit-background-size:1px 60%;
+	background-position: right center;
+}
+.nav_integral li:last-of-type{background:none;}
+.nav_integral a{
+	color:#ffffff;
+	display: block;
+	width:80px;
+	margin:auto;
+	height:50px;
+	text-align: center;
+}
+.nav_integral a>span{
+	display: block;
+	width:30px;
+	height:30px;
+	margin:auto;
+	-webkit-background-size:50px auto;
+}
+.box {
+	width: 100%;
+	display: -webkit-box;
+	display: -moz-box;
+	display: box;
+	-webkit-box-orient: horizontal;
+	-moz-box-orient: horizontal;
+	box-orient: horizontal;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	margin:0;padding:0;
+}
+.box > * {
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	box-flex: 1;
+}
+</style>
+<nav class="nav_integral">
+	<ul class="box" style="list-style-type:none">
+		<li style="margin-top:8px;"><a href="{php echo $this->createMobileUrl('awardlist', array('from_user' => $from_user , 'rid' => $rid ,'weid' => $_W['weid']))}"><label style="font-weight: bold;">奖品清单</label><span style="color:#666666">{$awardtotal['sum']}</span></a></li>
+		<li style="margin-top:8px;"><a href="{php echo $this->createMobileUrl('winnerlist', array('from_user' => $from_user , 'rid' => $rid ,'weid' => $_W['weid']))}"><label style="font-weight: bold;">中奖名单</label><span style="color:#666666">{$winnertotal['sum']}</span></a></li>
+		<li style="margin-top:8px;"><a href="{php echo $this->createMobileUrl('myaward', array('from_user' => $from_user , 'rid' => $rid ,'weid' => $_W['weid']))}"><label style="font-weight: bold;">我的奖品</label><span style="color:#666666">{$mytotal['sum']}</span></a></li>
+	</ul>
+</nav>
+
+<style>
+body{
+background:#F9F9F9;
+line-height:1.231;
+}
+dd {
+border-bottom: 1px solid #5ac5d4;
+padding-bottom: 0px;
+background-repeat: no-repeat;
+margin-left: 1px;
+}	
+img.coupon {
+    width: 18px;
+    height: 18px;
+    background: none repeat scroll 0% 0% #5AC5D4;
+    padding: 4px;
+    border-radius: 4px;
+	vertical-align:middle;	
+}
+</style>
+
+<div class="body">
+	<table width="100%">
+		<thead style="background: none repeat scroll 0% 0% #56C6D6;line-height: 35px;color: #FFF;font-size: 16px;">
+		<tr>
+			<td width="33%" align="center">奖品名称</td>
+			<td width="33%" align="center" style="border-left:1px solid white;border-right:1px solid white;">中奖时间</td>
+			<td width="33%" align="center">中奖楼层</td>
+		</tr>
+		</thead>
+		{loop $myaward $item}
+			<tr style="line-height: 35px;font-size: 16px; width:100%">
+				<td width="33%" align="center">{php echo $item['awardname']}</td>
+				<td width="33%" align="center" style="border-left:1px solid #5ac5d4;border-right:1px solid #5ac5d4;">{php echo date('Y-m-d', $item['dateline'])}</td>
+				<td width="33%" align="center">
+					{if ($item['status']==0)}					
+						<a href="{php echo $this->createMobileUrl('getaward', array('from_user' => $from_user , 'id' => $item['id'],'rid' => $item['rid']))}"><span style="vertical-align:middle;">点击领奖</span>
+					{else}	
+						奖品已领
+					{/if}					
+				
+				</td>
+			</tr>
+			<tr style="width:100%">
+				<td colspan="3">
+					<dd></dd>
+				</td>
+			</tr>
+			<tr style="width:100%">
+				<td colspan="3">
+					<dd></dd>
+				</td>
+			</tr>
+		{/loop}
+	</table>
+	{$pager}	
+</div>
+
+<script type="text/javascript">
+//对分享时的数据处理
+function _removeHTMLTag(str) {
+	str = str.replace(/<script[^>]*?>[\s\S]*?<\/script>/g,'');
+	str = str.replace(/<style[^>]*?>[\s\S]*?<\/style>/g,'');
+    str = str.replace(/<\/?[^>]*>/g,'');
+    str = str.replace(/\s+/g,'');
+    str = str.replace(/&nbsp;/ig,'');
+    return str;
+}
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	<?php
+		$_share = array();
+		//$_share['title'] = (empty($title)) ? $_W['account']['name'] : $title;
+		$_share['link'] = 'http://'.$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '&wxref=mp.weixin.qq.com';
+		//$_share['img'] = $_W['siteroot'] . 'source/modules/' . $_GPC['name'] . '/icon.jpg';
+		//$_share['content'] = $_share_content;
+		$_share['title'] = (empty($title)) ? $_W['account']['name'] : $title;
+		$_share['img'] =$_W['attachurl'] . $floor['picture'];
+		//$_share['img'] =$_W['attachurl'] . $site['logo'];
+		//$_share['content'] = '【' . $_share['title'] . '】快来抢楼领奖品吧！';
+		$_share['title'] = (empty($title)) ? $_W['account']['name'] : $title;
+		$_share['content'] = '快来关注【' . $_share['title'] . '】，参加占楼送礼吧！';
+	?>
+	var _share_img = $('body img:eq(0)').attr("src");
+	if(typeof(_share_img) == "undefined") _share_img = "{$_share['img']}";
+	{if empty($_share['content'])}
+	var _share_content = _removeHTMLTag($('body').html()).replace("{$_share['title']}",'');
+	{else}
+	var _share_content = "{php echo preg_replace('/\s/i', '', str_replace('	', '', cutstr(str_replace('&nbsp;', '', ihtmlspecialchars(strip_tags($_share['content']))), 60)));}";
+	{/if}
+
+	window.shareData = {
+		"imgUrl": "{$_share['img']}",
+		"timeLineLink": "{$_share['link']}",
+		"sendFriendLink": "{$_share['link']}",
+		"weiboLink": "{$_share['link']}",
+		"tTitle": "{$_share['content']}",
+		"tContent":  "{$_share['content']}",
+		"fTitle": "{$_share['title']}",
+		"fContent":  "{$_share['content']}",
+		"wContent":  "{$_share['title']}"
+	};
+
+	// 发送给好友
+	WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+		WeixinJSBridge.invoke('sendAppMessage', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.sendFriendLink,
+			"desc": window.shareData.fContent,
+			"title": window.shareData.fTitle
+		}, function (res) {
+			_report('send_msg', res.err_msg);
+		})
+	});
+
+	// 分享到朋友圈
+	WeixinJSBridge.on('menu:share:timeline', function (argv) {
+		WeixinJSBridge.invoke('shareTimeline', {
+			"img_url": window.shareData.imgUrl,
+			"img_width": "640",
+			"img_height": "640",
+			"link": window.shareData.timeLineLink,
+			"desc": window.shareData.tContent,
+			"title": window.shareData.tTitle
+		}, function (res) {
+			_report('timeline', res.err_msg);
+		});
+	});
+
+	// 分享到微博
+	WeixinJSBridge.on('menu:share:weibo', function (argv) {
+		WeixinJSBridge.invoke('shareWeibo', {
+			"content": window.shareData.wContent,
+			"url": window.shareData.weiboLink
+		}, function (res) {
+			_report('weibo', res.err_msg);
+		});
+	});
+}, false);
+</script>

@@ -1,0 +1,65 @@
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    // jssdk config 对象
+    jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+    // 是否启用调试
+    jssdkconfig.debug = false;
+    //
+    jssdkconfig.jsApiList = [
+        'checkJsApi',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+        'hideMenuItems',
+        'showMenuItems',
+        'hideAllNonBaseMenuItem',
+        'showAllNonBaseMenuItem',
+        'translateVoice',
+        'startRecord',
+        'stopRecord',
+        'onRecordEnd',
+        'playVoice',
+        'pauseVoice',
+        'stopVoice',
+        'uploadVoice',
+        'downloadVoice',
+        'chooseImage',
+        'previewImage',
+        'uploadImage',
+        'downloadImage',
+        'getNetworkType',
+        'openLocation',
+        'getLocation',
+        'hideOptionMenu',
+        'showOptionMenu',
+        'closeWindow',
+        'scanQRCode',
+        'chooseWXPay',
+        'openProductSpecificView',
+        'addCard',
+        'chooseCard',
+        'openCard'
+    ];
+
+    var wxData = {
+        //"appId": "{$_W['account']['key']}",
+        "imgUrl":"{php echo toimage($list['share_thumb'])}",
+        "link":document.URL,
+        "desc":"{$list['share_content']}",
+        "title":"{$list['share_title']}"
+    };
+
+    if('{$list['share_thumb']}' == ''){
+        wxData['imgUrl'] = '{$_W['attachurl']}images/global/wechat_share.png';
+    }
+
+    wx.config(jssdkconfig);
+    wx.ready(function () {
+        wx.onMenuShareAppMessage(wxData);
+        wx.onMenuShareTimeline(wxData);
+        wx.onMenuShareQQ(wxData);
+        wx.onMenuShareWeibo(wxData);
+    });
+</script>
+<div style="display:none">{php echo htmlspecialchars_decode($list['tongji'])}</div>

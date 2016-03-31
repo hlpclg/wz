@@ -1,0 +1,175 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>帮TA传情</title>
+
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+  <link rel="icon" type="image/png" href="assets/i/favicon.png">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
+  <meta name="msapplication-TileColor" content="#0e90d2">
+
+  <link rel="stylesheet" href="{$res_path}/css/amazeui.min.css">
+  <link rel="stylesheet" href="{$res_path}/css/app.css">
+  <link rel="stylesheet" href="{$res_path}/css/init.css">   
+  
+  <script type='text/javascript' src='resource/js/lib/jquery-1.11.1.min.js'></script>
+  <script type="text/javascript" src="{$res_path}/js/weixinapi.js"></script>
+  <script type="text/javascript" src="{$res_path}/js/jquery.backstretch.js"></script>
+  <script type="text/javascript" src="{$res_path}/js/init.js"></script>
+
+</head>
+<body>
+
+<div class="musicicon_area">
+	<div class="musicicon musicbg musicicon_animate" style="position:fixed;"></div> 
+</div>
+
+<div style="width:100%; height:300px;">
+<marquee direction="up" truespeed="truespeed" scrollamount="2" scrolldelay="80" height="200px" behavior="scroll" style="text-align:center;">
+<p class="content">{$content}</p></marquee></div>
+
+<div class="snowbg"></div>
+
+<div class="bottom">
+  <span class="leftspan">浏览{$viewcount}</span>
+  <span class="leftspan">转发{$forward}</span>
+  <span class="leftspan praise_span"><i class="icon_praise_gray {if $praise>0}praised{/if}"></i><span class="praise_number">{if $praise==0}赞{else}{$praise}{/if}</span></span>
+  <span class="rightspan rank">排行</span>
+  <span class="rightspan report">举报</span>
+</div>
+</body>
+
+</html>
+<audio style="display:none; z-index:-9999;visibility:hidden" preload="preload" controls id="car_audio" src="../{$_W[config][upload][attachdir]}/{php echo $this->randomBgres(1)}" loop></audio>
+<script>
+
+$(function(){
+  $.backstretch(["../{$_W[config][upload][attachdir]}/{$bgimage}"]); //背景
+    
+  $(".praise_span").bind("click", function(){
+    $.ajax({
+      type: 'POST',
+      url: "{php echo $this->createMobileUrl('forwardlove', array('id' => $id,'op' => 'praise'))}",
+      dataType: 'json',
+      success: function(e) {
+        $(".praise_number").html(e);
+        if(!$(".icon_praise_gray").hasClass("praised")) {
+          $(".icon_praise_gray").addClass("praised")
+        }
+        return true;
+      },
+      error: function(e, t) {
+        alert(t);
+        return false;
+      }
+    });
+  });
+  
+  $(".rank").bind("click", function(){
+    location.href = "{php echo $this->createMobileUrl('rank')}";
+  });
+
+  $(".report").bind("click", function(){
+    location.href = "http://meiqia.com/chat/55db51e84eae351b22000002";
+  });
+ 
+  $(".bottom").css("top", $(window).height()-25);
+});
+
+// 需要分享的内容，请放到ready里
+WeixinApi.ready(function(Api) {
+    // 微信分享的数据
+    var wxData = {
+        "imgUrl": "{$shareimg}", 
+        "link" : "{$sharelink}",
+        "desc" : "{$sharedesc}",
+        "title" : "{$sharetitle}"
+    };
+    // 分享的回调
+    var wxCallbacks = {
+        // 收藏操作是否触发回调，默认是开启的
+        favorite : false,
+        // 分享操作开始之前
+        ready : function() {
+            // 你可以在这里对分享的数据进行重组
+     
+        },
+        // 分享被用户自动取消
+        cancel : function(resp) {
+            // 你可以在你的页面上给用户一个小Tip，为什么要取消呢？
+        },
+        // 分享失败了
+        fail : function(resp) {
+            // 分享失败了，是不是可以告诉用户：不要紧，可能是网络问题，一会儿再试试？
+        },
+        // 分享成功
+        confirm : function(resp) {
+            // 分享成功了，我们是不是可以做一些分享统计呢？
+            //转发成功
+                $.ajax({
+                    type: 'POST',
+                    url: "{php echo $this->createMobileUrl('forwardlove', array('id' => $id))}",
+                    //data: {"id":0},
+                    dataType: 'json',
+                    success: function(e) {                               
+                    alert(e.msg);    
+                    if (e.success!=0){
+                        $("#lcount").text(e.success);
+                    }
+                    return true;
+                    },
+                    error: function(e, t) {
+					alert(e.msg);    
+                        return false;
+                    }
+                });
+        },
+        // 整个分享过程结束
+        all : function(resp,shareTo) {
+            // 如果你做的是一个鼓励用户进行分享的产品，在这里是不是可以给用户一些反馈了？
+     
+        }
+    };
+    // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
+    Api.shareToFriend(wxData, wxCallbacks);
+    // 点击分享到朋友圈，会执行下面这个代码
+    Api.shareToTimeline(wxData, wxCallbacks);
+    // 点击分享到腾讯微博，会执行下面这个代码
+    Api.shareToWeibo(wxData, wxCallbacks);
+    // iOS上，可以直接调用这个API进行分享，一句话搞定
+    Api.generalShare(wxData,wxCallbacks);
+}); 
+
+setTimeout(function(){
+	$(window).scrollTop(1);
+},0);
+document.getElementById('car_audio').play();
+document.addEventListener("WeixinJSBridgeReady", function () {
+	WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+		document.getElementById('car_audio').play();
+	});
+}, false);
+</script>

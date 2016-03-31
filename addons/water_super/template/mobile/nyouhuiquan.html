@@ -1,0 +1,164 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>e袋洗</title>
+<link href="../addons/water_super/template/cssn/footer.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/base.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/card.css" rel="stylesheet" type="text/css" media="all">
+<link href="../addons/water_super/template/cssn/wap.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../addons/water_super/template/jsn/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/jscommon.js"></script>
+</head>
+<body>
+  <div class="cardexplain" style="margin:0;display:none" id="cardExplain">
+      <div class="cod">
+        <div class="wx_mask"></div>
+        <div class="wx_confirm ">
+          <div class="wx_confirm_inner" id="wx_confirm_coupon">
+            <div class="wx_confirm_hd" style="margin-bottom:0;padding-top:10px">
+                <div class="wx_confirm_tit" id="ump_color_gray">兑换优惠券</div>
+                
+                <form action="javascript:;" method="POST">
+                  <input name="bind_sn_coupon1" type="hidden" value="输入优惠码" class="coupon-btn single_input">
+                  <div class="inputbox"><input name="bind_sn_coupon" type="text" placeholder="输入优惠码" class="bind_sn_coupon single_input" id="coupon_sn"></div>
+                  <div id="erro_empty"></div>
+                  
+                  <div class="floatBorder floatbox">
+                    <a id="codGoPayCancel" class="coupon-btn cancel single_input">取消</a>
+                    <a id="showcard" class="coupon-btn" href="javascript:void(0)" ontouchstart="">兑换</a>
+                  </div>
+                  <!-- <button disabled="disabled"></button> -->
+                    
+                </form>
+                <div class="clearBoth"></div>
+                
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      
+      
+    </div>
+  <div class="headerPlace header-address">
+      <div class="choose-time">
+        <span class="">优惠券</span><span class="pull-right"> <a href="http://www.edaixi.com/pages/coupon_des"> 说明</a></span>
+      </div>
+  </div> 
+  
+  <div id="first">
+
+   	  	<div class="ump-coupon-wrap">
+      <div class="coupon-btn-long">
+          <div id="coupon-btn-style" class="coupon-btn-style"><a>兑换优惠券</a></div>
+      </div>
+  		<ul class="ump-coupon-list">
+        	           	<li class="ump-coupon-item coupon-style-0">
+                <table width="100%">
+                  <tbody><tr>
+                    <td width="36%" align="center">
+                      <div class="ump-coupon-value">
+                           <span>￥</span><i>17</i>
+                      </div>
+                    </td>
+                    <td align="center">
+                      <h3>
+                        初夏换洗新人专享                      </h3>
+                      <p>满18可用  </p>
+                                          <p>仅限微信支付时使用</p>                    <p> 05月15日 到 05月17日</p>
+                    </td>
+                  </tr>
+                </tbody></table>
+          	</li>
+                 	 </ul>
+       <div style="height:60px"></div>
+	  </div>
+	 <!--结束 $coupon_list-->
+  </div>
+  
+ <script>
+ 	$(document).ready(
+ 		function (){
+ 			$("#showcard").click(
+ 				function(){
+ 					var submitData = {
+ 							bind_sn_coupon : $("#coupon_sn").val().trim()
+ 						};
+ 					if($("#coupon_sn").val().trim() == ""){
+                                          $("#erro_empty").text("请输入优惠码");
+                                           return false;
+ 					}
+          
+ 					$.post("mobile.php?m=wap&act=payment&do=bind_coupon&",submitData,
+ 						function (data){
+ 							if(data.message.state == 1){
+ 								alertToUrl(data.message.msg,
+ 										"mobile.php?m=wap&act=payment&do=coupon_list&");
+ 							}else{
+ 								$("#erro_empty").text(data.message.msg);
+ 							}
+ 					},"json")
+ 				});
+ 			});
+ 	$("#windowclosebutton").click(function() {
+		$("#windowcenter").slideUp(500);
+
+	});
+	$("#alertclose").click(function() {
+		$("#windowcenter").slideUp(500);
+	});
+  function hide_res(){
+    $("#codFloat").hide();
+  }
+  function show_res(){
+    setTimeout("hide_res()",2000);
+  }
+	function alert_1(title) {
+		$("#show_mes").html(title);
+    $("#codFloat").show();
+    show_res();
+	}
+
+	function alertToUrl(title, url) {  
+    alert_1(title);
+    setTimeout("window.location.href='" + url + "'", 500);
+	}
+
+  $("#coupon-btn-style").click(function(){
+    $("#cardExplain").toggle();
+    $('.single_input').val('');
+
+  })
+  $('#codGoPayCancel').click(function() {
+    $("#cardExplain").hide();
+    $("#erro_empty").text("");
+    return false;
+  });
+
+  $("#coupon_sn").focus(function(){
+    $("#erro_empty").text("");
+  });
+  </script>
+    <!-- 页脚导航-->
+<footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                	<a href="mobile.php?m=wap&amp;act=homepage&amp;do=index&amp;"><span class=" home-index">洗衣</span></a>
+                	<a href="mobile.php?m=wap&amp;act=order&amp;do=order_list&amp;"><span class=" Order-index">订单</span></a>
+                	<a href="mobile.php?m=wap&amp;act=icard&amp;do=my_icard&amp;"><span class="card-index">我的</span></a>
+              </div>
+        </div>
+    </div>
+</footer>
+  
+  
+</body></html>

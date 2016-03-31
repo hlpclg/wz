@@ -1,0 +1,38 @@
+
+
+
+
+<LINK href="../addons/feng_fightgroups/template/css/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<style>
+body{padding-bottom:50px;}
+#footer{width: 100%;max-width: 640px;height: 56px;position: fixed;bottom: 0;left: 50%;-webkit-transform: translate3d(-50%, 0, 0);transform: translate3d(-50%, 0, 0);overflow: hidden;background-color: #fff;border-top: #eceded;-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .2);box-shadow: 0 0 4px rgba(0, 0, 0, .2)}
+#footer ul{display:block;padding: 0;margin-bottom: 5px;}
+#footer li{float: left;width: 25%;text-align: center;height: 100%}
+#footer a{color: #777;font-size: 13px}
+#footer a:hover,
+#footer a:focus{color: #777;font-size: 13px}
+#footer a.active{color: #DF2127}
+#footer .nav-controller{position: relative;height: 100%;display: block;padding-top: 10px}
+#footer .nav-controller i{display: block;font-size: 1.5em;margin-bottom: 3px}
+</style>
+{php $this->pay($params);}
+<FOOTER id="footer">
+			<NAV>
+				<UL>
+					<LI>
+						<A class="nav-controller" href="{php echo $this->createMobileUrl('index')}"><I 
+					  class="fa fa-home"></I>首页</A>
+					</LI>
+					<LI>
+						<A class="nav-controller" href="{php echo $this->createMobileUrl('mygroup',array('op'=>0));}"><I class="fa fa-group"></I>我的团</A>
+					</LI>
+					<LI>
+						<A  id="myorder" class="nav-controller" href="{php echo $this->createMobileUrl('myorder',array('op' => '0'))}"><I class="fa fa-list"></I>我的订单</A>
+					</LI>
+					<LI>
+						<A class="nav-controller" href="{php echo $this->createMobileUrl('person');}">
+							<I class="fa fa-user"></I>个人中心</A>
+					</LI>
+				</UL>
+			</NAV>
+</FOOTER>

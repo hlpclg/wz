@@ -1,0 +1,43 @@
+{loop $list $for}
+            	 <li class="section-1px " onclick="window.location.href='{php echo $this->createMobileUrl('forum_topic',array('id'=>$for['id']))}'">  
+            	 	<div class="detail-text-content haspic">  
+            	 		{if !empty($for['thumb'])}
+            	 		<div class="act-img img-gallary  hide-bg">  
+            	 			<img needhidebg="true" style="min-width:90px;height:90px;" src="{php echo tomedia($for['thumb'][0])}">   
+            	 			<div class="pic-count-tips">{$for['thumb_num']}图 </div>  
+            	 		</div>  
+            	 		{/if}
+            	 		<div class="text-container"> 
+            	 			<h3 class="text">
+            	 				{if $for['tab'] == 'new'}
+            	 				<div class="post-tags">
+            	 					<label class="new">新</label>
+            	 				</div>
+            	 				{/if}
+            	 				{if $for['tab'] == 'jing'}
+            	 				<div class="post-tags">
+            	 					<label class="best">精</label>
+            	 				</div>
+            	 				{/if}
+            	 				{$for['title']}
+            	 			</h3> 
+            	 			
+            	 			<div class="list-content ">{if !empty($for['thumb'])}&nbsp;{/if}{php echo strip_tags($for['content'])}</div> 
+            	 		</div> 
+            	 		<div class="info ">  
+	            	 		<div> 
+		            	 		<span class="nick"> 
+		            	 			<span class="single-ellipsis" style="max-width: 150px;">  {$for['author']['nickname']} </span> 
+		            	 			<span class="ver-middle"><span class="honour expert">{$for['ctitle']}</span>  <span class="honour border-1px">{$for['author']['group']}</span> </span> 
+		            	 		</span> 
+	            	 		</div>   
+	            	 		<div class="fl-right"> 
+	            	 			<i class="read-icon"></i> 
+	            	 			<span class="read-num-text">{$for['lnum']}</span> 
+	            	 			<i class="reply-icon"></i> 
+	            	 			<span class="reply-num-text" style="margin-right: 0;">{$for['replynum']}</span> 
+	            	 		</div>  
+            	 		</div> 
+            	 	</div>   
+            	 </li>
+            	 {/loop}

@@ -1,0 +1,74 @@
+{template 'common/header'}
+<script type="text/javascript" src="resource/js/lib/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="resource/js/lib/jquery-ui-1.10.3.min.js"></script>
+<ul class="nav nav-tabs">
+	<li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('dptmanage', array('op' => 'post'))}">添加门店</a></li>
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('dptmanage', array('op' => 'display'))}">管理门店</a></li>
+</ul>
+{if $operation == 'post'}
+<style type='text/css'>
+	.tab-pane {padding:20px 0 20px 0;}
+</style>
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				{if empty($department)}添加门店{else}编辑门店{/if}
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span>门店名称</label>
+					<div class="col-sm-6 col-xs-6">
+						<input type="text" name="dpt-name" id="dpt-name" class="form-control" value="{$department['sv_dpt_name']}"></input>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="help-block" style="margin-left:200px;">若想批量添加，<a href="{php echo $this->createWebUrl('info', array());}">查看这里</a></span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>
+
+{elseif $operation == 'display'}
+
+<div class="main">
+	
+<style>
+.label{cursor:pointer;}
+</style>
+<div class="panel panel-default">
+	<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:50px;">ID</th>
+					<th style="min-width:150px;">门店名称</th>
+					<th style="width:200px;">最后编辑时间</th>
+					<th style="text-align:right; min-width:120px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $departments $key $item}
+				<tr>
+					<td>{php echo ($key+1);}</td>
+					<td><span class="text-info">{$item['sv_dpt_name']} </span></td>
+					<td title="{php echo date('Y-m-d H:i:s', $item['sv_dpt_time']);}">{php echo date('Y-m-d H:i:s', $item['sv_dpt_time']);}</td>
+					<td style="text-align:right;">
+						<a href="{php echo $this->createWebUrl('dptmanage', array('id' => $item['sv_dpt_id'], 'op' => 'post'))}"class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="编辑"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
+						<a href="{php echo $this->createWebUrl('dptmanage', array('id' => $item['sv_dpt_id'], 'op' => 'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="删除"><i class="fa fa-times"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+			
+		</table>
+	</div>
+	</div>
+</div>
+{/if}
+{template 'common/footer'}

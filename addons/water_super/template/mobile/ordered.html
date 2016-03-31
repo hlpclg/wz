@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>{$systeminfo['shopname']}</title>
+
+<link href="../addons/water_super/template/css/footer.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/css/base.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/css/wap.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/css/myOrder.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../addons/water_super/template/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/js/jscommon.js"></script>
+</head>
+<body>
+  <!-- 我的订单 -->
+  <div class="channel-nav three-nav">
+    <ul>
+       <li class=""><a href="{php echo $this->createMobileUrl('ordering', array('openid' => $item['id']))}">服务中</a></li>
+      <li class="active"><a href="{php echo $this->createMobileUrl('orderend', array('openid' => $item['id']))}">已完成</a></li>
+    </ul>
+  </div>
+ <div class="myOrder">
+    <!-- 订单服务中 -->
+    <div class="myOrder_list p10" id = "p10">
+      <ul id = "add_order">
+      {loop $orderList $item} 
+                <!-- 每个订单 -->
+        <li class="order_item">
+
+                      <div class="item_list_ordersn">
+              <a href = "{php echo $this->createMobileUrl('orderShow', array('id' => $item['id']))}" >
+                <div class="item_list_box borderD">订单编号：{$item['ordercode']}<img src="../addons/water_super/template/images/arrow-2.png" class="pull-right" style="margin-right:0;width:16px;margin-top:4px">
+                
+              </div>
+              </a>
+            </div>
+              <!-- 订单信息 -->
+            <div class="item_list_number navlist">
+              <div class="item_list_box borderD">商品名称：{$systeminfo['fuwuname']}</div>
+            </div>
+            <!-- 订单状态 -->
+            <div class="item_list_state"><div class="item_list_box borderD">订单状态：<em>结束</em></div></div>
+            <!-- 物流状态 -->
+            <div class="item_list_time"><div class="item_list_box borderD">物流状态：结束</div></div>
+            <!-- 订单服务付款金额 -->
+            <div class="item_list_money navlist">
+              <div class="item_list_box"><div class="">订单总额：{$item['ordercost']}元</div></div>
+            </div>
+        </li>
+      {/loop}          
+      </ul>
+    </div>
+     </div>
+  <div id = "prompt" style = "text-align:center;line-height:40px;color:#999;display:none">订单加载中...</div>
+    <!-- ／我的订单 -->
+   <!-- 页脚导航-->
+<footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                	<a href="{php echo $this->createMobileUrl('index', array())}"><span class=" home-index">首页</span></a>
+                	<a href="{php echo $this->createMobileUrl('ordering', array('openid' => $item['id']))}"><span class=" Order-index-active">订单</span></a>
+                	<a href="{php echo $this->createMobileUrl('usercenter', array('openid' => $item['id']))}"><span class="card-index">我的</span></a>
+              </div>
+        </div>
+    </div>
+</footer>
+   <div style="display:none">
+</div><!--  -->
+    <script type="text/javascript">
+    var $pindex = 2;
+    var show_more = "0";
+
+    function add_title(msg){
+      $("#prompt").html(msg);
+    }
+    function add_order_1(add_o,str){
+      str = str + add_o;
+      $("#add_order").html(str);
+      show_more = 1;
+      $("#prompt").hide();
+    }
+    function showmore($pindexpindexpindex){
+      $("#prompt").show();
+      var str = $("#add_order").html(); 
+      submitData = {
+                  pindex : $pindex
+                };
+      $.post("mobile.php?act=module&from_user=oMWhZty4E4lKPvSyv0UKE5hHSfWY&name=washing&do=add_order&weid=5",submitData,
+                function (data){
+                  if (data.message.state == 1) {
+                    add_order_1(data.message.add_order,str);
+                  }else if(data.message.state == 0){
+                    add_title(data.message.msg);
+                  }
+              },"json")
+    }
+    window.onscroll=function(){
+      var a = document.documentElement.clientHeight;
+      var b = document.documentElement.scrollTop==0? document.body.scrollTop : document.documentElement.scrollTop;
+      var c = document.documentElement.scrollTop==0? document.body.scrollHeight : document.documentElement.scrollHeight;
+      if(a+b==c && show_more == 1){
+        show_more = 0;
+        showmore($pindex);
+        $pindex ++;
+      }
+    }
+    </script>
+
+    <!-- 展开与收缩 -->
+    <script type="text/javascript">
+    navList(12);
+    </script>
+    <!-- 选择框表单--> 
+    {php $deleteurl = $this->createMobileUrl('orderCancel',array());}
+    <script>
+    $(function() {
+      selectcont('.select01', '.selectBx');
+    });
+   
+    </script>
+  </body>
+  </html>

@@ -1,0 +1,36 @@
+{template 'common/header'}
+<div class="main">
+	<form class="form-horizontal form" id="form2" action="" method="post">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				新闻配置
+			</div>
+			<div class="panel-body">
+							
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">新闻开关</label>
+					<div class="col-sm-8 col-xs-12">
+						<label class="radio-inline">
+							<input type="radio" name="switch"  value="1" {if $settings[switch]=='1'}checked{/if}/>
+							开启
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="switch" value="0" {if empty($settings[switch])}checked{/if}/>
+							关闭
+						</label>
+						<span class="help-block">是否开启新闻模块</span>
+					</div>
+				</div>			
+				
+			</div>
+		</div>	
+		
+		
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>
+{template 'common/footer'}

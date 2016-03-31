@@ -1,0 +1,31 @@
+{template 'header'}
+{template 'mslide'}
+<style>
+	body{
+	font:{$_W['styles']['fontsize']} {$_W['styles']['fontfamily']};
+	color:{$_W['styles']['fontcolor']};
+	padding:0;
+	margin:0;
+	background-image:url('{MODULE_URL}template/mobile/style/style4/images/bg_index.jpg');background-size:cover;
+	background-color:{if empty($_W['styles']['indexbgcolor'])}#fbf5df{else}{$_W['styles']['indexbgcolor']}{/if};
+	{$_W['styles']['indexbgextra']}
+	}
+	a{color:{$_W['styles']['linkcolor']}; text-decoration:none;}
+	{$_W['styles']['css']}
+	.box{width:100%;overflow:hidden;margin-top:40%;}
+	.box .box-item{display:block; text-decoration:none;outline:none; height:35px; line-height:35px; margin-bottom:5px; color:#FFF; }
+	.box .box-item div{display:inline-block; background:rgba(13, 94, 97, 0.7); padding:0 20% 0 5px; width:auto; position:relative; max-width:320px;overflow:hidden;}
+	.box .box-item div i{position:absolute; right:10px; top:10px;}
+	.box .box-item span{color:{$_W['styles']['fontnavcolor']}; display:inline-block; font-size:14px;}
+	.footer{color:#FFF;}
+</style>
+<div class="box" style="margin-bottom:50px;">
+	{loop $list $row}
+	{loop $children[$row['id']] $item}
+	<a href="{$item['url']}" class="box-item">
+		<div><i class="fa fa-chevron-right"></i><span style="">{$item['title']}</span></div>
+	</a>
+	{/loop}
+	{/loop}
+</div>
+{template 'footer'}

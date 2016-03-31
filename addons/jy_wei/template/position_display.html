@@ -1,0 +1,57 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('position', array('op'=>'display'));}">职位列表</a></li>
+	<li><a href="{php echo $this->createWebUrl('position', array('op'=>'set'));}">添加职位</a></li>
+</ul>
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" id="form">
+		<div class="panel panel-default">
+			<div class="panel-heading">微招聘 - 职位列表列表</div>
+			<div class="panel-body">
+				<div class="table-responsive panel-body">
+					<table class="table table-hover" style="min-width: 300px;">
+						<thead class="navbar-inner">
+							<tr>
+								<th>ID</th>
+								<th>职位</th>
+								<th>所属公司</th>
+								<th>描述</th>
+								<th>薪酬</th>
+								<th>创建时间</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							{loop $cache $key $item}
+							<tr>
+								<td>{$item['id']}</td>
+								<td>{$item['name']}</td>
+								<td>{$item['company']['name']}</td>
+								<td>{$item['description']}</td>
+								<td>{$item['payment']}</td>
+								<td>{$item['createtime']}</td>
+								<td>
+									<a href="{php echo $this->createWebUrl('position', array('op'=>'set', 'id'=>$item['id']));}" class="btn btn-default btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="编辑">
+										<i class="fa fa-pencil"></i>
+									</a>
+									<a onclick="if(!confirm('删除后将不可恢复,确定删除吗?')) return false;" href="{php echo $this->createWebUrl('position', array('op'=>'delete', 'id'=>$item['id']));}" class="btn btn-default btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="删除"><i class="fa fa-times"></i></a>
+								</td>
+							</tr>
+							{/loop}
+							{if empty($cache)}
+							<tr>
+								<td colspan="4">
+									尚未添加
+								</td>
+							</tr>
+							{/if}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+{template 'common/footer'}

@@ -1,0 +1,80 @@
+{template 'common/header'}
+
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li{if $_GPC['do'] == 'manage'} class="active"{/if}><a href="{php echo $this->createWebUrl('manage');}">契约管理</a></li>
+        <li{if $_GPC['do'] == 'post'} class="active"{/if}><a href="{php echo url('platform/reply/post',array('m'=>'ewei_dream','rid'=>$rid));}">编辑契约</a></li>
+        <li{if $_GPC['do'] == 'fans'} class="active"{/if}><a href="{php echo $this->createWebUrl('fans',array('rid' => $rid));}">参与用户</a></li>
+    </ul>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">筛选</div>
+        <div class="panel-body">
+            <form action="./index.php" method="get" class="form-horizontal" role="form">
+                <input type="hidden" name="c" value="site" />
+                <input type="hidden" name="a" value="entry" />
+                <input type="hidden" name="m" value="ewei_dream" />
+                <input type="hidden" name="do" value="fans" />
+                <input type="hidden" name="rid" value="{$_GPC['rid']}" />
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">关键字</label>
+                    <div class="col-sm-8 col-lg-9">
+                        <input class="form-control" name="keywords"  type="text" value="{$_GPC['keywords']}" placeholder="用户昵称"> 
+                    </div>
+ <div class=" col-xs-12 col-sm-2 col-lg-2">
+                        <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                </div>
+            </form>
+        </div>
+ 
+        <div style="padding: 0 15px 0  15px;">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                    <tr>
+                        <th>序号</th>
+                        
+                        <th>昵称</th>
+                        <th>梦想</th>
+                        <th>惩罚</th>
+                        <th>浏览数</th>
+                        <th>参与时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {loop $list $row}
+                    <tr>
+                        <td>{$row['id']}</td>
+                    
+                        <td>{$row['nickname']}</td>
+                        <td>{$row['dream']}</td>
+                        <td>{$row['punishment']}</td>
+                        
+                        <td>{$row['views']}</td>
+                        <td>{php echo date('Y/m/d H:i',$row['createtime']);}</td>
+                        <td>
+                            <a class="btn btn-default" href="#" onclick="drop_confirm('确认删除?', '{php echo $this->createWebUrl('deletefans',array('id'=>$row['id'],'rid'=>$row['rid']))}');">删除</a>
+                            </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    {/loop}
+
+                </tbody>
+            </table>
+            {$pager}
+        </div>
+
+    </div>
+    <script>
+
+                function drop_confirm(msg, url){
+                if (confirm(msg)){
+                window.location = url;
+                }
+                }
+    </script>
+    {template 'common/footer'}

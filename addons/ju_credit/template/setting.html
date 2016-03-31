@@ -1,0 +1,45 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				参数设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">关注赠送额度</label>
+					<div class="col-sm-4">
+						<div class="input-group">
+							<span class="input-group-addon">
+							{loop $creditnames['creditnames'] $scredit $creditname}
+								<label><input type="radio" value="{$scredit}" name="sub_type" {if $settings['sub_type'] == $scredit }checked{/if}>{$creditname['title']}</label>
+							{/loop}
+							</span>
+							<input class="form-control" type="text" value="{$settings['sub_num']}" class="span2" name="sub_num">
+						</div>
+						<span class="help-block">为0表示不赠送</span>
+					</div>
+				 </div>
+				 <div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">取消关注扣除额度</label>
+					<div class="col-sm-4">
+						<div class="input-group">
+							<span class="input-group-addon">
+							{loop $creditnames['creditnames'] $scredit $creditname}
+								<label><input type="radio" value="{$scredit}" name="unsub_type" {if $settings['unsub_type'] == $scredit }checked{/if}>{$creditname['title']}</label>
+							{/loop}
+							</span>
+							<input class="form-control" type="text" value="{$settings['unsub_num']}" class="span2" name="unsub_num">
+						</div>
+						<span class="help-block">为0表示不扣除</span>
+					</div>
+				 </div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>
+{template 'common/footer'}

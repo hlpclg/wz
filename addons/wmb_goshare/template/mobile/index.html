@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+ <head> 
+  
+  <title></title> 
+  <meta charset="utf-8" /> 
+  <meta content="" name="description" /> 
+  <meta content="" name="keywords" /> 
+  <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type" /> 
+  <meta content="no-cache,must-revalidate" http-equiv="Cache-Control" /> 
+  <meta content="no-cache" http-equiv="pragma" /> 
+  <meta content="0" http-equiv="expires" /> 
+  <meta content="telephone=no, address=no" name="format-detection" /> 
+  <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" /> 
+  <link rel="stylesheet" type="text/css" href="http://demo.pigcms.cn/tpl/static/forum/css/main.css" /> 
+  <link rel="stylesheet" type="text/css" href="http://demo.pigcms.cn/tpl/static/forum/css/dialog.css" /> 
+  <link rel="stylesheet" href="./source/modules/jdg_bbs/template/css/dawn-gallery.css" />
+  
+  <script src="http://demo.pigcms.cn/tpl/static/forum/js/jquery_min.js"></script> 
+  <script src="http://demo.pigcms.cn/tpl/static/forum/js/main.js"></script> 
+  <script src="http://demo.pigcms.cn/tpl/static/forum/js/dialog_min.js"></script> 
+  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript">
+      //通过config接口注入权限验证配置
+      wx.config({
+          debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+           appId: '<?php echo $signPackage["appId"];?>',
+           timestamp: '<?php echo $signPackage["timestamp"];?>',
+           nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+           signature: '<?php echo $signPackage["signature"];?>',
+           jsApiList: 
+           ['onMenuShareAppMessage',
+        'onMenuShareTimeline',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',] // 必填，需要使用的JS接口列表
+      });
+      //通过ready接口处理成功验证
+      wx.ready(function(){
+        // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后
+        wx.onMenuShareTimeline({
+    title: '<?php echo $signPackage["title"];?> ', // 分享标题
+    link: '<?php echo $signPackage["link"];?> ', // 分享链接
+    imgUrl: '<?php echo $signPackage["img"];?> ', // 分享图标
+    success: function () { 
+        // 用户确认分享后执行的回调函数
+    },
+    cancel: function () { 
+        // 用户取消分享后执行的回调函数
+    }
+});
+        wx.onMenuShareAppMessage({
+    title: '<?php echo $signPackage["title"];?> ', // 分享标题
+    desc: '', // 分享描述
+    link: '<?php echo $signPackage["link"];?> ', // 分享链接
+    imgUrl: '<?php echo $signPackage["img"];?> ', // 分享图标
+    type: '', // 分享类型,music、video或link，不填默认为link
+    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+    success: function () { 
+        // 用户确认分享后执行的回调函数
+    },
+    cancel: function () { 
+        // 用户取消分享后执行的回调函数
+    }
+});
+      });
+     
+    </script>
+  <script> 
+  function collectTrends(obj,rid, id){
+                loading(true);
+                $.post('{php echo $this->createMobileUrl('addlove')}',{
+                    "rid"  : rid,
+                    "id"  : id,
+                    },function(res){
+                        loading(false);
+					
+                        if(res) {
+                          var loveid =parseInt($(obj).children("label").html())+1;
+						$(obj).children("label").empty();
+						$(obj).children("label").html(loveid);
+						
+                           // location.reload();
+                           $(obj).addClass("on");
+                        }else{
+						var loveid =parseInt($(obj).children("label").html())-1;
+						if(loveid<=0){
+								loveid=0;
+							}
+						$(obj).children("label").empty();
+						$(obj).children("label").html(loveid);
+						 $(obj).removeClass("on");
+						}
+                      //  location.reload();
+							 
+                    });
+            }
+           function praiseTrends(obj,rid, id){
+                loading(true);
+                $.post('{php echo $this->createMobileUrl('addbeauty')}',{
+                    "rid"  : rid,
+                    "id"  : id,
+                    },function(res){
+                        loading(false);
+                        if(res) {
+						
+						  var loveid =parseInt($(obj).children("label").html())+1;
+						$(obj).children("label").empty();
+						$(obj).children("label").html(loveid);
+						
+                           // location.reload();
+                           $(obj).addClass("on");
+                           // location.reload();
+                        }else{
+						var loveid =parseInt($(obj).children("label").html())-1;
+						if(loveid<=0){
+								loveid=0;
+							}
+						$(obj).children("label").empty();
+						$(obj).children("label").html(loveid);
+						 $(obj).removeClass("on");
+						}
+							//location.reload();
+                    });
+            }
+        </script>
+ </head> 
+ <body onselectstart="return true;" ondragstart="return false;" class="discuss_index">
+
+  <div id="container" class="container" style="background:url({php echo toimage($result['background'])}) repeat-y center 0"> 
+   <header> 
+    <div class="header_1"> 
+     <ul class="tbox"> 
+      <li> <span class="head_img"> 
+      <img src="{php echo toimage($result['logoimg'])}" />
+         </span> </li> 
+      <li> <h5>{php echo $result['bbsname']}</h5> <p> <a href="javascript:;" class="label"> <span class="icons icons_post">&nbsp;</span>{php echo $rownum}帖子</a> <a href="javascript:;" class="label"> <span class="icons icons_visisted">&nbsp;</span>{$result['view']}访问</a></p></li>
+     </ul>
+    </div>
+   </header>
+   <div class="body">
+    <div id="list_article" class="list_article">
+    	{loop $row  $rows}
+     <article>
+      <!--帖子-->
+      <header>
+       <ul class="tbox">
+        <li>
+         <!--头像-->
+         <a href="#" class="head_img">
+         	<img src="{php echo toimage($rows['headimg'])}" onerror="this.src='http://demo.pigcms.cn/tpl/static/forum/images/face.png';" /></a></li>
+        <li>
+         <!--用户名、发布时间--><h5>{$rows['nickname']}</h5><p>{php echo date('Y-m-d H:i:s', $rows['createtime'])}</p></li>
+       </ul>
+      </header>
+      <section>
+	  {if !($rows['abc'][0]['imgurl']=="0")}
+	 
+       <figure data-count="{php echo count($rows['abc'])}张图片">
+        <div>
+        	{loop $rows['abc'] $r}
+        	<img src="{php echo toimage($r['imgurl'])}">
+      {/loop}
+        </div>
+       </figure>
+	   {/if}
+       <div style="clear:both"></div>
+       <div>
+        <h5>{$rows['title']}</h5>
+        <!--发帖标题-->
+        <div>
+         {$rows['content']}
+        </div>
+        <!--发帖内容-->
+       </div>
+       <a href="{php echo $this->createMobileUrl('comment',array('rid'=>$rows['rid'],'id'=>$rows['id']))}">查看全文</a>
+      </section>
+      <footer>
+       <ul class="box">
+        <li>
+         <!--喜欢--><a href="javascript:;" class="a_collect " onclick="collectTrends(this,{php echo $rows['rid']},{php echo $rows['id']})"><span class="icons icons_collect">&nbsp;</span><label>{$rows['love']}</label></a></li>
+        <li>
+         <!--评论--><a href="{php echo $this->createMobileUrl('comment',array('rid'=>$rows['rid'],'id'=>$rows['id']))}" class="a_comment"><span class="icons icons_comment">&nbsp;</span><label>{$rows['comment']}</label></a></li>
+        <li>
+         <!--赞--><a href="javascript:;" class="a_like " onclick="praiseTrends(this,{php echo $rows['rid']},{php echo $rows['id']})"><span class="icons icons_like">&nbsp;</span><label>{$rows['beauty']}</label></a></li>
+       </ul>
+      </footer>
+     </article>
+     {/loop}
+    </div>
+   </div>
+   	<div id="page-ctrl-wrap">
+			{$pager}
+      </div>
+   <footer>
+    <section class="nav_footer">
+     <ul class="box">
+      <li><a href={php echo $this->createMobileUrl('index', array('rid' => $result['rid']))} class="on"><span class="icons_home">&nbsp;</span><label>首页</label></a></li>
+      <li>
+      	<a href={php echo $this->createMobileUrl('edite', array('rid' => $result['rid']))} class="nav_add">
+      	<span class="icons_home_edit">&nbsp;</span></a>
+      </li>
+      <li><a href={php echo $this->createMobileUrl('user',array('rid'=>$result['rid']))}><span class="icons_my" data-tip="0">&nbsp;</span><label>我的</label></a></li>
+     </ul>
+    </section>
+   </footer>
+  </div>
+  <script type="text/javascript">window.shareData = {  
+            "moduleName":"Forum",
+            "moduleID":"0",
+            "imgUrl": "http://image.pigcms.com/demotoken/2014/05/07/1399424263_8a66ed380d5d4c72.png", 
+            "timeLineLink": "http://demo.pigcms.cn/index.php?g=Wap&m=Forum&a=index&token=wndssh1414395403",
+            "sendFriendLink": "http://demo.pigcms.cn/index.php?g=Wap&m=Forum&a=index&token=wndssh1414395403",
+            "weiboLink": "http://demo.pigcms.cn/index.php?g=Wap&m=Forum&a=index&token=wndssh1414395403",
+            "tTitle": "测试公众号官方粉丝社区",
+            "tContent": "测试公众号官方粉丝社区"
+        };
+</script>
+  <script>
+        window.shareData.sendFriendLink=window.shareData.sendFriendLink.replace('http://demo.pigcms.cn','http://demo.pigcms.cn');
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+         shareHandle('friend');
+            WeixinJSBridge.invoke('sendAppMessage', { 
+                "img_url": window.shareData.imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": window.shareData.sendFriendLink,
+                "desc": window.shareData.tContent,
+                "title": window.shareData.tTitle
+            }, function (res) {
+                _report('send_msg', res.err_msg);
+            })
+        });
+
+        WeixinJSBridge.on('menu:share:timeline', function (argv) {
+         shareHandle('frineds');
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url": window.shareData.imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": window.shareData.sendFriendLink,
+                "desc": window.shareData.tContent,
+                "title": window.shareData.tTitle
+            }, function (res) {
+                _report('timeline', res.err_msg);
+            });
+        });
+
+        WeixinJSBridge.on('menu:share:weibo', function (argv) {
+         shareHandle('weibo');
+            WeixinJSBridge.invoke('shareWeibo', {
+                "content": window.shareData.tContent,
+                "url": window.shareData.sendFriendLink,
+            }, function (res) {
+                _report('weibo', res.err_msg);
+            });
+        });
+        }, false)
+        
+        function shareHandle(to) {
+    var submitData = {
+        module: window.shareData.moduleName,
+        moduleid: window.shareData.moduleID,
+        token:'wndssh1414395403',
+        wecha_id:'oCHmct1rXoqrfpzf5z1Pj3yTN_1k',
+        url: window.shareData.sendFriendLink,
+        to:to
+    };
+    
+  /*  $.post('/index.php?g=Wap&m=Share&a=shareData&token=wndssh1414395403&wecha_id=oCHmct1rXoqrfpzf5z1Pj3yTN_1k',submitData,function (data) {},'json')*/
+}
+        </script>
+        
+<!--
+  <script type="text/javascript">    
+  $(document).ready(function(){
+        var range = 50;             //距下边界长度/单位px  
+        var _srollPos = 0;
+        var pageNum = 2;
+        var totalheight = 0; 
+        var main = $("#list_article");
+        var js = 0;
+        $(window).scroll(function(){
+            var srollPos = $(window).scrollTop();    //滚动条距顶部距离(页面超出窗口的高度)  
+           if(srollPos<_srollPos){
+                return;
+            }else{
+                _srollPos = srollPos;
+            }
+            totalheight = parseFloat($(window).height()) + parseFloat(srollPos);  
+            if(($(document).height()-range) <= totalheight ) {
+            
+                    $.ajax({
+                        url: "/index.php?g=Wap&m=Forum&a=moreList&token=wndssh1414395403&wecha_id=oCHmct1rXoqrfpzf5z1Pj3yTN_1k&p="+pageNum,
+                        type:"post",
+                        data:"pageNum="+pageNum,
+                        success: function(res){
+                            if(res == 0){
+                                if(js == 0){
+                                    $('#list_article').append('<article style="display:block" id="noMore"><header style="margin:7px;text-align:center;color:#828282;">没有更多帖子了</header></article>');
+                                }
+                                js = 1;
+                            }else{
+                                main.append(res);
+                                pageNum ++;
+                                
+                            }
+                            
+                        }
+                    });
+            }
+        });
+        
+    }); 
+</script>
+-->
+ </body>
+</html>

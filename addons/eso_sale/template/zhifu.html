@@ -1,0 +1,86 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li  class="active"><a href="{php echo create_url('site/entry', array('do' => 'zhifu', 'op' => 'list','m' => 'eso_sale','uniacid'=>$_W['uniacid']))}">满足打款会员</a></li>
+
+</ul>
+<div class="main">
+    <div class="panel panel-info">
+        <div class="panel-heading">筛选</div>
+        <div class="panel-body">
+            <form action="./index.php" method="get" class="form-horizontal" role="form">
+                <input type="hidden" name="c" value="site" />
+                <input type="hidden" name="a" value="entry" />
+                <input type="hidden" name="m" value="eso_sale" />
+                <input type="hidden" name="do" value="zhifu" />
+                <input type="hidden" name="op" value="list" />
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">手机号码</label>
+                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                        <input class="form-control" name="mobile" type="text" value="{$sort['mobile']}" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label"></label>
+                    <div class=" col-xs-12 col-sm-2 col-lg-2">
+                        <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-div">
+
+            <div class="sub-item" id="table-list">
+                <h4 class="sub-title" style="float:right;color:red;">总数：{$total} <a href="">刷新</a> </h4>
+                <h4 class="sub-title">会员列表</h4>
+
+                <div class="sub-content">
+                    <table class="table table-hover">
+                        <thead class="navbar-inner">
+                        <tr>
+                            <th class="row-hover">姓名</th>
+                            <th class="row-hover">联系方式</th>
+                            <th class="row-hover"> 已打款</th>
+                            <th class="row-hover">未打款</th>
+                            <th class="row-hover">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {loop $list $v}
+
+                        <tr>
+                            <td>
+                                {$v['realname']}
+                            </td>
+                            <td>
+                                {$v['mobile']}
+                            </td>
+                            <td>
+                                {$v['zhifu']}
+                            </td>
+                            <td>
+                                {php echo round($v['commission'] - $v['zhifu'],2)}
+                            </td>
+                            <td>
+
+                                <a href="{php echo create_url('site/entry', array('do' => 'zhifu', 'op' => 'post','m' => 'eso_sale','uniacid'=>$_W['uniacid'],'from_user'=>$v['from_user']))}" class="btn btn-primary">打款</a>
+                            </td>
+                        </tr>
+
+                        {/loop}
+                        </tbody>
+                    </table>
+                </div>
+
+                {$pager}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{template 'common/footer'}

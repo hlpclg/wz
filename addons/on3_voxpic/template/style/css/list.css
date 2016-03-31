@@ -1,0 +1,129 @@
+@charset "utf-8";
+/*
+ @名称: list
+ @功能: 留声卡
+ @作者：zuozuo
+ */
+#header{
+	background: #fff;
+	 -webkit-box-shadow:0px 2px 0px #d5d4d4; 
+	 box-shadow:0px 2px 0px #d5d4d4;
+}
+#header .logo{
+	padding: 10px;
+}
+#header .logo .fn-left img{
+	width: 165px;
+}
+#header .logo .but{
+	text-align: left;
+}
+
+#header .logo .but a{
+	margin-top: 15px;
+	display: block;
+	font-size: 14px;
+	color: #fff;
+	padding: 6px 10px;
+	/*background: -moz-linear-gradient(top, #f3f5f5 0%,#bac5ca 100%);
+	background: -webkit-linear-gradient(top, #f3f5f5 0%,#bac5ca 100%); 
+	background: -ms-linear-gradient(top, #f3f5f5 0%,#bac5ca 100%); */
+	background: #99cc66;
+	border-radius:3px;
+}
+#header .logo .but a i{
+	margin-left: 3px;
+	padding: 0 13px;
+	background: url(./addons/on3_voxpic/template/style/img/liu_icon_01.png) 0 1px no-repeat;
+	background-size: 23px 14px;
+}
+body{
+	/*background: url(../../images/system/liusound/liu_back.jpg) repeat;
+	background-size: 160px 25px;*/
+	background: #e6e6e6;
+}
+#main{
+	padding-top: 5px;
+}
+#main .content ul li{
+	width: 32%;
+	float: left;
+	position: relative;
+	margin-left: 1%;
+	margin-bottom: 1%;
+	background: #ccc;
+	
+}
+#main .content ul li a.pic{
+	display: block;
+	width: 100%;
+	height: 100%;
+
+}
+#main .content ul li a.pic img{
+	width: 100%;
+	height: 100%;
+}
+
+#main .content ul li a.sound{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	display: block;
+	width: 20px;
+	height: 20px;
+}
+#main .bottom{
+	padding: 10px 0;
+	text-align: center;
+}
+#main .bottom a{
+	display: block;
+	height: 39px;
+	line-height: 39px;
+	border-radius: 5px;
+	margin: 0 50px;
+	color: #76bc30;
+	font-size: 17px;
+	background: #fafafa;
+}
+
+/*插件需要*/
+#wrapper {
+	position: absolute;
+	z-index: 1;
+	top: 0px;
+	bottom: 0px;
+	left: 0;
+	width: 100%;
+	overflow: hidden;
+}
+#scroller {
+	position: absolute;
+	z-index: 1;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	width: 100%;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+}
+
+
+#main footer{
+	background: none;
+	color: #747474;
+	font-size: 14px;
+
+}

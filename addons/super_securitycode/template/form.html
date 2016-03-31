@@ -1,0 +1,44 @@
+<div class="col-sm-12">
+	<div class="panel panel-default">
+	<div class="panel-heading">
+		配置防伪码查询参数
+	</div>
+	<ul class="list-group reply-container">
+		<li class="list-group-item">
+			<div>
+			<input type="hidden" name="reply_id" value="{$reply['id']}" />
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">允许查询次数</label>
+					<div class="col-sm-9">
+						<input class="form-control" type="text" value="{$reply['tnumber']}" class="span2" name="tnumber">
+						<div class="help-block">每个防伪码允许查次数, 1、2、3、4....</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">查询成功回复</label>
+					<div class="col-sm-9">
+						<textarea class="form-control" style="height:150px;" name="Reply" class="span7" cols="60">{$reply['Reply']}</textarea>
+						<div class="help-block">用于返回查询结果，动态变量：[SecurityCode](防伪码)、[number](次数)、[Factory](生产厂家)、[Effedate](有效日期)、[Products](产品名称)、[Brand](产品品牌)、[Spec](规格参数)、[Weight](产品重量)、[Remarks](备注)、[CreditName](积分名称)、[CreditNum](积分数)</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">查询失败回复</label>
+					<div class="col-sm-9">
+						<textarea class="form-control" style="height:150px;" name="Failure" class="span7" cols="60">{$reply['Failure']}</textarea>
+						<div class="help-block">用于返回查询结果，动态变量：[SecurityCode](防伪码)</div>		
+					</div>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+</div>
+<script>
+	window.initReplyController = function($scope) {
+		
+	};
+	window.validateReplyForm = function(form, $, _, util, $scope) {
+		
+		return true;
+	};
+</script>

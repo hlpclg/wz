@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+	<base target="_blank"/>
+
+	<link href="../addons/meepo_bbs/template/mobile/{php echo $tempalte}/lib/ionic/css/ionic.css" rel="stylesheet">
+	<link href="../addons/meepo_bbs/template/mobile/{php echo $tempalte}/css/style.css" rel="stylesheet">
+	
+	<style>
+		
+		.bar.bar-energized {
+		  border-color: {php echo $setting['mainColor']};
+		  background-color: {php echo $setting['mainColor']};
+		  background-image: linear-gradient(0deg, {php echo $setting['mainColor']}, {php echo $setting['mainColor']} 50%, transparent 50%);
+		  color: #fff;
+		}
+		
+		.energized, a.energized {
+		  color: {php echo $setting['mainColor']};
+		}
+		
+		.toggle.toggle-energized input:checked + .track {
+		  border-color: {php echo $setting['mainColor']};
+		  background-color: {php echo $setting['mainColor']};
+		}
+		
+		.tabs-energized > .tabs, .tabs.tabs-energized {
+		  border-color: {php echo $setting['mainColor']};
+		  background-color: {php echo $setting['mainColor']};
+		  background-image: linear-gradient(0deg, {php echo $setting['mainColor']};, {php echo $setting['mainColor']}; 50%, transparent 50%);
+		  color: #fff;
+		}
+		.energized-bg {
+		  background-color: {php echo $setting['mainColor']};
+		}
+	</style>
+	
+	<script type="text/javascript">
+		var MEEPO = {
+			TOPICS : '{php echo $this->createMobileUrl('topics')}',
+			TOPIC_DETAIL : '{php echo $this->createMobileUrl('topic',array('id'=>$id))}',
+			NEW_TOPICS : '{php echo $this->createMobileUrl('new_topics')}',
+			REPLIES : '{php echo $this->createMobileUrl('reply')}',
+			UPS : '{php echo $this->createMobileUrl('ups')}',
+			USER : '{php echo $this->createMobileUrl('user')}',
+			OPENID : '{php echo $_W['openid']}',
+			SETTING : {php echo json_encode($setting)},
+			TEMPLATE : '{php echo $tempalte}',
+			CLASS : '{php echo $this->createMobileUrl('bbs_threadclass')}'
+		};
+	</script>
+	<!-- ionic/angularjs js -->
+	<script src="../addons/meepo_bbs/template/mobile/{php echo $tempalte}/lib/ionic/js/ionic.bundle.js"></script>
+
+	<!-- cordova script (this will be a 404 during development) -->
+
+	<!-- moment.js -->
+	<script src="../addons/meepo_bbs/template/mobile/{php echo $tempalte}/lib/moment/moment.js"></script>
+	<script src="../addons/meepo_bbs/template/mobile/{php echo $tempalte}/lib/moment/lang/zh-cn.js"></script>
+
+	<!-- API conf -->
+	<script src="../addons/meepo_bbs/template/mobile/{php echo $tempalte}/js/app-conf.js"></script>
+
+	<!-- your app's js -->
+	<script src="../addons/meepo_bbs/template/mobile/{php echo $tempalte}/js/app.js"></script>
+	<script src="../addons/meepo_bbs/template/mobile/{php echo $tempalte}/js/controllers.js"></script>
+	<script src="../addons/meepo_bbs/template/mobile/{php echo $tempalte}/js/factories.js"></script>
+	<script src="../addons/meepo_bbs/template/mobile/{php echo $tempalte}/js/services.js"></script>
+	<script src="../addons/meepo_bbs/template/mobile/{php echo $tempalte}/js/filters.js"></script>
+
+</head>
+	<body ng-app="starter">
+		<ion-nav-view></ion-nav-view>
+	</body>
+</html>

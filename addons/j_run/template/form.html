@@ -1,0 +1,388 @@
+<style>
+.jpanel .panel-heading {
+	position: relative;
+}
+.jpanel .panel-collapse {
+	width: 50px;
+	height: 38px;
+	line-height: 38px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: #CCC;
+	text-align: center;
+	background: #EEE;
+	border-left: 1px #DDD solid;
+}
+</style>
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="panel panel-default jpanel">
+  <div class="panel-heading">
+    <h4 class="panel-title">游戏设置</h4>
+    <a class="panel-collapse" data-toggle="collapse" href="#jframe-1"> <i class="fa fa-chevron-circle-down"></i> </a> </div>
+  <div class="panel-body collapse in" id="jframe-1"> {if $reply['id']}
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">&nbsp;</label>
+      <div class="col-sm-9"> {$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=entry&do=index&m=j_run&rid={php echo $rid}
+        <div class="help-block"></div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">管理</label>
+      <div class="col-sm-9"> <a href="{php echo $this->createWebUrl('gift',array('rid'=>$rid));}" target="_blank" class="btn btn-info">奖品设置</a>&nbsp;&nbsp; <a href="{php echo $this->createWebUrl('user',array('rid'=>$rid));}" target="_blank" class="btn btn-warning">会员管理</a>&nbsp;&nbsp; <a href="{php echo $this->createWebUrl('record',array('rid'=>$rid));}" target="_blank" class="btn btn-default">领奖记录</a>&nbsp;&nbsp; <a href="{php echo $this->createWebUrl('admin',array('rid'=>$rid));}" target="_blank" class="btn btn-info">核销人员</a>&nbsp;&nbsp; </div>
+    </div>
+    {/if} 
+  </div>
+  <div class="panel-heading">
+    <h4 class="panel-title">核心设置</h4>
+    <a class="panel-collapse" data-toggle="collapse" href="#jframe-2"> <i class="fa fa-chevron-circle-down"></i> </a> </div>
+  <div class="panel-body collapse in" id="jframe-2">
+  <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">状态</label>
+      <div class="col-sm-9">
+        <label class="radio-inline">
+          <input type="radio" name="status" value="0" {if $reply['status'] == 0 } checked{/if} />
+          未开始</label>
+        <label class="radio-inline">
+          <input type="radio" name="status" value="1" {if $reply['status'] == 1} checked{/if} />
+          进行中</label>
+        <label class="radio-inline">
+          <input type="radio" name="status" value="2" {if $reply['status'] == 2} checked{/if} />
+          结束</label>
+        <div class="help-block"></div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">活动模式</label>
+      <div class="col-sm-9">
+        <label class="radio-inline">
+          <input type="radio" name="gametype" value="0" {if $reply['gametype'] == 0 } checked{/if} />
+          前XX名可兑奖</label>
+        <label class="radio-inline">
+          <input type="radio" name="gametype" value="1" {if $reply['gametype'] == 1} checked{/if} />
+          只奖励到达XX米的</label>
+        <div class="help-block">第一模式就是无论跑了多少米，奖励最高的前XX名；第二模式是奖励达到了XX米的用户</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">参与模式</label>
+      <div class="col-sm-9">
+        <label class="radio-inline">
+          <input type="radio" name="issex" value="0" {if $reply['issex'] == 0 } checked{/if} />
+          不分性别</label>
+        <label class="radio-inline">
+          <input type="radio" name="issex" value="1" {if $reply['issex'] == 1} checked{/if} />
+          分开男女榜</label>
+        <div class="help-block">【不分性别】就是统一一个榜；【分开男女榜】男的会有一个排名，女的会有一个排名；数据依据参与者第一次登陆时的数据来决定性别。如果性别未知的，无法游戏。</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">活动时间</label>
+      <div class="col-sm-9 form-inline"> {php echo tpl_form_field_date('starttime', date('Y-m-d H:i:s',empty($reply['starttime'])?time():$reply['starttime']), true)} ~ 
+        {php echo tpl_form_field_date('endtime', date('Y-m-d H:i:s',empty($reply['endtime'])?time()+3600*240:$reply['endtime']), true)} </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">活动标题</label>
+      <div class="col-sm-9">
+        <input type="text" value="{$reply['title']}" class="form-control"  name="title">
+        <div class="help-block">用户发送关键词返回的图文主题。</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">页面顶部图片</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('thumb_top', $reply['thumb_top'])}
+        <div class="help-block">建议尺寸：640*500px</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">跑道终点图标</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('thumb_end', $reply['thumb_end'])}
+        <div class="help-block">建议尺寸：120*120px</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">游戏说明</label>
+      <div class="col-sm-9">
+        <textarea style="height:150px;" name="rule" class="form-control rich-text" cols="60">{$reply['rule']}</textarea>
+        <div class="help-block">游戏的详细介绍</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">游戏时间</label>
+      <div class="col-sm-9 form-inline">
+        <div class="input-group ">
+          <input type="number" style="width:80px" maxlength="2" value="{php echo intval($reply['gametime']) ? intval($reply['gametime']) : 10}" class="form-control" name="gametime">
+          <span class="input-group-addon">秒</span> </div>
+        <div class="help-block">进行游戏的时间1-99秒。10秒大概可以跑90米。</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">奖励人数</label>
+      <div class="col-sm-9 form-inline">
+        <div class="input-group "> <span class="input-group-addon">前</span>
+          <input type="number" style="width:80px" maxlength="3" value="{php echo intval($reply['ranking']) ? intval($reply['ranking']) : 10}" class="form-control" name="ranking">
+          <span class="input-group-addon">人</span> </div>
+        <div class="help-block">只有排名在前XX名的人方可领奖，如有奖品数量，请依照奖品总数量来设定。【游戏模式1有效】</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">总距离</label>
+      <div class="col-sm-9 form-inline">
+        <div class="input-group ">
+          <input type="number" style="width:80px" value="{php echo intval($reply['need']) ? intval($reply['need']) : 200}" class="form-control" name="need">
+          <span class="input-group-addon">米</span> </div>
+        <div class="help-block">总距离，一般一个人能跑90左右，请按需要的人数来计算。如需要4人协助，那么就是4*9=360【游戏模式2有效】</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">游戏奔跑模式</label>
+      <div class="col-sm-9">
+        <label class="radio-inline">
+          <input type="radio" name="modol" value="0" {if $reply['modol'] == 0 } checked{/if} />
+          加速度模式</label>
+        <label class="radio-inline">
+          <input type="radio" name="modol" value="1" {if $reply['modol'] == 1} checked{/if} />
+          手动点击模式</label>
+        <div class="help-block">【加速度模式】就是起跑后，系统会自动增加米数，这个比较适合反作弊；【手动点击模式】：就是传统的点1下加1。</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">速度设置</label>
+      <div class="col-sm-9 form-inline">
+        <div class="input-group "> <span class="input-group-addon">加速度</span>
+          <input type="text" style="width:80px" maxlength="5" value="{php echo $reply['speed'] ? $reply['speed'] : 0.3}" class="form-control" name="speed">
+        </div>
+        <div class="help-block">【加速度】在加速度模式下，请设置0.3；手动点击模式下，请设置在0.05；如果你不知道如何设置，请先尝试各类参数的差异</div>
+        <div class="input-group "> <span class="input-group-addon">步长</span>
+          <input type="text" style="width:80px" maxlength="5" value="{php echo $reply['speedStep'] ? $reply['speedStep'] : 0.5}" class="form-control" name="speedStep">
+        </div>
+        <div class="help-block">【步长】在加速度模式下，步长无效；手动点击模式下，请设置在0.05；如果你不知道如何设置，请先尝试各类参数的差异</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">限制助力人数</label>
+      <div class="col-sm-9 form-inline">
+        <div class="input-group ">
+          <input type="number" style="width:80px" value="{php echo intval($reply['helpnum'])}" class="form-control" name="helpnum">
+          <span class="input-group-addon">人</span> </div>
+        <div class="help-block">限制最多可以多少人助力。此参数意义在于让跑道发起者谨慎选择朋友，增加游戏的体验感。设置0为不限制</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">广告语</label>
+      <div class="col-sm-9">
+        <input type="text" value="{$reply['ad']}" class="form-control" name="ad">
+        <div class="help-block">出现主页面的跑道上方,如：本活动由XXXX举办</div>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">活动口号</label>
+      <div class="col-sm-9">
+        <textarea style="height:150px;" name="slogan" class="form-control" cols="60">{$reply['slogan']}</textarea>
+        <div class="help-block">游戏中出现的口号,请用回车相隔，不要使用引号。</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">活动版权</label>
+      <div class="col-sm-9">
+        <input type="text" value="{$reply['copyright']}" class="form-control" name="copyright">
+        <div class="help-block">出现在活动底部的版面声明</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">核销登陆验证码</label>
+      <div class="col-sm-9 form-inline">
+        <input type="text" value="{$reply['code']}" class="form-control" name="code">
+        <div class="help-block">手机端登陆时的验证码</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-heading">
+    <h4 class="panel-title">借用设置</h4>
+    <a class="panel-collapse" data-toggle="collapse" href="#jframe-7"> <i class="fa fa-chevron-circle-down"></i> </a> </div>
+  <div class="panel-body collapse in" id="jframe-7">
+  	<div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">借用appid</label>
+      <div class="col-sm-9">
+        <input type="text" value="{$reply['appid']}" class="form-control"  name="appid">
+        <div class="help-block">自身是认证服务号也需要填写！</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">借用secret</label>
+      <div class="col-sm-9">
+        <input type="text" value="{$reply['secret']}" class="form-control"  name="secret">
+        <div class="help-block">自身是认证服务号也需要填写！</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-heading">
+    <h4 class="panel-title">图文回复</h4>
+    <a class="panel-collapse" data-toggle="collapse" href="#jframe-3"> <i class="fa fa-chevron-circle-down"></i> </a> </div>
+  <div class="panel-body collapse in" id="jframe-3">
+  	<div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">封面</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('cover', $reply['cover'])}
+        <div class="help-block">建议尺寸：450*250px，仅用于图文回复</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">描述</label>
+      <div class="col-sm-9">
+        <textarea style="height:150px;" name="description" class="form-control" cols="60">{$reply['description']}</textarea>
+        <div class="help-block">用于图文显示的简介</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-heading">
+    <h4 class="panel-title">皮肤UI</h4>
+    <a class="panel-collapse" data-toggle="collapse" href="#jframe-4"> <i class="fa fa-chevron-circle-down"></i> </a> </div>
+  <div class="panel-body collapse in" id="jframe-4">
+  	<div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">背景音乐</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_audio('music', $reply['music'] ? $reply['music'] :'../addons/j_run/template/mobile/img/2.mp3')}
+        <div class="help-block">请使用软件截断音乐，音乐长度在10秒500k以内。</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">loading图片</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('img_loadImg', $reply['img_loadImg'] ? $reply['img_loadImg'] :'../addons/j_run/template/mobile/img/loading.png')}
+        <div class="help-block">请尽量使用gif或者png图片</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">男性站立/起跑</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('img_personImg', $reply['img_personImg'] ? $reply['img_personImg'] :'../addons/j_run/template/mobile/img/per_other.png')}
+        <div class="help-block">请尽量使用gif或者png图片</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">男性跑步动作</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('img_personsImg', $reply['img_personsImg'] ? $reply['img_personsImg'] :'../addons/j_run/template/mobile/img/persons.png')}
+        <div class="help-block">请尽量使用gif或者png图片</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">女性起跑/站立</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('img_personImg_girl', $reply['img_personImg_girl'] ? $reply['img_personImg_girl'] :'../addons/j_run/template/mobile/img/per_other_g.png')}
+        <div class="help-block">请按默认规格制作，必须是gif或者png图片</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">女性奔跑</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('img_personsImg_girl', $reply['img_personsImg_girl'] ? $reply['img_personsImg_girl'] :'../addons/j_run/template/mobile/img/personsg.png')}
+        <div class="help-block">请按默认规格制作，必须是gif或者png图片</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">两侧环境</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('img_treeImage', $reply['img_treeImage'] ? $reply['img_treeImage'] :'../addons/j_run/template/mobile/img/tree.png')}
+        <div class="help-block">请尽量使用gif或者png图片</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">环境</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('img_green', $reply['img_green'] ? $reply['img_green'] :'../addons/j_run/template/mobile/img/green.png')}
+        <div class="help-block">请尽量使用gif或者png图片</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">跑道</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('img_road', $reply['img_road'] ? $reply['img_road'] :'../addons/j_run/template/mobile/img/black.png')}
+        <div class="help-block">请尽量使用gif或者png图片</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">太阳</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('img_sun', $reply['img_sun'] ? $reply['img_sun'] :'../addons/j_run/template/mobile/img/sun.png')}
+        <div class="help-block">请尽量使用gif或者png图片</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">云1</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('img_cloud1', $reply['img_cloud1'] ? $reply['img_cloud1'] :'../addons/j_run/template/mobile/img/cloud1.png')}
+        <div class="help-block">请尽量使用gif或者png图片</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">云2</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('img_cloud2', $reply['img_cloud2'] ? $reply['img_cloud2'] :'../addons/j_run/template/mobile/img/cloud2.png')}
+        <div class="help-block">请尽量使用gif或者png图片</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">云3</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('img_cloud3', $reply['img_cloud3'] ? $reply['img_cloud3'] :'../addons/j_run/template/mobile/img/cloud3.png')}
+        <div class="help-block">请尽量使用gif或者png图片</div>
+      </div>
+    </div>
+  	<div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">开启特殊背景</label>
+      <div class="col-sm-9">
+        <label class="radio-inline">
+          <input type="radio" name="open_bg" value="0" {if $reply['open_bg'] == 0 } checked{/if} />
+          关闭</label>
+        <label class="radio-inline">
+          <input type="radio" name="open_bg" value="1" {if $reply['open_bg'] == 1} checked{/if} />
+          开启</label>
+        <div class="help-block">如果想简单更换UI，可以直接使用一张图片来代替太阳，云等的设置。</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">特殊背景</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('img_fullbg', $reply['img_fullbg'])}
+        <div class="help-block">固定尺寸：640*1200；如果采用本背景图。其他细节将不显示，如上面的太阳，树木等</div>
+      </div>
+    </div>
+    
+  </div>
+  <div class="panel-heading">
+    <h4 class="panel-title">分享设置</h4>
+    <a class="panel-collapse" data-toggle="collapse" href="#jframe-5"> <i class="fa fa-chevron-circle-down"></i> </a> </div>
+  <div class="panel-body collapse in" id="jframe-5">
+  	<div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享小图</label>
+      <div class="col-sm-9"> {php echo tpl_form_field_image('thumb_share', $reply['thumb_share'])}
+        <div class="help-block">建议尺寸：120*120px</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">分享文字</label>
+      <div class="col-sm-9">
+        <input type="text" value="{$reply['share_title']}" class="form-control" name="share_title">
+        <div class="help-block">分享时的文字提示，标签|#成绩#|为多少米，如 我裸奔了|#成绩#|米,你来帮我加油哦！谢谢亲！</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">说明及引导关注页</label>
+      <div class="col-sm-9">
+        <input type="text" value="{$reply['gzurl']}" class="form-control" name="gzurl">
+        <div class="help-block">填写一条游戏说明及关注的微信图文消息，必须填写否则无法关注</div>
+      </div>
+    </div>
+    
+  </div>
+  <div class="panel-heading">
+    <h4 class="panel-title">广告设置</h4>
+    <a class="panel-collapse" data-toggle="collapse" href="#jframe-6"> <i class="fa fa-chevron-circle-down"></i> </a> </div>
+  <div class="panel-body collapse in" id="jframe-6">
+    <div class="form-group">
+      <label class="col-xs-12 col-sm-3 col-md-2 control-label">广告选择</label>
+      <div class="col-sm-9"> {loop $list $row}
+        <label class="radio-inline">
+          <input type="checkbox" name="adlist[]" value="{$row['id']}" {if in_array($row['id'],$adlist)}checked{/if} />
+          <A class="tips" data-toggle="tooltip" data-placement="bottom" title="{$row['title']}"><img src="{$_W['attachurl']}{$row['thumb']}" width="48" height="48"></A></label>
+        {/loop} </div>
+    </div>
+  </div>
+</div>
+<script>
+require(['jquery','util'], function($, util){
+	$('.tips').hover(function(){
+		$(this).tooltip('show');
+	},function(){
+		$(this).tooltip('hide');
+	});
+});
+</script>

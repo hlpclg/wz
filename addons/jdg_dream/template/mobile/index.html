@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html class="js canvas no-touch opacity svg wf-budfont-n4-inactive wf-inactive">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script id="__v3__clicki_js_tracker_loader__" type="text/javascript" charset="UTF-8" src="../addons/jdg_dream/style/mobile/style/js/clicki.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>{$reply['title']}</title>
+<input type="hidden" name="id" value="{$reply['rid']}" />
+<link rel="stylesheet" href="../addons/jdg_dream/style/mobile/style/css/style.css"> 
+<script type="text/javascript" async="" charset="utf-8" src="../addons/jdg_dream/style/mobile/style/10406"></script>
+<script type="text/javascript" async="" src="../addons/jdg_dream/style/mobile/style/js/ga.js"></script>
+<script src="../addons/jdg_dream/style/mobile/style/js/c7c484cf.modernizr.js"></script>  
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+
+
+  wx.config({
+      debug: false,
+      appId: '<?php echo $signPackage["appId"];?>',
+      timestamp: '<?php echo $signPackage["timestamp"];?>',
+      nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+      signature: '<?php echo $signPackage["signature"];?>',
+      jsApiList: [
+        'onMenuShareAppMessage',
+        'onMenuShareTimeline',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+      ]
+  });
+ 
+  wx.ready(function () {
+
+  // 2. 分享接口
+  // 2.1 监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
+    wx.onMenuShareAppMessage({
+      title: '{$reply['share_title']}',
+      desc: '{$reply['share_content']}',
+      link: '{php echo $_W['siteroot'].str_replace('./','app/',$this->createMobileurl('index',array('id' => $id)))}',
+      imgUrl: '{php echo $_W['attachurl'].$reply['picurl']}',
+      trigger: function (res) {
+      //  alert('用户点击发送给朋友');
+      },
+      success: function (res) {
+       // alert('已分享1');
+      },
+      cancel: function (res) {
+       // alert('已取消');
+      },
+      fail: function (res) {
+       // alert(JSON.stringify(res));
+      }
+    });
+
+     wx.onMenuShareTimeline({
+		   title: '{$reply['share_title']}',
+      
+      link: '{php echo $_W['siteroot'].str_replace('./','app/',$this->createMobileurl('index',array('id' => $id)))}',
+      imgUrl: '{php echo $_W['attachurl'].$reply['picurl']}',
+        
+      trigger: function (res) {
+        //alert('用户点击分享到朋友圈');
+      },
+      success: function (res) {
+       // alert('已分享');
+      },
+      cancel: function (res) {
+       // alert('已取消');
+      },
+      fail: function (res) {
+       // alert(JSON.stringify(res));
+      }
+    });
+     wx.onMenuShareQQ({
+      title: '{$reply['share_title']}',
+      desc: '{$reply['share_content']}',
+      link: '{php echo $_W['siteroot'].str_replace('./','app/',$this->createMobileurl('index',array('id' => $id)))}',
+      imgUrl: '{php echo $_W['attachurl'].$reply['picurl']}',
+      trigger: function (res) {
+       // alert('用户点击分享到QQ');
+      },
+      complete: function (res) {
+        //alert(JSON.stringify(res));
+      },
+      success: function (res) {
+       // alert('已分享');
+      },
+      cancel: function (res) {
+      //  alert('已取消');
+      },
+      fail: function (res) {
+     //   alert(JSON.stringify(res));
+      }
+    });
+      wx.onMenuShareWeibo({
+      title: '{$reply['share_title']}',
+      desc: '{$reply['share_content']}',
+      link: '{php echo $_W['siteroot'].str_replace('./','app/',$this->createMobileurl('index',array('id' => $id)))}',
+      imgUrl: '{php echo $_W['attachurl'].$reply['picurl']}',
+      trigger: function (res) {
+       // alert('用户点击分享到微博');
+      },
+      complete: function (res) {
+       // alert(JSON.stringify(res));
+      },
+      success: function (res) {
+        //alert('已分享');
+      },
+      cancel: function (res) {
+       // alert('已取消');
+      },
+      fail: function (res) {
+        //alert(JSON.stringify(res));
+      }
+    });
+  });
+</script> 
+<link rel="stylesheet" href="../addons/jdg_dream/style/mobile/style/css/style1.css">
+<style type="text/css">@font-face {font-family:"budFont";src: url("http://bud-font-947736416.ap-northeast-1.elb.amazonaws.com/api/font/HYLingXinJ.ttf?text=%E6%8F%90%E5%89%8D%E6%94%92%E5%A4%9F%E5%8F%8C%E5%8D%81%E4%B8%80%E5%9F%BA%E9%87%91%20%2C%E5%8D%8A%E4%BB%B7%E4%B9%B0%E5%88%B0%E6%88%BF%E4%B8%88%E6%AF%8D%E5%A8%98%E6%AC%A2%E5%96%9C%2C%E4%B8%80%E4%B8%8D%E5%B0%8F%E5%BF%83%E7%98%A6%E6%88%90%E9%97%AA%E7%94%B5%2C%E5%8D%8E%E4%B8%BD%E8%84%B1%E5%8D%95%E6%B4%BB%E5%BE%97%E7%89%9B%E9%80%BC%E8%87%AA%E5%9C%A8%2C%E9%A2%86%E5%AF%BC%E7%BB%99%E5%85%B3%E6%B3%A8%E5%88%9B%E5%87%BA%E4%B8%80%E7%89%87%E5%A4%A9%2C%E6%9D%A5%E5%9C%BA%E8%AF%B4%E8%B5%B0%E5%B0%B1%E8%B5%B0%E7%9A%84%E6%97%85%E8%A1%8C%2C%E5%8F%98%E8%BA%AB%E5%AD%A6%E9%9C%B8%E6%91%86%E5%B9%B3%E6%9C%9F%E6%9C%AB%E8%80%83%20%2C%E5%A4%9A%E6%94%BE%E5%87%A0%E5%A4%A9%E5%81%87%E8%83%8C%E5%8C%85%E8%A1%8C%E5%A4%A9%E4%B8%8B%2C%E5%87%BA%E4%BB%BBCEO%E8%BF%8E%E5%A8%B6%E7%99%BD%E5%AF%8C%E7%BE%8EBESbswy") format("truetype");};</style>
+</head>
+<body> 
+<img class="city" src="../addons/jdg_dream/style/mobile/style/images/3aedd613.city.png">
+<img class="sharing-poster" src="../addons/jdg_dream/style/mobile/style/images/3b252cb0.share.jpg" width="0" height="0"> 
+<section class="landing-backgrounds"> 
+	<div class="landing-bg" style="transform: translate(0%, -100%) translate3d(0px, 0px, 0px);">
+		<div class="stars-wrapper"> 
+			<div class="stars"> 
+				<div class="star1"></div> 
+				<div class="star2"></div> 
+				<div class="star3"></div>
+				<div class="star4"></div>
+				<div class="star5"></div>
+				<div class="star6"></div>
+				<div class="star7"></div>
+				<div class="star8"></div> 
+				<div class="star9"></div> 
+				<div class="star10"></div>
+			</div>
+		</div> 
+	 </div>                  
+	<img class="city" src="../addons/jdg_dream/style/mobile/style/images/3aedd613.city.png" style="transform: translate(0%, 0%) translate3d(0px, 0px, 0px);">
+	<img class="landing-clouds cloud1" src="../addons/jdg_dream/style/mobile/style/images/d8f4313f.clouds-1.png" style="transform: translate(0%, -100%) translate3d(0px, 0px, 0px);"> 
+	<img class="landing-clouds cloud2" src="../addons/jdg_dream/style/mobile/style/images/0ab7b362.clouds-2.png" style="transform: translate(0%, -100%) translate3d(0px, 0px, 0px);"> 
+	<img class="landing-moon" src="../addons/jdg_dream/style/mobile/style/images/c2d6eea3.moon.png" style="transform: translate(0%, -100%) translate3d(0px, 0px, 0px);"> 
+ </section> 
+ <section class="landing-container"> 
+	<canvas id="fireworksCanvas" width="1920" height="920"></canvas>
+	<div class="rotate-area" style="transform: translate(0%, 0%) matrix3d(0.99978, 0, 0.02076, 0, 0.00028, 0.9999, -0.01395, 0, -0.02076, 0.01396, 0.99968, 0, 0, 0, 0, 1);"> 
+		<div class="top" style="opacity: 1; transform: translate(0%, -100%) translate3d(0px, 0px, 0px);">
+			<img class="logo-landing" src="{$_W['attachurl']}{$reply['logo']}">
+			<img class="logo-landing-2" src="../addons/jdg_dream/style/mobile/style/images/8cb8c364.logo.png">
+		</div> <br/>
+		<div class="centered-area" style="opacity: 0;"> 
+			<div class="message-infos" style="opacity: 0;">
+				<span class="dream-id"></span>
+				<span class="dream-from-to"></span>
+			</div>
+				<div class="message">
+					<div class="message-wrapper" style="opacity: 0; perspective: 1000px;">
+					
+				</div>
+				<div class="loader-landing ">
+					<img class="loader-sprite" src="../addons/jdg_dream/style/mobile/style/images/fe7f9000.loader-sprite.png" style="transform: translate3d(0px, -2010px, 0px);">
+				</div>
+			</div>
+			<p class="instructions">现在就许个最闪新年梦<br>让梦想在纽约时代广场耀眼绽放</p> 
+			<a class="button-create lingxin" href="{php echo $this->createMobileUrl('mobile', array('id' => $id))}" id="button-create" name="dream" data-analytics="landing.create">开始许愿</a> 
+		</div>                                     
+		</div> <!-- <img class="qr-code" src="images/png/e3c14659.qr-code.png" /> --> 
+		<div class="qr-code-overlay"></div>
+</section> 
+
+<script>
+  var address = "{php echo $this->createMobileUrl('GetArr')}";
+</script>
+
+<script src="../addons/jdg_dream/style/mobile/style/js/87a9ec1f.landing_vendor.js"></script>
+<script src="../addons/jdg_dream/style/mobile/style/js/27fbf7d6.landing_script.js"></script> 
+ </body></html>

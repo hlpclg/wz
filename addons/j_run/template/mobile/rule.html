@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="wap-font-scale" content="no">
+<title>{$item['title']}</title>
+<link rel="stylesheet" href="../addons/j_run/template/mobile/css/style-rule.css?v=2">
+<style>
+.r-header{height:151px;background:#249e49 url({php echo $_W['attachurl'].$item['thumb_top']}) no-repeat;background-size: 100% 100%;margin-bottom:20px}
+#r-back{position:absolute;top:10px;right:10px;color:#ff0;padding:3px 5px;border-radius:5px;font-size:12px; background:#F00}
+#r-back2{position:absolute;top:10px;left:10px;color:#ff0;padding:3px 5px;border-radius:5px;font-size:12px; background:#F00}
+</style>
+</head>
+<body>
+<article class="page-rule">
+  <section class="r-header"><span id="r-back2" onclick="window.location.href='{php echo $this->createMobileUrl('rank',array('rid'=>$rid))}'">&nbsp;排行榜&nbsp;</span><span id="r-back" onclick="window.history.back()">返回首页</span></section>
+  <section class="r-cont">
+    <h3 class="r-title">活动规则</h3>
+    {$item['rule']}
+    <br>
+  </section>
+  <div class="r-copy"> {$item['copyright']}<br /></div>
+</article>
+<!--<script type="text/javascript" src="../addons/j_run/template/mobile/js/sea.js"></script> -->
+<script type="text/javascript">
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+		WeixinJSBridge.call('hideOptionMenu');
+	});
+</script>
+</body>
+</html>

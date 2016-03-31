@@ -1,0 +1,34 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		模块参数配置
+	</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">说明</label>
+			<div class="col-sm-8">
+				1.【模块参数配置】<b>函数定义</b> 位于 addons/we7_demo/module.php <br />
+				2.【模块参数配置】<b>模板文件</b> 位于 addons/we7_demo/template/rule.html，模板文件名称可随意命名。 <br />
+				3. 显示规则表单，自动调用函数 <code>function fieldsFormDisplay() {}</code> 用于附加额外字段。<br />
+				4. 提交规则表单，在保存规则前调用 <code>function fieldsFormValidate() {}</code> 验证附加字段，验证成功保存规则字段，验证失败中断操作并提示错误信息。 <br/>
+				5. 规则保存成功后，将调用 <code>function fieldsFormSubmit() {}</code> 完成入库操作，此处禁止使用 <code>exit();</code> 或 <code>die();</code>。
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">回复内容</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="content" value="{$item['content']}" />
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 此函数为扩展验证表单JS，您有需要验证可以实现此函数提示错误信息，当然也可以不实现。-->
+<script type="text/javascript">
+<!--
+	function validateReplyForm(formobj, jq, underscore, util, $scope, $http) {
+		if (!formobj['content'].value) {
+			util.message('请输入回复内容');
+			return false;
+		}
+	}
+//-->
+</script>

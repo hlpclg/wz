@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>创建微名片</title>
+    <link href="../addons/amouse_weicard/ui/css/weiCard.css?v=20150210" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        body {
+            background: url(../addons/amouse_weicard/ui/images/createbg.png) no-repeat #e8f7ff;
+            background-size: 100%;
+        }
+        #fotter {
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+<div class="ui-content">
+    <div id="Create">
+        <div class="header">
+            <img src="../addons/amouse_weicard/ui/images/weicard2.jpg"/>
+        </div>
+        <div class="content">
+            <form id="weicardForm" name="weicardForm">
+                <input name="token" type="hidden" value="{$_W['token']}"/>
+                <input id="ID" name="ID" type="hidden" value="{$fans['id']}"/>
+                <input id="openId" name="openId" type="hidden" value="{$fromuser}"/>
+                <input id="headimg" name="headimg" type="hidden" value="{$fans['headimg']}"/>
+                <input id="rid" name="rid" type="hidden" value="{$id}"/>
+                <div class="formarea">
+                    <div>
+                        <input  id="name" name="name" placeholder="请输入您的姓名"  type="text" value="{$fans['name']}"/>
+                    </div>
+                    <div>
+                        <select name="template" id="template" >
+                            <option {if $fans[template]=='1'} selected="selected"{/if} value="1">模板一</option>
+                            <option {if $fans[template]=='2'} selected="selected"{/if} value="2">模板二</option>
+                            <option {if $fans[template]=='3'} selected="selected"{/if} value="3">模板三</option>
+                            <option {if $fans[template]=='4'} selected="selected"{/if} value="4">模板四</option>
+                        </select>
+                    </div>
+                    <div>
+                        <input id="mobile" name="mobile" placeholder="请输入您的手机" type="text" value="{$fans['mobile']}"/>
+                    </div>
+                    <div>
+                        <input id="email" name="email" placeholder="请输入您的邮箱" type="text" value="{$fans['email']}"/>
+                    </div>
+                    <div>
+                        <input id="qq" name="qq" placeholder="请输入您的QQ号码" type="text" value="{$fans['qq']}"/>
+                    </div>
+                    <div>
+                        <input id="weixin" name="weixin" placeholder="请输入您的微信" type="text" value="{$fans['weixin']}"/>
+                    </div>
+                    <div>
+                        <input id="job" name="job" placeholder="请输入您的职位" type="text"  value="{$fans['job']}"/>
+                    </div>
+                    <div>
+                        <input  id="company" name="company" placeholder="请输入您的公司" type="text"  value="{$fans['company']}"/>
+                    </div>
+                    <div>
+                   <input id="department" name="department" placeholder="请输入您的部门" type="text" value="{$fans['department']}"/>
+                    </div>
+                    <div>
+                       <input id="address" name="address" placeholder="请输入您的公司地址"  type="text"  value="{$fans['address']}"/>
+                    </div>
+
+                </div>
+                <input id="sharebtn" class="create-submit" type="button" value="提交信息"/>
+            </form>
+        </div>
+    </div>
+
+    <div class="copyright">
+        <div>微名片</div>
+        <div>关注我请点:
+            <a href="{$setting['guanzhuUrl']}">
+                {if empty($setting['copyright'])}{$_W['account']['name']} {else}{$setting['copyright']}{/if}</a>
+        </div>
+    </div>
+</div>
+<div class="ui-loader ui-loader-default">
+    <span class="ui-icon ui-icon-loading"></span>
+    <h1>loading</h1>
+</div>
+
+<div class="popup" style="display: none;">
+    <div class="popup-wrap">
+        <a href="javascript:;" class="cancle del">×</a>
+        <div class="btns">
+            <a href="javascript:;" id="subscribeUrl" class="button_01">点此关注</a>
+        </div>
+    </div>
+    <div id="mcover03"></div>
+</div>
+<script type="text/javascript" src="../addons/amouse_weicard/ui/js/jquery.js?v=20141210"></script>
+<!--<script type="text/javascript" src="../addons/amouse_weicard/ui/js/alert.js?v=20141210"></script>-->
+<script type="text/javascript">
+    /*{if !$followed}
+        $("#subscribeUrl").click(function () {
+            location.href = "{$setting['guanzhuUrl']}";
+        });
+        $(".cancle").hide();
+        $("#popupText").html("赶紧来创建您的名片吧！<br/>关注后可创建名片，也可分享名片给好友哦。");
+        $(".popup").show();
+    {/if}*/
+
+    $(document).ready(function () {
+        $("#sharebtn").click(function () {
+            var $btn = $("#sharebtn");
+            if ($btn.hasClass("disabled")) return;
+            if($("#name").val()==''){
+                alert('名字不能为空');
+                $("#name").focus();
+                return;
+            }
+            var phoneReg = /^[0-9]{2,4}-?[0-9]{4,16}$/;
+            var phone = $("#mobile").val();
+            if(phone.length == 0) {
+                alert('联系电话不能为空');
+                $("#mobile").focus();
+                return;
+            } else if(!phoneReg.test(phone)){
+                alert('联系电话必须为6到12位数字');
+                $("#mobile").focus();
+                return;
+            }
+
+            var emailReg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+            var email = $("#email").val();
+            if(email.length == 0) {
+                alert('email不能为空');
+                $("#email").focus();
+                return;
+            } else if(!emailReg.test(email)) {
+                alert('email格式错误');
+                $("#email").focus();
+                return;
+            }
+            if($("#job").val()=='') {
+                alert('职务不能为空');
+                $("#job").focus();
+                return;
+            }
+            if($("#department").val()=='') {
+                alert('部门不能为空');
+                $("#department").focus();
+                return;
+            }
+
+            if($("#company").val()=='') {
+                alert('公司名称不能为空');
+                $("#company").focus();
+                return;
+            }
+
+            if($("#address").val()=='') {
+                alert('公司地址不能为空');
+                $("#address").focus();
+                return;
+            }
+            var openid=$("#openId").val();
+            var rid=$("#rid").val();
+            $btn.addClass("disabled");
+            var ajaxurl = "{php echo murl('entry//processData',array('m'=>'amouse_weicard'),true)}";
+            var params = $("#weicardForm").serializeArray();
+            $.ajax({
+                type: "post",
+                url: ajaxurl,
+                data: params,
+                dataType: "json",
+                success: function (data) {
+                    if (data.resultCode == 1) {
+                        var cardid=data.resultData;
+                        window.location ="{php echo murl('entry//detail',array('m'=>'amouse_weicard'),true)}&cardid=" + cardid+"&wxid="+openid+"&rid="+rid;
+                    }else if (data.resultCode == -1 || data.resultCode == 0) {
+                        alert(data.resultMsg || "亲，提交出错了！");
+                    }
+                },
+                error: function(data) {
+                    alert("error:" + data.responseText);
+                }
+            });
+            return false;
+        });
+    });
+</script>
+<!--<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script language='javascript'>
+    <?php
+            $jssdk = new JSSDK();
+        $signPackage = $jssdk->GetSignPackage();
+    ?>
+    wx.config({
+        debug:false,
+        appId: "{$_W['account']['appid_share']}",
+        timestamp: {$signPackage["timestamp"]},
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            'onMenuShareTimeline','onMenuShareAppMessage','onMenuShareWeibo'
+        ]
+    });
+    var shareMeta = {
+        imgUrl:"{$shareimg}",
+        link:"{$url}",
+        desc:"{$reply['description']}",
+        title:"{$reply['title']}"
+    };
+    wx.ready(function(){
+        wx.onMenuShareTimeline(shareMeta);
+        wx.onMenuShareAppMessage(shareMeta);
+        wx.onMenuShareWeibo(shareMeta);
+    });
+</script>-->
+</body>
+</html>

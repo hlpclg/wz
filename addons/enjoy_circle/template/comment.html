@@ -1,0 +1,129 @@
+{template 'common/header'}
+{template 'common'}
+
+<ul class="nav nav-tabs">
+<li><a href="{php echo $this->createWebUrl('topic',array('op' =>'display'))}">返回话题</a></li>
+	<li {if $op == 'display'} class="active" {/if}><a href="{php echo $this->createWebUrl('comment',array('op' =>'display','tid'=>$tid))}">评论</a></li>
+	<li{if empty($comment['cid']) && $op == 'post'} class="active" {/if}><a href="{php echo $this->createWebUrl('comment',array('op' =>'post','tid'=>$tid))}">添加评论</a></li>
+	{if !empty($comment['cid']) && $op== 'post'} <li class="active"><a href="{php echo $this->createWebUrl('comment',array('op' =>'post','tid'=>$tid,'cid'=>$comment['cid']))}">编辑评论</a></li> {/if}
+</ul>
+
+{if $op == 'display'}
+<div class="main panel panel-default">
+	<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:100px;">热度</th>
+					<th style="width:100px;">评论人</th>
+					<th style="width:100px;">头像</th>
+					<th style="width:100px;">评论</th>
+					<th style="width:150px;">评论时间</th>
+					<th style="width:150px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['hot']}</td>
+					<td>{$item['nickname']}</td>
+					<td><img src="{php echo tomedia($item[avatar])}" width="80px"/></td>
+					<td>{$item['comment']}</td>
+					<td>{php echo date('Y-m-d H:i:s',$item['createtime'])}</td>
+					<td style="text-align:left;">
+						<a href="{php echo $this->createWebUrl('comment', array('op' => 'post', 'tid' => $item['tid'],'cid' => $item['cid']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="修改"><i class="fa fa-pencil"></i></a>
+						<a href="{php echo $this->createWebUrl('comment', array('op' => 'delete', 'tid' => $item['tid'],'cid' => $item['cid']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="删除"><i class="fa fa-times"></i></a>
+				</td>
+				</tr>
+				{/loop}
+				
+			</tbody>
+
+              
+		</table>
+		{$pager}
+		
+	</div>
+</div>
+
+<script>
+	require(['bootstrap'],function($){
+		$('.btn').hover(function(){
+			$(this).tooltip('show');
+		},function(){
+			$(this).tooltip('hide');
+		});
+	});
+</script>
+
+{elseif $op == 'post'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit='return formcheck()'>
+		<input type="hidden" name="tid" value="{$tid}" />
+		<input type="hidden" name="cid" value="{$comment['cid']}" />
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				评论设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">热度</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id='hot' name="hot" class="form-control" value="{$comment['hot']}" />
+					</div>
+				</div>
+	
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>评论</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id='rname' name="comment" class="form-control" value="{$comment['comment']}" />
+						<span class="help-block">#myuser#替换粉丝昵称</span>
+					</div>
+				</div>
+
+			<div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">评论人昵称</label>
+                  <div class="col-sm-9 col-xs-12">
+						<input type="text" id='nickname' name="nickname" class="form-control" value="{$comment['nickname']}" />
+						<span class="help-block">#myuser#替换粉丝昵称</span>
+					</div>                
+                </div>
+              	<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">评论人头像</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo tpl_form_field_image('avatar', $comment['avatar'])}
+						<span class="help-block">#myavatar#替换粉丝头像</span>
+					</div>
+				</div>  
+
+                
+		</div>
+	</div>
+	<div class="form-group col-sm-12">
+		<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" onclick="return formcheck()" />
+		<input type="hidden" name="token" value="{$_W['token']}" />
+	</div>
+	</form>
+</div>
+
+<script language='javascript'>
+	function formcheck() {
+		if ($("#rname").isEmpty()) {
+			Tip.focus("rname", "请填写评论!", "top");
+			return false;
+		}
+		return true;
+	}
+	$(function() {
+		$("#common_corp").change(function() {
+			var obj = $(this);
+			var sel = obj.find("option:selected");
+			$("#comment_name").val(sel.attr("data-name"));
+			$("#comment_url").val(sel.attr("data-url"));
+		});
+	})
+</script>
+
+{/if}
+
+{template 'common/footer'}

@@ -1,0 +1,57 @@
+{template 'common/header'}
+
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{php echo $this->createWebUrl('theme');}">活动管理</a></li>
+        <li><a href="{php echo $this->createWebUrl('addtheme');}">添加活动</a></li>
+    </ul> 
+  <div class="panel panel-default">
+        <div class="panel-body table-responsive">
+            <table class="table table-hover">
+                <thead class="navbar-inner">
+                    <tr>
+                        <th style="width:40px;">序号</th>
+                        <th style="width:200px;">活动名称</th>
+                        <th style="width:60px;">参与人数</th>
+                        <th style="width:60px;">投票总数</th>
+                        <th style="width:60px;">奖品总数</th>
+                        <th style="width:60px;">剩余奖品</th>
+                        <th style="width:300px;">管理</th>
+                        <th style="width:120px; text-align:right;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {loop $list $item}
+                  <tr> 
+                    <td>{$item['id']}</td>
+                    <td>{$item['tnameshort']}</td>
+                    <td>{php echo $this->getCanyrs($item['id']);}</td>
+                    <td>{php echo $this->getTouprs($item['id']);}</td>
+                    <td>{php echo $this->getGiftSum($item['id']);}</td>
+                    <td>{php echo $this->getGiftLeftSum($item['id']);}</td>
+                    <td>
+                    <a href="{php echo $this->createWebUrl('gift', array('themeid' => $item['id']))}" class="btn btn-primary">奖品管理</a>
+                    <a href="{php echo $this->createWebUrl('member', array('themeid' => $item['id']))}" class="btn btn-success">用户管理</a>
+                    <a href="{php echo $this->createWebUrl('unTakeGift',array('themeid' =>$item['id']))}" class="btn btn-primary">领奖管理</a>
+                    </td>
+                  <td style="text-align:right;">
+                  <a class="btn btn-success btn-sm" href="{php echo $this->createWebUrl('addtheme', array('themeid' =>$item['id']))}" title="编辑"><i class="icon-edit"></i>编辑</a>
+                  <a class="btn btn-default btn-sm" href="#" onclick="drop_confirm('您确定要删除吗?', '{php echo $this->createWebUrl('addtheme',array('op'=>'delete', 'themeid' =>$item['id']))}');" title="删除"><i class="icon-remove"></i>删除</a>
+                    </td>
+                </tr>
+                {/loop}
+            </tbody>
+            </table>
+        </div>
+        {$pager}
+    </div>
+    </div>
+
+<script type="text/javascript">
+    function drop_confirm(msg, url){
+        if(confirm(msg)){
+            window.location = url;
+        }
+    }
+</script>
+{template 'common/footer'}

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<title>{$reply['title']}</title>
+{php echo register_jssdk(false);}
+<link type="text/css" rel="stylesheet" href="{MODULE_URL}template/mobile/css/style.css"/>
+<link type="text/css" rel="stylesheet" href="{MODULE_URL}template/mobile/js/sweetalert.css"/>
+<script src="{MODULE_URL}template/mobile/js/jquery-2.1.1.min.js"></script>
+<script src="{MODULE_URL}template/mobile/js/sweetalert.min.js"></script>
+<script>
+sharedate={
+	title:"{php echo $reply['title']}",
+	desc: "{php echo $share_des}",
+	link: "{php echo $_W['siteroot'].str_replace('./','app/',$this->createMobileurl('share',array('rid' => $rid,'fid'=>$fans['id'])))}",
+	imgUrl: "{php echo $_W['attachurl'].$reply['thumb_share']}",
+}
+wx.ready(function () {
+	wx.onMenuShareAppMessage({
+	  title:sharedate.title,
+	  desc:sharedate.desc,
+	  link:sharedate.link,
+	  imgUrl:sharedate.imgUrl,
+	  trigger: function (res) {},
+	  success: function (res) {},
+	  cancel: function (res) {},
+	  fail: function (res) {}
+	});
+	 wx.onMenuShareTimeline({
+	  title:sharedate.title,
+	  desc: sharedate.title,
+	  link:sharedate.link,
+	  imgUrl: sharedate.imgUrl,
+	  trigger: function (res) {},
+	  success: function (res) {},
+	  cancel: function (res) {},
+	  fail: function (res) {}
+	});
+});
+wx.error(function(res){
+	wx.hideOptionMenu();
+})
+
+</script>
+<style>
+.i-header {position:relative;margin-bottom:10px;}
+.i-nodes {width:300px!important;}
+@media(max-width:320px) {
+#nodesdiv{
+left: 15px;
+}
+}
+.i-rule-right {position:absolute;bottom:10px;right:10px;background:#ff0;color:#F00;padding:3px 5px;border-radius:5px;font-size:12px;z-index:4}
+.i-rule-left{position:absolute;bottom:10px;left:10px;background:#ff0;color:#F00;padding:3px 5px;border-radius:5px;font-size:12px;z-index:5}
+</style>
+</head>
+<body>
+<article id="page-index">
+  <header id="i-header" class="i-header" >
+  <img src="{php echo $_W['attachurl'].$reply['thumb_top']}" style="width:100%;"/>
+  <a href="{php echo $this->createMobileUrl('rank',array('rid' => $rid));}"><span class="i-rule-left">&nbsp;排行榜&nbsp;</span></a>
+  <A href="javascript:showrule();"><span id="i-rule" class="i-rule-right">游戏规则</span></A>
+  </header>
+  <p align="center">{$reply['ad']}</p>
+  <!-- 基本信息-->
+  <div id="nodesdiv">
+  
+    {if $fans=='' }
+    <ul id="i-nodes" class="i-nodes" style="display: block; height: 62px;width: 300px; ">
+      <li style="top: 7px; left: 103px; ">
+        <section class="i-node-1"></section>
+        <span><img src="{$fans['headimgurl']}"></span>
+        <p id="myScroe"> {$fans['distance']}m </p>
+      </li>
+      
+      <li style="top: 7px; left: 177px; ">
+        <section class="i-node-2-g"></section>
+        <span class="i-node-null"><img></span>
+        <p> </p>
+      </li>
+      
+      <li style="top: 7px; left: 251px; " >
+        <section class="i-node-1"></section>
+        <i style="position: absolute;top: 0;left: 0px;background: url({php echo $_W['attachurl'].$reply['thumb_end']});background-size:100% 100%;" class="huafei"></i></li>
+    </ul>
+    {else}
+    <ul id="i-nodes" class="i-nodes" style="display: block; height: 62px; ">
+      <?php $count=count($geili);
+			$left = 103;
+			$top = -63;
+			$flag = -1;
+			$margin = 0;
+			$all = 0;
+			
+	         for($i=0;$i<$count;$i++){
+				if($i% 3 == 0){
+				
+				 if(($i+1)%2 == 0){
+                        $left = 251;
+						
+                    }else{
+                        $left = 103;
+                    }
+					
+                    $flag ++;
+                    $top+=70;
+					$margin+=60;
+                }
+				if($i >= $flag*3 && i <= $flag*3+2){ ?>
+      <li style="top: {$top}px; left: {$left}px; ">
+        <?php if($i%6==0 || ($i+1)%6 == 0){echo '';}else{echo '<section class="i-node-1"></section>';}?>
+        <span><img src="{$geili[$i]['headimgurl']}"></span>
+        <?php if($i%3==0 && $i != 0){if(($i+1)%2 == 0){echo '<section class="i-node-4"></section>';}else{echo '<section class="i-node-8"></section>';}} ?>
+        <p> {$geili[$i]['distance']}m </p>
+        <?php $all = $flag;?>
+      </li>
+      <?php  
+                    (($flag+1)%2 ==0) ? $left-=70 : $left+=70;
+                }  ?>
+      <?php}?>
+      <?php if($all % 2 == 0){?>
+      <li style="top:{$top}px;left:{$left}px;">
+        <section style="left: inherit;left: -38px;" class="i-node-1"></section>
+        <i style="position: absolute;top: 0;left: px;background: url({php echo $_W['attachurl'].$reply['thumb_end']});background-size:100% 100%;" class="huafei"></i></li>
+      <?php}else{?>
+      <li style="top: {$top}px;left: {$left}px;">
+        <section style="left: inherit;right: -38px;" class="i-node-1"></section>
+        <i style="position: absolute;top: 0;left: 12px;background: url({php echo $_W['attachurl'].$reply['thumb_end']});background-size:100% 100%;" class="huafei"></i></li>
+      <?php}?>
+      <style>
+#nodesdiv{width:300px;position:relative;left: 55px;overflow: hidden;height: <?php echo ($flag+1)*52+(30*($flag+1)) ?>px;}
+</style>
+    </ul>
+    {/if}
+  </div>
+  <div class="i-race"> 
+  	
+    {if !empty($fans)}
+      <p id="i-owner" style="display:block;"> <strong>{$fans['nickname']}</strong>的跑道： </p>
+      {if !empty($is_getprize)}
+      <!--已经兑换-->
+      <p id="i-stat-reward" class="i-stat" style="display:block;">已兑换{$is_getprize['giftname']}<br></p>
+      {else}
+      <!--未兑换-->
+      <p id="i-stat-remain-owner" class="i-stat" style="display:block"> 已跑 <span class="i-total" id="i-totalxx">{$sum}</span>米，
+      {if $reply['gametype']==0}
+          游戏结束后，奖励前{$reply['ranking']}名哦
+      {else}
+        {if $reply['need']-$sum>0}
+        距离领取{$reply['gift']}还有<span class="i-remain">{php echo $reply['need']-$sum}</span>米
+        {else}
+        已可以领取{$reply['gift']}
+        {/if}
+      {/if}
+      </p>
+      {/if}
+    {/if}
+  </div>
+  <div id="i-notice-bind"> </div>
+  <div id="i-end"> </div>
+  <div class="i-start-panel">
+    {if $status==0}
+    <span><button id="i-xinxi" class="i-button" style="display:block;">开始游戏</button></span>
+    {else}
+    	{if empty($fans['distance'])} 
+          <span><button id="i-start" class="i-button i-btn-animate" style="display:inline-block;">开始游戏</button></span>
+        {else}
+          {if !empty($is_getprize)}
+          <span><a href="{php echo $this->createMobileUrl('rank',array('rid' => $rid));}"><button class="i-button i-btn-animate" style="display:inline-block;">看看排名</button></a></span>
+          <span><button id="i-invite" class="i-button i-btn-animate" style="display:block;">叫朋友一起玩</button></span>
+          {else}
+          {if $reply['gametype']==0}
+          <span><button id="i-start" class="i-button" style="display:inline-block;">再跑一次</button></span>
+          <span><button id="i-invite" class="i-button i-btn-animate" style="display:block;">邀请朋友接力</button></span>
+          {else}
+          {if $reply['need']-$sum>0}
+          <span><button id="i-start" class="i-button" style="display:inline-block;">再跑一次</button></span>
+          <span><button id="i-invite" class="i-button i-btn-animate" style="display:block;">邀请朋友接力</button></span>
+          {else}
+          <span><button id="i-getprize" class="i-button i-btn-animate" style="display:inline-block;">领取奖品</button></span>
+          {/if}
+          {/if}
+          {/if}
+        {/if}
+        {if $friendid && $openid}
+        <span><a href="{php echo $this->createMobileUrl('share',array('rid' => $rid,'fid'=>$friendid));}"><button class="i-button" style="display:inline-block;margin-top:10px">帮{$frdnickname}接力</button></a></span>
+        {/if}
+    {/if}
+    </div>
+  <div id="i-notice-others" class="i-notice"> 记得分享给小伙伴哦 </div>
+  <div id="i-notice-uc" class="i-notice" style="display:block; "> </div>
+  <div id="i-notice-download" class="i-notice"> </div>
+  <div id="i-notice-download-close"> × </div>
+  {if !empty($fans)}
+  <section id="i-ranking" style="display: block; ">
+    <div class="i-title-rank"> 基情榜 </div>
+    <ul id="i-records" class="i-friend-rank">
+      <?php for($i=0;$i<$count;$i++){ ?>
+      {if $geili[$i]['distance']!=0}
+      <li>
+        <div class="box">
+          <div> <img src="{$geili[$i]['headimgurl']}"/> </div>
+          <div>
+            <p>{$geili[$i]['nickname']}</p>
+            <?php if($i==0){ ?>
+            <p><small> 自己跑了{$geili[$i]['distance']}m</small></p>
+            <?php }else{ ?>
+            <p><small> 帮{$ren}跑了{$geili[$i]['distance']}m</small></p>
+            <?php } ?>
+          </div>
+          <em>{php echo date('Y-m-d H:i', $geili[$i]['time'])}</em>
+          <section style="clear:both;"></section>
+        </div>
+        <p> </p>
+      </li>
+      {/if}
+      <?php}?>
+    </ul>
+  </section>
+  {/if}
+  <div id="timelineGuid" onclick="this.style.display='none'" style="display: none;position:fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 2000; background: rgba(0, 0, 0, 0.701961);"> <img src="../addons/j_run/template/mobile/img/guide.png" style="position: fixed; right: 18px; top: 5px; width: 260px; height: 180px; z-index: 2001;"> </div>
+
+{template 'ad'}
+<img src="{php echo $_W['attachurl'].$reply['img_personImg_girl']}" style="width:1px; height:1px"/>
+<img src="{php echo $_W['attachurl'].$reply['img_personsImg_girl']}" style="width:1px; height:1px"/>
+<img src="{php echo $_W['attachurl'].$reply['img_personImg']}" style="width:1px; height:1px"/>
+<img src="{php echo $_W['attachurl'].$reply['img_personsImg']}" style="width:1px; height:1px"/>
+</article>
+
+<div id="rulebox" style="display:none;">
+	<div class="rulebody">{php echo str_replace(array("\r\n", "\r", "\n"), "<br>", $reply["rule"])}</div>
+    <div class="rulefoot"><button type="button" class="i-button" onClick="closeRule();">关闭</button></div>
+</div>
+<div id="markser"></div>
+<style>
+#markser{ width:100%; height:100%; background:rgba(0,0,0,0.6); position:absolute; z-index:9; display:none;}
+#rulebox{ width:90%; background:#FFF; border-radius:8px; padding:10px; position:fixed; top:10px; bottom:10px; z-index:10;}
+.rulebody{ overflow-y:scroll;}
+.rulefoot{ padding:5px; text-align:center;height:30px;}
+.rulefoot button{}
+</style>
+<script language="javascript">
+var qrcode="{php echo $qrcode}";
+$('#i-getprize').bind('click',function(){
+	swal({
+		title:"兑奖二维码",
+		text:"请将兑奖二维码出示给店员，或者长按保存到手机上。<br><img src='http://qr.liantu.com/api.php?text="+qrcode+"' height='200'/>",
+		html: true
+	})
+})
+
+$(function(){
+	if($('body').width() <= 320){
+		$('#nodesdiv').css({left:'15px'})
+	}
+	$('#i-start').bind('click',function(){
+		window.location.href = "{php echo $this->createMobileUrl('Game',array('rid' => $rid,'uid'=>$fans['id'],'fid'=>$fans['helpid']))}";
+	})
+	$('#i-invite').bind('click',function(){
+		$("#timelineGuid").show();
+	})
+	
+	
+	$('#i-xinxi').bind('click',function(){
+		swal({
+			title:"系统提示",
+			text:'您还没有关注我们的公众号，系统无法获取到您的信息，这将会导致您无法领奖。请您点击【去关注】按钮关注本公众号。',
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",   
+			confirmButtonText: "去关注", 
+			cancelButtonText: "关闭", 
+			closeOnConfirm: false,  
+			animation:false,
+			closeOnCancel: false },
+			function(isConfirm){ 
+				if (isConfirm) { 
+					window.location.href="{$reply['gzurl']}"; 
+				} else {
+					swal.close();
+				} 
+			}
+		);
+	})
+	
+})
+function closeRule(){
+	$("#rulebox").hide();
+	$("#markser").hide();
+}
+function showrule(){
+	var _h=document.documentElement.clientHeight -60;
+	var _w=document.documentElement.clientWidth *0.90;
+	var _left=document.documentElement.clientWidth *0.05;
+	$("#rulebox").css({'width':_w,'height':_h,'left':_left}).show();
+	
+	$(".rulebody").css("height",_h-60);
+	var _hd=$(document).height();
+	$("#markser").css({'width':_w,'height':_hd,'top':0,'left':0,'bottom':0}).show();
+	/*swal({
+		title:"活动规则",
+		text:'<article id="rulebox" style="display:block;text-align:left;width:'+_w+'px;height:'+_h+'px;overflow-y:scroll;">{php echo str_replace(array("\r\n", "\r", "\n"), "<br>", $reply["rule"])}</article>',
+		html: true
+	})
+	$("#rulebox").width(_w);*/
+}
+</script>
+<style>{ overflow:scroll;</style>
+</body>
+</html>

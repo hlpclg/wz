@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>{$_W['account']['name']}的留声墙</title>
+		{php echo register_jssdk(false);}
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<link rel="stylesheet" href="{MODULE_URL}template/style/css/list.css">
+		<link rel="stylesheet" href="{MODULE_URL}template/style/css/base.css">
+		<script type="text/javascript" src="{MODULE_URL}template/style/js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript">
+			function getUrl(){
+				return $('#baseurl').val();
+			}
+		</script>
+		<style type="text/css">
+			body{
+				background-color:#eef0eb;
+				overflow: hidden;
+				position:relative;
+			}
+			.detail-box {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				z-index: 99;
+				background: #fff;
+			}
+			.detail-box a.close {
+				position: absolute;
+				left: 10px;
+				bottom: 10px;
+				display: block;
+				width: 40px;
+				height: 40px;
+				-webkit-border-radius: 50%;
+				-moz-border-radius: 50%;
+				-ms-border-radius: 50%;
+				border-radius: 50%;
+				background: rgba(0,0,0,0.5);
+			}
+			.detail-box a.close span {
+				display: block;
+				width: 40px;
+				height: 40px;
+				background: url({MODULE_URL}template/style/img/voicea_icon_07.png) center center no-repeat;
+				background-size: 20px 20px;
+			}
+			.pic-div {
+				margin-bottom:8px;
+				position:relative;
+			}
+			.pic img {
+				width : 100%;
+				box-shadow: 2px 2px 0 #909090;
+			}
+			.pic-div .sound {
+				position:absolute;
+				left:0;
+				bottom:0;
+			}
+			.content td {
+				width:37%;
+				vertical-align:top;
+			}
+		</style>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				lodImage();
+			});
+	       function lodImage(){
+		       	var imgWidth = $(window).width()*0.32;
+		        $("#main li").height(imgWidth*1.1);
+	       }
+	       window.onresize = function(){
+	        	lodImage();
+	       }
+		</script>
+	</head>
+
+	<body>
+		<input type="hidden" id="baseurl" value="{MODULE_URL}">
+		<div id="header">
+			<div class="logo fn-clear">
+				<div class="fn-left">
+					<img class="fn-left" src="{MODULE_URL}template/style/img/liu_logo.png" />
+				</div>
+				<div class="fn-right but">
+					<a href="{php echo $this->createMobileUrl('Mypage')}">我的留声卡</a>
+				</div>
+			</div>
+		</div>
+		<div id="main">
+			<div class="content">
+				<table class="fn-clear" id="data_content" style="width:100%;">
+					<tr>
+						<td style="padding-left:11%;padding-right:2%;">
+							<div id="content-1">
+							</div>
+						</td>
+						<td style="padding-left:2%;padding-right:11%;">
+							<div id="content-2">
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="bottom">
+				<a href="javascript:;" id="load-more-but">查看更多</a>
+			</div>
+			<footer><a target="_top" class="box-flex" style="text-align: center;">@{$_W['account']['name']}</a></footer>
+
+		</div>
+		<div class="detail-box" style="width:100%;height:100%;position:fixed;z-index:999999;">
+			<div id="info-content" style="width:100%;height:100%;border:0;overflow: auto;"></div>
+			<a href="javascript:;" class="close" style="position:fixed;">
+				<span></span>
+			</a>
+		</div>
+		<div id="content-temp" style="position:absolute;width:0px;height:0px;left:-12px;overflow:hidden;"></div>
+	</body>
+	<script type="text/javascript">
+		var page = 0,isLoading=false, model='';
+		$(document).ready(function(){
+			loadMore();
+		});
+		function loadMore(but) {
+			var but = $('#load-more-but');
+			if(isLoading) {
+				return;
+			}
+			isLoading = true;
+			$(but).html('加载中');
+			page = page + 1;
+			$.post('{php echo $this->createMobileUrl('index',array('foo'=>'show'))}'+'&page='+page,function(msg){
+				isLoading = false;
+				if(msg.isok) {
+					var list = msg.list;
+					if(list==null){
+						if(!msg.hasMore) {
+							$(but).hide();
+							$(window).unbind('scroll');
+						}
+						return;
+					}
+					var html = [];
+					$.each(list,function(index,album) {
+						html.push('<div><div class="pic-div">');
+						html.push('<a href="javascript:;" data-url="{php echo $this->createMobileUrl('Details')}'+'&id='+album.id+'" class="pic"><img src="'+album.face+'"/></a>');
+						if(album.voicePath != null && album.voicePath != '') {
+							html.push('<a class="sound"><img width="20" height="20" src="{MODULE_URL}template/style/img/sound_icon_02.png"/></a>');
+						}
+						html.push('</div></div>');
+					});
+					if(html==''){
+						return;
+					}
+					$('#content-temp').append(html.join(''));
+					$.each($('.pic').find('img'), function(index, object) {
+						object.onload = function(){
+							if($('#content-1').height() < $('#content-2').height()) {
+								$('#content-1').append($(object).parent().parent().parent().html());
+								$(object).parent().parent().parent().remove();
+							} else {
+								$('#content-2').append($(object).parent().parent().parent().html());
+								$(object).parent().parent().parent().remove();
+							}
+						};
+					});
+					lodImage();
+					if(msg.hasMore) {
+						$(but).html('查看更多');
+					} else {
+						$(but).hide();
+						$(window).unbind('scroll');
+					}
+				} else {
+					alert(msg.message);
+				}
+			},'json');
+		}
+		$('#load-more-but').click(loadMore);
+		$(window).scroll(function(){
+			var scrollTop = $(this).scrollTop();               //滚动条距离顶部的高度
+			var scrollHeight = $(document).height();           //当前页面的总高度
+			var windowHeight = $(this).height();               //当前可视的页面高度
+		    　 	if(scrollTop + windowHeight >= scrollHeight){        //距离顶部+当前高度 >=文档总高度 即代表滑动到底部
+		    　 		loadMore();
+        	}
+	    });
+		var iframeIndex = 0;
+		window.openDetail = function(url) {
+			$('#info-content').load(url+'&enterType=0');
+			$('.detail-box').show();
+		};
+		$(document).ready(function(){
+			$('.pic').live('click', function(){
+				var url = $(this).attr('data-url');
+				window.openDetail(url);
+			});
+			$('.detail-box a.close').click(function(){
+				$('.detail-box').hide();
+				$('#info-content').html('');
+				window.dataForWeixin = window.dataForWeixin1;
+				window.share_count = window.share_count1;
+				document.title = '{$_W['account']['name']}的留声墙';
+			});
+		});
+	</script>
+	<script type="text/javascript" src="{MODULE_URL}template/style/js/default.set.js"></script>
+
+</html>

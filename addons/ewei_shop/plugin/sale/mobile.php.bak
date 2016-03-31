@@ -1,0 +1,12 @@
+<?php
+//折翼天使资源社区 QQ:3213288469
+if (!defined('IN_IA')) {
+    exit('Access Denied');
+}
+class SaleMobile extends Plugin
+{
+    public function __construct()
+    {
+        parent::__construct('sale');
+    }
+}

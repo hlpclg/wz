@@ -1,0 +1,120 @@
+{template 'common/header'}
+{php load()->func('tpl');}
+<script type='text/javascript' src='resource/js/lib/jquery-1.11.1.min.js'></script>
+<script type="text/javascript" src="{MEEPO}images/jquery.gcjs.js"></script>
+<script type="text/javascript" src="{MEEPO}images/jquery.form.js"></script>
+<script type="text/javascript" src="{MEEPO}images/tooltipbox.js"></script>
+<style type="text/css">
+.red {float:left;color:red}
+.white{float:left;color:#fff}
+
+.tooltipbox {
+	background:#fef8dd;border:1px solid #c40808; position:absolute; left:0;top:0; text-align:center;height:20px;
+	color:#c40808;padding:2px 5px 1px 5px; border-radius:3px;z-index:1000;
+}
+.red { float:left;color:red}
+</style>
+<ul class="nav nav-tabs">
+	<li {if $operation == 'display'} class="active" {/if}><a href="{php echo $this->createWebUrl('exchangerecord',array('op' =>'display'))}">兑换记录</a></li>
+	{if !empty($user['id']) &&  $operation == 'post'}<li  class="active"><a href="{php echo $this->createWebUrl('exchangerecord',array('op' =>'post','id'=>$user['id']))}">修改兑换记录</a></li>{/if}
+    <li><a href="{php echo $this->createWebUrl('payrecord')}">充值记录</a></li>
+	<li><a href="{php echo $this->createWebUrl('baoyuerecord')}">包月记录</a></li>
+	<li><a href="{php echo $this->createWebUrl('photolist')}">图片管理</a></li>
+	<li><a href="{php echo $this->createWebUrl('tjapply')}">推荐记录</a></li>
+    <li><a href="{php echo $this->createWebUrl('set')}">基本设置</a></li>
+</ul>
+{if $operation == 'display'}
+<div class="panel panel-info">
+	<div class="panel-heading">
+	筛选
+	
+	</div>
+	<div class="panel-body">
+		<form action="./index.php" method="get" class="form-horizontal" role="form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+			<input type="hidden" name="m" value="meepo_weixiangqin" />
+			<input type="hidden" name="do" value="exchangerecord" />
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">点击兑换粉丝昵称</label>
+				<div class="col-xs-12 col-sm-8 col-lg-9">
+					<input class="form-control" name="nickname" id="" type="text" value="{$_GPC['nickname']}" placeholder="请输入点击兑换粉丝昵称">
+				</div>
+			</div>
+			<div class="form-group">
+                <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">支付时间</label>
+                <div class="col-xs-12 col-sm-8 col-lg-9">
+               	
+				{php echo tpl_form_field_daterange('datelimit', array('starttime'=>empty($starttime) ? date('Y-m-d',time()) : date('Y-m-d',$starttime),'endtime'=>empty($endtime) ? date('Y-m-d',time()+3600*240) : date('Y-m-d',$endtime)))}
+				
+               </div>
+           </div>
+			<div class="form-group">
+			    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label"></label>
+				<div class=" col-xs-12 col-sm-2 col-lg-3">
+					<input type="submit"  value="搜索" class="btn btn-success btn-block" />
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>
+<div class="main panel panel-default">
+	<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+				    
+					<th>兑换人</th>
+					<th>被兑换人</th>
+					<th style="width:300px">兑换类目</th>
+					<th>花费积分</th>
+					<th>兑换时间</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $row}
+				
+				<tr>
+				    
+					<td class="row-hover">
+								<img width="50" src="{if preg_match('/http:(.*)/',$row['avatar'])}{$row['avatar']} {else if preg_match('/images(.*)/',$row['avatar'])} {$_W['attachurl']}{$row['avatar']}     {else}{MEEPORES}/static/friend/images/cdhn80.jpg{/if}" class="avatar" />
+								<div class="mainContent">
+									<div class="nickname"><a href="{php echo $this->createWebUrl('list', array('keyword' =>$row['nickname'] , 'isshow' =>'1'))}">{$row['nickname']}</a></div>
+								</div>
+							</td>
+					<td class="row-hover">
+								<img width="50" src="{if preg_match('/http:(.*)/',$row['toavatar'])}{$row['toavatar']} {else if preg_match('/images(.*)/',$row['toavatar'])} {$_W['attachurl']}{$row['toavatar']}     {else}{MEEPORES}/static/friend/images/cdhn80.jpg{/if}" class="avatar" />
+								<div class="mainContent">
+									<div class="nickname"><a href="{php echo $this->createWebUrl('list', array('keyword' =>$row['tonickname'] , 'isshow' =>'1'))}">{$row['tonickname']}</a></div>
+								</div>
+							</td>
+					<td style="width:200px">{$row['twhichone']}</td>
+					<td>{$row['credit']}分</td>
+				
+					<td>
+					            <div style="margin-bottom:10px;">{php echo date('Y-m-d', $row['createtime']);}</div>
+								<div>{php echo date('H:i:s', $row['createtime']);}</div>
+					</td>
+					<td style="text-align:left;">
+						<a href="{php echo $this->createWebUrl('exchangerecord', array('op' => 'delete', 'id' => $row['id']))}"class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="删除" onclick="return confirm('删除将无法恢复，确认吗？');return false;"><i class="fa fa-times"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+</div>
+<script>
+	require(['bootstrap'],function($){
+		$('.btn').hover(function(){
+			$(this).tooltip('show');
+		},function(){
+			$(this).tooltip('hide');
+		});
+	});
+</script>
+
+{/if}
+{template 'common/footer'}

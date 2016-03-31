@@ -1,0 +1,172 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>帮TA传情</title>
+
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+  <link rel="icon" type="image/png" href="assets/i/favicon.png">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" sizes="192x192" href="assets/i/app-icon72x72@2x.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+  <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
+  <meta name="msapplication-TileColor" content="#0e90d2">
+
+  <link rel="stylesheet" href="{$res_path}/css/amazeui.min.css">
+  <link rel="stylesheet" href="{$res_path}/css/app.css">
+  <link rel="stylesheet" href="{$res_path}/css/init.css">
+  
+  <!--[if (gte IE 9)|!(IE)]><!-->
+  <script type="text/javascript" src="{$res_path}/js/jquery.min.js"></script>
+  <!--<![endif]-->
+  <!--[if lte IE 8 ]>
+  <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+  <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+  <![endif]-->
+  <script type="text/javascript" src="{$res_path}/js/amazeui.min.js"></script>
+  <script type="text/javascript" src="{$res_path}/js/jquery.backstretch.js"></script>
+  <script type="text/javascript" src="{$res_path}/js/jquery.overlay.min.js"></script>
+  <script type="text/javascript" src="{$res_path}/js/init.js"></script>
+  
+</head>
+<body>
+
+<div class="choose_bgimage_area">
+  <div class="choose_bgimage_tips">
+  <span class="content">︾往下拉选择背景︾</span>
+  </div>
+  <div data-am-widget="slider" class="am-slider am-slider-a5" data-am-slider='{"animation":"slide","slideshow":false,"animationLoop":true,"itemWidth":150,"itemMargin":5}' >
+    <ul class="am-slides">
+    {loop $bgimages $key $item}
+      <li>
+        <img width="150px" height="270px" src="../{$_W[config][upload][attachdir]}/{$item['filename']}">
+      </li>
+    {/loop}
+    </ul>
+  </div>
+</div>
+
+<div class="musicicon_area">
+	<div class="musicicon musicbg musicicon_animate" style="position:fixed;"></div> 
+</div> 
+
+{if $isfollow}
+<div class="main">
+  <nav class="navbar navbar-default " role="navigation">
+    <div class="container" style="width: 100%; ">
+      <h3 style="position: relative; text-align: center;">
+        <span class="content">写下你的小情书吧</span>
+      </h3>
+    </div>
+  </nav>
+	<form action="" method="post" class="form-horizontal" role="form">
+		<div class="box">
+			<textarea id="content" name="content" placeholder="点击开始写吧"></textarea>
+			<div class="input_text_area">from：<input type="text" id="fromuser" name="fromuser" value=""></div>
+			<div class="sumit_inputtext_area"><input type="button" name="submit" value="" data-am-modal="{target: '#my-modal-loading'}"></div>
+			<input id="bgimage" type="hidden" name="bgimage" value="">
+		</div>		
+	</form>
+</div>
+{else}
+<div class="main">
+  <nav class="navbar navbar-default " role="navigation">
+    <div class="container" style="width: 100%; ">
+      <h3 style="position: relative; text-align: center; margin-top:50px;">
+        <span class="content">关注下面公众号后，发小情书就可以啦(^o^)</span>
+      </h3>
+    </div>
+  </nav>
+  <div class="qr">
+    <img width="150px" src="{$_W["account"]["qrcode"]}">
+  </div>
+</div>
+{/if}
+
+<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="my-modal-loading">
+  <div class="am-modal-dialog">
+	<div class="am-modal-hd"><span class="txt">正在生成...</span>
+      <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+    </div>
+    <div class="am-modal-bd">
+      <span class="am-icon-spinner am-icon-spin"></span>
+    </div>
+  </div>
+</div>
+
+<div class="snowbg"></div>
+
+</body>
+</html>
+
+<audio style="display:none; z-index:-9999;visibility:hidden" preload="preload" controls id="car_audio" src="../{$_W[config][upload][attachdir]}/{php echo $this->randomBgres(1)}" loop></audio>
+<script>
+$(".sumit_inputtext_area input").bind("click", function(){
+  $(".am-modal-bd").show();
+  $("#my-modal-loading .txt").html("正在生成...");
+  if($("#content").val() == "" || $("#fromuser").val() == "") {
+    $("#my-modal-loading .txt").html("亲，漏些点东西了吧(^o^)");
+    $(".am-modal-bd").hide();
+    return;
+  }
+	$.ajax({
+	  type: 'POST',
+	  url: "{php echo $this->createMobileUrl('saylove', array('op'=>'submit'));}",
+	  data: {content : $("#content").val(), fromuser : $("#fromuser").val(), bgimage : $("#bgimage").val()},
+	  success: function(data){
+		setTimeout(function(){
+			$("#my-modal-loading .txt").html("生成完成");
+			setTimeout(function(){
+				$("#my-modal-loading").modal('close');
+				link = "{php echo $this->createMobileUrl('showlove', array('id'=>'id_number'));}";
+				location.href = link.replace("id_number", data);
+			},1000);
+		},1000);		
+	  }
+	});
+});
+
+$(function(){
+  randimage = "{php echo $this->randomBgres(2)}";
+  $.backstretch(["../{$_W[config][upload][attachdir]}/" + randimage]); //背景
+  $("#bgimage").val(randimage);
+  
+});
+
+$(".choose_bgimage_area").css('top', $(window).height()-25);
+
+$(".am-slider li").bind("click", function(){
+	$.backstretch([$("img", this).attr('src')]); //背景
+	$("#bgimage").val($("img", this).attr('src').replace("../{$_W[config][upload][attachdir]}/",""));
+});
+
+setTimeout(function(){
+	$(window).scrollTop(1);
+},0);
+document.getElementById('car_audio').play();
+document.addEventListener("WeixinJSBridgeReady", function () {
+	WeixinJSBridge.invoke('getNetworkType', {}, function (e) {
+		document.getElementById('car_audio').play();
+	});
+}, false);
+</script>

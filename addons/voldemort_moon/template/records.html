@@ -1,0 +1,73 @@
+{template 'common/header'}
+
+<div class="main">
+	
+<style>
+.label{cursor:pointer;}
+</style>
+<!-- <div class="panel panel-info">
+		<div class="panel-heading">筛选</div>
+		<div class="panel-body">
+			<form action="./index.php" method="get" class="form-horizontal" role="form">
+				<input type="hidden" name="c" value="mc" />
+				<input type="hidden" name="a" value="fans" />
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">所属公众号</label>
+					<div class="col-sm-9 col-md-8 col-lg-8 col-xs-12">
+						<select class="form-control" name="acid">
+							<option value="">所有公众号</option>
+							{loop $accounts $acc}
+							<option value="{$acc['acid']}"{if $acc['acid'] == $acid} selected="selected"{/if}>{$acc['name']}</option>
+							{/loop}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">昵称</label>
+					<div class="col-sm-9 col-md-8 col-lg-8 col-xs-12">
+						<input type="text" class="form-control" name="nickname" value="{$nickname}"/>
+					</div>
+				</div>
+					<div class="form-group">
+					<div class="pull-right col-xs-12 col-sm-3 col-md-2 col-lg-2">
+						<button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+					</div>
+				</div>
+				<div class="form-group">
+				</div>
+			</form>
+		</div>
+	</div> -->
+<div class="panel panel-default">
+	<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:50px;"></th>
+					<th style="width:300px;">参与者</th>
+					<th style="width:200px;">得分</th>
+					<th style="width:200px;">排名</th>
+					<th style="text-align:right; min-width:300px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $records $key $vip}
+				<tr>
+					<td></td>
+					<td><span class="text-info"><a href="{php echo url('mc/member/post', array('uid'=>$vip['user']['uid']));}"><img src="{if !empty($vip['user']['tag']['avatar'])}{$vip['user']['tag']['avatar']}{else}resource/images/noavatar_middle.gif{/if}" width="48">&nbsp;&nbsp;&nbsp;{$vip['user']['nickname']}</a></span></td>
+					<td><span class="text-info">{$vip['score']}</span></td>
+					<td><span class="text-info">{php echo ($key+1);}</span></td>
+					
+					<td style="text-align:right;">
+						<a href="{php echo url('mc/notice/tpl', array('id' => $vip['user']['fanid']));}" id="{$vip['user']['fanid']}" class="btn btn-success btn-sm sms">发送消息</a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+			
+		</table>
+	</div>
+	</div>
+</div>
+
+{template 'common/footer'}

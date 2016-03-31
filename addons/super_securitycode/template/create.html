@@ -1,0 +1,435 @@
+{template 'common/header'}
+<style>
+.field label{float:left;margin:0 !important; width:140px;}
+</style>
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li><a href="{php echo $this->createWebUrl('list');}">防伪码列表</a></li>
+		<li class="active"><a href="{php echo $this->createWebUrl('create');}">生成防伪码</a></li>
+		<li><a href="{php echo $this->createWebUrl('insert');}">数据导入</a></li>
+		<li><a href="{php echo $this->createWebUrl('logs');}">查询记录</a></li>
+	</ul>
+	<div class="panel panel-info">
+		<div class="panel-heading">批量生成防伪码</div>
+		<div class="panel-body">
+			<form action="" method="post" class="form-horizontal" role="form" id="form1">
+                <div class="form-group">
+                    <label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">商城选项</label>
+                    <div class="col-sm-4">
+                        <label><input  name="fromshop" id="" type="radio" value="1">有商城</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label> <input  name="fromshop" id="" type="radio" value="0" checked="true">无商城</label>
+                    </div>
+
+                </div>
+
+                <div class="form-group haveshop" style="display:none;">
+                    <label class="col-xs-12 col-sm-3 col-md-1 control-label">分类</label>
+                    <div class="col-sm-8 col-xs-12">
+                        {php echo tpl_form_field_category_2level('category', $parent, $children, $params[':pcate'], $params[':ccate'])}
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-lg-2">
+
+                    </div>
+                </div>
+
+                <div class="form-group haveshop" style="display:none;">
+                    <label class="col-xs-12 col-sm-3 col-md-1 control-label">产品</label>
+                    <div class="col-sm-8 col-xs-12">
+
+                        <select class="form-control tpl-category-parent" id="goods" name="goods" onchange="selectgoods()">
+
+                            </select>
+
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-lg-2">
+                        <span id="txtHint_good"></span>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+                <div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">防伪码长度</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="slen" id="" type="text" value="10">&nbsp;&nbsp;建议8-20位以内 
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">防伪码前缀</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sStr" id="sStr" type="text" value="" onkeyup="checkstr(this.value)">&nbsp;&nbsp;<span id="txtHint">设置的防伪码前缀</span>
+				</div>		
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">防伪码规则</label>
+				<div class="col-sm-4">
+					<select class="form-control" name="rule">
+						<option value="3">前缀 + 字母 + 数字</option>
+						<option value="2">前缀 + 字母</option>
+						<option value="1">前缀 + 数字</option>
+					</select>
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">生成数量</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sNum" id="" type="text" value="100">&nbsp;&nbsp;一次过多，可能造成数据库变量，建议1000条以内
+				</div>		
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">产品名称</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sName" id="goods_title" type="text" value="">
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">产品品牌</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sBrand" id="" type="text" value="">
+				</div>
+					
+			</div>
+            <div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">规格参数</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sSpec" id="" type="text" value="">
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">产品重量</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sWeight" id="" type="text" value="">
+				</div>
+					
+			</div>  
+            <div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">生产厂家</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sFactory" id="" type="text" value="">
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">备注</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sRemarks" id="" type="text" value="">
+				</div>
+					
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">积分类型</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="creditname" id="" type="text" value="">
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">积分值</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="creditnum" id="" type="text" value="">
+				</div>
+					
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">积分状态</label>
+				<div class="col-sm-4">
+					<input name="creditstatus" id="" type="radio" value="0" checked> 未发放
+					<input name="creditstatus" id="" type="radio" value="1"> 已发放
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">有效日期</label>
+				<div class="col-sm-4">
+					{php echo tpl_form_field_date('sTime_1', $value = array(), $withtime = true );}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-4 col-md-3 col-lg-2 control-label">未关注转向地址</label>
+				<div class="col-sm-6">
+					<input class="form-control" name="tourl" id="" type="text" value="">
+				</div>
+			</div>
+
+
+                <div class="form-group">
+                    <label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">LOGO图</label>
+                    <div class="col-sm-4">
+                        {php echo tpl_form_field_image('img_logo', '', '', array('extras' => array('text' => 'readonly')))}
+                    </div>
+                    <label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">Banner图</label>
+                    <div class="col-sm-4">
+                        {php echo tpl_form_field_image('img_banner', '', '', array('extras' => array('text' => 'readonly')))}
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">视频地址</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" name="video" id="" type="text" value="">
+                    </div>
+                    <label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">购买地址</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" name="buyurl" id="" type="text" value="">
+                    </div>
+
+                </div>
+
+			<div class="form-group">
+				<div class="col-sm-8">
+					<input type="submit" name="submit" value="批量生成" class="btn btn-primary">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</div>		
+			</div>
+			</form>
+		</div>
+	</div>
+<script type="text/javascript">
+    var goodslist ;
+
+	require(['jquery', 'util'], function($, u){
+		$("#form1").submit(function(){
+			if(!$(":text[name='slen']").val()) {
+				u.message('抱歉，防伪码长度为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='sStr']").val() == '') {
+				u.message('抱歉，防伪码前缀必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='sStr']").val() != '') {
+				
+			}
+			if(!$("select[name='rule']").val()) {
+				u.message('请选择防伪码规则！', '', 'error');
+				return false;
+			}
+			if($(":text[name='sNum']").val() == '') {
+				u.message('抱歉，生成数量为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='sName']").val() == '') {
+				u.message('抱歉，产品名称为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='sFactory']").val() == '') {
+				u.message('抱歉，生成厂家为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='creditname']").val() == '') {
+				u.message('抱歉，积分类型为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='creditnum']").val() == '') {
+				u.message('抱歉，积分数为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			return true;
+		});
+
+        $("#category_child").change(function(){
+            var child_str = $("#category_child").val();
+            $.ajax({
+                type: "POST",
+                url: "{php echo $this->createWebUrl('getgoods');}",
+                data: {ccate:child_str},
+                dataType: "json",
+                success: function(data){
+                    $goods = $('#goods');
+                    if (data != '0') {
+                        goodslist = data;
+                        var html = '<option value="0">请选择产品</option>';
+                        for(var i=0; i< data.length; i++){
+                            html += '<option value="'+data[i]['id']+'">'+data[i]['title']+'</option>';
+                        }
+                        $goods.html(html);
+                    }else{
+                        var html = '<option value="0">本分类下暂无产品</option>';
+                        $goods.html(html);
+
+                    }
+                }
+            });
+        });
+
+        $("input[name='fromshop']").click(function(){
+            var $formshop = $("input[name='fromshop']");
+            if($(this).val()=='1'){
+                $(".haveshop").show();
+            }
+            if($(this).val()=='0'){
+                $(".haveshop").hide();
+            }
+
+
+        });
+	});
+	function checkstr(str){
+		var dat='';
+		$.ajax({
+			type: "POST",
+			url: "{php echo $this->createWebUrl('checkepre');}",
+			data: {sStr:str},
+			dataType: "json",
+			success: function(data){
+				if (data >= '1') {
+					document.getElementById("txtHint").innerHTML='<font color="red">数据库中已存在相同前缀的数据'+data+'条,请修改</font>';
+				}else{
+					document.getElementById("txtHint").innerHTML='<font color="green">当前防伪码前缀可用</font>';
+				}
+			}
+		});
+	}
+</script>
+	<div class="panel panel-info">
+		<div class="panel-heading">生成单个防伪码</div>
+		<div class="panel-body">
+			<form action="" method="post" class="form-horizontal" role="form" id="form2">
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">防伪码</label>
+				<div class="col-sm-8">
+					<input class="form-control" name="security" id="security" type="text" value=""onkeyup="checksecurity(this.value)">&nbsp;&nbsp;<span id="txtHint2">设置的防伪码</span>
+				</div>	
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">产品名称</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sName2" id="" type="text" value="">
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">产品品牌</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sBrand2" id="" type="text" value="">
+				</div>
+					
+			</div>
+            <div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">规格参数</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sSpec2" id="" type="text" value="">
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">产品重量</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sWeight2" id="" type="text" value="">
+				</div>
+					
+			</div>  
+            <div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">生产厂家</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sFactory2" id="" type="text" value="">
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">备注</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="sRemarks2" id="" type="text" value="">
+				</div>		
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">积分类型</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="creditname2" id="" type="text" value="">
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">积分值</label>
+				<div class="col-sm-4">
+					<input class="form-control" name="creditnum2" id="" type="text" value="">
+				</div>
+					
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">积分状态</label>
+				<div class="col-sm-4">
+					<input name="creditstatus2" id="" type="radio" value="0" checked> 未发放
+					<input name="creditstatus2" id="" type="radio" value="1"> 已发放
+				</div>
+				<label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">有效日期</label>
+				<div class="col-sm-4">
+					{php echo tpl_form_field_date('sTime_2', $value = array(), $withtime = true );}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-13 col-sm-4 col-md-3 col-lg-2 control-label">未关注转向地址</label>
+				<div class="col-sm-6">
+					<input class="form-control" name="tourl" id="" type="text" value="">
+				</div>
+			</div>
+
+                <div class="form-group">
+                    <label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">LOGO图</label>
+                    <div class="col-sm-4">
+                        {php echo tpl_form_field_image('img_logo', '', '', array('extras' => array('text' => 'readonly')))}
+                    </div>
+                    <label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">Banner图</label>
+                    <div class="col-sm-4">
+                        {php echo tpl_form_field_image('img_banner', '', '', array('extras' => array('text' => 'readonly')))}
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">视频地址</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" name="video" id="" type="text" value="">
+                    </div>
+                    <label class="col-xs-13 col-sm-2 col-md-2 col-lg-1 control-label">购买地址</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" name="buyurl" id="" type="text" value="">
+                    </div>
+
+                </div>
+
+
+			<div class="form-group">
+				<div class="col-sm-8">
+					<input type="submit" name="submitone" value="生成防伪码" class="btn btn-primary">
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</div>		
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	require(['jquery', 'util'], function($, u){
+		$("#form2").submit(function(){
+			if(!$(":text[name='security']").val()) {
+				u.message('抱歉，防伪码为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='sName2']").val() == '') {
+				u.message('抱歉，产品名称为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='sFactory2']").val() == '') {
+				u.message('抱歉，生成厂家为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='creditname2']").val() == '') {
+				u.message('抱歉，积分类型为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			if($(":text[name='creditnum2']").val() == '') {
+				u.message('抱歉，积分数为必填项，请返回修改！', '', 'error');
+				return false;
+			}
+			return true;
+		});
+	});
+	function checksecurity(str){
+		var dat='';
+		$.ajax({
+			type: "POST",
+			url: "{php echo $this->createWebUrl('checkesecurity');}",
+			data: {security:str},
+			dataType: "json",
+			success: function(data){
+				if (data >= '1') {
+					document.getElementById("txtHint2").innerHTML='<font color="red">数据库中已存在该防伪码,请修改</font>';
+				}else{
+					document.getElementById("txtHint2").innerHTML='<font color="green">当前防伪码可用</font>';
+				}
+			}
+		});
+	}
+    function selectgoods(){
+        var goods_id = $("#goods").val();
+        for(var i=0; i< goodslist.length; i++){
+            if(goodslist[i]['id'] ==  goods_id ){
+                $("#goods_title").val(goodslist[i]['title']);
+                $("input[name='img_logo']").val('{php echo $_W['attachurl'];}' + goodslist[i]['thumb']);
+                $("input[name='buyurl']").val('{php echo $_W['siteroot'];}app/index.php?c=entry&do=detail&m=ewei_shopping&id=' + goodslist[i]['id'] + '&i={php echo $_W['weid']}'   );
+
+            }
+        }
+    }
+</script>
+{template 'common/footer'}

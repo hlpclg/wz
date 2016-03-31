@@ -1,0 +1,19 @@
+{template 'header'}
+<div class="container">
+	<h3>{$_W['account']['name']}-公众服务号</h3>
+	【<span style="color:red">高考上头条</span>】功能<br>
+	<br>
+	您当前使用的是“{$_W['os']}”手机<br>
+	<br>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+		苹果、安卓手机请长按下方二维码，点击“识别二维码”关注【{$_W['account']['name']}】
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<img class="img-responsive" src="{$_W['account']['qrcode']}">
+			</div>
+		</div>
+	</div>	
+</div>
+{template 'footer'}

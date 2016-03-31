@@ -1,0 +1,27 @@
+{template 'common/header'}
+<style type="text/css">
+    .main{ padding:0px;}
+    .list li{color:#999;}
+</style>
+<div class="main">
+    <div class="head_box" style=" width:100%; ">
+        <div class="head_logo">
+            <img src="{$_W['attachurl']}{$member['img_banner']}" style="width:100%;" />
+        </div>
+    </div>
+
+
+
+    <div class="list">
+        <div style="width:100%; text-align:center; font-size:1.5em; color: blueviolet; margin-top: 20px;">此码是被第{$member['num']}次被扫</div>
+        <div style="width:100%; text-align:center; font-size:0.8em; color: #666">该码已经被扫描{$member['num']}次，请确认是否为本人操作</div>
+        <div style="width:100%; text-align:center; font-size:1em; color: #22292C; margin-top: 20px;">最近扫码记录</div>
+        <ul>
+            {loop $loglist $log}
+            <li>第{$member['num']}次扫码 &nbsp;&nbsp; {php echo date('Y-m-d H:i:s',$log['createtime']) ; }  &nbsp;&nbsp;{$log['resideprovince']} {$log['residecity']} </li>
+            {php $member['num']--; }
+            {/loop}
+        </ul>
+    </div>
+</div>
+{template 'common/footer'}

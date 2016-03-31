@@ -1,0 +1,83 @@
+{template 'common/header'}
+<div class="main">
+	<form class="form-horizontal form" id="" action="" method="post">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">游戏标题</label>
+					<div class="col-sm-9 col-xs-12">
+						<input class="form-control" name="hc_ybdzs_title" type="text" value="{if $subject['hc_ybdzs_title']}{$subject['hc_ybdzs_title']}{else}{$item['hc_ybdzs_title']}{/if}">
+					</div>	
+				</div>	
+<!-- 				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">分享标题</label>
+					<div class="col-sm-9 col-xs-12">
+						<input class="form-control" name="share_title" type="text" value="{$subject['share_title']}">
+					</div>	
+				</div> -->
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">分享描述</label>
+					<div class="col-sm-9 col-xs-12">
+						<input class="form-control" name="share_desc" type="text" value="{if $subject['share_desc']}{$subject['share_desc']}{else}{$item['share_desc']}{/if}">
+					</div>	
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">公众号名称</label>
+					<div class="col-sm-9 col-xs-12">
+						<input class="form-control" name="wechat" type="text" value="{if $subject['wechat']}{$subject['wechat']}{else}{$item['wechat']}{/if}">
+					</div>	
+				</div>			
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">引导链接</label>
+					<div class="col-sm-9 col-xs-12">
+						<input class="form-control" name="hc_ybdzs_url" type="text" value="{if $subject['hc_ybdzs_url']}{$subject['hc_ybdzs_url']}{else}{$item['hc_ybdzs_url']}{/if}">
+					</div>	
+				</div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">分享到朋友圈图片</label>
+                    <div class="col-sm-8 col-xs-12">
+					{php echo tpl_form_field_image('photo',$subject['photo'])}
+                       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9 col-xs-12">
+                        <div class="help-block">分享到朋友圈图片</div>
+                    </div>
+                </div>
+	
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">统计代码（sorry暂时无法使用）</label>
+					<div class="col-sm-9 col-xs-12">
+						<input class="form-control" name="counts" type="text" value="{$subject['counts']}">
+					</div>	
+				</div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+                    <div class="col-sm-9 col-xs-12">
+                        <div class="help-block">如cnzz，百度统计等（不添加也正常使用）</div>
+                    </div>
+                </div>
+
+			</div>
+		</div>
+
+		<div class="form-group col-sm-12">
+			<input name="token" type="hidden" value="{$_W['token']}" />
+			<input type="submit" class="btn btn-primary col-lg-1" name="submit" value="提交" />
+		</div>
+	</form>
+</div>
+
+<script language='javascript'>
+require(['jquery', 'util'], function($, u) {
+	$(function() {
+
+	});
+});
+</script>
+{template 'common/footer'}

@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{if empty($title)}个人中心{else}{$title}{/if}</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+    <!--link type="text/css" rel="stylesheet" href="./resource/style/bootstrap.css" /-->
+    <link type="text/css" rel="stylesheet" href="{RES_CSS}base.css" />
+    <link type="text/css" rel="stylesheet" href="{RES_CSS}style.css?v=13" />
+    <link type="text/css" rel="stylesheet" href="./addons/quicktemplate/quick_shop/pink/css/color.css" />
+    <link type="text/css" rel="stylesheet" href="./resource/style/font-awesome.min.css" />
+    <script type="text/javascript" src="{RES_JS}jquery-1.7.2.min.js"></script>
+	  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script>
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+
+	// 是否启用调试
+	// jssdkconfig.debug = true;
+
+	// 已经注册了 jssdk 文档中所有的接口
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'hideMenuItems',
+		'showMenuItems',
+		'hideAllNonBaseMenuItem',
+		'showAllNonBaseMenuItem',
+		'translateVoice',
+		'startRecord',
+		'stopRecord',
+		'onRecordEnd',
+		'playVoice',
+		'pauseVoice',
+		'stopVoice',
+		'uploadVoice',
+		'downloadVoice',
+		'chooseImage',
+		'previewImage',
+		'uploadImage',
+		'downloadImage',
+		'getNetworkType',
+		'openLocation',
+		'getLocation',
+		'hideOptionMenu',
+		'showOptionMenu',
+		'closeWindow',
+		'scanQRCode',
+		'chooseWXPay',
+		'openProductSpecificView',
+		'addCard',
+		'chooseCard',
+		'openCard'
+	];
+	wx.config(jssdkconfig);
+  function promoteCloseWindow(msg) {
+    var ret = confirm(msg);
+    if (ret) {
+      wx.closeWindow();
+    }
+  }
+	</script>
+<style>
+/****************************body ********************************/
+body {
+  background-color:#ebebeb !important;
+}
+/****************************header*******************************/
+#header{ width:100%; height:46px; position:relative; z-index:10;}
+#header h1{ width:100%; height:100%; line-height:46px; text-align:center; font-size:18px;}
+#header .back-btn{ width:60px; height:100%; display:block; position:absolute; top:0px; left:-10px; z-index:20; line-height:46px; text-align:center; font-size:26px; font-weight:100;text-decoration: none;}
+.userItem .uplevel {
+  white-space:nowrap;overflow:hidden;
+}
+</style>
+
+</head>
+
+<body>
+{template 'footerbar'}
+
+{php $cnt = 0;}
+{loop $menus $menu}
+{php $cnt++;}
+  {if $cnt == 1}
+	<!--主界面-->
+
+
+    <div class="mainInterface" id="{$menu['identifier']}">
+    <header id="header">
+    	<a href="javascript:history.back()" class="back-btn icon-angle-left icon-4x"></a>
+      <h1>记账本</h1>
+    </header>
+
+
+        <!--item-->
+        <div class="userItem">
+                <img class='round-corner'  src="{php echo preg_replace('/\/0$/', '/96', stripslashes($fans['avatar']));}" width="80" height="80" />
+                <dl>
+                  <dt>{$fans['nickname']}</dt>
+                  <dd>积分：{$fans['credit1']}</dd>
+                  <dd>级别：{if empty($fans['vip'])}0级
+                    (<a style="color:red" href="{php echo murl('entry/module/list', array('m'=>'quick_shop', 'weid'=> $_W['weid']))}">点此链接购买后升级</a>)
+                    {else}<span style="color:red">VIP{$fans['vip']}级</span>{/if}
+                  </dd>
+                  <dd class='uplevel'>上线：{$uplevelfans['nickname']}</dd>
+                </dl>
+        </div>
+        <!--item end-->
+
+        {loop $menu['items'] $groups}
+        <!--item-->
+        <div class="item">
+        	<ul>
+          {loop $groups $item}
+          {if $item['rich_callback_enable']}
+            {$item['callback_str']}
+          {else}
+            {if empty($item['url'])}
+            <li><a href="javascript:void()" onClick="javascript:setActiveMenu('{$item['identifier']}', '{$item['pidentifier']}');">{if !empty($item['thumb'])}<img src="{php echo $this->res($item['thumb'])}" />{/if}{$item['title']}<em>{$item['callback_str']}</em></a></li>
+            {else}
+            <li><a href="{$item['url']}">{if !empty($item['thumb'])}<img src="{php echo $this->res($item['thumb'])}" />{/if}{$item['title']}<em>{$item['callback_str']}</em></a></li>
+            {/if}
+          {/if}
+          {/loop}
+          </ul>
+        </div>
+        <!--item end-->
+        {/loop}
+    </div>
+    <!--主界面 end-->
+    {else}
+    <!--设置一-->
+    <div class="setOneMain" id="{$menu['identifier']}">
+        <!--header-->
+
+        <header id="header">
+            <a href="javascript:goBack('{$menu['identifier']}', '{$menu['pidentifier']}')" class="back-btn icon-angle-left icon-4x"></a>
+            <h1>记账本</h1>
+        </header>
+        <!--header end-->
+        {loop $menu['items'] $groups}
+    	  <!--item-->
+        <div class="item">
+        	<ul>
+          {loop $groups $item}
+            {if empty($item['url'])}
+            <li><a href="javascript:void()" onClick="javascript:setActiveMenu('{$item['identifier']}', '{$item['pidentifier']}');">{if !empty($item['thumb'])}<img src="{php echo $this->res($item['thumb'])}" />{/if}{$item['title']}<em>{if empty($item['rich_callback_enable'])}{$item['callback_str']}{/if}</em></a></li>
+            {else}
+            <li><a href="{$item['url']}">{if !empty($item['thumb'])}<img src="{php echo $this->res($item['thumb'])}" />{/if}{$item['title']}<em>{if empty($item['rich_callback_enable'])}{$item['callback_str']}{/if}</em></a></li>
+            {/if}
+          {if $item['rich_callback_enable']}
+            {$item['callback_str']}
+          {/if}
+          {/loop}
+          </ul>
+        </div>
+        {/loop}
+        <!--item end-->
+    </div>
+    <!--设置一 end-->
+    {/if}
+{/loop}
+    <script type="text/javascript">
+    	$(function(){
+			$("#setTwoMain dt").find("span").click(function(){
+				if($(this).hasClass("off")){
+					$(this).stop().animate({top:"0px",right:"0px"},200,function(){
+						$(this).removeClass("off");
+						$(this).addClass("on");
+					});
+				}else{
+					$(this).stop().animate({top:"0px",left:"0px"},200,function(){
+						$(this).removeClass("on");
+						$(this).addClass("off");
+					});
+				}
+			});
+		});
+		//设置一
+		function setActiveMenu(ident, pident){
+      if ($("#"+ident).length > 0) {
+        $("#"+pident).hide();
+        $("#"+ident).show();
+      }
+		}
+		function goBack(ident, pident){
+			$("#"+ident).hide();
+			$("#"+pident).show();
+		}
+
+    wx.ready(function () {
+      {if $share['disable']}
+      wx.hideOptionMenu();
+      {else}
+      wx.showOptionMenu();
+      {/if}
+    });
+
+    </script>
+    <div id="footer_pad" style="width:100%; height:68px;"></div>
+</body>
+</html>

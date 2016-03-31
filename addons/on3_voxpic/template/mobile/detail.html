@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>{$item['nickname']}的留声卡</title>
+		{php echo register_jssdk(false);}
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<script type="text/javascript" src="{MODULE_URL}template/style/js/jquery-1.8.2.min.js"></script>
+		<link rel="stylesheet" href="{MODULE_URL}template/style/css/base.css">
+		<link rel="stylesheet" href="{MODULE_URL}template/style/css/liusound.css">
+	</head>
+
+	<body>
+		<input type="hidden" id="baseurl" value="{MODULE_URL}">
+		<article class="w640">
+			<div id="main">
+				<div class="border-r">
+					<div class="img-cont">
+						<img class="pic" src="{php echo toimage($item['img'])}" /> 
+						{if !empty($item['voice'])}
+						<a class="voice-but" data-url="{php echo toimage($item['voice'])}">
+							<img src="{MODULE_URL}template/style/img/voice-icon.png" width="25" height="23">
+						</a>
+						<span style="display:none;"><audio id="audio-control" src="">您的浏览器不支持语音播放。</audio></span>
+						{/if}
+					</div>
+					<div class="back">
+						<p align="center" id="test-name">{$item['summary']}</p>
+						<div class="background">
+						</div>
+					</div>
+				</div>
+				{if !empty($data['url'])}
+				<div class="bottom margin-t-20">
+					<a href="{$data['url']}" id="myMake">我也要制作</a>
+				</div>
+				{/if}
+				<div class="liu-footer box">
+					<a target="_top" class="box-flex" style="text-align: center;">@{$_W['account']['name']}</a>
+				</div>
+			</div>
+		</article>
+	</body>
+<script type="text/javascript" src="{MODULE_URL}template/style/js/default.set.js"></script>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+		$("title").html("{$item['nickname']}"+"的留声卡");
+		var textEditObj = $("#text-edit-id"),
+			commentListInit = false,
+			makeSubmit = false;
+		var isUpRequest = false;
+		var audio, hasAddCount = false;
+		$('a.voice-but').click(function() {
+			var obj = this;
+			if ($(this).hasClass('on')) {
+				$(this).removeClass('on');
+				$(this).find('img').attr('src', '{MODULE_URL}template/style/img/voice-icon.png');
+				audio.pause();
+			} else {
+				$(this).addClass('on');
+				$(this).find('img').attr('src', '{MODULE_URL}template/style/img/voice-icon.gif');
+				audio = document.getElementById("audio-control");
+				audio.src = $(this).attr('data-url');
+				audio.play();
+				audio.addEventListener('ended', function() {
+					$(obj).removeClass('on');
+					$(obj).find('img').attr('src', '{MODULE_URL}template/style/img/voice-icon.png');
+				}, false);
+			}
+		});
+	});
+</script>
+</html>

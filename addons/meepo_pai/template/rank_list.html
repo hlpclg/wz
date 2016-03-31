@@ -1,0 +1,39 @@
+{template 'common/header'}
+{template 'nav_bar'}
+<div class="panel panel-default">
+	 <div class="panel-heading">
+     	{$panel_heading}
+     </div>
+	<div class="panel-body">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th>排名</th>
+					<th>昵称</th>
+                    <th>学校</th>
+					<th>点赞</th>
+					<th>姓别</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $key $item}
+					<tr>
+						<td>NO.{php echo $key+1}</td>
+						<td>{$item['nickname']}</td>
+						<td>{$item['school']}</td>
+						<td>{$item['num']}</td>
+						<td>{if !$item['sex']}女{else}男{/if}</td>
+						<td>
+							<a href="{php echo $this->createWebUrl('rank', array('act'=>'rank','pid' => $item['pid'], 'op' => 'edit'))}"class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="编辑"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
+							<a href="{php echo $this->createWebUrl('rank', array('act'=>'rank','pid' => $item['pid'], 'op' => 'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" title="删除"><i class="fa fa-times"></i></a>
+						</td>
+					</tr>
+				{/loop}
+			</tbody>
+			
+		</table>
+		{$pager}
+	</div>
+</div>
+{template 'common/footer'}

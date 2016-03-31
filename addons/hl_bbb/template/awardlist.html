@@ -1,0 +1,71 @@
+{template 'common/header'}
+
+ <div class="panel panel-info">
+	<div class="panel-heading">筛选</div>
+	<div class="panel-body">
+		<form action="./index.php" method="get" class="form-horizontal" role="form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+        	<input type="hidden" name="m" value="hl_bbb" />
+        	<input type="hidden" name="do" value="awardlist" />
+        	<input type="hidden" name="id" value="{$_GPC['id']}" />
+            <div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">昵称</label>
+                <div class="col-sm-6">
+					<input type="text" name="nickname" value="{$_GPC['nickname']}"  class="form-control" />
+				</div>
+				<div class="col-sm-2">
+					<button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+					<button name="export" class="btn btn-default" value="export"><i class="fa fa-download"></i> 导出数据</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading">详细数据</div>
+	<div class="panel-body table-responsive">
+		<form action="" method="post" onsubmit="">
+			<table class="table table-hover">
+				<thead class="navbar-inner">
+				<tr>
+					<th style="width:10%;" class="row-first">选择</th>
+					<th style="width:25%;" class="row-hover">姓名<i></i></th>
+					<th style="width:25%;">分数<i></i></th>
+					<th style="width:30%;">时间<i></i></th>
+				</tr>
+				</thead>
+				<tbody>
+				{loop $list $row}
+				<tr>
+					<td class="row-first">
+						<input type="checkbox" name="select[]" value="{$row['id']}" />
+					</td>
+					<td class="row-hover">
+						{$row['nickname']}
+					</td>
+					<td>{$row['points']}</td>
+					<td>
+						{php echo date('Y-m-d H:i:s', $row[createtime]);}
+					</td>
+				</tr>
+				{/loop}
+				<tr>
+					<td style="width:40px;" class="row-first">
+						<input type="checkbox" onclick="var ck = this.checked;$(':checkbox').each(function(){this.checked = ck})"  />
+					</td>
+					<td colspan="3">
+						<input type="submit" name="delete" value="删除" class="btn btn-primary" />
+						<input type="hidden" name="token" value="{$_W['token']}" />
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</form>
+	</div>
+</div>
+
+{$pager}
+
+{template 'common/footer'}
+

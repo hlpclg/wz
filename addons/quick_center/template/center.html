@@ -1,0 +1,72 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('Center', array('op' => 'display'));}">管理分类</a></li>
+  <li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('Center', array('op' => 'post'));}">编辑菜单项</a></li>
+</ul>
+{if $operation == 'post'}
+<div class="main">
+  <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$item['id']}" />
+    <div class="panel panel-default">
+      <div class="panel-heading">菜单编辑</div>
+
+      <div class="panel-body">
+{loop $data_config $c}
+<div class="form-group">
+  <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">{$c['title']}</label>
+  {php echo FormTpl::getWebControl($c['type'], $c['name'], $item[$c['name']], $c['value'])}
+</div>
+{/loop}
+</div>
+<div class="form-group">
+  <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label"></label>
+  <div class="col-sm-6 col-xs-6">
+    <div class="col-sm-6">
+      <input name="submit" type="submit" value="提交" class="btn btn-primary form-control">
+    </div>
+    <div class="col-sm-6">
+      <a href="{php echo referer()}"><input type="button" value="取消" class="btn btn-primary form-control"></a>
+    </div>
+  </div>
+  <input type="hidden" name="token" value="{$_W['token']}" />
+</div>
+</div>
+</form>
+</div>
+
+{elseif $operation == 'display'}
+<div class="main">
+  <div style="padding:15px;">
+    <table class="table table-hover">
+      <thead class="navbar-inner">
+        <tr>
+          {loop $data_config $c}
+          {if false !== $c['list']}
+          <th width="{$c['size']}px">{$c['title']}</th>
+          {/if}
+          {/loop}
+          <th style="text-align:right; min-width:60px;">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {loop $list $item}
+        <tr>
+          {loop $data_config $c}
+          {if false !== $c['list']}
+          <td>{php echo getWebDisplayTpl($item[$c['name']], $c)}</td>
+          {/if}
+          {/loop}
+          <td style="text-align:right;">
+            <a href="{php echo $this->CreateWebUrl('Center', array('id' => $item['id'], 'op' => 'post'))}" title="编辑" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-cog"></i></a>
+            <a href="{php echo $this->CreateWebUrl('Center', array('id' => $item['id'], 'op' => 'delete'))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" title="删除" class="btn btn-sm btn-default"><i class="glyphicon glyphicon-trash"></i><img src='../addons/quickauth/padding.png'></a>
+          </td>
+        </tr>
+        {/loop}
+      </tbody>
+    </table>
+    {$pager}
+  </div>
+</div>
+
+{/if}
+{template 'common/footer'}

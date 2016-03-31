@@ -1,0 +1,84 @@
+{template 'common/header'}
+<div class="main">
+    <div class="alert alert-info">
+        数据统计：共<span class="text-danger">{$all_total}</span>人参与，其中充值成功<span class="text-danger">{$suc_total}</span>人次、充值失败<span class="text-danger">{$not_total}</span>人次、正在充值<span class="text-danger">{$in_total}</span>人次。
+    </div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li{if $state==0} class="active"{/if}><a href="{php echo $this->createWebUrl('list',array('id'=>$rid, 'state'=>0))}">参与会员</a></li>
+        <li{if $state==1} class="active"{/if}><a href="{php echo $this->createWebUrl('list',array('id'=>$rid, 'state'=>1))}">完成会员</a></li>
+    </ul>
+    <div class="panel panel-default" style="margin-top: 10px;">
+        <div class="panel-body table-responsive">
+        <table class="table table-hover">
+            <thead class="navbar-inner"> 
+            <tr>
+                <th class="col-md-1">UID</th>
+                <th class="col-md-2">姓名</th>
+                <th class="col-md-2">手机</th>
+                <th>奖品</th>
+                <!-- <th class="col-md-2">时间</th> -->
+                <th class="col-md-2">状态</th>
+                <!-- <th class="col-md-2"></th> -->
+            </tr>
+        </thead>
+        <tbody>
+    {loop $result['list'] $item}
+            <tr data-info='{php echo json_encode($item)}'>
+                <td>{$item['uid']}</td>
+                <td>{$item['nickname']}</td>
+                <td>{$item['mobile']}</td>
+                <td>{if empty($item['prize']) && !empty($item['nickname'])}新春对联{else}{$item['prize']}{/if}</td>
+                <!-- <td>{$item['createtime']}</td> -->
+                <td>
+                    {if $item['opennum'] < 4 }
+                        <span class="text-primary">正在进行</span>
+                    {else}
+                        <span class="text-danger">已完成</span>
+                    {/if}
+                </td>
+                <!-- <td>
+                    <a href="javascript:;" onclick="preview(this);return false;" class="btn btn-sm btn-info">详情</a>
+                </td> -->
+            </tr>
+    {/loop}
+        </tbody>
+    </table>
+        </div>
+    </div>
+    {$result['pager']}
+</div>
+<script type="text/javascript">
+    require(['jquery', 'util'], function($, u){
+        $('.table button').click(function(){
+            var id = $(this).attr('data-id');
+            var order_url="{php echo url('site/entry', array('do'=>'order','m'=>'mobiorder'))}&id="+id;
+            window.location.href = order_url;
+        });
+    });
+
+    function preview(_this) {
+        require(['jquery', 'util'], function($, u){
+            var $this = $(_this).parent().parent();
+            var $data = $this.attr('data-info');
+            var _obj = JSON.parse($data);
+            var content =
+    '<table class="table" style="width:100%; min-width:100%">'+
+        '<tr><td width="100" class="text-right" style="border-top:0">姓名：</td><td style="border-top:0">'+_obj.truename+'</td></tr>'+
+        '<tr><td class="text-right">手机号：</td><td>'+_obj.telstring+'</td></tr>'+
+        '<tr><td class="text-right">城市：</td><td>'+_obj.province+'</td></tr>'+
+        '<tr><td class="text-right">运营商：</td><td>'+_obj.isp+'</td></tr>'+
+        '<tr><td class="text-right">金额：</td><td>'+_obj.price+'</td></tr>'+
+        '<tr><td class="text-right">充值时间：</td><td>'+_obj.createtime+'</td></tr>'+
+        '<tr><td class="text-right">站内订单号：</td><td>'+_obj.sporder_id+'</td></tr>'+
+        '<tr><td class="text-right">欧飞订单号：</td><td>'+_obj.orderid+'</td></tr>'+
+        '<tr><td class="text-right">状态：</td><td>'+_obj.errmsg+'</td></tr>'+
+    '</table>';
+            var footer ='<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>';
+            var dialog = u.dialog('详细信息', content, footer);
+            dialog.find('.modal-dialog').css({'width': '480px'});
+            dialog.modal('show');
+        });
+    }
+
+</script>
+{template 'common/footer'}

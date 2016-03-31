@@ -1,0 +1,112 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="../addons/water_super/template/css/card.css" media="all">
+<link rel="stylesheet" type="text/css" href="../addons/water_super/template/css/datepicker.css" media="all">
+<script type="text/javascript" src="../addons/water_super/template/js/zepto.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/js/jQuery.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/js/bootstrap_datepicker_card.js"></script>
+<title>{$systeminfo['shopname']}</title>
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta name="format-detection" content="telephone=no">
+</head>
+<body id="carduser" ondragstart="return false;" onselectstart="return false;">
+	<section class="body">
+		<div class="cardexplain">
+			<ul class="round">
+				<form action="javascript:;" method="post">
+					<li class="title mb"><span class="none">升级VIP会员</span></li>
+
+					<li class="nob">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0"
+							class="kuang">
+							<tbody>
+								<tr>
+									<th style="width: 100px">实体卡卡号</th>
+									<td><input name="sn_code" type="text" class="px" id="sn_code" value="" placeholder="请输入实体卡卡号"></td>
+								</tr>
+								<tr>
+									<th style="width: 100px">绑定手机号</th>
+									<td><input name="sn_password" type="text" class="px" id="sn_password" value="" placeholder="请输入您的手机号"></td>
+								</tr>
+							</tbody>
+						</table>
+											</li>
+				</form>
+			</ul>
+						 <div class="footReturn">
+				<a id="showcard" class=" coupon-btn" href="javascript:void(0)">提交</a>
+				<div class="window" id="windowcenter" style="max-height:86px;">
+					<div id="title" class="wtitle">
+						操作结果<span class="close" id="alertclose"></span>
+					</div>
+					<div class="content">
+						<div id="txt"></div>
+					</div>
+				</div>
+		</div>
+</div>
+			
+		</div>
+		<div style="display:none">
+	
+</div>
+		<script type="text/javascript">
+			$(document).ready(
+					function() {
+						$("#showcard").click(
+						function() {
+						    var submitData = {
+									sn_code : $("#sn_code").val().trim(),
+									sn_password : $("#sn_password").val().trim()
+								};
+						    if($("#sn_code").val().trim() == ""){
+						    	alert("请输入实体卡卡号");
+						    	return false;
+						    }
+						    if($("#sn_password").val().trim() == ""){
+						    	alert("请输入您的手机号码");
+						    	return false;
+						    }
+							$.post("/",submitData,
+								function(data) {
+									if (data.message.state == 1) {
+										alertToUrl(
+												data.message.msg,
+												"/");
+									} else {
+										alert(data.message.msg);
+									}
+							}, "json")
+					});
+			});
+
+			$("#windowclosebutton").click(function() {
+				$("#windowcenter").slideUp(500);
+
+			});
+			$("#alertclose").click(function() {
+				$("#windowcenter").slideUp(500);
+
+			});
+
+			function alert(title) {
+				$("#windowcenter").slideToggle("slow");
+				$("#txt").html(title);
+				setTimeout('$("#windowcenter").slideUp(500)', 4000);
+			}
+
+			function alertToUrl(title, url) {
+				if (url == '')
+					url = window.location.href;
+				$("#windowcenter").slideToggle("slow");
+				$("#txt").html(title);
+				setTimeout("window.location.href='" + url + "'", 1000);
+			}
+		</script>
+	</section>
+	<div style="display:none">
+	
+</div>
+</body>
+</html>

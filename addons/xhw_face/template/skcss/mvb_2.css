@@ -1,0 +1,190 @@
+body,div,ul,li,p,span,h1,h2,h3,h4,nav,header,input,form,dl,dt,dd{margin:0;padding:0}
+body{font:normal 100% DroidSansFallback,Microsoft Yahei,Helvetica,Arial,sans-serif;color:#333;background:#e9e9e9;font-size:1em;min-width:300px;-webkit-text-size-adjust:none;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+h1,h2,h3,h4{font-size:1em}
+li{list-style:none}
+img{border:none}
+input{-webkit-appearance:none;border-radius:0;border:none}
+a,a:link,a:visited,a:active{color:#46bbe6;text-decoration:none}
+a:hover{text-decoration:underline}
+.mahua h1,.mahua h3{font-weight:bold;line-height:1.2em;font-size:1.2em;padding:0.7em 3% 0.25em 3%;background:#fff}
+h1,h3,h3 a,h3 a:link,h3 a:visited,h3 a:active{color:#555}
+ul li{float:left;width:33%}
+
+.header,.header-view{height:2.9em;padding-top:0.7em;background:#f1fcff}
+.header .logo,.header-view .logo{width:34%}
+.header .menu a,.header .user a,.header-view .menu a,.header-view .goh a,.header-view .user a{width:1.56em;height:2em;line-height:2em;float:left;margin-left:1em;background:url(../skimages/mvb_2.png) no-repeat;background-size:12.5em auto;text-indent:50px;overflow:hidden}
+.header .user a,.header-view .user a{float:right;margin:0 1em 0 0;background-position:-9.625em 0}/*background-position:-7.97em 0*/
+.header .logo a,.header-view .logo a{display:block;width:6.35em;margin:0 auto;height:2em;line-height:2em;background:url(../skimages/mvb_2.png) -1.59em 0 no-repeat;background-size:12.5em auto;text-indent:202px;overflow:hidden}
+.header .menu a{background-position:-1000em -1000em}
+
+.header-view{background:#00b4ff}
+.header-view .goh a{background-position:-9.53em -13.5em}
+.header-view .menu a{background-position:-1000em -1000em}/*background-position:0 -13.5em*/
+.header-view .user a{background-position:-11.06em -13.5em}/*background-position:-7.97em -13.5em*/
+.header-view .logo a{background-position:-1.59em -13.5em}
+
+
+.nav,.hiddennav{height:2.9em;background:#d9f4ff}
+.nav ul li{border-bottom:0.1em solid #00b4ff;height:2.9em}
+.nav ul li a{display:block;width:100%;height:100%;text-align:center;line-height:3em;color:#000}
+.nav ul li a:visited{color:#000001}
+.nav ul li.active{}
+.nav ul li.active a,li.active a:visited{width:80%;height:2.4em;margin:0.27em auto;line-height:2.4em;background:#00b4ff;color:#fff;border-radius:4px;}
+li.hot{width:34%}
+li.hot span{display:block;float:right;height:1.5em;width:1px;overflow:hidden;margin-top:0.7em;border-right:1px solid #94cde5}
+li.hot span.hotleft{float:left}
+li.active a{color:#fff}
+.channel{float:left;margin:0.5em 0;widht:100%}
+.channel a,.channel span{display:block;float:left;padding:0.5em}
+
+
+.mahua{margin:0 0.5em;margin-top:1em;clear:both;background:#fff;overflow:hidden}
+.notbg{background:none}
+.content{padding:0 3% 0.25em 3%;background:#fff;line-height:1.5em;overflow:hidden}
+.content img{max-width:100%;height:auto;border:none;margin-top:0.5em}
+.play{width:5.3em;height:5.3em;position:absolute;z-index:2;top:30%;left:30%;background:url(../skimages/mvb_2.png) 0 -8.06em no-repeat;background-size:12.5em auto;}
+.play:hover{background-position:-5.34em -8.06em}
+.operation{height:1.38em;padding:0.7em 3% 0.5em 3%;line-height:1.5em;border-bottom:0.1em solid #dbdbdb}
+.good,.share{width:30%}
+.comment-icon{width:40%}
+.good a,.share a,.comment-icon a{float:left;min-width:3.5em;border:1px solid #00b4ff;border-radius:4px;background:url(../skimages/mvb_2.png) #fff -11.14em -0.1em no-repeat;background-size:12.5em auto;text-indent:1.6em;line-height:1.4em;color:#47bce7}
+.share a{border:none;background:none}/*background-position:-11.34em -1.596em*/
+.comment-icon a{float:right;background-position:-11.14em -2.9em}
+.good a:hover,.comment-icon a:hover{color:#ff4000;border-color:#ff4000}
+.good a:hover,.good_ash{background-position:-11.14em -4.2em}
+/*.share a:hover{background-position:1000em 1000em}background-position:-11.34em -5.69em*/
+.comment-icon a:hover{float:right;background-position:-11.14em -7.0em}
+
+
+#pagecut,.jokenum{color:#acacac;line-height:2.5em;font-size:1.2em}
+#PageNo,.pagego{height:2.4em;line-height:2.5em;padding-left:0.3em;font-size:1em;border:none;color:#acacac}
+#PageNo{height:2.4em;width:6em;margin-left:2em;border-bottom:0.1em solid #dbdbdb}
+.pagego{padding-left:0;background:#47bce7;color:#fff;border-bottom:0.1em solid #47bce7}
+.pages{float:right;margin-top:0.5em}
+#page a{display:block;height:1.38em;padding:0.6em 0.5em 0.3em 0.5em;background:#fff;border-bottom:0.1em solid #dbdbdb;color:#666}
+.b_2{width:21.43%}
+.b_3{width:28.57%}
+.b_2 a{width:70%;text-align:center;float:left}
+.b_3 a{width:70%;text-align:center;margin:0 auto}
+.b_2 a.p_right{float:right}
+.jokenum{clear:both;text-align:center;font-size:1em}
+ul.links{background:#fff;height:4.5em;padding:0.7em 3%}
+ul.links li{width:50%;height:1.5em;line-height:1.5em}
+
+.footer{background:#565d67;margin-top:1em}
+ul.about li{width:40%;text-align:center;color:#fff;padding-top:1.2em}
+ul.about li.bd{width:60%;color:#ebebeb}
+.app{clear:both;padding:2em 0 5em 0}
+.ios a,.android a,.wp a{display:block;width:2.9em;height:2.9em;background:url(../skimages/mvb_2.png) 0 -2.11em no-repeat;background-size:12.5em auto;}
+.ios a{float:right}
+.android a{margin:0 auto;background-position:-2.9em -2.11em}
+.wp a{background-position:-5.85em -2.11em}
+.ios a:hover{background-position:0 -5.1em}
+.android a:hover{background-position:-2.9em -5.1em}
+.wp a:hover{background-position:-5.85em -5.1em}
+
+.Commentlist{line-height:1.5em}
+.Commentlist .usercolor{color:#999}
+.trborder{border-bottom:0.1em dotted #ddd;width:90%;height:0.1em}
+.Commentform{margin:1em 0 2em;width:90%}
+.more{clear:both;width:100%;text-align:center}
+.more a.button{width:5em;font-size:1em;margin:0 auto;background:#57bfe6;display:block;color:#fff;padding:2px;text-decoration:none}
+.more a.button:hover {background:#16a7dd;display: block;color: #fff;padding:2px;text-decoration: none}
+/*详情页*/
+.tagsbg{background:#f6f6f6;padding-top:0.3em}
+.tags{width:100%;line-height:1.5em;padding-bottom:0.3em}
+.tags dl{overflow:hidden}
+dd,dt{float:left;margin-left:0.7em}
+dd.t{margin-left:0}
+dd h4{font-weight:normal}
+.upnext{margin:1em 0 0.5em;width:100%}
+.upnext p{text-align:center}
+.upnext a{display:inline-block;height:49px;background:url(../skimages/mvb_2.png) 0 -255px no-repeat; background-size:12.5em auto}
+.upnext a.up{width:95px;margin-right:0.3em}
+.upnext a.next{width:185px;background-position:-7px -306px;margin-left:0.5em}
+.upnext a.up:hover{background-position:-5px -255px}
+.upnext a.next:hover{background-position:-7px -356px}
+.o_border{border-top:1px solid #d3d3d3;border-bottom:1px solid #fff;height:0px;overflow:hidden;margin:0 0.7em}
+
+.recom{margin:1em 0 1em;width:100%;float:left}
+.recom li{float:left;width:50%}
+.recom li a{width:100%;text-align:center;display:block}
+.recom li p{height:1.5em;line-height:1.5em;width:100%;overflow:hidden;text-align:center;color:#5d5d5d}
+.recom li img{width:8em}
+
+h1{font-size:1.2em}
+.border-bottom{border-bottom:0.1em solid #dbdbdb}
+.Comment{margin:0 0.5em;margin-top:1em;clear:both;overflow:hidden;background:#fff}
+.commentform,.commentlist{}
+.commentform{margin:5px;padding:5px;padding-left:0;border:1px solid #00b4ff;border-radius:2px;height:40px;background:-webkit-gradient(linear,0 0,0 30%,from(#ddf5ff), to(#fff))}
+.c_border{border-top:1px solid #dbdbdb}
+.c_border{display:none}
+.Comment form{padding-left:3%}
+.Comment ul{float:left;background:#fff;width:100%;border-bottom:0.1em solid #dbdbdb}
+.Comment ul li{padding:0.7em 0;clear:both;color:#525252;border-top:0.1em solid #f2f2f2;width:100%}
+.Comment ul li p{line-height:1.5em}
+.Comment ul li.border-top{border:none;text-indent:3%}
+.comment-left{float:left;width:67%;padding-left:3%}
+.usercolor{color:#acacac}
+.comment-right{float:right;width:3em;padding-right:3%}
+.comment-right a:hover{text-decoration:none;color:#ff5c26}
+.comment-right a:hover p.ding{background-position:-11.34em -4.2em}
+.ding{background:url(../skimages/mvb_2.png) -11.34em -0.156em no-repeat;background-size:12.5em auto}
+.comment-input,.comment-submit{background:none;width:70%;height:2.5em;line-height:2.5em;padding-left:0.3em;font-size:1em;border:none;color:#acacac}
+.comment-submit{float:right;width:auto;padding-left:0;background:#00b4ff;color:#fff; border-radius:2px}
+.compage{text-align:center;background:#e9e9e9;height:3em;line-height:3em;clear:both}
+.compage a{margin-right:0.5em;background:#fff;padding:0.5em;border-bottom:0.1em solid #dbdbdb}
+/*详情页结束*/
+/*笑点开始*/
+ul.tagslist{float:left;width:100%;background:#fff;border-bottom:2px solid #dbdbdb;}
+ul.tagslist li{width:25%;height:5em;border-top:0.1em solid #dbdbdb}
+ul.tagslist li a{display:block;width:99%;height:100%;text-align:center;line-height:5em; vertical-align:middle;overflow:hidden;border-right:0.1em solid #dbdbdb}
+ul.tagslist li a p{width:100%}
+ul.tagslist li a.bc-blue ,ul.tagslist li a.bc-yellow {background:#00aeff;color:#fff}
+ul.tagslist li a.bc-yellow {background:#eb9954}
+ul.tagslist li a.bc-blue:hover{color:#fff}
+ul.tagslist li a.bc-yellow:hover{color:#fff}
+ul.tagslist li a.text-blue {color:#00aeff}
+ul.tagslist li a.text-yellow {color:#eb9954}
+ul.tagslist li a.text-big{font-size:15px}
+ul.tagslist li a.text-big-blue {color:#00aeff}
+ul.tagslist li a.text-big-yellow {color:#eb9954}
+ul.tagslist li a.bc-white-blue {background:#00aeff;color:#fff}
+ul.tagslist li a.bc-white-yellow {background:#eb9954;color:#fff}
+ul.tagslist li.noborder,ul.tagslist li a.noborder{border:none}
+ul.tagslist li a.noborder{width:100%}
+ul.tagslist li a.line-2{line-height:1.5em;height:4em;padding-top:1em}
+/*笑点结束*/
+
+.mahuashare{width:100%;margin:0px;padding-bottom:0.5em}
+.shareTitle{font-family:"Microsoft Yahei";color:#627872;text-indent:0.7em}
+.bdsharebuttonbox a{width:47px !important;height:47px !important;margin-right:4px !important;background:url(../skimages/mahuashare_2.png) no-repeat !important;background-size:320px auto !important}
+a.bds_tsina{background-position:-47px 0 !important}
+a.bds_tqq{background-position:-94px 0 !important}
+a.bds_weixin{background-position:-141px 0 !important}
+a.bds_qzone{background-position:-188px 0 !important}
+a.bds_bdhome{background-position:-235px 0 !important;margin-right:0 !important;}
+a.bds_sqq:hover{background-position:0 -48px !important}
+a.bds_tsina:hover{background-position:-47px -48px !important}
+a.bds_tqq:hover{background-position:-94px -48px !important}
+a.bds_weixin:hover{background-position:-141px -48px !important}
+a.bds_qzone:hover{background-position:-188px -48px !important}
+a.bds_bdhome:hover{background-position:-235px -48px !important;margin-right:0 !important;}
+a.bds_more{background:none !important;width:0 !important;height:0 !important;margin-right:0 !important}
+
+.picarr{width:270px;height:64px;overflow:hidden;margin:0 auto}
+.picleft,.picright{display:block;float:left;width:20px;height:59px;margin-top:4px;background:url(../skimages/mvb_2.png) -41px -128px no-repeat;background-size:12.5em auto}
+.picleft a,.picright a{display:block;width:100%;height:100%}
+.picleft{margin-right:5px}
+.picleftend{background-position:0 -128px}
+.picpicrightend{background-position:-20px -128px}
+.picright{background-position:-62px -128px}
+.picdiv{float:left;width:225px;height:59px;overflow:hidden}
+ul.picli{width:5000px}
+ul.picli li{width:70px;height:64px;margin-right:5px}
+ul.picli li img{width:70px;height:52px;margin-top:9px}
+ul.picli li.hover img{width:64px;height:47px;margin-left:2px}
+ul.picli li.nextmahua{height:52px;line-height:52px;background:#ffae00;text-align:center;color:#fff;font-size:14px;margin-top:7px}
+ul.picli li.nextmahua a{color:#fff}
+ul.picli li.hover{background:url(../skimages/mvb_2.png) -83px -128px;background-size:12.5em auto}
+#picdata{display:none}

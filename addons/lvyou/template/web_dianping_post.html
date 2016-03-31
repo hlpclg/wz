@@ -1,0 +1,49 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+  <li class="active"><a href="{php echo $curr_url.'&op=post';}">添加点评</a></li>
+  <li><a href="{php echo $curr_url.'&op=list';}">点评管理</a></li>
+</ul>
+<div class="main">
+  <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+    <h4>添加点评</h4>
+    <table class="tb">
+      <tbody>
+        <tr>
+          <td>标题</td>
+          <td><input type="text" id="" class="span5" placeholder="" name="title" value="{$item['title']}"></td>
+        </tr>
+        <tr>
+          <td>显示顺序</td>
+          <td><input type="text" id="" class="span1" placeholder="" name="sort" value="{if $item['sort']}{$item['sort']}{else}0{/if}"></td>
+        </tr>
+        <tr>
+          <td>专家姓名</td>
+          <td><input type="text" id="" class="span5" placeholder="" name="xingming" value="{$item['xingming']}"></td>
+        </tr>
+        <tr>
+          <td>专家职位</td>
+          <td><input type="text" id="" class="span5" placeholder="" name="zhiwei" value="{$item['zhiwei']}"></td>
+        </tr>
+        <tr>
+          <td>专家照片</td>
+          <td>{php echo tpl_form_field_image('img', $item['img']);}</td>
+        </tr>
+        <tr>
+          <td>专家介绍</td>
+          <td><textarea style="height:100px;" class="span5" name="jianjie1" cols="50">{$item['jianjie1']}</textarea></td>
+        </tr>
+        <tr>
+          <td>点评内容</td>
+          <td><textarea style="height:100px;" class="span5" name="jianjie2" cols="50">{$item['jianjie2']}</textarea></td>
+        </tr>
+        
+        <tr>
+          <td></td>
+          <td><button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+            <input type="hidden" name="id" value="{$item['id']}" /></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+{template 'common/footer'}

@@ -1,0 +1,113 @@
+{template 'common/header'}
+<div class="main">
+		<ul class="nav nav-tabs">
+    			<li{if $_GPC['do'] == 'adshow'} class="active"{/if}><a href="{php echo $this->createWebUrl('adshow');}">微站宣传页</a>
+       
+  </ul>
+
+<div class="panel panel-info">
+		<div class="panel-heading">宣传页设置</div>
+		<div class="panel-body">
+        
+		  <form action="" method="post" class="form-horizontal" role="form">
+			<input type="hidden" name="id" value="{$data['id']}">
+            <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">预览链接地址</label>
+			<div class="col-sm-9">
+            			    <input type="text" id="mobileurl" name="mobileurl" value="{$previewUrl}"  class="form-control"  readonly="readonly"/>
+			</div>
+		</div>
+
+			<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">微信宣传页标题</label>
+			<div class="col-sm-9">
+            <input type="text" id="title" name="title" value="{$data['title']}"  class="form-control" />
+			</div>
+		   </div>  
+			
+
+
+			<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">触发关键词</label>
+			<div class="col-sm-9">
+            <input type="text" id="classkouling" name="classkouling" value="{$data['classkouling']}"  class="form-control" />
+			</div>
+		   </div> 
+
+			<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">口号</label>
+			<div class="col-sm-9">
+            <input type="text" id="classslogan" name="classslogan" value="{$data['classslogan']}"  class="form-control" />
+			</div>
+		   </div> 
+
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">简介</label>
+			<div class="col-sm-9">
+            			    <textarea style="height:100px;" class="col-xs-12 richtext-clone" name="info" cols="70" id="info">{$data['info']}</textarea>
+            <div class="help-block">请简单描述您的微信公众号可以给粉丝带来什么好处，尽量控制在<span class="red">150文字以内</span></div>
+
+			</div>
+		</div>
+
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">微信二维码图片</label>
+			<div class="col-sm-9">
+				{php echo tpl_form_field_image('url', $data['url'],$data['url']);}
+				<span class="help-block">二维码边长为12CM，大小为344×344PX.</span>
+
+			</div>
+		</div>
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">顶部图</label>
+                    <div class="col-sm-9 col-xs-12">
+					    {php echo tpl_form_field_image('group_photo', $data['group_photo'],$data['group_photo']);}
+      
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">网页背景图</label>
+                    <div class="col-sm-9 col-xs-12">
+					    {php echo tpl_form_field_image('background_img', $data['background_img'],$data['background_img']);}
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+
+
+			<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">微信名</label>
+			<div class="col-sm-9">
+            			    <input type="text" id="wxm" name="wxm" value="{$data['wxm']}"  class="form-control" />
+			</div>
+		   </div>
+			<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">微信号</label>
+			<div class="col-sm-9">
+            			    <input type="text" id="wxh" name="wxh" value="{$data['wxh']}"  class="form-control" />
+			</div>
+		   </div>
+
+
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">版权信息</label>
+			<div class="col-sm-9">
+            			    <input type="text" id="copyright" name="copyright" value="{$data['copyright']}"  class="form-control" />
+            <div class="help-block">例如：© 2001-2013测试公众号版权所有</div>
+            </div>
+		</div>
+        <div class="form-group">
+			<div class="col-sm-8">
+                    <button type="submit" class="btn btn-primary" name="submit" value="提交">提交</button>
+                    <button type="button" class="btn " " value="提交" onclick="window.open('{$previewUrl}','预览','height=800,width=500,scrollbars=yes,status =yes');">预览</button>
+			  <input type="hidden" name="token" value="{$_W['token']}" />
+				</div>		
+			</div>
+			</form>
+		</div>
+</div>
+
+
+{template 'common/footer'}

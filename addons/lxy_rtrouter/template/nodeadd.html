@@ -1,0 +1,222 @@
+{template 'common/header'}
+<div class="main">
+<ul class="nav nav-tabs">
+  <li{if $_GPC['do'] == 'nodelist'} class="active"{/if}><a href="{php echo  $this->createWebUrl('nodelist');}">节点列表</a>
+  </li>
+  <li{if $_GPC['do'] == 'nodeadd'} class="active"{/if}><a href="{php echo $this->createWebUrl('nodeadd');}">添加节点</a>
+  </li>
+</ul>
+
+<form action="" method="post" class="form-horizontal" role="form">
+
+<div class="panel panel-info">
+
+		<div class="panel-heading">基本信息</div> 
+
+		<div class="panel-body">
+                <div class="form-group">
+
+			<input type="hidden" name="id" value="{$item['id']}">
+			<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">节点名:</label>
+			<div class="col-sm-4">
+<input type="text" id="nodename" name="nodename" value="{$item['name']}"  class="form-control"/>	</div>
+		</div>
+        
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">备注:</label>
+			<div class="col-sm-7">
+              <textarea name="description" class="form-control" id="description">{$item['description']}</textarea>
+   	      </div>
+		</div>
+        </div>
+        </div>
+      
+  </div>
+<div class="panel panel-info">
+
+        
+		<div class="panel-heading">认证方式</div> 
+		<div class="panel-body">
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">开启弹出页面:</label>
+			<div class="col-sm-9">
+<label class="radio-inline"><input type="radio" name="is_portal" value="1" {if $item['is_portal']=='1'} checked="checked" {/if}> 开</label>&nbsp;&nbsp;&nbsp;
+                                                <label class="radio-inline"><input type="radio" name="is_portal" value="0" {if $item['is_portal']=='0'} checked="checked" {/if} > 关</label>
+       	  </div>
+		</div><div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">弹出页面链接地址:</label>
+			<div class="col-sm-7">
+<input type="text" id="login_url" name="login_url" value="{$item['login_url']}"  class="form-control" />
+		<span class="help-block">认证登陆（主动弹出）页面地址，即主动弹出认证页面</span>
+       	  </div>
+		</div><div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">认证成功链接地址：</label>
+			<div class="col-sm-7">
+<input type="text" id="success_url" name="success_url" value="{$item['success_url']}"  class="form-control"/>
+       	  </div>
+		</div><div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">多种登录方式:</label>
+			<div class="col-sm-9" ><label for="weibo_login"  class="checkbox-inline">
+<input type="checkbox" name="weibo_login" id="weibo_login" value="{$item['weibo_login']}" {if $item['weibo_login']==1}checked="checked" {/if}/> 新浪微博</label>
+		<label for="qq_login"  class="checkbox-inline"><input type="checkbox" name="qq_login" id="qq_login" value="{$item['qq_login']}" {if $item['qq_login']==1}checked="checked" {/if}/>腾讯QQ</label> 
+       	  </div>
+		</div><div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">开启微信认证:</label>
+			<div class="col-sm-9">
+            <label for="weixin_login"  class="checkbox-inline">
+<input type="checkbox" name="weixin_login" id="weixin_login" value="{$item['weixin_login']}" {if $item['weixin_login']==1}checked="checked" {/if}/></label>
+       	  </div>
+		</div><div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">绑定的微信号:</label>
+			<div class="col-sm-4">
+<input type="text" id="wx_id" name="wx_id" value="{$item['wx_id']}"  class="form-control" />
+       	  </div>
+		</div>
+        
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">绑定的微信名称:</label>
+			<div class="col-sm-4">
+<input type="text" id="wx_name" name="wx_name" value="{$item['wx_name']}"   class="form-control" />
+	    <span class="help-block">(展示在店名之下和认证提示页)</span>
+       	  </div>
+		</div>
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">仅手机登陆:</label>
+			<div class="col-sm-9">
+            <label for="wx_phone_only"  class="checkbox-inline">
+           <input type="checkbox" name="wx_phone_only" id="wx_phone_only" value="{$item['wx_phone_only']}" {if $item['wx_phone_only']==1}checked="checked" {/if}/>(选中后，生成的微信接口无法获取动态口令，电脑等无微信客户端的设备则</label>
+无法认证上网)
+       	  </div>
+		</div>
+        </div>
+  </div>
+        
+        <div class="panel panel-info">        
+		<div class="panel-heading"><label>高级功能</label>		     
+	      (启用高级功能，请确保您清楚其含义)</div> 
+		<div class="panel-body">
+
+        
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">未认证可微信聊天：</label>
+			<div class="col-sm-2">
+<input type="text" id="wx_unauth_timeout" name="wx_unauth_timeout" value="{$item['wx_unauth_timeout']}"   class="form-control"  />
+	    分钟 (5-1440分钟，不填为默认5分钟)
+       	  </div>
+		</div>
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">未认证断线时间:</label>
+			<div class="col-sm-2">
+ <input type="text" id="wx_reject_timeout" name="wx_reject_timeout" value="{$item['wx_reject_timeout']}"   class="form-control" />
+	    分钟 (1-1440分钟，不填为默认3分钟)
+       	  </div>
+		</div>
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">试用有效期:</label>
+			<div class="col-sm-2">
+<input type="text" id="probation_timeout" name="probation_timeout" value="{$item['probation_timeout']}"   class="form-control" />
+	    分钟 (1-1440分钟，不填为试用有效期0分钟) 
+       	  </div>
+		</div>
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">登陆有效期:</label>
+			<div class="col-sm-2">
+<input type="text" id="login_timeout" name="login_timeout" value="{$item['login_timeout']}"   class="form-control"  />
+	    分钟 (1-1440分钟,不填为有效期1440分钟)
+       	  </div>
+		</div>
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">试用认证成功页面地址：</label>
+			<div class="col-sm-9">
+<input type="text" id="probation_url" name="probation_url" value="{$item['probation_url']}"   class="form-control" />
+		  试用认证成功页面地址。如果用户在前端页面调用试用接口，认证成功后返回该地址。
+       	  </div>
+		</div>
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">IOS/WP不主动弹窗：</label>
+			<div class="col-sm-9">
+<label for="hide_cp"  class="checkbox-inline">
+<input type="checkbox" name="hide_cp" id="hide_cp" value="{$item['hide_cp']}" {if $item['hide_cp']==1}checked="checked" {/if}/>(IOS终端(iPhone, iPod, iPad)和WP终端(Windows Phone,需要RippleOS固件 3.1及以上版本支持)将不会主动弹窗)
+</label>
+       	  </div>
+		</div>
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">二次连接认证方式：</label>
+			<div class="col-sm-4">
+<select name="auth2nd" id="auth2nd" class="form-control" style="margin-right:15px;">
+					    <option value="0" {if $item['auth2nd']==0}selected="selected"{/if}>与首次连接方式一致</option>
+                        <option value="1" {if $item['auth2nd']==1}selected="selected"{/if}>二次连接无需认证</option>
+                        <option value="2" {if $item['auth2nd']==2}selected="selected"{/if}>二次连接简单认证</option>
+              </select>
+				    (需要RippleOS固件3.1版本支持.提示:开启&quot;二次连接无需认证&quot;,3.0及以下版本会出现IOS不主动弹窗)
+       	  </div>
+		</div>
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">白名单：</label>
+			<div class="col-sm-7"><textarea name="white_list" class="form-control" id="white_list">{$item['white_list']}</textarea>
+	    使用英文逗号(,)分隔主机名或IP地址，例如：qq.com,weibo</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-8">
+                    <button type="submit" class="btn btn-primary" name="submit" value="提交">提交</button>
+			  <input type="hidden" name="token" value="{$_W['token']}" />
+		  </div>		
+		  </div>
+        
+</div>
+</div>
+</form>
+
+<script>
+  
+	
+
+	$(function(){ 
+	
+	  $("#weixin_login").click(function () {setvisible();});
+		function setvisible()
+	{
+		var servertype=$("#weixin_login").attr("checked");
+        if(servertype!="checked")
+		{
+			$("#weixin_login").val(0);
+			$("#trwxid").hide();
+			$("#trwxname").hide();
+			$("#trsjlogin").hide();
+		}
+		else
+		{
+			$("#weixin_login").val(1);
+			$("#trwxid").show();
+			$("#trwxname").show();
+			$("#trsjlogin").show();
+			}
+	}
+	
+	    $("#weixin_login").click(function () {
+		setvisible();
+    });
+	
+	var $check_box_click = function(){ 
+		if ($(this).attr("checked") == "checked")
+		 { 
+			$(this).val(1); 
+			} 
+		else 
+		{ 
+			$(this).val(0); 
+		} 
+	};
+	
+	$("#weibo_login").click($check_box_click);
+	$("#qq_login").click($check_box_click);
+	$("#wx_phone_only").click($check_box_click);
+
+	
+})
+	
+</script>
+ 
+
+{template 'common/footer'}

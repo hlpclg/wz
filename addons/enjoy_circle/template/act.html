@@ -1,0 +1,177 @@
+{template 'common/header'}
+{template 'common'}
+<script type="text/javascript" src="resource/js/lib/jquery-ui-1.10.3.min.js"></script>
+<style>
+.form_short{
+  width: 5%;
+  height: 34px;
+  padding: 6px 12px;
+  margin: 0px 5px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+</style>
+<link type="text/css" rel="stylesheet" href="../addons/recruit/template/mobile/css/uploadify_t.css" />
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit='return formcheck()'>
+		<input type="hidden" name="id" value="{$item['id']}" />
+		<div class="panel panel-default">
+			<div class="panel-heading">活动设置</div>
+			<div class="panel-body">
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">活动标题</label>
+				<div class="col-sm-9 col-xs-12">
+					<input type="text" name="title" id="title" class="form-control" value="{$item['title']}" />
+				</div>
+			</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否必须关注</label>
+					<div class="col-sm-9 col-xs-12">
+						<label class="radio-inline">
+							<input type="radio" name="subscribe" value="1" {if $item['subscribe']==1}checked{/if}>是
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="subscribe" value="0" {if $item['subscribe']==0}checked{/if}>否
+						</label>
+					</div>
+			
+					</div>	
+						<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">关注二维码</label>
+					<div class="col-sm-9 col-xs-12" id="apic">
+						{php echo tpl_form_field_image('ewm', $item['ewm'])}
+						<span class="help-block">参考图片大小：258px*258px</span>
+					</div>
+					
+				</div>
+			
+			                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-2 control-label">图文消息素材</label>
+                    <div class="col-sm-9 col-xs-12">
+                        <input type="text" name="sucai" class="form-control" value="{$item['sucai']}">
+                        <span class="help-block">本次活动的图文素材, 用于引导关注. 请在微信公众平台中编辑的单条图文消息来介绍本次活动, 用于引导粉丝快速关注</span>
+                    </div>
+                </div>
+
+			        
+</div></div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">模板风格设置</div>
+			<div class="panel-body">	
+			<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">朋友圈背景图片</label>
+					<div class="col-sm-9 col-xs-12" id="apic">
+						{php echo tpl_form_field_image('bgpic', $item['bgpic'])}
+						<span class="help-block">参考图片大小：480px*300px</span>
+					</div>
+					
+				</div>
+
+			</div></div>
+		<div class="panel panel-default">
+			<div class="panel-heading">分享设置</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">分享图标</label>
+					<div class="col-sm-9 col-xs-12" id="share_icon">
+						{php echo tpl_form_field_image('share_icon', $item['share_icon'])}
+					</div>
+					
+				</div>
+				<span class="help-block" style="margin-left:17%">(提示：不填默认头像)</span>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">分享标题</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="share_title" class="form-control" value="{$item['share_title']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">分享内容</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="share_content" class="form-control" value="{$item['share_content']}" />
+						<span class="help-block">参数设置：#user# 粉丝昵称</span>
+					</div>
+					
+				</div>
+				
+				</div>
+				
+				</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">外链活动设置</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">图标</label>
+					<div class="col-sm-9 col-xs-12" id="share_icon">
+						{php echo tpl_form_field_image('expic', $item['expic'])}
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">外链提示</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="extitle" class="form-control" value="{$item['extitle']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">外链url</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="exurl" class="form-control" value="{$item['exurl']}" />
+						<span class="help-block">你想推广的活动链接</span>
+					</div>
+					
+				</div>
+				
+				</div>
+				
+				</div>
+</div>
+
+
+<script language='javascript'>
+	require(['jquery', 'util'], function($, u){
+		$(function(){
+			u.editor($('.richtext')[0]);
+		});
+	});
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+	
+<div class="form-group col-sm-12">
+	<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" onclick='return formcheck()' />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+	</div>
+	</form>
+</div>
+<script language='javascript'>
+	function formcheck(){
+		if($("#title").isEmpty()){
+			Tip.focus("title","请填写活动标题!");
+			return false;
+		}
+		return true;
+	}
+{template 'common/footer'}

@@ -1,0 +1,41 @@
+/**************header****************/
+.header{ width:100%; height:46px; line-height:46px; background:#22292c; position:relative; z-index:10; overflow:hidden;}
+.header a.back_btn{ width:40px; height:46px; position:absolute; z-index:20; display:block; background:url(../images/back_btn.jpg) center center no-repeat; background-size:17px 17px;}
+.header h2{ width:100%; height:100%;}
+.header h2 span{ margin-left:40px; height:22px; margin-top:12px; line-height:22px; display:block; border-left:1px solid #14191a; padding-left:10px; color:#fff; font-family:"微软雅黑"; font-size:16px;}
+
+.userItem{ padding:10px; width:100%; height:auto; overflow:hidden; background:#fff;margin-top:15px;}
+.userItem a {/* display:block; width:100%; height:100%; overflow:hidden; */ text-decoration:none !important;}
+.userItem img {border:1px solid #ebebeb;border-radius:8px;-webkit-border-radius:8px;-moz-border-radius:8px;-ms-border-radius:8px;-o-border-radius:8px;}
+.userItem img{ float:left; display:block; margin-right:10px;}
+.userItem dt{ height:20px; line-height:18px; margin-top:6px; color:#333; font-size:16px;}
+.userItem dd{ height:20px; line-height:20px; color:#666; margin-top:0px;}
+
+.item{ padding:0px 10px; height:auto; overflow:hidden; background:#fff; margin-top:15px; font-size:16px;}
+.item li{padding:0px; height:auto; line-height:20px;  border-bottom:1px solid rgb(240,240,240);}
+.item li a{text-decoration:none;}
+.item li:last-child{ border-bottom:none;}
+
+
+.mainInterface .item li a{  height:100%;padding:14px 0px;  display:block; color:#333;} 
+.item li img{ width:22px; height:22px; display:block; float:left; margin:0px 12px;}
+
+.setOneMain,.setTwoMain{ display:none;}
+.setOneMain .item li img,.setTwoMain .item li img{ margin-left:0px;}
+
+.setOneMain .item li a{ height:100%;padding:14px 10px ;  display:block; color:#333;} 
+.setOneMain .item li em{ float:right; color:#999;}
+.setOneMain .item li em img{ width:16px; height:16px; margin-right:2px; vertical-align:middle; display:inline-block;}
+
+.item em{ float:right; color:#999;padding-right:10px;}
+.setTwoMain .item li{  height:100%;padding:14px 10px ;  display:block; color:#333;height:auto; line-height:22px;  border-bottom:1px solid #ebebeb;}
+.setTwoMain .item li span{ width:50px; height:18px;  border-radius:2px;-webkit-border-radius:2px;-moz-border-radius:2px;-ms-border-radius:2px;-o-border-radius:2px; display:block; float:right;  position:relative; z-index:10;} 
+.setTwoMain .item li span.on{background:#45c01a;border:1px solid #45c01a;}
+.setTwoMain .item li span.off{background:#888;border:1px solid #888;}
+.setTwoMain .item li span em{width:25px; height:18px; display:block; background:#fff;border-radius:2px;-webkit-border
+-radius:2px;-moz-border-radius:2px;-ms-border-radius:2px;-o-border-radius:2px; position:absolute; z-index:20;}
+.setTwoMain .item li span.on em{ top:0px; right:0px;}
+.setTwoMain .item li span.off em{ top:0px; left:0px;}
+.setTwoMain .item li dt{ width:100%; height:22px; line-height:18px; overflow:hidden;}
+.setTwoMain .item li dd{ width:100%;height:auto; line-height:20px; color:#888; overflow:hidden; margin-top:4px; font-size:14px;}
+.userDefinedAvatar {border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;-ms-border-radius:50%;-o-border-radius:50%;width:40px !important;height:40px !important;margin-top:-9px !important;}

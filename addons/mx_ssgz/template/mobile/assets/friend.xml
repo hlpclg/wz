@@ -1,0 +1,35 @@
+{"frames": {
+
+"LaoTaiPoCry01.png":
+{
+	"frame": {"x":190,"y":114,"w":150,"h":110},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":150,"h":110},
+	"sourceSize": {"w":150,"h":110}
+},
+"LaoTaiPoCry02.png":
+{
+	"frame": {"x":190,"y":2,"w":150,"h":110},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":150,"h":110},
+	"sourceSize": {"w":150,"h":110}
+},
+"LaoTaiPoMove01.png":
+{
+	"frame": {"x":96,"y":2,"w":92,"h":153},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":92,"h":153},
+	"sourceSize": {"w":92,"h":153}
+},
+"LaoTaiPoMove02.png":
+{
+	"frame": {"x":2,"y":2,"w":92,"h":153},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":92,"h":153},
+	"sourceSize": {"w":92,"h":153}
+}}
+}

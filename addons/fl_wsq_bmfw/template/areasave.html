@@ -1,0 +1,40 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li ><a href="{php echo $this->createWebUrl('group')}">地区列表</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('groupAdd')}"><i class="fa fa-plus"></i> 添加地区</a></li>
+</ul>
+<div class="main">
+	<form class="form-horizontal form" id="form2" action="{php echo $this->createWebUrl('AreaSave')}" method="post">
+		<input type="hidden" name="id" value="{$_GPC[id]}" />
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				新增地区
+			</div>
+			<div class="panel-body">
+						
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">所属地区</label>
+					<div class="col-sm-9 col-xs-12">
+						<select name="fid">
+							<option value="0">无</option>
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">地区名称</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" class="form-control" name="name" value="{$data['name']}" /><span class="help-block"></span>
+					</div>
+				</div>
+				
+			
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input name="token" type="hidden" value="{$_W['token']}" />
+			<input type="submit" class="btn btn-primary col-lg-1" name="submit" value="提交" />
+		</div>
+	</form>
+</div>
+{template 'common/footer'}

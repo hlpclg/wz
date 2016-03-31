@@ -1,0 +1,180 @@
+<script language="javascript" type="text/javascript" src="./source/modules/bm_floor/template/js/dp/WdatePicker.js"></script>
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="alert alert-block alert-new">
+	<a class="close" data-dismiss="alert">×</a>
+	<table class="tb reply-news-edit">
+		<tr>
+			<th>兑奖密码</th>
+			<td>
+				<input type="text" value="{$prompt['password']}" class="span7" name="password">
+				<div class="help-block">商家兑奖密码</div>
+			</td>
+		</tr>	
+		<tr>
+			<th>楼层提示语</th>
+			<td>
+				<textarea style="height:40px;" name="currentprompt" class="span7" cols="70">{$prompt['currentprompt']}</textarea>
+				<div class="help-block">{##FLOOR##} 表示当前楼层，请根据您的需要自己组织语言，如：第{##FLOOR##}楼<br>如果不填，则为默认为：当前楼层是{##FLOOR##}楼</div>
+			</td>
+		</tr>
+		<tr>
+			<th>封面</th>
+			<td>{php echo tpl_form_field_image('logo', $item['logo'])}</td>
+		</tr>	
+        <tr>
+			<th>开始时间</th>
+			<td>
+            <input type="text" name="starttime" id="starttime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate" style="width:300px"  value="{if !empty($prompt['starttime'])} {php echo  $prompt['starttime']}{else}{php echo date('Y-m-d H:i:s', time())}{/if}"/>
+        
+							<div class="help-block"></div>			
+            </td>
+		</tr>
+        <tr>
+			<th>结束时间</th>
+			<td>
+            <input type="text" name="endtime" id="endtime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate" style="width:300px"  value="{if !empty($prompt['endtime'])} {php echo  $prompt['endtime']}{else}{php echo date('Y-m-d H:i:s', time())}{/if}"/>
+        
+							<div class="help-block"></div>			
+            </td>
+		</tr>
+		<tr>
+			<th>未开始提示语</th>
+			<td>
+				<textarea style="height:40px;" name="memo1" class="span7" cols="70">{$prompt['memo1']}</textarea>
+				<div class="help-block"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>活动结束提示语</th>
+			<td>
+				<textarea style="height:40px;" name="memo2" class="span7" cols="70">{$prompt['memo2']}</textarea>
+				<div class="help-block"></div>
+			</td>
+		</tr>								
+		<tr>
+			<th>中奖提示语</th>
+			<td>
+				<textarea style="height:40px;" name="awardprompt" class="span7" cols="70">{$prompt['awardprompt']}</textarea>
+				<div class="help-block">{##FLOOR##} 表示当前楼层，{##AWARD##}表示奖品名称，{##DESCRIPTION##}表示奖品描述，请根据您的需要自己组织语言，如：第{##FLOOR##}楼，中奖啦，奖品是{##AWARD##}{##DESCRIPTION##}<br>如果不填，则为默认为：当前楼层是{##FLOOR##}楼,恭喜你，获得{##AWARD##}</div>
+			</td>
+		</tr>
+		<tr>
+			<th>领奖后跳转URL</th>
+			<td>
+				<textarea style="height:40px;" name="url" class="span7" cols="70">{$prompt['url']}</textarea>
+				<div class="help-block"></div>
+			</td>
+		</tr>	
+		<tr>
+			<th>游戏说明URL</th>
+			<td>
+				<textarea style="height:40px;" name="url1" class="span7" cols="70">{$prompt['url1']}</textarea>
+				<div class="help-block"></div>
+			</td>
+		</tr>			
+		<tr>
+			<th>每天抢楼次数</th>
+			<td>
+				<input type="text" value="{$prompt['total']}" class="span7" name="total">
+				<div class="help-block"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>次数用完提示语</th>
+			<td>
+				<textarea style="height:40px;" name="memo" class="span7" cols="70">{$prompt['memo']}</textarea>
+				<div class="help-block"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>分享关键字</th>
+			<td>
+				<input type="text" value="{$prompt['share_keyword']}" class="span7" name="share_keyword">
+				<div class="help-block"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>分享Logo</th>
+			<td>{php echo tpl_form_field_image('share_logo', $prompt['share_logo'])}</td>
+		</tr>
+		<tr>
+			<th>分享简介</th>
+			<td>
+				<textarea style="height:40px;" name="share_memo" class="span7" cols="70">{$prompt['share_memo']}</textarea>
+				<div class="help-block"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>分享规则</th>
+			<td>
+				<textarea style="height:40px;" name="share_statement" class="span7" cols="70">{$prompt['share_statement']}</textarea>
+				<div class="help-block"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>分享URL</th>
+			<td>
+				<textarea style="height:40px;" name="share_url" class="span7" cols="70">{$prompt['share_url']}</textarea>
+				<div class="help-block"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>分享被点击后奖励次数</th>
+			<td>
+				<input type="text" value="{$prompt['share_point']}" class="span7" name="share_point">
+				<div class="help-block"></div>
+			</td>
+		</tr>
+		<tr>
+			<th>转发页面广告URL</th>
+			<td>
+				<textarea style="height:40px;" name="adv_url" class="span7" cols="70">{$prompt['adv_url']}</textarea>
+				<div class="help-block"></div>
+			</td>
+		</tr>												
+	</table>
+	<div id="append-list" class="list">
+	{if !empty($award)}
+		{php $prize = 1;}
+		{loop $award $item}
+		<div class="item" id="superman_floor-item-{$item['id']}">
+		{php include $this->template('bm_floor/item');}
+		</div>
+		{php $prize++;}
+		{/loop}
+	{/if}
+	</div>
+	<div class="reply-news-edit-button"><a href="javascript:;" onclick="superman_floorHandler.buildAddForm('superman_floor-form-html', $('#append-list'))" class="btn"><i class="icon-plus"></i> 添加奖品</a></div>
+</div>
+
+<script type="text/html" id="superman_floor-form-html">
+{php unset($item); include $this->template('bm_floor/item');}
+</script>
+<script type="text/javascript">
+
+var superman_floorHandler = {
+	'buildAddForm' : function(id, targetwrap) {
+		var obj = buildAddForm(id, targetwrap);
+		obj.html(obj.html().replace(/\(wrapitemid\)/gm, obj.attr('id')));
+	}
+};
+
+function add_row() {
+	$.getJSON('{php echo create_url('index/module/formdisplay', array('name' => 'bm_floor'))}', function(data){
+		if (data.error === 0 && data.content.html != '') {
+			$('#append-list').append(data.content.html);
+			row = $('#'+data.content.id);
+		}
+	});
+}
+//奖品类型切换
+$("#append-list").delegate("#award-inkind input", "click", function(){
+	if($(this).val() == 0) {
+		$(this).parents(".item").find(".num").css("display", "none");
+		$(this).parents(".item").find("tr:eq(3),tr:eq(4)").show();
+	} else {
+		$(this).parents(".item").find(".num").css("display", "inline-block");
+		$(this).parents(".item").find("tr:eq(3),tr:eq(4)").hide();
+	}
+});
+</script>

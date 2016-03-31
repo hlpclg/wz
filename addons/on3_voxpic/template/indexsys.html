@@ -1,0 +1,23 @@
+{template 'common/header'}
+{template 'nav_tabs'}
+<div class="main">
+	<div class="panel panel-default">
+		<div class="table-responsive panel-body">
+			<table class="table table-hover">
+				<thead class="navbar-inner">
+					<tr>
+						<th style="width:20%;">入口名称</th>
+						<th style="width:80%;">入口链接</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>留声墙首页</td>
+						<td><a href="{php echo  $_W['siteroot']."app".substr($this->createMobileUrl('Index'),1)}" target="_blank" style="text-decoration:none;">{php echo  $_W['siteroot']."app".substr($this->createMobileUrl('Index'),1)}</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{template 'common/footer'}

@@ -1,0 +1,185 @@
+<html><head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<meta name="misapplication-tap-highlight" content="no">
+	<meta name="HandheldFriendly" content="true">
+	<meta name="MobileOptimized" content="320">
+	<title>{$systeminfo['shopname']}</title>
+	<script type="text/javascript" src="../addons/water_super/template/js2/common.js"></script>
+	<script type="text/javascript" src="../addons/water_super/template/js2/jquery-1.11.0.js"></script>
+	<script type="text/javascript" src="../addons/water_super/template/js2/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../addons/water_super/template/js2/lmxyApi.js"></script>
+	<script type="text/javascript" src="../addons/water_super/template/js2/action.js"></script>
+	<script type="text/javascript" src="../addons/water_super/template/js2/update.js"></script>
+	<script type="text/javascript" src="../addons/water_super/template/js2/mui.min.js"></script>
+	<script type="text/javascript" src="../addons/water_super/template/js2/lmxyEvent.js"></script>
+	<script type="text/javascript" src="../addons/water_super/template/js2/ilm.js"></script>
+	<link href="../addons/water_super/template/css/base2.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="../addons/water_super/template/css2/mui.min.css">
+	<link rel="stylesheet" href="../addons/water_super/template/css2/common.css" type="text/css" charset="utf-8">
+	<link rel="stylesheet" href="../addons/water_super/template/css2/ilm.css" type="text/css" charset="utf-8">
+	<script type="text/javascript" src="../addons/water_super/template/js2/geolocation.js"></script>
+    <script>
+	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	WeixinJSBridge.call('hideOptionMenu');
+	});
+	</script>
+	<script type="text/javascript" charset="utf-8">
+      	<?php $i=0; ?>
+		$(document).ready(function() {	
+		    /*为三种衣服加点击事件*/
+		     {loop $goodslist $item}
+
+				eleClick($("#productList_div").find("li:eq(<?php echo $i++;?>)"));
+
+		    
+		     {/loop}
+		});
+		
+		function eleClick(ele){		
+			ele.find("button.input-minus").click(function(){
+					minusOrPlus(0,ele);
+			});
+			ele.find("button.input-plus").click(function(){
+					minusOrPlus(1,ele);
+			});
+			
+		}
+		/*加和减事件所进行的操作*/
+		function minusOrPlus(type,ele){
+			var value=ele.find(".buy-number input").val();
+			var money=parseInt(ele.find(".buy-number button:eq(0)").attr("data-type"));
+			var num=parseInt(value.substring(0,value.length-1));
+			var totalNum=$("#total").find("i:eq(0)");
+			var totalMoney=$("#total").find("i:eq(1)");
+			if(type == 0){
+				if(num != 0){
+					num=num-1;
+					totalNum.html(parseInt(totalNum.html())-1);
+					totalMoney.html(parseInt(totalMoney.html())-money);
+					document.getElementById('allcostfee').value = parseInt(totalMoney.html());
+				}			 
+			}else if(type ==1){
+			   num=num+1;
+			   totalNum.html(parseInt(totalNum.html())+1);
+			   totalMoney.html(parseInt(totalMoney.html())+money);
+			   document.getElementById('allcostfee').value = parseInt(totalMoney.html());
+			}
+			ele.find(".buy-number input").attr("value",num+"件");
+		}
+		mui.init();
+		
+		function checkform(){
+			var projectIds = $("input[name='projectId']");
+			var numbers = $("input[name='number']");
+			var urlParameter = "";
+			var flag = false;
+			for(var i = 0 ; i < projectIds.length ; i ++ ){
+				/*alert(numbers[i].value.indexOf("件")+1);
+				alert(numbers[i].value.substring(0,numbers[i].value.indexOf("件")));*/
+				if(i==0){
+					urlParameter += "projectId="+projectIds[i].value+"&number="+numbers[i].value.substring(0,numbers[i].value.indexOf("件"));
+				}else{
+					urlParameter += "&projectId="+projectIds[i].value+"&number="+numbers[i].value.substring(0,numbers[i].value.indexOf("件"));
+				}
+				if(numbers[i].value != "0件"){
+					flag = true;
+				}
+			}
+			if(!flag){
+				//alert("亲，您还未选择服务内容哦");
+				$("#error_tip").show();
+				return false;
+			}
+		}
+		
+		function onclose1(){
+			$("#error_tip").hide();
+			return false;
+		}
+    </script>
+
+	<style type="text/css"> 
+	 
+	#list {
+		/*避免导航边框和列表背景边框重叠，看起来像两条边框似得；*/
+		margin-top: -1px;
+	}
+	.mui-collapse a img {vertical-align:botttom; width:50px; margin-top:4px; margin-right:5px;}
+	</style>
+</head>
+<body onselectstart="return false;">
+	<header class="mui-bar mui-bar-nav">
+		<!--<button class="mui-btn mui-btn-link mui-btn-nav mui-pull-left">
+			<span class="mui-icon mui-icon-left-nav"></span>
+		</button>-->
+		<h1 class="mui-title">{$systeminfo['sltxc']}</h1>
+	</header> 
+	<div class="ncontent" style="display: block">
+		<div class="align-c" style="padding: 5px 10px;">
+			<h4>请您选择需要的服务项目</h4>
+		</div>
+		<div id="productList_div" class="mui-card"><ul class="mui-table-view content-info">
+		 {loop $goodslist $item}
+		<li class="posR">
+			<div class="mui-table-view-cell mui-collapse">
+				<a class="mui-navigate-right ilm-center" href="javascript:;"><img src="{$_W['attachurl']}{$item['goodsphoto']}">&nbsp;{$item['goodsname']}</a>
+				<div id="wp_sm_id_{$item['id']}" class="mui-collapse-content">
+				{$item['goodsinfo']}
+				</div>
+			</div>
+			<div id="nav-area">
+				<div class="buy-number fl">
+					<button type="button" class="input-minus fl" data-type="{$item['goodsprice']}">-</button>
+					<input id="number01" readonly="readonly" name="number" class="proinput fl" value="0件">
+					<button type="button" class="input-plus" data-type="{$item['goodsprice']}" style="float: left;">+</button>
+				</div>
+				<input name="projectId" class="proinput" value="{$item['id']}" type="hidden">
+			</div>
+		</li>		 
+		 
+		 {/loop}
+
+</ul></div>
+		<h5 class="align-c" id="total" style="padding: 5px 10px;">共<i style="color: #007aff;">0</i>件　共<i style="color: #007aff;">0</i>元</h5>
+		<div class="mui-table-view-cell mui-collapse" style="padding: 10px 20px;color: #007aff;">
+		小贴士：{$systeminfo['sltts']}
+		</div>
+		<form method="POST" name="feeform" id="feeform" action="" onsubmit="return checkform();">
+		<input type="hidden" name="allcostfee" id ="allcostfee" />
+		<div class="mui-button-row">
+			<button onclick="javascript:history.go(-1);" class="mui-btn w4" style="background: rgb(0,180,255);">上一步</button>
+			<button value="选好了" class="mui-btn w4" id = "data_submit" style="background: rgb(0,180,255);">选好了</button>
+		</div>
+		
+		<input type="hidden" name="submit" value="1"/>
+		<input type="hidden" name="token" value="{$_W['token']}" />
+		</form>
+		<div style="padding: 20px 10px; 0">
+			<!-- <span class="mui-icon mui-icon-info"></span>
+			<span style="line-height: 36px;">小喵友情提醒：</span>
+			<p>如果您希望由懒猫清点件数，请点击上方<i class="red">"跳过本步骤"</i></p> -->
+		</div>
+	</div>
+	<!--<nav class="mui-bar mui-bar-tab" id="tabNav"><a class="mui-tab-item mui-active" href="http://ilanmao.cn/jsLmxy/lmxyApp/index.html"><span class="mui-icon mui-icon-download"></span><span class="mui-tab-label">我要洗衣</span></a><a class="mui-tab-item" href="http://ilanmao.cn/jsLmxy/lmxyApp/myorder.html"><span class="mui-icon mui-icon-email"></span><span class="mui-tab-label">我的订单</span></a><a class="mui-tab-item" href="http://ilanmao.cn/jsLmxy/lmxyApp/myaccount.html"><span class="mui-icon mui-icon-contact"></span><span class="mui-tab-label">我的帐户</span></a></nav> -->
+	<div onclick="changeDiv('loading_div','')" id="loading_div" style="position:absolute; height:100%; width:100%;z-index:200;display: none;">
+		<img src="img/loading.png" height="100%" width="100%">
+	</div>
+	
+	<div id="error_tip" style="display:none" class="cod">
+        <div class="wx_mask"></div>
+        <div class="wx_confirm">
+            <div class="wx_confirm_inner">
+                <div class="wx_confirm_hd">
+                    <div class="wx_confirm_tit" id="tip_div">亲，请先选择服务内容吧</div>
+                </div>
+                <div class="wx_confirm_bd">
+                    <div class="wx_confirm_btn">
+                        <button type="button" onclick="javascript:onclose1();" class="okbtn" id="codGoPay" style="width:97%">我知道了</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

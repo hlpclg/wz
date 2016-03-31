@@ -1,0 +1,19 @@
+{"frames": {
+
+"EnemyMove01.png":
+{
+	"frame": {"x":2,"y":162,"w":118,"h":158},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":118,"h":158},
+	"sourceSize": {"w":118,"h":158}
+},
+"EnemyMove02.png":
+{
+	"frame": {"x":2,"y":2,"w":118,"h":158},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":118,"h":158},
+	"sourceSize": {"w":118,"h":158}
+}}
+}

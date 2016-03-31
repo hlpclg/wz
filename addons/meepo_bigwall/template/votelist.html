@@ -1,0 +1,154 @@
+{template 'common/header'}
+<script type='text/javascript' src='resource/js/lib/jquery-1.11.1.min.js'></script>
+<script type="text/javascript" src="../addons/ewei_shopping/images/jquery.gcjs.js"></script>
+<script type="text/javascript" src="../addons/ewei_shopping/images/jquery.form.js"></script>
+<script type="text/javascript" src="../addons/ewei_shopping/images/tooltipbox.js"></script>
+<style type="text/css">
+.red {float:left;color:red}
+.white{float:left;color:#fff}
+
+.tooltipbox {
+	background:#fef8dd;border:1px solid #c40808; position:absolute; left:0;top:0; text-align:center;height:20px;
+	color:#c40808;padding:2px 5px 1px 5px; border-radius:3px;z-index:1000;
+}
+.red { float:left;color:red}
+</style>
+<ul class="nav nav-tabs">
+	<li {if $operation == 'display'} class="active" {/if}><a href="{php echo $this->createWebUrl('Checkvote',array('op' =>'display'))}">投票项目列表</a></li>
+	<li{if empty($adv['id']) && $operation == 'post'} class="active" {/if}><a href="{php echo $this->createWebUrl('Checkvote',array('op' =>'post'))}">添加投票项目</a></li>
+	{if !empty($adv['id']) &&  $operation == 'post'}<li  class="active"><a href="{php echo $this->createWebUrl('Checkvote',array('op' =>'post','id'=>$adv['id']))}">编辑投票项目</a></li>{/if}
+</ul>
+
+{if $operation == 'display'}
+<div class="panel panel-success">
+
+	<div class="panel-heading">筛选</div>
+	<div class="panel-body">
+		<form action="./index.php" method="get" class="form-horizontal" role="form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+			<input type="hidden" name="m" value="meepo_bigwall" />
+			<input type="hidden" name="do" value="Checkvote" />
+            
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">选择所属活动</label>
+				<div class="col-sm-8 col-lg-10 col-xs-12">
+					<select name="rid" class="form-control">
+						<option value="">不限</option>
+						{if !empty($rids)}
+						{loop $rids $row}
+						<option value="{$row['rid']}" {if $_GPC['rid'] === $row['rid']} selected="selected" {/if}>{$row['content']}</option>
+						{/loop}
+						{/if}
+					</select>
+					<span class="help-block">请选择活动名称</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class=" col-xs-12 col-sm-2 col-lg-2">
+					<input type="submit"  value="搜索" class="btn btn-success" />
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>
+<div class="main panel panel-success">
+<div class="panel-heading">
+				投票数据<br><br>
+				<strong>具体投票结果 请到规则列表下查看</strong>
+
+
+			</div>
+	<div class="panel-body table-responsive">
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th>ID</th>					
+					<th>投票名称</th>
+					<th>所属活动名称</th>
+					<th >操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $adv}
+				<tr>
+					<td><span class="label label-danger">{$adv['id']}</span></td>
+					<td><span class="label label-success">{$adv['name']}</span></td>
+					<td><span class="label label-info">{$adv['ridname']}</span></td>
+					<td style="text-align:left;">
+						<a href="{php echo $this->createWebUrl('Checkvote', array('op' => 'post', 'id' => $adv['id']))}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="修改"><i class="fa fa-edit"></i></a>
+						<a href="{php echo $this->createWebUrl('Checkvote', array('op' => 'delete', 'id' => $adv['id']))}"class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="删除" onclick="return confirm('删除将无法恢复，确认吗？');return false;"><i class="fa fa-times"></i></a>
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+		{$pager}
+	</div>
+</div>
+<script>
+	require(['bootstrap'],function($){
+		$('.btn').hover(function(){
+			$(this).tooltip('show');
+		},function(){
+			$(this).tooltip('hide');
+		});
+	});
+</script>
+{elseif $operation == 'post'}
+
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" onsubmit='return formcheck()'>
+		<input type="hidden" name="id" value="{$adv['id']}" />
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				投票项目
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span><span class="label label-success">投票项目名称</span></label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" id='name' name="name" class="form-control" value="{$adv['name']}" placeholder="请输入投票项目名称" />
+						<span class="help-block">投票项目名称</span>
+					</div>
+				</div>
+				<div class="form-group">
+				  <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label"><span style="color:red">*</span><span class="label label-success">所属活动</span></label>
+				  <div class="col-sm-8 col-lg-10 col-xs-12">
+				  {if !empty($rids)}
+					<select name="rid" class="form-control">
+						{loop $rids $row}
+						<option value="{$row['rid']}" {if $adv['rid'] === $row['rid']} selected="selected" {/if}>{$row['content']}</option>
+						{/loop}
+					</select>
+				  {else}
+				  请先到规则列表内 添加相应的活动名称
+				  {/if}
+					<span class="help-block">请选择活动名称</span>
+				 </div>
+			    </div>
+			</div>
+		</div>
+    <div class="form-group col-sm-12">
+	<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+	<input type="hidden" name="token" value="{$_W['token']}" />
+	</div>
+	</form>
+</div>
+
+<script language='javascript'>
+	function formcheck() {
+		if ($("#name").isEmpty()) {
+			Tip.focus("name", "请填写投票项目名称!");
+			return false;
+		}
+		return true;
+	}
+</script>
+{/if}
+
+
+
+	
+{template 'common/footer'}

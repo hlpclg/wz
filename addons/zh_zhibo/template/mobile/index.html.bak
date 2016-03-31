@@ -1,0 +1,86 @@
+﻿<!DOCTYPE hmtl>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=2.0" />
+<title>微信手机直播看93抗战大阅兵-CCTV1直播信号，不用安装客户端直接看</title>
+<script type="text/javascript" src="{PATH}style/js/jquery.js"></script>
+<style>
+	* {color:#ffffff;}
+	a {color:#ffffff;}
+	#header{height:auto;display:block;margin:0;padding:auto 1%;margin:2% auto;  }
+	#player{width:100%;margin:0px;padding:0px;display:block;}
+	#selecter{display:block;margin:2% auto; padding-left:2%;}
+	#ad{display:block;margin:2% auto; width:100%; text-align:center;}
+	#selecter ul {margin:0px;padding:0px;}
+	#selecter ul li{float:left;width:48%;margin:1% auto; margin-right:1%; }
+	.logo{display:none;}
+	
+</style>
+
+<script>
+	
+	
+	//判断手机横竖屏状态：
+	function hengshuping(){
+		if(window.orientation==180||window.orientation==0){
+			// alert("竖屏状态！");
+			$('#header').show();
+			$('#selecter').show();
+			$('#ad').show();
+		}
+		if(window.orientation==90||window.orientation==-90){
+			// alert("横屏状态！");
+			$('#header').hide();
+			$('#selecter').hide();
+			$('#ad').hide();
+		}
+	}
+	$(document).ready(function(){
+		// var wwidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+		// var wheight = wwidth*0.5;
+		// alert(width);
+		// $('#vplayer').width(wwidth);
+		// $('#vplayer').height(wheight);
+		window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", hengshuping, false);
+		
+	});
+
+</script>
+</head>
+<body style="margin:0px;padding:0px;background:#404952;">
+<div id="header">93抗战大阅兵直播</span></div>
+<div id="player">
+	
+	<video controls="controls" loop="loop" id="vplayer" style="width:100%;height:auto;">
+		<source src="http://111.1.62.218/gitv_live/CCTV-1-HD/CCTV-1-HD.m3u8">
+	</video>
+</div>
+<div class="logo">
+	<img src="{PATH}style/images/logo.jpg" style="width:100%;"  />
+</div>
+
+<div id="selecter">
+	<div>
+
+	</div>
+	<div style="clear:both;"></div>
+	<div style="margin:2% auto;padding:0px;">
+		<p>温馨提醒：请在Wifi的环境下观看节目，以免产生高额的流量费用。</p>
+	
+	</div>
+	<div style="margin:2% auto;padding:0px;text-align:center;margin-bottom:20px;">
+		分享给好友：
+	</div>
+	<div style="margin:2% auto;padding:0px;text-align:center;">
+		<img src="{PATH}style/images/live.png" style="width:90%;" />
+	</div>
+	
+</div>
+
+<div id="footer">
+
+</div>
+
+</body>
+</html>

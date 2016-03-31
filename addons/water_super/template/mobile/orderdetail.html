@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	WeixinJSBridge.call('hideOptionMenu');
+});
+</script>
+<title>{$systeminfo['shopname']}</title>
+<link href="../addons/water_super/template/css/footer.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/css/base.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/css/myOrder.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../addons/water_super/template/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/js/jscommon.js"></script>
+</head>
+<body>
+<div class="myOrder_list order-detail-con p10">
+  <ul>
+    <li  class="order_item">
+      <div class="item_list_box borderD">订单编号：{$orderinfo['ordercode']}</div>
+      <div class="item_list_box borderD list-titel">商品信息：{$systeminfo['fuwuname']}</div>
+      <div class="item_list_box borderD">订单状态：{if $orderinfo['orderstate'] == '0'}{$systeminfo['ddzt0']}{elseif $orderinfo['orderstate'] == '1'}{$systeminfo['ddzt1']}{elseif $orderinfo['orderstate'] == '2'}{$systeminfo['ddzt2']}{elseif $orderinfo['orderstate'] == '3'}{$systeminfo['ddzt3']}{elseif $orderinfo['orderstate'] == '4'}{$systeminfo['ddzt4']}{elseif $orderinfo['orderstate'] == '5'}{$systeminfo['ddzt5']}{/if}</div>
+      {if $orderinfo['orderstate'] == '1'}
+      <div class="item_list_box borderD list-titel">员工信息：{$employee['employeename']}<a href="tel:{$employee['tel']}"><b style="padding-left:10px">{$employee['tel']}</b></a></div>
+      {/if}
+      <div class="item_list_box ">服务日期：<em>{$orderinfo['fuwuriqi']} &nbsp; {$orderinfo['fuwushijian']}</em></div>
+    </li>
+    <li  class="order_item ">
+     	<div class="item_list_box borderD "><div class="">订单明细</div></div>
+    	<div class=" wuliu-div">{$orderinfo['detail']}</div>
+      <div class="clear"></div>
+    </li>  
+    
+     
+    <li  class="order_item ">
+     	<div class="item_list_box borderD "><div class="">我的信息</div></div>
+	
+    	<div class=" wuliu-div"><img src = "../addons/water_super/template/images/icon-name.png"/>{$orderinfo['customername']}</div>
+     	 <div class=" wuliu-div"><img src = "../addons/water_super/template/images/icon-phone.png"/>{$orderinfo['customertel']}</div>
+    	<div class=" wuliu-div"><img src = "../addons/water_super/template/images/icon-adress.png"/>{$orderinfo['customercity']}{$orderinfo['customerarea']}{$orderinfo['xiangxdz']}</div>
+     	 
+      <div class="clear"></div>
+    </li>
+   
+    <li  class="order_item">
+      
+      <div class="myOrder_list order-detail-con">
+        <div class="iitem_list_box">
+        <div class="item_list_box borderD">物流跟踪</div>
+        {loop $expresinfoList $item}  
+        <div class="order-logictics">
+          <div class="split-position"></div>
+          <span class="high-dottle"></span>
+          <div class="borderD con-text" style="color:#f7ba5b;font-size:14px">
+          <b>{if $item['orderstate'] == '0'}{$systeminfo['ddzt0']}{elseif $item['orderstate'] == '1'}{$systeminfo['ddzt1']}{elseif $item['orderstate'] == '2'}{$systeminfo['ddzt2']}{elseif $item['orderstate'] == '3'}{$systeminfo['ddzt3']}{elseif $item['orderstate'] == '4'}{$systeminfo['ddzt4']}{elseif $item['orderstate'] == '5'}{$systeminfo['ddzt5']}{/if}</b>
+          <div><small>{$item['expresstime']}</small></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+		{/loop}
+      </div>
+     </div> 
+    </li>
+  </ul>
+</div>
+<div style="display:none">
+</div><body>
+</html>
+
+  

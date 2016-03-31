@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html><head>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<meta charset="utf-8">
+
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+
+<meta content="yes" name="apple-mobile-web-app-capable">
+
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+
+<meta content="telephone=no" name="format-detection">
+
+<meta content="email=no" name="format-detection">
+
+<meta content="" name="pgv">
+
+<title>{$systeminfo['shopname']}</title>
+
+<link href="../addons/water_super/template/css/base.css" rel="stylesheet" type="text/css">
+
+<link href="../addons/water_super/template/css/item.css" rel="stylesheet" type="text/css" />
+
+<link href="../addons/water_super/template/css/order.css" rel="stylesheet" type="text/css" />
+
+<link href="../addons/water_super/template/css/footer.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="../addons/water_super/template/js/jquery-1.7.2.min.js"></script>
+
+<script type="text/javascript" src="../addons/water_super/template/js/jquery.form.js"></script>
+
+<script type="text/javascript" src="../addons/water_super/template/js/page.js"></script>
+
+<script type='text/javascript' src="../addons/water_super/template/js/touchslider.min.js"></script>
+
+<script type='text/javascript' src="../addons/water_super/template/js/klass.min.js"></script>
+
+<script type='text/javascript' src="../addons/water_super/template/js/photoswipe.jquery-3.0.5.min.js"></script>
+
+<script type='text/javascript' src="../addons/water_super/template/js/jsAddress.js"></script>
+
+</head>
+
+<body class="Bg-white">
+
+<!--添加新地址-->
+
+    <form method="post" action="" onsubmit="return checkform();">
+
+        <!-- 个人基本信息-->
+
+        <section class="section_4">     
+
+            <div class="m_input m_input_5">     
+
+                <label for="name">姓名</label>   
+
+                <div class="input"><input placeholder="请填写姓名" id="customername"  name="customername" value="{$address['customername']}"></div>    
+
+            </div>    
+
+            <div class="m_input m_input_5">
+
+                <label for="mobile">手机号码</label>      
+
+                <div class="input"><input placeholder="请填写手机号码" value="{$address['tel']}" id="tel" name="tel" type="number"></div>
+
+            </div>
+
+        </section>
+
+        <!-- 地址-->
+
+        <!-- 地址-->
+
+        <div class="borderD" style="margin:5px 0"></div>
+
+	        <section class="address_div">    
+
+	            <div class="m_input select y_hover">     
+
+	                <label for="">选择城市 </label>
+
+	                <div class="select y_hover"> <select id="cmbCity" class="J_city select_J_ytag" name="customercity">{$address['customercity']}</select> </div>    
+
+	            </div>    
+
+	            <div class="m_input select y_hover">    
+
+	                <label for="">选择区域</label>   
+
+	                <div class="select y_hover"><select id="cmbArea" class="J_area select_J_ytag" name="customerarea">{$address['customerarea']}</select>     
+
+	                </div>    
+
+	            </div>    
+
+	            <div class="m_input m_input_4">      
+
+	                <label for="id_pay">详细地址 </label>  
+
+	                <div class="input"><textarea placeholder="请填写详细地址" id="address" name="xiangxdz" >{$address['xiangxdz']}</textarea></div>    
+
+	            </div>    
+
+	        </section>
+
+        <!-- 确定-->
+
+          <div class="white-bg">
+
+            <div class="m_input"><button  type="submit" class="btn_order y_hover J_ytag "  id = "save_address" value="保存" disabled='true'>保存</button></div> 
+
+          </div>  
+
+        <input type="hidden" name="token" value="{$_W['token']}" />
+
+        <input type="hidden" name="submit" value="1"/>
+
+        <input name = "id"  type = "hidden" value = "{$address['id']}">
+
+    </form>
+
+<!--／添加新地址-->
+
+	<div id="error_tip" style="display:none" class="cod">
+
+        <div class="wx_mask"></div>
+
+        <div class="wx_confirm">
+
+            <div class="wx_confirm_inner">
+
+                <div class="wx_confirm_hd">
+
+                    <div class="wx_confirm_tit" id="tip_div">请将地址信息填写完整</div>
+
+                </div>
+
+                <div class="wx_confirm_bd">
+
+                    <div class="wx_confirm_btn">
+
+                        <button type="button" onclick="javascript:onclose1();" class="okbtn" id="codGoPay" style="width:97%">我知道了</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{php $city = $firstCity['cityname']; }
+
+{php $area = $firstArea['areaname']; }
+
+<div style="display:none">
+
+</div></body>
+
+<script type="text/javascript">
+
+var cityArr = {$cityStr};
+
+var areaArr = {$areaStr};
+
+
+
+$(function(){
+
+    
+
+    var city = '{php echo $city}';
+
+  	var area = '{php echo $area}';
+
+    if(city.trim() == '' || area.trim() == ''){
+
+        city = '请选择城市';
+
+        area = '请先选择城市';
+
+  }
+
+
+
+  selectinit(city,area,'cmbCity','cmbArea');
+
+  $("#save_address").attr("disabled",false); 
+
+})
+
+
+
+
+
+function checkform(){
+
+	var username = $("#customername").val().trim();
+
+	var tel = $("#tel").val().trim();
+
+	var address = $("#address").val().trim();
+
+  	var city = $('#cmbCity').val();
+
+  	var area = $('#cmbArea').val();
+
+
+
+	if(username == ""){
+
+		$("#error_tip").show();
+
+		$("#tip_div").html("请填写姓名");
+
+		return false;
+
+	}
+
+	var re = /^[0-9]{11}$/;
+
+  if (tel == '') {
+
+    $("#tip_div").html("请填写手机号码");
+
+    $("#error_tip").show();
+
+    return false;
+
+  }else if (!re.test(tel)) {
+
+    $("#tip_div").html("请正确填写手机号码");
+
+    $("#error_tip").show();
+
+    return false;
+
+  };
+
+
+
+    if(!city || city == ""){
+
+        $("#error_tip").show();
+
+        $("#tip_div").html("请选择城市");
+
+        return false;
+
+    }
+
+
+
+     if(!area || area == ""){
+
+         $("#error_tip").show();
+
+         $("#tip_div").html("请选择区域");
+
+         return false;
+
+    }
+
+
+
+	if(address == ""){
+
+		$("#tip_div").html("请填写详细地址");
+
+		$("#error_tip").show();
+
+		return false;
+
+	}
+
+
+
+	$("#save_address").attr("disabled",true); 
+
+}
+
+function onclose1(){
+
+	$("#error_tip").hide();
+
+	return false;
+
+}
+
+</script>
+
+
+
+</html>

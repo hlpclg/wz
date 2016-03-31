@@ -1,0 +1,71 @@
+{template 'common/header'}
+
+<ul class="nav nav-tabs">
+	<li ><a href="{php echo $this->createWebUrl('list')}">商家列表</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('add')}"><i class="fa fa-plus"></i> 添加商户</a></li>
+</ul>
+<div class="main">
+	<form class="form-horizontal form" id="form2" action="{php echo $this->createWebUrl('save')}" method="post">
+		<input type="hidden" name="id" value="{$_GPC[id]}" />
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				新增商户
+			</div>
+			<div class="panel-body">
+						
+
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">商户名称</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" class="form-control" name="name" value="{$row['name']}" /><span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">商户电话</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" class="form-control" name="tel" value="{$row['tel']}" /><span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">商户地址</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" class="form-control" name="address" value="{$row['address']}" /><span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-md-2 control-label">商户分类</label>
+						<div class="col-lg-5">
+							 <select id='class' name='tid[]' class="selectpicker form-control" multiple data-live-search="true" data-live-search-placeholder="Search" data-actions-box="true" data-done-button="true">
+								 <option value='0'>请选择</option>
+								 {loop $types $value}
+								 <option value='{$value[id]}'>{$value[name]}</option>
+								 {/loop}
+						</select>
+						</div>
+					</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">商户状态</label>
+					<div class="col-sm-9 col-xs-12">
+						<select name="status" class="form-control">
+							<option value="1" selected >开启</option>
+							<option value="0" >关闭</option>
+						</select>
+						<span class="help-block"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">商户排序</label>
+					<div class="col-sm-2 col-xs-12">
+						<input type="text" class="form-control" name="orders" value="{php echo $row['orders']?$row['orders']:0}" /><span class="help-block"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input name="token" type="hidden" value="{$_W['token']}" />
+			<input name="id" type="hidden" value="{$row[id]}" />
+			<input type="submit" class="btn btn-primary col-lg-1" name="submit" value="提交" />
+		</div>
+	</form>
+</div>
+{template 'common/footer'}

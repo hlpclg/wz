@@ -1,0 +1,19 @@
+{template 'header'}
+<div class="container2 projects">
+	<div id="ranking">
+		<h3 id="title" style="text-align: center">全民自拍比赛排行榜<br><small id="sex">{if !$sex}女生{else}男生{/if}</small></h3>
+	</div>
+	<div id="RankingList">
+		{loop $userss $key $user}
+		<div class="panel panel-info">
+			<div class="panel-heading">NO.{php echo $key+1}&nbsp;{$user['nickname']}&nbsp;{$user['school']}&nbsp;<span color="red">{$user['num']}赞</span></div>
+			<div class="panel-body"><img src="{php echo tomedia($user['src_img'])}" alt="{php $user['nickname']}" class="listimg"></div>
+		</div>	
+		{/loop}
+		{php echo $pager}
+	</div>
+	<p class="text-center"><a href="{php echo $copy['yindao']['url']}" class="btn btn-primary" role="button">{$copy['yindao']['title']}</a></p>
+</div>
+</div>
+{template 'footer_bar'}
+{template 'common/footer'}

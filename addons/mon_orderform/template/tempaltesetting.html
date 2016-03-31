@@ -1,0 +1,82 @@
+{template 'common/header'}
+<div class="main">
+
+
+	<form action="" method="post" class="form-horizontal form">
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			模板消息设置
+		</div>
+		<div class="panel-body">
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">订单通知模板ID：</label>
+				<div class="col-sm-9 col-xs-12">
+					<input type="text" name="ordertid" class="form-control" value="{$ordertempalte['ordertid']}" />
+					<div class="help-block">《新订单通知》 模板消息ID 例如：URS93kHy43Bj10Dac_U6_nZXRkw5gs5JIkeXqCpGBZ8</div>
+				</div>
+
+			</div>
+
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">订单通知模板选择类型：</label>
+				<div class="col-sm-9 col-xs-12">
+                   <img src="{MON_ORDER_RES}images/order.jpg">
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class='red'>*</span>订单模板消息通知开关：</label>
+
+				<div class="col-sm-9 col-xs-12">
+
+					<input type="radio" name="orderenable" value="0" {if $ordertempalte['orderenable'] == 0}checked="checked"{/if}>关闭
+					&nbsp; <input type="radio" name="orderenable" value="1" {if $ordertempalte['orderenable'] == 1}checked="checked"{/if}/>开启
+
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">支付成功模板ID：</label>
+				<div class="col-sm-9 col-xs-12">
+					<input type="text" name="paytid" class="form-control" value="{$ordertempalte['paytid']}" />
+					<div class="help-block">《订单支付成功》 模板消息ID 例如：31VVdRDD25BQ3Va68s0NZgb4RGgetpqPsEMkaXWyK4s</div>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">支付模板选择类型：</label>
+				<div class="col-sm-9 col-xs-12">
+					<img src="{MON_ORDER_RES}images/pay.jpg">
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class='red'>*</span>支付模板消息通知开关：</label>
+
+				<div class="col-sm-9 col-xs-12">
+
+					<input type="radio" name="payenable" value="0" {if $ordertempalte['payenable'] == 0}checked="checked"{/if}>关闭
+					&nbsp; <input type="radio" name="payenable" value="1" {if $ordertempalte['payenable'] == 1}checked="checked"{/if}/>开启
+
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+				<div class="col-sm-9 col-xs-12">
+					<p/>
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					<input type="hidden" name="token" value="{$_W['token']}" />
+				</div>
+			</div>
+
+			</div>
+
+		</div>
+
+{template 'common/footer'}

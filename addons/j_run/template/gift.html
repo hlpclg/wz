@@ -1,0 +1,106 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+  <li {if $operation == 'post'}class="active"{/if}><a href="{php echo $this->createWebUrl('gift', array('op' => 'post','rid'=>$rid))}">添加奖品</a></li>
+  <li {if $operation == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('gift', array('op' => 'display','rid'=>$rid))}">管理奖品</a></li>
+</ul>
+<script>
+require(['bootstrap'],function($){
+	$('.btn').hover(function(){
+		$(this).tooltip('show');
+	},function(){
+		$(this).tooltip('hide');
+	});
+});
+</script> 
+{if $operation == 'post'}
+<div class="main">
+  <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+    <div class="panel panel-default">
+      <div class="panel-heading"> 奖品 </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>奖品名称</label>
+          <div class="col-sm-9 col-xs-12">
+            <input type="text" name="title" class="form-control" required value="{$category['title']}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>奖品图片</label>
+          <div class="col-sm-9 col-xs-12"> {php echo tpl_form_field_image('thumb', $category['thumb'])}
+            <div class="help-block">建议图片120*120px</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>领取条件</label>
+          <div class="col-sm-9 col-xs-12 form-inline">
+            <div class="input-group ">
+              <input type="number" style="width:80px" value="{php echo intval($category['need'])}" class="form-control" name="need">
+              <span class="input-group-addon">米</span> </div>
+            <div class="help-block">当所有奖品领取条件均为0时，则是达到统一目标后客户选择;</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>奖品数量</label>
+          <div class="col-sm-9 col-xs-12 form-inline">
+            <input type="text" name="total" class="form-control" style="width:80px" required value="{php echo intval($category['total'])}" />
+          </div>
+        </div>
+        {if !empty($id)}
+        <div class="form-group">
+          <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style="color:red">*</span>剩余数量</label>
+          <div class="col-sm-9 col-xs-12 form-inline">
+            <input type="text" name="remain" class="form-control" style="width:80px" required value="{php echo intval($category['remain'])}" />
+          </div>
+        </div>
+        {/if} </div>
+    </div>
+    <div class="form-group col-xs-12">
+      <input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+      <input type="hidden" name="token" value="{$_W['token']}" />
+    </div>
+  </form>
+</div>
+{elseif $operation == 'display'}
+<div class="main">
+  <div class="category">
+    <form action="" method="post" onsubmit="return formcheck(this)">
+      <div class="panel panel-default">
+        <div class="panel-body table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th style="width:30px;"></th>
+                <th>标题</th>
+                <th>奖品图片</th>
+                <th>条件</th>
+                <th>剩余/总数</th>
+                <th style="text-align:right">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+            
+            {loop $category $row}
+            <tr>
+              <td>{$row['id']}</td>
+              <td>{$row['title']}</td>
+              <td><img src="{$_W['attachurl']}{$row['thumb']}" width="48" height="48"/></td>
+              <td>{$row['need']}</td>
+              <td>{$row['remain']} / {$row['total']}</td>
+              <td style="text-align:right"><a href="{php echo $this->createWebUrl('gift', array('op' => 'post', 'id' => $row['id'],'rid'=>$rid))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="编辑"><i class="fa fa-edit"></i></a>&nbsp;&nbsp; <a href="{php echo $this->createWebUrl('gift', array('op' => 'delete', 'id' => $row['id'],'rid'=>$rid))}" onclick="return confirm('确认删除此奖品吗？');return false;" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="删除"><i class="fa fa-times"></i></a></td>
+            </tr>
+            {/loop}
+            <tr>
+            <tr>
+              <td></td>
+              <td colspan="4"><a href="{php echo $this->createWebUrl('gift', array('op' => 'post','rid'=>$rid))}"><i class="icon-plus-sign-alt"></i> 添加新奖品</a></td>
+            </tr>
+              </tbody>
+            
+          </table>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{/if}
+{template 'common/footer'} 

@@ -1,0 +1,545 @@
+<html>
+<head>
+    <title>我的团</title>
+    {php echo register_jssdk();}
+    <script>
+        wx.ready(function () {
+        shareData = {
+            'title' : "我参加了"+"{$goods['gname']}"+"拼团，快来吧",
+            'desc': "{$share_data['share_desc']}",
+            'link': "{$_W['siteroot']}app/{php echo str_replace('./','',$this->createMobileUrl('group', array('tuan_id'=>$tuan_id)))}",
+            'imgUrl': "{php echo tomedia($share_images)}",
+        };
+        //分享朋友
+    wx.onMenuShareAppMessage({
+        title: shareData.title,
+        desc: shareData.desc,
+        link: shareData.link,
+        imgUrl:shareData.imgUrl,
+        trigger: function (res) {
+        },
+        success: function (res) {
+        	alert('分享成功！');
+            location.href='{php echo $this->createMobileUrl('index');}';
+        },
+        cancel: function (res) {
+            alert('分享是一种美德哦！');
+        },
+        fail: function (res) {
+            alert(JSON.stringify(res));
+        }
+    });
+//朋友圈
+    wx.onMenuShareTimeline({
+        title: shareData.title,
+        link: shareData.link,
+        imgUrl:shareData.imgUrl,
+        trigger: function (res) {
+        },
+        success: function (res) {
+            alert('分享成功');
+        },
+        cancel: function (res) {
+            alert('分享是一种美德哦！');
+        },
+        fail: function (res) {
+            alert(JSON.stringify(res));
+        }
+        });
+    });
+    </script>
+<style type="text/css">
+#cover{display:none;position:absolute;left:0;top:0;z-index:18888;background-color:#000000;opacity:0.7;}
+#guide{display:none;position:absolute;right:18px;top:5px;z-index:19999;}
+#guide img{width:260px;height:180px;}
+</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Pragma" content="no-cache">   
+    <meta http-equiv="Cache-Control" content="no-store">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="../addons/feng_fightgroups/template/css/style_366c9ef.css?v=5">
+    <link rel="stylesheet" href="../addons/feng_fightgroups/template/css/font-awesome-4.3.0/css/font-awesome.min.css" >
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div>
+        <div class="H5_con" id="group_title" style=" margin-top:0px; width:100%;height:120px;">
+        {if $lasttime2 > 0}
+        {if $n==0}
+        <div class='qq' style="margin-left:43%; margin-top:0px; width:50px;height:50px;">
+            <img src="../addons/feng_fightgroups/template/image/submit.png" alt="" title="">   
+        </div>
+        <div class='qqq' style="margin-top:5px; width:100%;height:50px; text-align:center;" >
+        
+            <p><font color="green" style="font-size:24px;font-weight:bold;" >团购已完成</font></p>
+            <p>欢迎再次团购！</p>
+        </div>
+        {else}
+
+        {if !empty($myorder)}
+        {if $nn == $n}
+        <div class='qq' style="margin-left:43%; margin-top:0px; width:50px;height:50px;">
+            <img src="../addons/feng_fightgroups/template/image/submit.png" alt="" title="">   
+        </div>
+        <div class='qqq' style="margin-top:5px; width:100%;height:50px; text-align:center;" >
+        
+            <p><font color="green" style="font-size:24px;font-weight:bold;" >开团成功</font></p>
+            <p>快邀请小伙伴加入吧！</p>
+        </div>
+        {else}
+       
+        <div class='qq' style="margin-left:43%; margin-top:0px; width:50px;height:50px;">
+            <img src="../addons/feng_fightgroups/template/image/submit.png" alt="" title="">   
+        </div>
+        <div class='qqq' style="margin-top:5px; width:100%;height:50px; text-align:center;" >
+        
+            <p><font color="green" style="font-size:24px;font-weight:bold;" >参团成功</font></p>
+            <p>欢迎再次团购！</p>
+        </div>
+        
+        {/if}
+        {/if}
+        
+      
+        {if empty($myorder)}
+         <div class='qq' style="margin-left:43%; margin-top:0px; width:50px;height:50px;">
+            <img src="../addons/feng_fightgroups/template/image/in.png" alt="" title="">   
+        </div>
+        <div class='qqq' style="margin-top:5px; width:100%;height:50px; text-align:center;" >
+        
+            <p><font color="green" style="font-size:24px;font-weight:bold;" >团购中</font></p>
+           
+        </div> 
+        {/if}
+        {/if}
+
+        {else}
+        <div class='qq' style="margin-left:43%; margin-top:0px; width:50px;height:50px;">
+            <img src="../addons/feng_fightgroups/template/image/cha.png" alt="" title="">   
+        </div>
+        <div class='qqq' style="margin-top:5px; width:100%;height:50px; text-align:center;" >
+        
+            <p><font color="green" style="font-size:24px;font-weight:bold;" >团购已过期</font></p>
+            
+        </div>
+        {/if}
+        </div> 
+        <div class="H5_con">
+            <div class="order_bd">
+                <div id="orderList" class="order_glist">
+                    <div class="only"> 
+                        <div class="order_goods" onclick="javascript:window.location.href='{php echo $this->createMobileUrl('gooddetails', array('id' => $goods['id'],'tuan_id'=>$tuan_id))}'">
+                            <div class="order_goods_img">
+                                <img src="{$_W['attachurl']}{$goods['gimg']}" alt="" title="">
+                            </div>
+                            <div class="order_goods_info">
+                            <input type="hidden" name="name" value="{$goods['cname']}" id="gname">
+                                <div class="order_goods_name"><span id="tuanLbl"></span>{$goods['gname']}</div>
+                                <div class="order_goods_attr">
+                                    <div class="order_goods_attr_item">
+                                        <span class="order_goods_attr_tit">数量：</span>
+                                        <div class="order_goods_num">1</div>
+                                        <div id="goodsPrice" class="order_goods_price">
+                                        {$goods['gprice']}
+                                        <input type="hidden" name='price' value="{$price}">
+                                        <i>/件</i></div>
+                                    </div>
+                                    <p class="order_goods_attr_item">库存：<span id="skuLast">{$goods['gnum']}</span><i>/件</i> <span class="order_goods_price"><i>运费：￥{$goods['freight']}</i></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+            <div class="pp">
+                <div class="pp_users" id="pp_users">               
+            {loop $orders $order}
+            {loop $profileall $profile}
+            {if $profile['from_user'] == $order['openid']} 
+            {if $order['openid'] == $tuan_first_order['openid']}
+                <span class='my_head_pic' style="width:50px;height:50px;margin-top: 30px;position:relative;" >
+                    <img   width="20" height="20" alt="" src="../addons/feng_fightgroups/template/image/tuan.png"  />
+                    <img  width="50px" class="my_head_img" height="50px" src="{$profile['avatar']}" alt=""/>        
+                </span> 
+            {else}
+                <span class='my_head_pic' style="width:50px;height:50px;margin-top: 30px;">
+                   <img  width="50px" class="my_head_img" height="50px" src="{$profile['avatar']}" alt=""/>        
+                </span> 
+            {/if}
+            {/if}
+            {/loop}
+            {/loop}
+               {loop $arr $ar}
+               <span class="pp_list_blank"></span>
+               {/loop}
+                </div>
+                <div class="pp_tips" id="flag_0_a" >还差<b>{$n}</b>人，盼你如南方人盼暖气~<br>
+                    <div class="text-right" style="position: relative;margin-bottom: 10px;float: left;">
+                        <span class="label label-default">开团<span>{php echo date('Y-m-d H:i:s',$tuan_first_order['createtime'])}</span></span>
+                    </div>
+                    
+                    <div class="text-right" style="position:relative;margin-bottom: 10px;float: right;">
+                        <span class="label label-danger">剩余时间:<span id="surplustime">0</span></span>
+                    </div>
+                    <div id="" style="clear: both;">
+                        
+                    </div>
+                    <div class="progress" style="height: 5px;">
+                        <div id="progressbar" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                            <span class="sr-only"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pp_list">
+                <div id="showYaoheList">
+                </div>
+                <div id="chamemeber" class="pp_list_blank">
+                    还差
+                    <span>{$n}</span> 人，让小伙伴们都来组团吧！
+                </div>
+            </div>
+        </div>
+        <div id="shareit">
+            <img class="arrow" src="../addons/feng_fightgroups/template/image/logo.jpg">
+        </div>
+        <div class="step">
+            <div class="step_hd">
+                拼团玩法<a class="step_more" href="{php echo $this->createMobileUrl('rules');}">查看详情</a>
+            </div>
+            <div id="footItem" class="step_list">
+                <div class="step_item ">
+                    <div class="step_num">1</div>
+                    <div class="step_detail">
+                        <p class="step_tit">选择
+                            <br>心仪商品</p>
+                    </div>
+                </div>
+                <div class="step_item ">
+                    <div class="step_num">2</div>
+                    <div class="step_detail">
+                        <p class="step_tit">支付开团
+                            <br>或参团</p>
+                    </div>
+                </div>
+                {if $n==0}
+                <div class="step_item" id="step_3">
+                    <div class="step_num">3</div>
+                    <div class="step_detail">
+                        <p class="step_tit" >邀请好友
+                            <br>参团支付</p>
+                    </div>
+                </div>
+                {else}
+                <div class="step_item step_item_on" id="step_3">
+                    <div class="step_num">3</div>
+                    <div class="step_detail">
+                        <p class="step_tit" >邀请好友
+                            <br>参团支付</p>
+                    </div>
+                </div>
+                {/if}
+                {if $n==0}
+                <div class="step_item step_item_on" id="step_4">
+                    <div class="step_num">4</div>
+                    <div class="step_detail">
+                        <p class="step_tit">达到人数
+                            <br>团购成功</p>
+                    </div>
+                </div>
+                {else}
+                 <div class="step_item" id="step_4">
+                    <div class="step_num">4</div>
+                    <div class="step_detail">
+                        <p class="step_tit">达到人数
+                            <br>团购成功</p>
+                    </div>
+                </div>
+                {/if}
+            </div>
+        </div>
+        <div class="mod_footer">
+            <div class="mod_footer_logo" style="position:relative;width: 50px;height: 50px;margin: 0 auto;margin-top: -40px;;">
+            	{if !empty($share_data['slogo'])}<img src="{$_W['attachurl']}{$share_data['slogo']}"/>{else}<img src="http://chucun.qiniudn.com/pintuan.jpg"/>{/if}
+            </div>
+            <div  class="mod_footer_logo">
+            	<lable style="position:relative;width: 150px;height: 50px;margin: 0 auto;text-align: center;">{$share_data['copyright']}</lable>
+            </div>
+              
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="H5_con fixopt" id="fixopt" style="display: block;">
+        <div class="address_new">
+        
+        {if $lasttime2 >0}
+            {if !empty($myorder)}
+                {if $n==0}   
+                <span style="display:block;float:left;width: 80%;margin-left: 5px;">
+                <a href="{php echo $this->createMobileUrl('orderconfirm',array('groupnum'=>$goods['groupnum'],'id'=>$goods['id']));}">
+            <button style="fllow:left;width: 100%;background-color: rgb(240,55,61);">团购已结束,点击新开一团</button> 
+           		 </a>
+               <!-- <button style="fllow:left;width: 100%;background-color: rgb(240,55,61);">团购已结束,点击新开一团</button> -->
+                </span>
+                <span style="display:block;float:right;width: 15%;">
+                 <button style="width: 90%; background-color: rgb(240,55,61);" ><a href="{php echo $this->createMobileUrl('index')}" class="nav-controller"><i class="fa fa-home" style="color: white;"></i>
+                </a></button>
+                </span>
+                {else}
+                <span style="display:block;float:left;width: 80%;margin-left: 5px;">
+                <button style="fllow:left;width: 100%;background-color: rgb(240,55,61);" onclick="_system._guide(true)">快邀请好友参团吧</button> 
+                </span>
+                <span style="display:block;float:right;width: 15%;">
+                 <button style="width: 90%;background-color: rgb(240,55,61);"><a href="{php echo $this->createMobileUrl('index')}" class="nav-controller"><i class="fa fa-home" style="color: white;"></i>
+                </a></button>
+                </span>
+                {/if}
+            {else}
+            {if $n==0}
+             <span style="display:block;float:left;width: 80%;margin-left: 5px;">
+             <a href="{php echo $this->createMobileUrl('orderconfirm',array('groupnum'=>$goods['groupnum'],'id'=>$goods['id']));}">
+            <button style="fllow:left;width: 100%;background-color: rgb(240,55,61);">团购已结束,点击新开一团</button> 
+           		 </a>
+            </span>
+            <span style="display:block;float:right;width: 15%;">
+             <button style="width: 90%;background-color: rgb(240,55,61);"><a href="{php echo $this->createMobileUrl('index')}" class="nav-controller"><i class="fa fa-home" style="color: white;"></i>
+            </a></button>
+            </span>
+            {else}
+             <span style="display:block;float:left;width: 80%;margin-left: 5px;">
+            <a href="{php echo $this->createMobileUrl('orderconfirm',array('id' => $goods['id'],'tuan_id' => $tuan_id,'groupnum'=>3));} ">
+            <button style="fllow:left;width: 100%;background-color: rgb(240,55,61);">我要参团</button> 
+            </a>
+            </span>
+            <span style="display:block;float:right;width: 15%;">
+             <button style="width: 90%;background-color: rgb(240,55,61);"><a href="{php echo $this->createMobileUrl('index')}" class="nav-controller"><i class="fa fa-home" style="color: white;"></i>
+            </a></button>
+            </span>
+            {/if}
+           
+            {/if}
+        {else}
+            <span style="display:block;float:left;width: 80%;margin-left: 5px;">
+            <button style="fllow:left;width: 100%;background-color: rgb(240,55,61);">本次团已过期</button> 
+            </span>
+            <span style="display:block;float:right;width: 15%;">
+             <button style="width: 90%;color: white;background-color: rgb(240,55,61);"><a href="{php echo $this->createMobileUrl('index')}" class="nav-controller"><i class="fa fa-home" style="color: white;"></i>
+            </a></button>
+            </span>
+        {/if}
+        </div>
+        </div>
+
+    </div>
+<div id="cover"></div>
+<div id="guide"><img src="../addons/feng_fightgroups/template/image/guide1.png"></div>
+
+</body>
+
+</html>
+
+<script>
+$(document).ready(function(){
+    
+//  var createtime = {$myorder['createtime']};
+//         alert(createtime);
+
+              
+            function FreshTime()
+            {
+//              alert("哈哈");
+                var str ='{php echo date('Y-m-d H:i:s',$tuan_first_order['createtime'])}';
+//              alert(str);
+                str = str.replace(/-/g,"/");
+//               alert(str);
+                var starttime= new Date(str);//开始时间
+//               alert(starttime);
+//////              var strr ='{php echo date('Y-m-d H:i:s',$row['end_time'])}';
+//////              strr = strr.replace(/-/g,"/");
+//////              var endtime=new Date(strr);//结束时间
+                var nowtime = new Date();//当前时间
+//              alert(nowtime);
+                var now_time = parseInt(nowtime.getTime());
+//              alert(now_time);
+                var start_time = parseInt(starttime.getTime());
+//              alert(start_time);
+
+                var lefttime = parseInt({$lasttime}*3600-((nowtime.getTime()-start_time)/1000)); //计算剩余时间\
+              
+                var bar_width =  (1-(lefttime/({$lasttime}*3600)))*100+"%"; //计算进度条百分比
+//               alert(lefttime);
+                if (lefttime > 0) {
+//                  alert(lefttime+'事实上');
+                    dd=parseInt(lefttime/3600/24);
+                    hh=parseInt((lefttime/3600)%24);
+                    mm=parseInt((lefttime/60)%60);
+                    ss=parseInt(lefttime%60);
+//                  alert(dd+"天"+hh+"时"+mm+"分"+ss+"秒");
+                    $("#surplustime").text(dd+"天"+hh+"时"+mm+"分"+ss+"秒");
+                    $('#progressbar').css("width",bar_width);
+                }else{
+                    
+                }
+                
+            }
+            FreshTime();
+           
+            var sh;
+            sh=setInterval(FreshTime,1000);
+             
+});
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/cm.js" type="text/javascript"></script>
+<script type="text/javascript">
+//秒表倒计时控制
+var normalelapse = 100; 
+var nextelapse = normalelapse;
+var counter;  
+var startTime;
+var start1 = clock.innerText;  
+var finish = "00:00:00:00"; 
+var timer = null; 
+// 开始运行 
+function run() { 
+    counter = 0; 
+    // 初始化开始时间 
+    startTime = new Date().valueOf();
+    //alert(startTime);
+    
+    // nextelapse是定时时间, 初始时为100毫秒 
+    // 注意setInterval函数: 时间逝去nextelapse(毫秒)后, onTimer才开始执行 
+    timer = window.setInterval("onTimer()", nextelapse);  
+} 
+// 停止运行 
+function stop() { 
+    window.clearTimeout(timer); 
+} 
+window.onload = function() {  
+ run();
+} 
+// 倒计时函数 
+function onTimer() 
+{ 
+    if (start1 == finish) 
+    { 
+        window.clearInterval(timer);  
+        return; 
+    } 
+    var hms = new String(start1).split(":"); 
+    var ms = new Number(hms[3]); 
+    var s = new Number(hms[2]); 
+    var m = new Number(hms[1]); 
+    var h = new Number(hms[0]); 
+    ms -= 10; 
+    if (ms < 0) 
+    { 
+        ms = 90; 
+        s -= 1; 
+        if (s < 0) 
+        { 
+            s = 59; 
+            m -= 1; 
+        } 
+        if (m < 0) 
+        { 
+            m = 59; 
+            h -= 1; 
+        } 
+    } 
+    var ms = ms < 10 ? ("0" + ms) : ms; 
+    var ss = s < 10 ? ("0" + s) : s; 
+    var sm = m < 10 ? ("0" + m) : m; 
+    var sh = h < 10 ? ("0" + h) : h; 
+    start1 = sh + ":" + sm + ":" + ss + ":" + ms; 
+    clock.innerText = start1; 
+    // 清除上一次的定时器 
+    window.clearInterval(timer); 
+    // 自校验系统时间得到时间差, 并由此得到下次所启动的新定时器的时间nextelapse 
+    counter++;  
+    var counterSecs = counter * 100; 
+    var elapseSecs = new Date().valueOf() - startTime; 
+    var diffSecs = counterSecs - elapseSecs; 
+    nextelapse = normalelapse + diffSecs; 
+    //diff.value = counterSecs + "-" + elapseSecs + "=" + diffSecs; 
+   // next.value = "nextelapse = " + nextelapse; 
+    if (nextelapse < 0) nextelapse = 0; 
+    // 启动新的定时器 
+    timer = window.setInterval("onTimer()", nextelapse);  
+}
+</script>
+<script type="text/javascript">
+
+    var _system={
+
+        $:function(id){return document.getElementById(id);},
+
+   _client:function(){
+
+      return {w:document.documentElement.scrollWidth,h:document.documentElement.scrollHeight,bw:document.documentElement.clientWidth,bh:document.documentElement.clientHeight};
+
+   },
+
+   _scroll:function(){
+
+      return {x:document.documentElement.scrollLeft?document.documentElement.scrollLeft:document.body.scrollLeft,y:document.documentElement.scrollTop?document.documentElement.scrollTop:document.body.scrollTop};
+
+   },
+
+   _cover:function(show){
+
+      if(show){
+
+     this.$("cover").style.display="block";
+
+     this.$("cover").style.width=(this._client().bw>this._client().w?this._client().bw:this._client().w)+"px";
+
+     this.$("cover").style.height=(this._client().bh>this._client().h?this._client().bh:this._client().h)+"px";
+
+  }else{
+
+     this.$("cover").style.display="none";
+
+  }
+
+   },
+
+   _guide:function(click){
+
+      this._cover(true);
+
+      this.$("guide").style.display="block";
+
+      this.$("guide").style.top=(_system._scroll().y+5)+"px";
+
+      window.onresize=function(){_system._cover(true);_system.$("guide").style.top=(_system._scroll().y+5)+"px";};
+
+  if(click){_system.$("cover").onclick=function(){
+
+         _system._cover();
+
+         _system.$("guide").style.display="none";
+
+ _system.$("cover").onclick=null;
+
+ window.onresize=null;
+
+  };}
+
+   },
+
+   _zero:function(n){
+
+      return n<0?0:n;
+
+   }
+
+}
+
+</script>

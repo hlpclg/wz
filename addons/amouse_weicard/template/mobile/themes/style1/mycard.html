@@ -1,0 +1,174 @@
+<html class="RENDERCOMPLETE" style="visibility: visible;">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="../addons/amouse_weicard/ui/css/tpl.css?v=20150320"/>
+<script type="text/javascript" src="../addons/amouse_weicard/ui/js/jquery.js?v=20150320"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=8898cdd145bf84a47f434280bd146d70"></script>
+<style type="text/css">
+    #mask {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        z-index: 20000;
+    }
+
+    #mask img {
+        position: fixed;
+        right: 18px;
+        top: 5px;
+        width: 260px !important;
+        height: 180px !important;
+        z-index: 20001;
+    }
+
+    #qrcode {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        z-index: 20000;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+</style>
+<title>{$weicard['name']}的微名片</title>
+</head>
+<body>
+<div class="weiba-page" style="display: block;">
+    <div class="weiba-content">
+        <div class="top-company">
+            <span class="top-company-text">{$weicard['company']}</span>
+        </div>
+        <div class="card-top" style="height: 160px;">
+            <img class="tpl-bc-bg" src="{$weicard['headimg']}">
+        </div>
+        <div class="card-view">
+            <div class="card-title">
+                <div class="card-ins">
+                    <div class="card-name-box">
+                        <span class="card-name tpl-bc-name">{$weicard[name]}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="tpl-bc-map card-company">
+                    <div class="tpl-bc-company">{$weicard[department]}&nbsp;&nbsp; {$weicard[job]}</div>
+                </div>
+                <ul class="card-content-view page-bc-con-view">
+                    <li class="card-content-item ">
+                        <span class="card-content-item-tips m_mobile"></span>
+                        <a href="tel:{$weicard[mobile]}" class="blud-font">{$weicard[mobile]}</a>
+                        <span class="card-content-item-left-arrow"></span>
+                    </li>
+                    <li class="card-content-item ">
+                        <span class="card-content-item-tips m_email"></span>
+                        <a href="mailto:{$weicard['email']}" class="blud-font">{$weicard['email']}</a>
+                        <span class="card-content-item-left-arrow"></span>
+                    </li>
+                    {if $weicard[qq]}
+                    <li class="card-content-item ">
+                        <span class="card-content-item-tips m_QQ"></span>{$weicard['qq']}
+                    </li>
+                    {/if}
+                    {if $weicard[weixin]}
+                    <li class="card-content-item ">
+                        <span class="card-content-item-tips m_QQ"></span>{$weicard['weixin']}
+                    </li>
+                    {/if}
+                    <li class="card-content-item ">
+                        <span class="card-content-item-tips m_address"></span>
+                        <a id="mapAddress" href="" class="blud-font">{$weicard['address']}</a>
+                        <span class="card-content-item-left-arrow"></span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-btn">
+                <div class="weiba-frame-share">
+                    <a class="but first-but tpl-to-mark"
+                       onclick="document.getElementById('qrcode').style.display='block';">
+                        <span class="card-btn-tip card-btn-tongxunlu"></span>
+                        <span class="card-btn-font">名片二维码</span>
+                    </a>
+
+                    <div class="but" onclick="document.getElementById('mask').style.display='block';">
+                        <span class="card-btn-tip card-btn-haoyou"></span>
+                        <span class="card-btn-font">发送给好友</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-box">
+            <div class="bottom-bottom">微名片-关注我请点:
+                <a href="{$setting['guanzhuUrl']}">
+                    {if empty($setting['copyright'])}{$_W['account']['name']} {else}{$setting['copyright']}{/if}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mask" onclick="document.getElementById('mask').style.display='';" style="">
+    <img src="../addons/amouse_weicard/ui/images/guide.png">
+</div>
+
+<div id="qrcode" onclick="document.getElementById('qrcode').style.display='';" align="center" style="padding-top: 25px;">
+    {php echo $this->getQRImage($weicard['id'],$weicard['openid'] );}
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var myGeo = new BMap.Geocoder();
+    // 将地址解析结果显示在地图上,并调整地图视野
+    myGeo.getPoint("{$weicard['address']}", function (point) {
+        if (point) {
+            $("#mapAddress").attr('href', 'http://api.map.baidu.com/marker?location=' + point.lat + ',' + point.lng + '&title={$weicard['address']}&content={$weicard['address']}&output=html&src=weicard');
+        }
+    });
+});
+</script>
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script language='javascript'>
+    <?php
+        $jssdk = new JSSDK();
+        $signPackage = $jssdk->GetSignPackage();
+    ?>
+    wx.config({
+        debug:false,
+        appId: "{$_W['account']['appid_share']}",
+        timestamp: {$signPackage["timestamp"]},
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            'onMenuShareTimeline','onMenuShareAppMessage','onMenuShareWeibo'
+        ]
+    });
+    var shareMeta = {
+        imgUrl:"{$shareimg}",
+        link:"{$sharelink}",
+        desc:"{$weicard['company']}",
+        title:"{$weicard['name']}"
+    };
+    wx.ready(function(){
+        wx.onMenuShareTimeline(shareMeta);
+        wx.onMenuShareAppMessage(shareMeta);
+        wx.onMenuShareWeibo(shareMeta);
+    });
+</script>
+</body>
+</html>

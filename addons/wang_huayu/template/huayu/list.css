@@ -1,0 +1,95 @@
+.index_cat{  margin: 0 0 5px;padding: 8px 0;  clear:both; height:135px; }
+.index_cat ul{ margin: 0 auto;width: 308px;}
+.index_cat ul li{float: left; margin: 0 0 6px;width: 77px;}
+.index_cat ul li dl{ font-size: 0.75em;text-align: center;}
+
+.index_cat_1{  margin: 0 0 5px;padding: 8px 0;  clear:both; height:135px; }
+.index_cat_1 ul{ margin: 0 auto;width: 50px;}
+.index_cat_1 ul li{float: left; margin: 0 0 6px;width: 77px;}
+.index_cat_1 ul li dl{ font-size: 0.75em;text-align: center;}
+
+
+#index_tabs{
+	clear: both;
+	height: 42px;
+	line-height: 42px;
+	background-color: #f6ecdc;
+	border-bottom: 1px solid #D9CDA7;
+	border-top: 1px solid #D9CDA7;
+ }
+#index_tabs a{padding:0.5em 1.5em;}
+#index_tabs li{
+	border-left: 1px solid #FAF8EF;
+    border-right: 1px solid #DACEA8;
+    cursor: pointer;
+    float: left;
+    height: 18px;
+    line-height: 18px;
+    padding: 12px 0;
+    position: relative;
+    text-align: center;
+    width: 32.9%;
+}
+#index_tabs li:last-child{ border-right:0px;}
+#index_tabs li:first-child{ border-left:0px;}
+#index_tabs .curr span{
+	-moz-border-bottom-colors: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+	background-color: #f0f0f0;
+	border-color: #D8D0CB #D8D0CB #F4EFE9;
+	border-image: none;
+	border-radius: 3px 3px 0 0;
+	border-style: solid;
+	border-width: 1px;
+	box-shadow: 0 2px 2px #999999 inset;
+	color: #DB2929;
+	display: block;
+	height: 38px;
+	left: 7px;
+	line-height: 38px;
+	position: absolute;
+	top: 2px;
+	width: 90%;
+	}
+#index_tabs_container {
+    background-color: #f0f0f0;
+    clear: both;
+    margin: 0;
+    padding: 0;
+}
+#index_tabs_container > div{
+	width: 316px;
+	margin: 0 auto;
+	padding-bottom: 0px;
+	clear: both;
+}
+
+#index_tabs_container ul{
+	background-color:#ffffff;
+	float:left;
+	width:144px;
+	height:214px;
+	margin: 10px 5px 0 5px;
+	border:1px solid #d2d2d2;
+	-webkit-border-radius:8px; 
+	-moz-border-radius:8px; 
+	border-radius:5px;
+	padding-top:3px;
+}
+
+#index_tabs_container ul li{
+	width:144px;
+	font-size:0.75em;
+	text-align:center;
+	padding-bottom:5px;
+}
+
+#index_tabs_container .price{
+	color:#ff0000;
+}
+#index_tabs_containe  ul li:not(.img){
+	height:30px;
+	line-height:30px;
+}

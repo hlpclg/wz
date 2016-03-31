@@ -1,0 +1,309 @@
+
+<!DOCTYPE html><html><head><meta charset="utf-8" /><title>「{$corp}」成功在纳斯达克上市，市值 102 亿美金！ - {$corp}</title><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"><meta name="keywords" content="周伯通,招聘"/><meta name="description" content=""><link rel="stylesheet" href="http://apps.bdimg.com/libs/fontawesome/4.2.0/css/font-awesome.css"><link rel="stylesheet" href="http://www.cdnjs.net/ajax/libs/Swiper/3.0.6/css/swiper.min.css"><link rel="stylesheet" href="http://apps.bdimg.com/libs/animate.css/3.1.0/animate.min.css"><style type="text/css">
+            html,
+            body {
+                position: relative;
+                height: 100%;
+            }
+            body{
+                font: 14px Microsoft YaHei,Arial,Helvetica,sans-serif,Simsun;
+                background: #eee;
+                padding:0;
+                margin: 0;
+            }
+
+            .swiper-container {
+                width: 100%;
+                height: 100%;
+            }
+
+            .swiper-slide {
+                text-align: center;
+                font-size: 18px;
+                background: #f64444;
+                color: #fff;
+
+                /* Center slide text vertically */
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+                -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                -webkit-justify-content: center;
+                justify-content: center;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                -webkit-align-items: center;
+                align-items: center;
+                -ms-flex-direction: column;
+                -moz-flex-direction: column;
+                -webkit-flex-direction: column;
+                flex-direction: column;
+            }
+
+            .highlight {
+                color: #ffde00;
+                font-size: 120%;
+            }
+
+            h3 {
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+
+            p {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            .building {
+                position: absolute;
+                z-index: -1;
+                width: 25%;
+            }
+
+            .building-1 {
+                top: 80px;
+                left: -20px;
+                animation-delay: .1s;
+                -webkit-animation-delay: .1s;
+                -moz-animation-delay: .1s;
+            }
+
+            .building-2 {
+                top: 70px;
+                right: -20px;
+                animation-delay: .1s;
+                -webkit-animation-delay: .1s;
+                -moz-animation-delay: .1s;
+            }
+
+            .building-3 {
+                top: 10px;
+                left: 40px;
+                animation-delay: .3s;
+                -webkit-animation-delay: .3s;
+                -moz-animation-delay: .3s;
+            }
+
+            .building-4 {
+                top: 20px;
+                right: 20px;
+                animation-delay: .3s;
+                -webkit-animation-delay: .3s;
+                -moz-animation-delay: .3s;
+            }
+
+            .btn-to-ipo {
+                display: block;
+                background-color: #ffde00;
+                color: #f64444;
+                padding: 5px 0;
+                box-shadow: 5px 5px 0 0 #df000c;
+                font-size: 20px;
+                border-radius: 2px;
+                -webkit-animation-delay: 1s;
+            }
+
+            .btn-to-ipo:hover,
+            .btn-to-ipo:active {
+                background-color: #f0d102;
+            }
+
+            .modal-share {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0,0,0,.6);
+                text-align: right;
+                padding-top: 10px;
+                padding-right: 5px;
+                z-index: 999;
+                display: none;
+            }
+
+            .footer {
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 5px;
+                color: #fff;
+                text-align: center;
+                z-index: 2;
+            }
+
+            .share-btn {
+                animation-delay: 3s;
+                -webkit-animation-delay: 3s;
+                -moz-animation-delay: 3s;
+                display: none;
+            }
+
+            .string-1 {
+                animation-delay: 1s;
+                -webkit-animation-delay: 1s;
+                -moz-animation-delay: 1s;
+            }
+
+            .string-2 {
+                animation-delay: 1.2s;
+                -webkit-animation-delay: 1.2s;
+                -moz-animation-delay: 1.2s;
+            }
+
+            .string-3 {
+                animation-delay: 1.4s;
+                -webkit-animation-delay: 1.4s;
+                -moz-animation-delay: 1.4s;
+            }
+
+            .string-4 {
+                animation-delay: 1.6s;
+                -webkit-animation-delay: 1.6s;
+                -moz-animation-delay: 1.6s;
+            }
+
+            .string-4 {
+                animation-delay: 1.8s;
+                -webkit-animation-delay: 1.8s;
+                -moz-animation-delay: 1.8s;
+            }
+
+            .form-control {
+                display: block;
+                width: 100%;
+                height: 34px;
+                padding: 6px 12px;
+                font-size: 14px;
+                line-height: 1.42857143;
+                color: #555;
+                background-color: #fff;
+                background-image: none;
+                border: none;
+                border-radius: 2px;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+                        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+                -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+                     -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                box-sizing: border-box;
+            }
+
+            .form-control:focus {
+                border-color: #66afe9;
+                outline: 0;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+                        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+            }
+
+            .btn-play {
+                background-image: url(../addons/ewei_shangshi/images/d80bf1c0898721ade4dac6fe7ef4a5da1d54a7b1.png);
+                background-size: 100px 100px;
+                width: 100px;
+                height: 100px;
+                margin: 0 auto;
+                margin-top: 10px;
+                cursor: pointer;
+            }
+
+            .btn-play:hover,
+            .btn-play:active {
+                opacity: .8;
+            }
+
+            .ellipsis {
+                display: block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        </style><script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script><script type="text/javascript">
+            var WEIXIN_CONFIG = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+            WEIXIN_CONFIG['debug'] = false;
+            WEIXIN_CONFIG['jsApiList'] = [
+                'onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo'
+            ];
+            wx.config(WEIXIN_CONFIG);
+        </script></head><body><div class="swiper-container"><div class="swiper-wrapper"><div class="swiper-slide" id="slider-1"><div style="width: 100%;"><img class="animated bounceInUp" src="../addons/ewei_shangshi/images/9ada8b5e5f8e8c7d0262c65421b9734b4563c051.png" width="100%" /><img class="building building-1 animated bounceInLeft" src="../addons/ewei_shangshi/images/building-1.png" /><img class="building building-2 animated bounceInRight" src="../addons/ewei_shangshi/images/building-2.png" /><img class="building building-3 animated bounceInLeft" src="../addons/ewei_shangshi/images/building-3.png" /><img class="building building-4 animated bounceInRight" src="../addons/ewei_shangshi/images/building-4.png" /><h3 class="highlight js-label-name ellipsis">{$corp}</h3><p>成功在纳斯达克上市啦！</p><p>市值&nbsp;<span class="highlight js-label-value">102</span>&nbsp;亿美金！愚您同乐！</p><p style="margin: 10px;"><a class="string-2 animated bounceIn btn-to-ipo js-to-ipo" href="javascript:;">我也要敲钟上市</a></p><p><a class="share-btn js-share-btn animated flipInX" href="javascript:;"><i class="fa fa-external-link"></i>&nbsp;分享喜悦，愚友同乐</a></p></div></div><div class="swiper-slide" id="slider-2"><div style="width: 100%;"><img class="js-duang" src="../addons/ewei_shangshi/images/3b8b7a0d6182c5f9b62add3488fe3532b2bfb4b6.png" width="65%"><div style="height: 20px;"></div><input id="input-name" class="form-control" type="text" placeholder="请输入公司名称" style="width:80%; margin: 0 auto;"><div style="height: 20px;"></div><div class="btn-play js-play"></div></div></div></div></div><div class="modal-share js-modal-share"><img src="../addons/ewei_shangshi/images/432286091ae7e2a25107bafdc985f3e02e8c936b.png" width="70%"></div><div class="footer">「{$copyright}」出品</div><audio id="audio" src="../addons/ewei_shangshi/images/bef52c1d3d9dbd373c82d1eddfd2661997ab905a.mp3" hidden="hidden" style="height: 0; display:none;"></audio><script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script><script src="http://cdn.staticfile.org/blueimp-md5/1.1.0/js/md5.min.js"></script><script src="http://www.cdnjs.net/ajax/libs/Swiper/3.0.6/js/swiper.jquery.min.js"></script><script type="text/javascript" src="../addons/ewei_shangshi/images/share.js"></script><script>
+            Share.WeChat.setData({
+                title: "「{$copyright}」成功在纳斯达克上市，市值 102 亿美金！",
+                desc: "{$copyright}带你去上市，你行你也上！",
+                link: "{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=entry&m=ewei_shangshi&do=index",
+                imgUrl: "{$_W['siteroot']}addons/ewei_shangshi/icon.jpg"
+            });
+
+            var swiper = new Swiper('.swiper-container', {
+                direction: 'vertical',
+                allowSwipeToPrev: false,
+                allowSwipeToNext: false
+            });
+
+            var $slider1 = $('#slider-1');
+            var $slider2 = $('#slider-2');
+
+            $('.js-to-ipo').on('click', function() {
+                {if !$follow && $followneed}
+                   location.href = "{$followurl}";
+                {else}
+                   $slider1.hide();
+                {/if}
+            });
+
+            $('.js-share-btn').on('click', function() {
+                $('.js-modal-share').show();
+            });
+
+            $('.js-modal-share').on('click', function() {
+                $(this).hide();
+            });
+
+            $('#input-name').on('focus', function() {
+                $('.js-duang').hide();
+            }).on('blur', function() {
+                $('.js-duang').show();
+            });
+
+            var playAudio = function() {
+                setTimeout(function() {
+                    document.getElementById("audio").play();
+                }, 1000);
+            };
+
+            playAudio();
+
+            $('.js-play').on('click', function() {
+                var $name = $('#input-name');
+                if (!$name.val()) {
+                    $name.focus();
+                    return ;
+                }
+
+                var arrs = md5($name.val()).replace(/[a-z]/g, '');
+                var value = 0;
+                for (var i = arrs.length - 1; i >= 0; i--) {
+                    var a = parseInt(arrs[i], 10)
+                    value += a ? a : 0;
+                };
+                $('.js-label-name').html($name.val());
+                $('.js-label-value').html(value);
+
+                $('.js-share-btn').show();
+                $slider1.show();
+
+                Share.WeChat.setData({
+                    title: "「" + $name.val() + "」成功在纳斯达克上市，市值 " + value + " 亿美金！",
+                    desc:  "{$copyright}带你去上市，你行你也上！",
+                    link: "{$_W['siteroot']}app/index.php?i={$_W['uniacid']}&c=entry&m=ewei_shangshi&do=index&corp=" + encodeURIComponent($name.val()) +"&openid={$openid}"
+                });
+
+                playAudio();
+            });
+        </script></body></html>

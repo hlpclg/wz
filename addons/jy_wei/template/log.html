@@ -1,0 +1,215 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" id="form">
+		<div class="panel panel-default">
+			<div class="panel-heading">微招聘 - 统计中心
+			</div>
+			<div class="panel-body">
+    			<div id="main" style="height:400px;width:80%;margin-left:10%;padding-top:50px"></div>
+    			<div id="main2" style="height:400px;width:80%;margin-left:10%;padding-top:50px"></div>
+    			<div id="main3" style="height:400px;width:80%;margin-left:10%;padding-top:50px"></div>
+			</div>
+		</div>
+	</form>
+</div>
+<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+<script type="text/javascript">
+    // 路径配置
+    require.config({
+        paths: {
+            echarts: 'http://echarts.baidu.com/build/dist'
+        }
+    });
+    
+    // 使用
+    require(
+        [
+            'echarts',
+            'echarts/chart/pie', // 使用柱状图就加载pie模块，按需加载
+            'echarts/chart/funnel'
+        ],
+        function (ec) {
+            // 基于准备好的dom，初始化echarts图表
+            var myChart = ec.init(document.getElementById('main')); 
+            var myChart2 = ec.init(document.getElementById('main2')); 
+            var myChart3 = ec.init(document.getElementById('main3')); 
+            
+            var option = {
+                title : {
+                    text: '微招聘 阅读量',
+                    subtext: '统计报表',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient : 'vertical',
+                    x : 'left',
+                    data:[
+                        {loop $company $item}
+                        '{$item['name']}',
+                        {/loop}
+                        ]
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: false},
+                        dataView : {show: false, readOnly: false},
+                        magicType : {
+                            show: true, 
+                            type: ['pie', 'funnel'],
+                            
+                            option: {
+                                funnel: {
+                                    x: '25%',
+                                    width: '50%',
+                                    funnelAlign: 'left',
+                                    max: 1548
+                                }
+                            }
+                        },
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                series : [
+                    {
+                        name:'点击量',
+                        type:'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:[
+                        {loop $company $item}
+                            {value:{$item['count']}, name:'{$item['name']}'},
+                        {/loop}
+                        ]
+                    }
+                ]
+            };
+
+            var option2 = {
+                title : {
+                    text: '公司职位申请',
+                    subtext: '各公司申请数量',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient : 'vertical',
+                    x : 'left',
+                    data:[
+                        {loop $invitation $item}
+                        '{$item['name']}',
+                        {/loop}
+                        ]
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: false},
+                        dataView : {show: false, readOnly: false},
+                        magicType : {
+                            show: true, 
+                            type: ['pie', 'funnel'],
+                            option: {
+                                funnel: {
+                                    x: '25%',
+                                    width: '50%',
+                                    funnelAlign: 'left',
+                                    max: 1548
+                                }
+                            }
+                        },
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                series : [
+                    {
+                        name:'申请量',
+                        type:'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:[
+                        {loop $invitation $item}
+                            {value:{$item['count']}, name:'{$item['name']}'},
+                        {/loop}
+                        ]
+                    }
+                ]
+            };
+
+             var option3 = {
+                title : {
+                    text: '职位访问报表',
+                    subtext: '统计报表',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient : 'vertical',
+                    x : 'left',
+                    data:[
+                        {loop $position $item}
+                        	'{$item['name']}',
+                        {/loop}
+                        ]
+                },
+                toolbox: {
+                    show : true,
+                    feature : {
+                        mark : {show: false},
+                        dataView : {show: false, readOnly: false},
+                        magicType : {
+                            show: true, 
+                            type: ['pie', 'funnel'],
+                            option: {
+                                funnel: {
+                                    x: '25%',
+                                    width: '50%',
+                                    funnelAlign: 'left',
+                                    max: 1548
+                                }
+                            }
+                        },
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
+                },
+                calculable : true,
+                series : [
+                    {
+                        name:'点击量',
+                        type:'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:[
+                        {loop $position $item}
+                             {value:{$item['count']}, name:'{$item['name']}'},
+                        {/loop}
+                        ]
+                    }
+                ]
+            };
+
+           
+            // 为echarts对象加载数据 
+            myChart.setOption(option); 
+            myChart2.setOption(option2); 
+            myChart3.setOption(option3); 
+
+        }
+    );
+</script>
+{template 'common/footer'}

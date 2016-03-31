@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="true">
+		<name><![CDATA[搭讪管家]]></name>
+		<identifie><![CDATA[yobydashan]]></identifie>
+		<version><![CDATA[3.0]]></version>
+		<type><![CDATA[customer]]></type>
+		<ability><![CDATA[这是一个搭讪美女或帅哥的模块,能够与公众号内部妹纸,蝈蝈们聊天,首次使用需要简单注册]]></ability>
+		<description><![CDATA[发送@可以找到随机异性
+@编号可以找到直接对话某个人
+搜索+关键字可以找到人]]></description>
+		<author><![CDATA[折翼天使资源社区]]></author>
+		<url><![CDATA[www.zheyitianshi.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="用户管理" do="fensi" state="" direct="false" />
+		</menu>
+		<profile>
+			<entry title="搭讪消息" do="sms" state="" direct="false" />
+		</profile>
+	</bindings>
+	<install><![CDATA[
+	CREATE TABLE `ims_yobydashan_sms` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `content` varchar(144) DEFAULT NULL COMMENT '字数',
+  `createtime` int(10) DEFAULT NULL,
+  `fromuser` varchar(64) DEFAULT NULL,
+  `touser` varchar(64) DEFAULT NULL,
+  `isread` tinyint(1) DEFAULT '0',
+  `weid` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_yobydashan_user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) DEFAULT NULL COMMENT '微信编号',
+  `wid` varchar(10) DEFAULT NULL COMMENT '聊天编号',
+  `sex` tinyint(1) DEFAULT '0',
+  `yname` varchar(30) DEFAULT NULL COMMENT '姓名',
+  `xi` varchar(100) DEFAULT NULL COMMENT '年级与系别',
+  `fromuser` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_yobydashan_friend` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) DEFAULT NULL,
+  `fromuser` varchar(60) DEFAULT NULL COMMENT '我的id',
+  `wid` varchar(10) DEFAULT NULL COMMENT '朋友id',
+  `yname` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+	]]></install>
+	<uninstall><![CDATA[
+	DROP TABLE IF EXISTS `ims_yobydashan_sms`;
+	DROP TABLE IF EXISTS `ims_yobydashan_user`;
+	DROP TABLE IF EXISTS `ims_yobydashan_friend`;
+	]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

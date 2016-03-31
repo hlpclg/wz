@@ -1,0 +1,112 @@
+{template 'common/header'}
+   <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">zafu_EC</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li ><a href="{php echo $this->createMobileUrl('Weblm');}"> <span class="sr-only"></span>我有快递</a></li>
+        <li class="active"><a href="{php echo $this->createMobileUrl('Help');}">快递盒子</a></li>
+         <li><a href="{php echo $this->createMobileUrl('MyExpress');}">我的快递</a></li>
+          </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+      {if !$check }
+      <li><a href="{php echo $this->createMobileUrl('WorkerRank');}">快递员注册</a></li>
+       {else}
+      <li><a href="#">欢迎你,{php echo($check['workername']);}</a></li>
+      {/if}
+        <li><a href="{php echo $this->createMobileUrl('Attention');}">用户须知</a></li>
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+{if !$box}
+<div class="jumbotron">
+  <h2 class="text-danger">盒子空空如也￣へ￣</h2>
+</div>
+{else}
+<div class="jumbotron">
+  <h2 class="text-success">快点来看看有没有顺路可以带走的快递吧  O(∩_∩)O~~</h2>
+</div>
+<div class="table-responsive">
+  <table class="table">
+   <tr>
+      <th>
+        快递编号
+      </th>
+      <th>
+      快递委托人
+      </th>
+      <th>
+      委托人住址
+      </th>
+      <th>
+    委托人联系方式
+      </th>
+      <th>
+      快递大小
+      </th>
+     <th>
+    是否获取
+      </th>
+   </tr>
+
+{loop $box $key $value}
+   <tr>
+   <td>
+   {$value['commonid']}
+    </td>
+     <td>
+   {$value['ownername']}
+    </td>
+       <td>
+   {$value['address']}
+    </td>
+       <td>
+   {$value['phone']}
+    </td>
+       <td>
+   {$value['type']}
+    </td>  
+    <td>
+   <a type="button" class="btn btn-success" href="{php echo $this->createMobileUrl('Help',array('button'=>1,'commonid'=>$value['commonid'],'workerid'=>$check['workerid']));}">Get!</a>
+<script type="text/javascript">
+　　function refresh(){
+　　url = location.href;    //把当前页面的地址赋给变量 url
+　　var times = url.split("&");      //分切变量 url 分隔符号为 "&"
+　　if(times[times.length-1] != 'fresh')
+    {        //如果?后的值不等于1表示没有刷新
+　　url += "&fresh";           //把变量 url 的值加入&fresh
+　　self.location.replace(url);         //刷新页面
+　　}
+　　}
+　　onload=refresh();
+</script>
+    </td>
+  </tr>
+{/loop}
+  </table>
+</div>
+{/if}
+
+
+
+
+
+
+
+

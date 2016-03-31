@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>{$systeminfo['shopname']}</title>
+<link href="../addons/water_super/template/css/index.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/css/base.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="../addons/water_super/template/css/card.css" media="all">
+<script type="text/javascript" src="../addons/water_super/template/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/js/page.js"></script>
+<script type='text/javascript' src="../addons/water_super/template/js/touchslider.min.js"></script>
+<script type='text/javascript' src="../addons/water_super/template/js/klass.min.js"></script>
+<script type='text/javascript' src="../addons/water_super/template/js/photoswipe.jquery-3.0.5.min.js"></script>
+<script type='text/javascript' src="../addons/water_super/template/js/jsAddress.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/js/jscommon.js"></script>
+</head>
+<body>
+  <div class="headerPlace">
+   <div class="choose-time">
+        <span class = "" ><a href="{php echo $this->createMobileUrl('Newaddress', array('from'=>'U'))}" style="padding:6px 12px;">添加地址</a></span>
+      </div>
+  </div>
+   <div>
+ <div class="cardexplain" style="margin-top:10px;">
+ {if empty($addressList)}
+   <ul class="round operate navlist p10">
+    <li style="text-align:center"><b class="delete-btn">您还没有地址奥！</b></li>
+  </ul>
+{else}
+    <ul class="round operate navlist">
+{loop $addressList $item}
+        <li>
+            <div>{$item['customername']}<em style="padding-left:10px">{$item['tel']}</em></div>
+            
+            <p >{$item['customercity']}  {$item['customerarea']}  {$item['xiangxdz']}</p>
+            
+          <div class="edit-btn">
+            <b class="no-img"><a href="{php echo $this->createMobileUrl('Newaddress', array('from'=>'U','addressid'=>$item['id']));}" class="edit-btn">编辑</a></b>
+            <b class="delete-btn" onclick ="onclose1({$item['id']})" > 删除</b>
+          
+           </div>        			
+	      
+    	    <input type = "hidden" value = ""   id = "order_address_id">
+    	    <input type = "hidden" value = ""   id = "delete_id">
+      </li>
+{/loop}
+    </ul> 
+{/if}
+
+
+
+  </div>
+
+
+ </div>
+    
+  <div style="display:none">
+	
+</div>
+</div>
+{php $deleteurl = $this->createMobileUrl('Uaddress',array('op'=>'delete'));}
+<!-- 确定删除 -->
+	<div id="error_tip" style="display:none" class="cod">
+        <div class="wx_mask"></div>
+        <div class="wx_confirm">
+            <div class="wx_confirm_inner">
+                <div class="wx_confirm_hd">
+                    <div class="wx_confirm_tit" id="tip_div">确定删除吗？</div>
+                </div>
+                <input type = "hidden" id ="delete_id">
+                <div class="wx_confirm_bd manage-btn">
+                    <div class="wx_confirm_btn">
+                        <button type="cancel" onclick="javascript:onclose2();" class="okbtn" id="codGoPay">取消</button>
+                        <button type="button" onclick="javascript:toDeleteAddress();" class="okbtn blue-btn" id="gotodelete">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   <script type="text/javascript">
+   function toDeleteAddress(){
+		  var delete_id = $("#delete_id").val();
+		  var sign = "delete";
+		  $("#gotodelete").attr("disabled",true);
+		  window.location.href= '{php echo $deleteurl}'+'&addressid='+delete_id;
+    }
+   $("#error_tip").hide();
+   function onclose1($delete_id){
+		$("#error_tip").show();
+		$("#delete_id").val($delete_id);
+		return false;
+	}
+   function onclose2(){
+		$("#error_tip").hide();
+		return false;
+	}
+   </script>
+</div>
+
+<footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                	<a href="{php echo $this->createMobileUrl('index', array())}"><span class=" home-index">首页</span></a>
+                	<a href="{php echo $this->createMobileUrl('ordering', array('openid' => $item['id']))}"><span class=" Order-index">订单</span></a>
+                	<a href="{php echo $this->createMobileUrl('usercenter', array('openid' => $item['id']))}"><span class="card-index-active">我的</span></a>
+              </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

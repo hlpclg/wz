@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>{$item['title']}</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <link rel="stylesheet" href="{MODULE_URL}public/css/global_v2.css?v=201501131921" />
+<?php
+    $query_string = $_SERVER['QUERY_STRING'];
+    if(!empty($query_string)) {
+        parse_str($query_string, $query_arr);
+        unset($query_arr['do']);
+        $query_string = http_build_query($query_arr);
+        $public_url = $_W['siteroot'].'app/index.php?'. $query_string;
+    }
+?>
+    <script type="text/javascript">
+    var SPEED_TIME = [];
+    SPEED_TIME.push('headStart:' + (+new Date()));
+    SPEED_TIME.push('headEnd:' + (+new Date()));
+{php define('HEADER', true);}
+    window.sysinfo = {
+{if !empty($_W['uniacid'])}
+        'uniacid': '{$_W['uniacid']}',
+{/if}
+{if !empty($_W['acid'])}
+        'acid': '{$_W['acid']}',
+{/if}
+{if !empty($_W['openid'])}
+        'openid': '{$_W['openid']}',
+{/if}
+{if !empty($_W['uid'])}
+        'uid': '{$_W['uid']}',
+{/if}
+        'siteroot': '{$_W['siteroot']}',
+        'siteurl': '{$_W['siteurl']}',
+        'attachurl': '{$_W['attachurl']}',
+        'public_url': '{$public_url}',
+{if defined('MODULE_URL')}
+        'MODULE_URL': '{MODULE_URL}',
+{/if}
+        'cookie' : {'pre': '{$_W['config']['cookie']['pre']}'}
+    };
+    </script>
+    <link href="{MODULE_URL}public/css/LuckyMoney/style.css?v=201501140951" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <!-- 声音控件-->
+    <section class="u-audio f-hide" autoplay="true" data-src="{php echo tomedia($item['musicurl'])}">
+        <p id="coffee_flow" class="btn_audio">
+            <strong class="txt_audio z-hide">关闭</strong>
+            <span class="audio_open"><img src="{MODULE_URL}public/images/LuckyMoney/yiyue.png" title="声音"/></span>
+            <div class="coffee-steam-box"></div>
+        </p>
+    </section>
+    <!-- 声音控件 end-->
+    <!--三个幕布层-->
+    <div class="fg-screen" id="fg_screen">
+        <div class="content">
+            <div class="animate-screen" id="animate_screen">
+                <div class="send-gift-screen" id="send_gift_screen"></div>
+            </div>
+            <div class="logo">
+                <img src="{MODULE_URL}public/images/ytaohx.png" title="logo" />
+            </div>
+            <div class="info-arrow" id="info_arrow">
+                <img src="{MODULE_URL}public/images/LuckyMoney/details.png" title="活动详情" />
+            </div>
+{if $do=='share'}
+            <!--朋友进来场景-->
+            <div id="scene2" class="helpFriend" >
+                <div class="giftBox">
+                    <img src="{MODULE_URL}public/images/LuckyMoney/gift.png" title="活动礼盒" class="giftBoxImg"/>
+                    <div class="friend_img"><a href="{php echo $this->createMobileUrl('detail', array('rid'=>$rid))}"><img src="{$fans['avatar']}" title="朋友图像"/></a></div>
+                </div>
+                {if $uid==$_W['member']['uid']}
+                <div class="activeyNum"><p style="color:red">提示：点击头像查看我的礼包</p></div>
+                <a href="javascript:" class="find_friend giftBtn js_help" title="找朋友拆礼包">
+                    <img src="{MODULE_URL}public/images/LuckyMoney/find_friend.png"/>
+                </a>
+                {else}
+                <a href="javascript:" class="giftBtn js_helpfolder" title="帮朋友拆礼包" data-url='{php echo $this->createMobileUrl('open', array('rid'=>$rid,'uid'=>$uid, true))}'/><img src='{MODULE_URL}public/images/LuckyMoney/help.png'/></a>
+                {/if}
+            </div>
+{else}
+            <!--自己进来场景-->
+            <div id="scene1">
+                <div class="interat_box">
+                    <img src="{MODULE_URL}public/images/LuckyMoney/people.png?v=201501141124" title="首页礼盒图像背景" class="gift_bg" />
+                    <!--用户头像-->
+                    <div class="js_help interat-header interat-header1">
+                        <img class="people_pic" src="{MODULE_URL}public/images/LuckyMoney/plus.png?v=201501140951" />
+                        <div class="mao mao1">
+                            <img src="{MODULE_URL}public/images/LuckyMoney/mao1.png?v=201501140951" />
+                        </div>
+                    </div>
+                    <div class="js_help interat-header interat-header2">
+                        <img class="people_pic" src="{MODULE_URL}public/images/LuckyMoney/plus.png?v=201501140951" />
+                        <div class="mao mao2">
+                            <img src="{MODULE_URL}public/images/LuckyMoney/mao2.png?v=201501140951" />
+                        </div>
+                    </div>
+                    <div class="js_help interat-header interat-header3">
+                        <img class="people_pic" src="{MODULE_URL}public/images/LuckyMoney/plus.png?v=201501140951" />
+                        <div class="mao mao3">
+                            <img src="{MODULE_URL}public/images/LuckyMoney/mao3.png?v=201501140951" />
+                        </div>
+                    </div>
+                    <div class="js_help interat-header interat-header4">
+                        <img class="people_pic" src="{MODULE_URL}public/images/LuckyMoney/plus.png?v=201501140951" />
+                        <div class="mao mao4">
+                            <img src="{MODULE_URL}public/images/LuckyMoney/mao4.png?v=201501140951" />
+                        </div>
+                    </div>
+                </div>
+                <!--找朋友拆礼包-->
+                {if $row['opennum']===0}
+                <a href="javascript:" class="giftBtn js_folder" data-url='{php echo $this->createMobileUrl('open', array('rid'=>$rid,'uid'=>$_W['member']['uid']), true)}' title="打开礼包">
+                    <img src="{MODULE_URL}public/images/LuckyMoney/open_gift_org.png" />
+                </a>
+                {else}
+                <a href="javascript:" class="find_friend giftBtn js_help" title="找朋友拆礼包">
+                    <img src="{MODULE_URL}public/images/LuckyMoney/find_friend.png" />
+                </a>
+                {/if}
+            </div>
+{/if}
+            <!--活动人数-->
+            <div class="activeyNum">
+            {if $do=='detail'}
+                <p>温馨提示：离拆开礼包还需邀请<em>{$row['opennum']}</em>位好友</p>
+            {/if}
+                <p>目前已有21613位小伙伴参与活动</p>
+            </div>
+        </div>
+        <!--页脚-->
+        <div class="page-footer" id="page_footer">
+            <div class="footer">
+                <a href="{$_W['account']['subscribeurl']}">Powered by {$_W['account']['name']}</a>
+            </div>
+        </div>
+    </div>
+    <!--活动分享弹出层开始-->
+    <div id="activeShareLayer" class="dialogLayer activeShareLayer">
+        <div class="Layer_content">
+            <a href="javascript:" id="activeShareBtn" class="activeShareBtn">
+                <img src="{MODULE_URL}public/images/LuckyMoney/tip.png" />
+            </a>
+        </div>
+    </div>
+    <!--活动分享弹出层结束-->
+    <!--活动详情弹出层开始-->
+    <div id="activeDetailLayer" class="dialogLayer activeDetailLayer">
+        <div class="Layer_content" >
+            <div class="activeBox">
+                <div class="activeCon">
+                    <h2>【活动时间】</h2>
+                    <p class="time">{php echo date('Y-m-d H:i', $item['starttime'])} 至 {php echo date('Y-m-d H:i', $item['endtime'])}</p>
+                    <h2 class="activeTit">【活动说明】</h2>
+                    <div>{$item['ruletxt']}</div>
+                </div>
+                <div class="underStandBtn"><a href="javascript:" id="underStandBtn"><img src="{MODULE_URL}public/images/LuckyMoney/got-it.png"/>我已经明白了</a></div>
+            </div>
+        </div>
+    </div>
+    <!--活动详情弹出层结束-->
+{if $do=='share'}
+    <!--帮他拆红包弹出层开始-->
+    <div id="helpHimGiftLayer"  class="dialogLayer helpHimGiftLayer">
+        <div class="Layer_content" >
+            <div class="help_gift_box">
+                <div class="raysDemoHolder">
+                    <a class="raysLogo show_gift" href="javascript:"><img src="{MODULE_URL}public/images/LuckyMoney/open_gift.png"/></a>
+                    <div class="rays"><img src="{MODULE_URL}public/images/LuckyMoney/light.png"></div>
+                </div>
+                <div class="gift_info">
+                    <img src="{MODULE_URL}public/images/LuckyMoney/award.png"/>
+                    <div class="gift_info_con">您已成功帮朋友拆开礼包啦~百分百中奖，要不自己也试试手气？</div>
+                    <div class="gift_join_btn" id="gift_join_btn" onClick="javascript:location.href='{php echo $this->createMobileUrl('detail',array('rid'=>$rid))}'"><img src="{MODULE_URL}public/images/LuckyMoney/iam_in.png" title="我也要参加"/></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--帮他拆红包弹出层结束-->
+{else}
+    <!--拆红包弹出层开始-->
+    <div id="openGiftLayer" class="dialogLayer openGiftLayer">
+        <div class="Layer_content">
+            <div class="open_gift_box">
+                <div class="close-open-gift-layer" id="close_open_gift_layer"></div>
+                <div class="building_logo">
+                    <a href=""><img src="{MODULE_URL}public/images/ytaohx.png" /></a>
+                </div>
+                <div class="prize_mes"></div>
+                <div class="get_prize">
+                    <a href="javascript:" id="get_prize_btn" class="get_prize_btn"><img src="{MODULE_URL}public/images/LuckyMoney/got-it.png" />马上去领取奖品</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--拆红包弹出层结束-->
+{/if}
+    <!--蒙板弹出层开始-->
+    <div id="dialog_mask" class="mask hide"></div>
+    <!--蒙板弹出层结束-->
+    <script type="text/javascript">
+        SPEED_TIME.push('footStart:' + (+new Date()));
+    </script>
+    <script type="text/javascript" src="{MODULE_URL}public/js/lib/mix/mix.js?v=201501131921"></script>
+    <script type="text/javascript" src="{MODULE_URL}public/js/lib/config_v2.js?v=201501131921"></script>
+    <script type="text/javascript" src="{MODULE_URL}public/js/lib/global_v2.js?v=201501131921"></script>
+    <script type="text/javascript">
+    var __Images = [
+        {src:'{MODULE_URL}public/images/LuckyMoney/people.png?v=201501141124', loaded:false},
+        {src:'{MODULE_URL}public/images/LuckyMoney/santaClaus.png?v=201501141124', loaded:false},
+        {src:'{MODULE_URL}public/images/LuckyMoney/gift1.png?v=201501141124', loaded:false},
+        {src:'{MODULE_URL}public/images/LuckyMoney/gift2.png?v=201501141124', loaded:false},
+        {src:'{MODULE_URL}public/images/LuckyMoney/gift3.png?v=201501141124', loaded:false}
+    ];
+
+    var __Status = {
+        isReceive: '{$isreceive}',
+        activityObject: 'Customer',
+        isBrokerLogin: '',
+        returnUrl: '',
+        isfans: '',
+        attentionUrl: '',
+        wxname: '{$_W['account']['name']}',
+        openid: '{$_W['account']['key']}'
+    };
+{if $_GPC['do']=='detail'}
+    var __Prizes = ['新春对联', ' 新春对联', '新春对联', '新春对联', '新春对联'];
+    {if $friend_list}
+    var _Friends = {php echo json_encode($friend_list)};
+    var j = 0;
+    for (var o in _Friends) {
+        $('.people_pic').eq(j).attr('src',_Friends[o]['avatar']);
+        j++;
+    };
+    {/if}
+{/if}
+    // **G_VERSIONINFO_START**
+    var G_VERSIONINFO = [
+        "logic/LuckyMoney/app",
+        "logic/LuckyMoney/index.js?v=201501261850"
+    ];
+    // **G_VERSIONINFO_END**
+    
+<?php
+    $_share['title'] = !empty($_share['title']) ? $_share['title'] : $_W['account']['name'];
+    $_share['imgUrl'] = !empty($_share['imgUrl']) ? $_share['imgUrl'] : '';
+    $_share['desc'] = !empty($_share['desc']) ? $_share['desc'] : '';
+    $_share['desc'] = preg_replace('/\s/i', '', str_replace('   ', '', cutstr(str_replace('&nbsp;', '', ihtmlspecialchars(strip_tags($_share['desc']))), 60)));
+    if(empty($_share['link'])) {
+        $_share['link'] = '';
+        $query_string = $_SERVER['QUERY_STRING'];
+        if(!empty($query_string)) {
+            //加上分享人的uid
+            parse_str($query_string, $query_arr);
+            $query_arr['do'] = 'share';
+            $query_arr['uid'] = $_W['member']['uid'];
+            $query_string = http_build_query($query_arr);
+            $_share['link'] = $_W['siteroot'].'app/index.php?'. $query_string;
+        }
+    }
+?>
+    seajs.updateRes(function(app, index) {
+        index.init({
+            // debug: true,
+            appId: '{$jsconfig['appId']}',
+            timestamp: {$jsconfig['timestamp']},
+            nonceStr: '{$jsconfig['nonceStr']}',
+            signature: '{$jsconfig['signature']}',
+            title: '{$_share['title']}',
+            desc: '{$_share['desc']}',
+            link: '{$_share['link']}',
+            imgUrl: '{php echo tomedia($_share['imgurl'])}'
+        });
+        // '' == '1' && $.sendSpeed();
+    }, true, false);
+    </script>
+</body>
+</html>

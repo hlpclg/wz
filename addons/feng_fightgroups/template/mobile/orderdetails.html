@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>拼团</title>
+		{php echo register_jssdk();}
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-store">
+		<meta http-equiv="Expires" content="0">
+		<link href="../addons/feng_fightgroups/template/css/style_826b4a.css" rel="stylesheet">
+		<LINK href="../addons/feng_fightgroups/template/css/style_366c9ef.css" rel="stylesheet">
+		<LINK href="../addons/feng_fightgroups/template/css/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	</head>
+
+	<body>
+		<div class="mod_container">
+			<div id="detailCon" class="wx_wrap" ms-visible="order.order_id != undefined">
+				<div class="state" ms-class="state_1: order.total_status == 2" ms-class-1="state_2: order.total_status == 3" ms-class-2="state_3: order.total_status == 4">
+					<div class="state_step">
+						<ul>
+							<li class="state_step_1"></li>
+							<li class="state_step_2"></li>
+							<li class="state_step_3"></li>
+						</ul>
+						<span class="state_arrow">
+
+                <i class="state_arrow_i"></i>
+
+                <i class="state_arrow_o"></i>
+
+                </span>
+					</div>
+					<div class="address">
+						<div class="address_row">
+							<div class="address_tit">订单状态：</div>
+									<div class="address_cnt">
+										<b>
+								{if intval($order['status']) == 9}  
+									已取消
+								{else if intval($order['status']) == 3}  
+									已完成
+								{else if intval($order['status']) == 2}
+									已发货
+								{else if intval($order['status']) == 1}
+									已支付
+								{else if intval($order['status']) == 0}
+									未支付
+								{else if intval($order['status']) == 4}
+									已退款
+								{else if intval($order['status']) == -1}
+									已关闭
+								{/if}</b>
+									</div>
+						</div>
+						<div class="address_row">
+							<span class="address_tit">订单编号：</span>
+							<span class="oinfo_cnt">{$order['orderno']}</span>
+						</div>
+						<div class="address_row">
+							<span class="oinfo_tit">下单时间：</span>
+							<span class="oinfo_cnt">{php echo date('Y-m-d H:i', $order['createtime']);}</span>
+						</div>
+						<div class="address_row">
+							<div class="address_tit">总&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 额：</div>
+							<div class="address_cnt">
+								<span class="address_price">{$order['price']}</span>
+								<span class="address_paytype">
+									{if $order['pay_type'] == 0}
+									(未支付)
+									{/if}
+									{if $order['pay_type'] == 1}
+									(余额支付)
+									{/if}
+									{if $order['pay_type'] == 2}
+									(在线支付)
+									{/if}
+									{if $order['pay_type'] == 3}
+									(货到付款)
+									{/if}
+								</span>
+							</div>
+						</div>
+						<div class="address_row">
+							<div class="address_tit">送 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;至：</div>
+							<div class="address_cnt">{$adds['province']} {$adds['city']} {$adds['county']} {$adds['detailed_address']}</div>
+						</div>
+						<div class="address_row">
+							<div class="address_tit">收&nbsp;货&nbsp;&nbsp;人：</div>
+							<div class="address_cnt">{$adds['cname']} {$adds['tel']}</div>
+						</div>
+						<div class="address_row" ms-visible="order.shipping_status>=1">
+							<div class="address_tit">配送方式：</div>
+							<div class="address_cnt">
+								{if !empty($order['express'])}
+								{$order['express']}
+								{else}
+								还未发货	
+								{/if}
+							</div>
+						
+							<div class="address_tit">快递单号：</div>
+							<div class="address_cnt">
+								{if !empty($order['expresssn'])}
+								{$order['expresssn']}
+								{else}
+								还未发货
+								{/if}	
+							</div>
+							{if !empty($order['expresssn'])}
+								<a  href="http://m.kuaidi100.com/index_all.html?type={$order['express']}&postid={$order['expresssn']}#input" class="btn btn-success pull-right btn-sm" >查看快递</a>
+							{/if}
+						</div>
+					</div>
+					<div class="state_btn" ms-visible="order.total_status == 0">
+						{if intval($order['status']) == 9}  
+										<a class="state_btn_3" href="" ms-click="orderBuy(order.order_id)">订单已取消</a>
+										
+								{else if intval($order['status']) == 3}  
+										<a class="state_btn_3" href="" ms-click="orderBuy(order.order_id)">订单已完成</a>
+								{else if intval($order['status']) == 2}
+										<a class="state_btn_3" href="" ms-click="orderBuy(order.order_id)">订单已发货</a>
+								{else if intval($order['status']) == 1}
+								
+								{else if intval($order['status']) == 0}
+								<a class="state_btn_2" href="" ms-click="orderBuy(order.order_id)">未支付</a>
+								<a class="state_btn_1" href="" ms-click="orderBuy(order.order_id)">取消订单</a>
+								{/if}
+						
+						
+					</div>
+					<div class="state_btn" ms-visible="order.total_status == 3">
+						<!-- <a class="state_btn_1" href="">查看物流</a> -->
+						{if intval($order['status']) == 2}  
+										<a id="confirm_receipt" class="state_btn_3" href="{php echo $this->createMobileUrl('confirmreceipt', array('orderno'=>$order['orderno']));}" ms-click="orderReceive(order.order_id)">确认收货</a>
+								{else}  
+								
+								{/if}
+						
+					</div>
+					<div class="state_btn"> </div>
+				</div>
+				<div class="ptit">订单信息</div>
+				<div class="order" style=" margin-bottom: 20px;">
+					<div class="order_bd">
+						<div class="order_glist">
+							<div class="order_item" ms-repeat-item="order.order_goods">
+								<a href="" class="order_goods" style="float:left;border-bottom:none;">
+									<div class="order_goods_img">
+										<img src="{php echo tomedia($good['gimg']);}">
+									</div>
+								</a>
+								<div class="order_goods_info">
+									<a class="order_goods" ms-href="goods.html?goods_id={{item.goods_id}}">
+										<div class="order_goods_name">{$good['gname']} </div>
+										<div class="order_goods_attr">
+											<br>
+											<div class="order_goods_attr_item">数量：1
+												<div class="order_goods_price"><i>￥</i>{if intval($order['tuan_id']) == 0}  
+										{$good['oprice']}
+								{else}  
+										{$good['gprice']}
+								{/if}<i>/件</i>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="order_total" style="  margin: 5px 0px 10px 0px;">
+							<span class="order_total_info">共1件商品，运费{$good['freight']}元</span>
+							<span class="order_price">总计：<b><i>￥</i>{$order['price']}</b></span>
+						</div>
+					</div>
+					<div style="height: 60px;">
+						{if $order['is_tuan']}
+                        <a class="mt_status_lk marg_right" href="{php echo $this->createMobileUrl('group', array('tuan_id'=>$order['tuan_id']));}" style="margin-right: 10px;">查看团详情</a>
+                        {/if}
+                    </div>
+				</div>
+			</div>
+		</div>
+		<div style="height: 30px;"></div>
+		<!--点击确认收货按钮-->
+		<FOOTER class="footer">
+			<NAV>
+				<UL>
+					<LI>
+						<A class="nav-controller" href="{php echo $this->createMobileUrl('index')}"><I 
+					  class="fa fa-home"></I>首页</A>
+					</LI>
+					<LI>
+						<A class="nav-controller" href="{php echo $this->createMobileUrl('mygroup',array('op'=>0));}"><I class="fa fa-group"></I>我的团</A>
+					</LI>
+					<LI>
+						<A  id="myorder" class="nav-controller" href="{php echo $this->createMobileUrl('myorder',array('op' => '0'))}"><I class="fa fa-list"></I>我的订单</A>
+					</LI>
+					<LI>
+						<A class="nav-controller" href="{php echo $this->createMobileUrl('person');}">
+							<I class="fa fa-user"></I>个人中心</A>
+					</LI>
+				</UL>
+			</NAV>
+		</FOOTER>
+		<script type="text/javascript">
+			$(document).ready(function() {
+		
+		$("#confirm_receipt").click(function(){
+	  	  if(confirm("请再次确认收货")){
+	  	  	return ture; //执行默认事件
+    }else{
+    	return false; //阻止默认时间
+   }
+    return false;
+	});	
+	});
+		</script><!--end点击确认收货按钮-->
+		
+	</body>
+<script>
+	wx.ready(function (){
+	var shareData = {
+		title: "{$share_data['share_title']}",
+		desc: "{$share_data['share_desc']}",
+		link: "{$to_url}",
+		imgUrl: "{$_W['attachurl']}{$share_data['share_image']}",
+	};
+//分享朋友
+	wx.onMenuShareAppMessage({
+	    title: shareData.title,
+	  	desc: shareData.desc,
+	  	link: shareData.link,
+	  	imgUrl:shareData.imgUrl,
+	  	trigger: function (res) {
+	  	},
+	  	success: function (res) {
+	    	window.location.href =adurl;
+	  	},
+	  	cancel: function (res) {
+	  	},
+	  	fail: function (res) {
+	    	alert(JSON.stringify(res));
+	  	}
+	});
+//朋友圈
+	wx.onMenuShareTimeline({
+	  	title: shareData.title+"---"+shareData.desc,
+	  	link: shareData.link,
+	  	imgUrl:shareData.imgUrl,
+	  	trigger: function (res) {
+	  	},
+	  	success: function (res) {
+	    	window.location.href =adurl;
+	  	},
+	  	cancel: function (res) {
+	  	},
+	  	fail: function (res) {
+	    	alert(JSON.stringify(res));
+	  	}
+	});
+});
+</script>
+</html>

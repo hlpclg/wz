@@ -1,0 +1,54 @@
+{template 'common/header'}
+{template 'nav_tabs'}
+<script>
+	require(['bootstrap'], function($) {
+		$('.btn').hover(function() {
+			$(this).tooltip('show');
+		}, function() {
+			$(this).tooltip('hide');
+		});
+	});
+</script>
+<div class="main">
+	<div class="panel panel-default">
+		<div class="table-responsive panel-body">
+			<table class="table table-hover">
+				<thead class="navbar-inner">
+					<tr>
+						<th style="width:20px;">  </th>
+						<th style="width:60px;">微信标识</th>
+						<th style="width:100px;">图片</th>
+						<th style="width:100px;">文字描述</th>
+						<th style="width:160px;">音频</th>
+						<th style="width:50px;">创建时间</th>
+						<th style="text-align:right; width:100px;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					{loop $list $i}
+					<tr>
+						<td><input type="checkbox" name="ids[]" value="{$i['id']}" /></td>
+						<td>{$i['openid']}</td>
+						<td><img src="{php echo toimage($i['img'])}" style="width:40px;height:40px;"></td>
+						<td>{$i['summary']}</td>
+						<td>{if !empty($i['voice'])&&strexists($i['voice'],'.mp3')}<audio src="{php echo toimage($i['voice'])}" controls="controls">您的浏览器不支持 audio 标签。</audio>{/if}</td>
+						<td>{php echo date('Y-m-d H:i:s',$i['createtime'])}</td>
+						<td style="text-align:right;">
+							<a href="{php echo $this->createWebUrl('Itemslist',array('op'=>'del','id'=>$i['id']))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" data-toggle="tooltip" data-placement="top" title="删除" class="btn btn-default btn-sm"><i class="fa fa-times"></i></a>
+						</td>
+					</tr>
+					{/loop}
+				</tbody>
+			</table>
+			<table class="table table-hover">
+			<tr>
+				<td width="30">
+					<input type="checkbox" onclick="var ck = this.checked;$(':checkbox').each(function(){this.checked = ck});" />
+				</td>
+			</tr>
+		</table>
+		</div>
+	</div>
+	{$pager}
+</div>
+{template 'common/footer'}

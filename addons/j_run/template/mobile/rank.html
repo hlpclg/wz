@@ -1,0 +1,210 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="wap-font-scale" content="no">
+<link href="./resource/css/bootstrap.min.css" rel="stylesheet">
+<link href="./resource/css/font-awesome.min.css" rel="stylesheet">
+<link href="./resource/css/animate.css" rel="stylesheet">
+<link href="./resource/css/common.css" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="{MODULE_URL}template/mobile/js/sweetalert.css"/>
+{php echo register_jssdk(false);}
+<script src="{MODULE_URL}template/mobile/js/jquery-2.1.1.min.js"></script>
+<script src="{MODULE_URL}template/mobile/js/roll.js"></script>
+<script src="{MODULE_URL}template/mobile/js/sweetalert.min.js"></script>
+<title>排行榜</title>
+<style>
+html{overflow:hidden;}
+body{background:#f39601 url({MODULE_URL}template/mobile/img/rank-bg.jpg) fixed top center; background-size:100% 100%; width:100%; height:100%;}
+header {width: 100%;height:50px;position: relative;}
+header h3 {width:100%;font:16px/40px"微软雅黑";color: #fff;text-align: center;position:absolute;z-index:2; margin-top:-5px}
+.header_bg1{height:25px;background: #f39601;border-bottom: 1px solid #bb7301;}
+.header_bg2{height:15px;background: url({MODULE_URL}template/mobile/img/rank_header.png) no-repeat center 0;background-size:105px;margin-top:-1px;}
+.footermenu{ position:fixed;height:40px; border-top:1px solid #DDD; background:#F3D556; bottom:0; left:0;right:0;z-index:3}
+.showbox{ margin:10px 5px; border-radius:8px; padding:5px; background:rgba(255,255,255,0.5);border:1px dashed #FFF;}
+ul.list, ul.list li{ margin:0; list-style:none; padding:0;}
+ul.list li{ margin-bottom:10px; display:table; width:100%; border-bottom:#FFF 1px dashed; padding-bottom:10px}
+ul.list2, ul.list2 li{ margin:0; list-style:none; padding:0;}
+ul.list2 li{ margin-bottom:10px; display:table; width:100%;}
+.j_table{ display:table; width:100%;}
+.j_row{ display:table-row;}
+.j_cell1{ display:table-cell; width:10%; font-size:30px; font-family:Constantia, "Lucida Bright", "DejaVu Serif", Georgia, serif; line-height:60px;color:#900; font-weight:bolder;vertical-align:middle}
+.j_cell2{ display:table-cell; width:20%; vertical-align:middle}
+.j_cell3{ display:table-cell; width:30%; vertical-align:middle}
+.j_cell7{ display:table-cell; width:70%;vertical-align:middle}
+.j_cell6{ display:table-cell; width:60%;vertical-align:middle; }
+.font12{ font-size:12px;}
+.red{color:#900}
+ul.list li:last-child{ border:none; margin:0}
+.pb5{padding-bottom:5px}
+.plb5{padding-bottom:5px; padding-left:5px}
+#qrcode{ text-align:center; margin:10px auto; background:url(../addons/j_run/template/mobile/img/loading.gif) center center no-repeat;}
+.j_getgift{margin:10px 5px; border-radius:8px; padding:5px; background:rgba(255,255,255,0.5);border:1px dashed #FFF;}
+#container{position:relative;overflow:hidden;width:85%;height:16px; line-height:16px;display:inline-block;}
+#content{position:absolute;left:0;top:0;white-space:nowrap;}
+.userheader{ text-align:center; margin-top:-40px; display:inline-block; padding:10px; background:rgba(255,255,255,0.5);border:1px dashed #FFF;border-radius:8px;}
+.giflist{ margin:0 auto; text-align:left; width:90%; overflow-x:scroll;}
+.giflist ul, ul li{ margin:0; list-style:none; padding:0;}
+.giflist ul{ width:{php echo count($giftlist)*110}px;overflow:auto;overflow-y:hidden;height:150px;}
+.giflist ul li{ display:inline-block;width:90px; margin:5px; text-align:center;}
+.giflist ul li div img{ width:100%}
+</style>
+</head>
+<body>
+<header>
+    <h3>奖 品</h3>
+    <div class="header_bg1"></div>
+    <div class="header_bg2"></div>
+</header>
+<article class="giflist">
+<ul>
+{loop $giftlist $row}
+<li>
+	<div>{$row['title']}</div>
+    <img src="{$_W['attachurl']}{$row['thumb']}" class="img-thumbnail">
+    <div style="font-size:12px">剩<b>{$row['remain']}</b>份</div>
+    <div style="font-size:12px">{if $row['need']}需：{$row['need']}米{else}&nbsp;{/if}</div>
+    
+</li>
+{/loop}
+</ul>
+</article>
+<div class="j_getgift">
+	<div style="width:8%;display:inline-block;line-height:16px;color:#900; text-align:center;"><i class="fa fa-bullhorn"></i></div>
+	<div id="container"><div id="content">
+    {if empty($prizelist)}暂未有人领奖哦{/if}
+    {loop $prizelist $row}
+    {$row['nickname']} 领取了 {$row['giftname']} &nbsp;&nbsp;
+    {/loop}
+    </div></div>
+</div>
+<div id="qrcode" style="display:none;"></div>
+{if $myselfRank}
+<div class="showbox">
+<ul class="list2">
+<li>
+  <div class="j_row">
+    <div class="j_cell3 text-center"><img src="{$fans['headimgurl']}"  width="60" height="60" style="border-radius:100px;"/></div>
+    <div class="j_cell6">我的昵称：<strong>{$fans['nickname']}</strong>
+    <div class="font12">我的成绩：<b class="red">{$self['mark']}</b>米</div>
+    <div class="font12">{if $item['gametype']==0}游戏结束后，前<b>{$item['ranking']}</b>获得奖励{else}总成绩达到<b>{$item['need']}</b>米，即可领奖{/if}</div>
+    </div>
+    <div class="j_cell1 text-center">{php echo $myselfRank}</div>
+  </div>
+</li>
+</ul>
+</div>
+{/if}
+
+<div class="showbox">
+  <ul class="list">
+  	{php $i=1;}
+  	{loop $list $row}
+    <li>
+      <div class="j_row">
+        <div class="j_cell3 text-center"><img src="{$row['headimgurl']}"  width="60" height="60" style="border-radius:100px;"/></div>
+        <div class="j_cell6"><strong>{$row['nickname']}</strong>
+        <div class="font12">成绩：<b class="red">{$row['marks']}</b>m {if $row['sex']==1}兄弟团{else}闺蜜团{/if}:<b class="red">{$row['nums']}</b>人</div>
+        </div>
+        <div class="j_cell1 text-center">{php echo $i}</div>
+      </div>
+    </li>
+    {php $i++}
+    {/loop}
+  </ul>
+</div>
+{if $total>$psize}
+<div style="padding:0 5px" id="pagebtn"><a href="javascript:nextpage()" class="btn btn-info btn-sm btn-block" style="color:#FFF">查看更多</a></div>
+{/if}
+<div style="height:60px;">&nbsp;</div>
+<div class="footermenu text-center" style="padding:5px 0;height:auto;">
+
+<a href="{php echo $this->createMobileUrl('index',array('rid'=>$rid))}" class="btn btn-success" style="color:#FFF">继续奔跑</a>
+{if $item['gametype']==0}
+{if !$is_getprize}
+  {if $myselfRank<=$item['ranking'] && $item['ranking'] && $myselfRank}
+  	{if TIMESTAMP<$item['endtime']}
+    <a href="javascript:" class="btn btn-warning" style="color:#FFF">暂时第{php echo $myselfRank}名</a>
+    {else}
+    <a href="javascript:showCode();" class="btn btn-danger" style="color:#FFF">兑换奖品</a>
+    {/if}
+  {else}
+  <a href="javascript:" class="btn btn-danger" style="color:#FFF">奖励前{$item['ranking']}名</a>
+  {/if}
+{else}
+  <a href="javascript:" class="btn btn-default" style="color:#333">已兑换</a>
+{/if}
+{else}
+&nbsp;
+  {if !$is_getprize}
+  	{if intval($self['mark'])>=$item['need']}
+    <a href="javascript:showCode();" class="btn btn-danger" style="color:#FFF">兑换奖品</a>
+    {else}
+    <a href="javascript:" class="btn btn-default" style="color:#333">未能兑奖</a>
+    {/if}
+  {else}
+    <a href="javascript:" class="btn btn-default" style="color:#333">已兑换</a>
+  {/if}
+{/if}
+</div>
+
+<script type="text/javascript">
+var allpage=parseInt("{php echo $allpage}");
+var notpage=1;
+var ranknum=10;
+function nextpage(){
+	if(notpage>allpage){
+		$("#pagebtn").hide();
+		swal({title:"消息提示",text:"排名已经到底了哦"});
+	}
+	notpage++;
+	$.ajax({
+	   type: "POST",
+	   url: "{php echo $this->createMobileUrl('ajax',array('rid'=>$rid,'op'=>'getrank','sex'=>$sex))}",
+	   data: "page="+notpage,
+	   dataType:'json',
+	   success: function(data){
+		 items=data.item;
+		 var temp="";
+		 for(var i=0;i<items.length;i++){
+			 ranknum++;
+			 temp+='<li><div class="j_row">';
+			 temp+='<div class="j_cell3 text-center"><img src="'+items[i]['headimgurl']+'" width="60" height="60" style="border-radius:100px;"/></div>';
+			 temp+='<div class="j_cell6"><strong>'+items[i]['nickname']+'</strong>';
+			 temp+='<div class="font12">成绩：<b class="red">'+items[i]['marks']+'</b>m ';
+			 if(items[i]['sex']==2){
+				 temp+='闺蜜团';
+			 }else{
+				 temp+='兄弟团';
+			 }
+			 temp+=':<b class="red">'+items[i]['nums']+'</b>人</div>';
+			 temp+='</div><div class="j_cell1 text-center">'+ranknum+'</div></div></li>';
+		 }
+		 $(".list").append(temp);
+	   }
+	});
+}
+function showgift(){
+	swal({title:"奖品清单",text:"{php echo $temp}",html:true });
+}
+var qrcode="{php echo $qrcode}";
+$(document).ready(function(e) {
+    $("#qrcode").html("请将兑奖二维码出示给店员，或者长按保存到手机上。<img src='http://qr.liantu.com/api.php?text="+qrcode+"'/>");
+	$("#container").roll({speed:2});
+});
+function showCode(){
+	if(qrcode){
+		$('html body').scrollTop(0);
+		$("#qrcode").toggle();
+	}else{
+		swal({title: "领奖二维码",text:"抱歉，您还没有资格领取奖励哦",html: true });
+	}
+}
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	WeixinJSBridge.call('hideOptionMenu');
+});
+</script>
+</body>
+</html>

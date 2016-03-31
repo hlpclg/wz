@@ -1,0 +1,36 @@
+{template 'common/header'}
+{php load()->func('tpl')}
+<style>
+    .field label{float:left;margin:0 !important; width:140px;}
+</style>
+<div class="main">
+    <div class="panel panel-info">
+        <div class="panel-heading">用户排名</div>
+        <div class="panel-body table-responsive">
+            <form action="" method="post" onsubmit="">
+                <table class="table table-hover">
+                    <thead class="navbar-inner">
+                        <tr>
+                            <th>排名<i></i></th>
+                            <th>微信号<i></i></th>
+                            <th>用户<i></i></th>
+                            <th>成绩<i></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {loop $list $row}
+                        <tr>
+                            <td>{$row['rank']}<i></i></td>
+                            <td class="row-hover"><a href="javascript:;" title="{$row['from_user']}">{php echo cutstr($row['from_user'], 8)}</a></td>
+                            <td>{$row['realname']}<i></i></td>
+                            <td>{$row['score']}<i></i></td>
+                        </tr>
+                        {/loop}
+                    </tbody>
+                </table>
+            </form>
+            {$pager}
+        </div>
+    </div>
+</div>
+{template 'common/footer'}

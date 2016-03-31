@@ -1,0 +1,251 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>{$reply['title']}</title>
+    <meta name="Keywords" content=""/>
+    <meta name="Description" content=""/>
+    <meta content="width=device-width,initial-scale=1,user-scalable=no;" name="viewport">
+    <script src="../addons/ewei_dream/style/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="../addons/ewei_dream/style/dream.css?v=1.0">
+     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+      <style type='text/css'>
+        body { 
+            background: {if empty($reply['diy_bgcolor'])}#2f333c{else}{$reply['diy_bgcolor']}{/if};
+            color: {if empty($reply['diy_fontcolor'])}#fff{else}{$reply['diy_fontcolor']}{/if};
+       }
+       .form-btn,.share-btn { 
+            {if !empty($reply['diy_btncolor'])} background: {$reply['diy_btncolor']};{/if} 
+            {if !empty($reply['diy_btnfontcolor'])} color: {$reply['diy_btnfontcolor']};{/if} 
+            -webkit-appearance:none;
+       }
+       .form-input{
+           
+           {if !empty($reply['diy_btncolor'])} border:1px solid {$reply['diy_btncolor']};{/if}
+           {if !empty($reply['diy_inputcolor'])} background: {$reply['diy_inputcolor']};{/if}
+           {if !empty($reply['diy_inputtextcolor'])} color: {$reply['diy_inputtextcolor']};{/if}
+           
+       }
+    </style>
+</head>
+<body>
+ <div class="container ">
+<div class="content">
+      {if !$hasfans}
+    <div class="wrap dream" id="wrapDream">
+        <img class="top" src="{php echo empty($reply['diy_topimg'])?'../addons/ewei_dream/style/top-form.png':$_W['attachurl'].$reply['diy_topimg']}" width="871" height="480" alt="2015梦想契约" />
+        <form class="form" id="dreamForm" action="" method="post">
+            <input type='hidden' name='rid' value='{$reply['rid']}' />
+                   <input type='hidden' name='openid' value='{$info['openid']}' />
+            <div class="form-wrap">
+                <label class="form-title" for="nickname">我的昵称</label>
+                <input type="text" name="nickname" class="form-input"  value="" >
+            </div>
+            <div class="form-wrap"  >
+                <label class="form-title" for="dream" >{$reply['diy_title1']}</label>
+                <input type="text" name="dream" class="form-input"  value=""   style=''>
+                <div class="form-txt">
+                    <b style='{if !empty($reply['diy_btncolor'])} color: {$reply['diy_btncolor']};{/if}'>{$reply['diy_title2']}</b>
+                    {loop $ds $k $v}
+                    {if $k==3}<br/>{/if}
+                    <a class="option" href="javascript:void 0;" style='{if !empty($reply['diy_btncolor'])} color: {$reply['diy_btncolor']};{/if}'>{$v['dream']}</a>
+                    {/loop}
+                 
+                </div>
+            </div>
+            <div class="form-wrap">
+                <label class="form-title" for="punishment">{$reply['diy_title3']}</label>
+                <input type="text" name="punishment" class="form-input"  value=""  >
+                <div class="form-txt">
+                    <b style='{if !empty($reply['diy_btncolor'])} color: {$reply['diy_btncolor']};{/if}'>{$reply['diy_title4']}</b>
+                        {loop $ps $k $v}
+                        {if $k==3}<br/>{/if}
+                        <a class="option" href="javascript:void 0;" style='{if !empty($reply['diy_btncolor'])} color: {$reply['diy_btncolor']};{/if}'>{$v['punishment']}</a>
+                        {/loop}
+                </div>
+            </div>
+            <div class="form-wrap">
+                <input id="dreamSubmit" type="submit" class="form-btn" value="{$reply['diy_btntext']}">
+            
+            </div>
+           
+        </form>
+    </div>
+      {/if}
+      
+    {if $hasfans}
+    <div class="wrap share" id="wrapShare">
+        <img class="top" src="{php echo empty($reply['diy_topimgshare'])?'../addons/ewei_dream/style/top-share.png':$_W['attachurl'].$reply['diy_topimgshare']}" width="871" height="387"  />
+        <div class="paper">
+            <img class="paper-bg" src="{php echo  empty($reply['diy_paperimg'])?'../addons/ewei_dream/style/paper.png':$_W['attachurl'].$reply['diy_paperimg']}" width="460" height="616"  />
+            <div class="paper-txt">
+                <strong>我，<b class="nickname">{$fans['nickname']}</b>，</strong>
+                {$reply['diy_title1']}<b class="paper-txt-dream dream">{$fans['dream']}</b>，<br />
+                {$reply['diy_title3']}<br/><b class="paper-txt-dream dream">{$fans['punishment']}</b>。</strong>
+            </div>
+            <b class="paper-signature signature">{$fans['nickname']}</b>
+        </div>  
+       
+       
+        {if empty($_GPC['isshare'])}
+        <div class="share">
+            <h1 class="share-txt">
+                立刻分享你的梦想契约，接受整个朋友圈的监督，也让你的朋友们来许下愿望~~
+            </h1>
+            <a class="form-btn " href="javascript:void 0;" title="分享到微信" onclick='$("#cover").show()'>分享微信</a>
+            <a class="form-btn back " id="back" href="{php echo $this->createMobileUrl('dream',array('rid'=>$rid,'reset'=>1,'timestamp'=>time()))}">重新许愿</a>
+            {if count($oversees)>0}
+            <h1 class="share-txt" style='color:{$reply['diy_btncolor']}'>
+                 <br/>看看有谁正在监督我:
+            </h1>
+          <div  style='width:90%;overflow:hidden;margin:auto;padding-top:10px;'>
+               {loop $oversees $over}
+            <div class='head'>
+              
+              <div class='nickname'>{$over['nickname']}</div>
+              </div>
+            
+              {/loop}
+          </div>
+            {/if}
+        </div>
+        {else}
+         <div class="share">
+            <h1 class="share-txt">
+                立即监督 TA, 看谁笑到最后, 你也可以签订你的梦想契约，接受整个朋友圈的监督。
+            </h1>
+             <a class="share-btn  " href="javascript:void 0;" title="分享到微信" onclick='$("#cover").show()'>找人监督 </a>
+             <a class="share-btn  "  href="javascript:oversee()">我要监督 </a>
+             
+             {php $url = $this->createMobileUrl('dream',array('rid'=>$rid));}
+             {if $reply['follow_need']==1}
+                {if !$follow}   
+                   {php $url =$reply['follow_url'];}
+                {/if}
+             {/if}
+             <a class="share-btn back " id="back" href="{$url}">我要许愿</a>
+              {if count($oversees)>0}
+             <h1 class="share-txt" style='color:{$reply['diy_btncolor']}'>
+                 <br/>看看有谁正在监督 TA:
+             </h1>
+              <div  style='width:90%;overflow:hidden;margin:auto;padding-top:10px;'>
+              {loop $oversees $over}
+            <div class='head'>
+             
+              <div class='nickname'>{$over['nickname']}</div>
+              </div>
+            
+              {/loop}
+            </div>
+            {/if}
+       
+        </div>
+        
+         
+        {/if}
+        
+ </div>
+    {/if}
+     
+      <p style='text-align:center;'>
+      {if !empty($reply['follow_url'])}<a href='{$reply['follow_url']}' style="color:{$reply['diy_fontcolor']}">{/if}
+         @{if empty($reply['copyright'])}{$_W['account']['name']}{else}{$reply['copyright']}{/if}
+         {if !empty($reply['follow_url'])}</a>{/if}
+      </p>
+      
+      <p>&nbsp;</p>
+ <div class="cover" id="cover" onclick='$(this).hide()'>
+        <img src="../addons/ewei_dream/style/finger.png" />
+        <p class="cover-txt">点击右上角按钮分享，提醒TA们留下梦想契约，谁笑到最后一年后见分晓！</p>
+ </div>
+      
+    {php $audio = !empty($reply['diy_audio'])?tomedia($reply['diy_audio']):'../addons/ewei_dream/style/sound.wav'}
+    <audio id="sound" class="sound" src="{php echo $audio}" autoplay="true"></audio>
+     <script language="javascript" type="text/javascript">
+        $(function(){
+            var myAuto = document.getElementById('sound');
+            myAuto.play();
+        })
+    </script>
+</div>
+</div>
+  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+ <script>
+	// jssdk config 对象
+	jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || { jsApiList:[] };
+	
+	// 是否启用调试
+	// jssdkconfig.debug = true;
+	
+	// 已经注册了 jssdk 文档中所有的接口
+	jssdkconfig.jsApiList = [
+		'checkJsApi',
+		'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'showOptionMenu',		
+	];
+	
+	wx.config(jssdkconfig);
+                    var sharedata = {php echo json_encode($share)};
+                    sharedata.success =function(){
+                          $.post("{php echo $this->createMobileUrl('share')}",{ "rid": "{$rid}"});
+                    }
+	wx.ready(function () {
+		wx.showOptionMenu();
+		wx.onMenuShareAppMessage(sharedata);
+		wx.onMenuShareTimeline(sharedata);
+		wx.onMenuShareQQ(sharedata);
+		wx.onMenuShareWeibo(sharedata);
+	});
+</script>
+    
+    <script language='javascript'>
+    
+      function oversee(){
+          var input = window.prompt("请输入您的称呼:");
+          if($.trim( input )==''){
+              return;
+          }
+          $.post("{php echo $this->createMobileUrl('oversee')}",{
+              "uniacid": {$_W['uniacid']},
+              "rid": "{$rid}",
+              "fansid": "{$fans['id']}",
+              "nickname": input
+          },function(ret){
+              ret = JSON.parse(ret);
+              alert(ret.msg);
+              if(ret.err==0){
+                  location.reload();
+              }
+          })
+          
+      }
+        $(function(){
+            $(".option").click(function(){
+                $(this).parent().prev().val( $(this).html());
+            })
+            
+            $('form').submit(function(){
+         
+            if($.trim( $(":input[name=nickname]").val() )==''){
+                $(":input[name=nickname]").focus();
+                return false;
+            }
+            if($.trim( $(":input[name=dream]").val() )==''){
+                $(":input[name=dream]").focus();
+                return false;
+            }
+            if($.trim( $(":input[name=punishment]").val() )==''){
+                $(":input[name=punishment]").focus();
+                return false;
+            }
+           
+            return true;
+         
+            });
+        })
+        </script>
+</body>
+</html>

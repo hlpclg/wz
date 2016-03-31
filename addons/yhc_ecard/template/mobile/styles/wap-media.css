@@ -1,0 +1,17 @@
+@media all and (min-width: 640px){html {font-size:625%;}}
+@media all and (max-width: 640px){html {font-size:625%;}}
+@media all and (max-width: 604px){html {font-size:589.84375%;}}
+@media all and (max-width: 600px){html {font-size:585.9375%;}}
+@media all and (max-width: 540px){html {font-size:527.34375%;}}
+@media all and (max-width: 534px){html {font-size:521.484375%;}}
+@media all and (max-width: 480px){html {font-size:468.75%;}}
+@media all and (max-width: 424px){html {font-size:414.0625%;}}
+@media all and (max-width: 400px){html {font-size:390.625%;}}
+@media all and (max-width: 384px){html {font-size:375%;}}
+@media all and (max-width: 360px){html {font-size:351.5625%;}}
+@media all and (max-width: 320px){html {font-size:312.5%;}}
+
+body{
+    font-family: "Helvetica Neue",Helvetica,"MicroSoft Yahei",Arial,sans-serif;
+    font-size: .1rem;
+}

@@ -1,0 +1,4 @@
+.deals-icon {background: #fff;border-bottom: .0625rem solid #DDD;border-top: .0625rem solid #DDD;}
+.deals-icon ul {padding: .3125rem;text-align: center;}
+.deals-icon ul li {width: 23%;display: inline-block;text-align: center;}
+.deals-icon ul li img {display: block;width: 100%;}

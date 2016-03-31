@@ -1,0 +1,298 @@
+{template 'common/header'}
+<div class="main">
+	
+<script type="text/javascript" src="../addons/meepo_weixiangqin/template/jquery-1.7.2.min.js"></script>
+<script>
+	function selectall(obj, name){
+		$('input[name="'+name+'[]"]:checkbox').each(function() {
+			$(this).attr("checked", $(obj).attr('checked') ? true : false);
+		});
+	}
+	
+</script>
+
+<ul class="nav nav-tabs">
+	<li {if $_GPC['isshow'] == 0 && $_GPC['op'] != 'post'} class="active"{/if}><a href="{php echo $this->createWebUrl('list', array('id' => $id, 'isshow' => 0))}">会员待审核</a></li>
+	<li {if $_GPC['isshow'] == 1 && $_GPC['op'] != 'post'} class="active"{/if}><a href="{php echo $this->createWebUrl('list', array('id' => $id, 'isshow' => 1))}">会员已审核</a></li>
+    {if $_GPC['op'] == 'post'}<li  class="active"><a href="{php echo $this->createWebUrl('list', array('op' =>'post', 'id' =>$user['id']))}">编辑粉丝资料</a></li>{/if}
+    <li><a href="{php echo $this->createWebUrl('list', array('type'=>'update'))}">同步会员中心</a></li>
+	<li><a href="{php echo $this->createWebUrl('tjapply')}">推荐记录</a></li>
+	<li><a href="{php echo $this->createWebUrl('payrecord')}">充值记录</a></li>
+	<li><a href="{php echo $this->createWebUrl('baoyuerecord')}">包月记录</a></li>
+	<li><a href="{php echo $this->createWebUrl('Exchangerecord')}">兑换记录</a></li>
+	<li><a href="{php echo $this->createWebUrl('chatcontent')}">聊天记录</a></li>
+	<li><a href="{php echo $this->createWebUrl('photolist')}">图片管理</a></li>
+    <li><a href="{php echo $this->createWebUrl('set')}">基本设置</a></li>
+</ul>
+{if $op == 'display'}
+<div class="panel panel-info">
+	<div class="panel-heading">筛选</div>
+	<div class="panel-body">
+		<form action="./index.php" method="get" class="form-horizontal" role="form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+			<input type="hidden" name="m" value="meepo_weixiangqin" />
+			<input type="hidden" name="do" value="list" />
+			{if $_GPC['isshow']=='1'}
+			   <input type="hidden" name="isshow" value="1" />
+			{else}
+             <input type="hidden" name="isshow" value="0" />
+			{/if}
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">昵称</label>
+				<div class="col-xs-12 col-sm-8 col-lg-9">
+					<input class="form-control" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">手机号码</label>
+				<div class="col-xs-12 col-sm-8 col-lg-9">
+					<input class="form-control" name="telephone" id="" type="text" value="{$_GPC['telephone']}">
+				</div>
+			</div>
+			<div class="form-group">
+                <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">注册时间</label>
+                <div class="col-xs-12 col-sm-8 col-lg-9">
+               	
+				{php echo tpl_form_field_daterange('datelimit', array('starttime'=>empty($_GPC['starttime']) ? date('Y-m-d',time()) : date('Y-m-d',$_GPC['starttime']),'endtime'=>empty($_GPC['endtime']) ? date('Y-m-d',time()+3600*240) : date('Y-m-d',$_GPC['endtime'])))}
+				
+               </div>
+           </div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">状态</label>
+				<div class="col-xs-12 col-sm-8 col-lg-9">
+					<select name="yingcang" class='form-control'>
+							<option value="1" {if $_GPC['yingcang']=='1'} selected{/if}>显示</option>
+							<option value="2" {if $_GPC['yingcang']=='2'} selected{/if}>隐藏</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">推荐首页状态</label>
+				<div class="col-xs-12 col-sm-8 col-lg-9">
+					<select name="tuijian" class='form-control'>
+							<option value="2" {if $_GPC['tuijian']=='2'} selected{/if}>推荐</option>
+							<option value="1" {if $_GPC['tuijian']=='1'} selected{/if}>未推荐</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class=" col-xs-12 col-sm-2 col-lg-2">
+					<input type="submit"  value="搜索" class="btn btn-primary" />
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>
+
+<div class="panel panel-success">
+	<div class="panel-heading">
+		{if $_GPC['isshow'] == 0}待审核<br><br><font color=red>请注意:　待审核排列顺序为 完善资料的会员将优先排列在前 未完善的会员排列按时间排序</font>{/if}
+		{if $_GPC['isshow'] == 1}已审核{/if}
+	</div>
+	<div class="panel-body">
+		<div class="main" id="table-list">
+			<form action="" method="post" onsubmit="">
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead class="navbar-inner">
+						<tr>
+							<th class="row-first">选择</th>
+							<th>用户<i></i></th>
+                            <th>真实姓名<i></i></th>
+							<th class="row-hover">手机号码<i></i></th>
+							<th>性别</th>
+							<th>所在地</th>
+							<th>当前状态</th>
+							<th>推荐类型</th>
+							<th>时间<i></i></th>
+							 <th>操作</th>
+						</tr>
+						</thead>
+						<tbody>
+						{loop $list $row}
+						<?php
+						$sql = 'SELECT `follow` FROM ' . tablename('mc_mapping_fans') . ' WHERE `uniacid`=:uniacid AND `openid`=:openid';
+						$pars[':uniacid'] = $_W['uniacid'];
+						$pars[':openid'] = $row['from_user'];
+						$follow = pdo_fetchcolumn($sql, $pars);
+						?>
+						<tr>
+							<td class="row-first"><input type="checkbox" name="select[]" value="{$row['id']}" /></td>
+							<td class="row-hover">
+								<img width="50" src="{if preg_match('/http:(.*)/',$row['avatar'])}{$row['avatar']} {else if preg_match('/images(.*)/',$row['avatar'])} {$_W['attachurl']}{$row['avatar']}     {else}{MEEPORES}/static/friend/images/cdhn80.jpg{/if}" class="avatar" />
+								<div class="mainContent">
+									<div class="nickname">{$row['nickname']}</div>
+									<div class="nickname">{if $follow=='0'}<font color=red>已经取消关注</font>{/if}</div>
+								</div>
+							</td>
+							<td>{if empty($row['realname'])}未完善{else}{$row['realname']}{/if}</td>
+							<td>
+							    <div class="mainContent">
+									<div class="nickname">{if !empty($row['telephone'])}{$row['telephone']}{else}未完善{/if}</div>
+									<div class="nickname">{if $row['telephoneconfirm']=='1'}<font color=red>已经验证</font>{else}<font color=black>&nbsp;&nbsp;未验证</font>{/if}</div>
+								</div>
+							</td>
+							<td>{if $row['gender']=='0'}保密{elseif $row['gender']=='1'}男{else}女{/if}</td>
+							<td>
+								{if !empty($row['resideprovincecity'])}{$row['resideprovincecity']}{else}未完善{/if}
+							</td>
+							<td>{if $row['yingcang']=='1'}显示{else}隐藏{/if}</td>
+							<td>
+							  {if $row['tuijian']=='1'}
+							      未推荐
+							  {else}
+							     {if $row['tjtype']=='0'}
+							        管理员推荐
+							     {else}
+							        <font color=red>粉丝自荐</font>
+							     {/if}
+							  {/if}
+							</td>
+							<td style="font-size:12px; color:#666;">
+								<div style="margin-bottom:10px;">{php echo date('Y-m-d', $row['time']);}</div>
+								<div>{php echo date('H:i:s', $row['time']);}</div>
+							</td>
+							<td>
+							<a href="{php echo $this->createWebUrl('list', array('op' => 'post', 'id' =>$row['id']))}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="修改"><i class="fa fa-edit"></i></a>
+							{if $isshow == '1'}
+							 <a class="btn {if $row['tuijian']==1}btn-primary{else}btn-danger{/if}" href="{php echo $this->createWebUrl('tuijian', array('id' =>$row['id']))}"  >{if $row['tuijian']==1}推荐{else}移除{/if}</a>
+							{/if}
+							</td>
+						</tr>
+						{/loop}
+						</tbody>
+					</table>
+					{if !empty($list)}
+					<table class="table">
+						<tr>
+							<td style="width:50px;" class="row-first"><input type="checkbox" onclick="selectall(this, 'select');" /></td>
+							<td colspan="4">
+								{if $_GPC['isshow'] == 0}
+								<input type="submit" name="verify" value="审核" class="btn btn-primary" />
+								{/if}
+								<input type="submit" name="delete" value="删除" class="btn btn-primary" />
+								<input type="hidden" name="token" value="{$_W['token']}" />
+							</td>
+						</tr>
+					</table>
+					{/if}
+					{$pager}
+				</div>
+			</form>
+		</div>
+	</div>
+
+<script>
+require(['jquery'], function($){
+	//详细数据相关操作
+	var tdIndex;
+	$("#table-list thead").delegate("th", "mouseover", function(){
+		if($(this).find("i").hasClass("")) {
+			$("#table-list thead th").each(function() {
+				if($(this).find("i").hasClass("icon-sort")) $(this).find("i").attr("class", "");
+			});
+			$("#table-list thead th").eq($(this).index()).find("i").addClass("icon-sort");
+		}
+	});
+	$("#table-list thead th").click(function() {
+		if($(this).find("i").length>0) {
+			var a = $(this).find("i");
+			if(a.hasClass("icon-sort") || a.hasClass("icon-caret-up")) { //递减排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-down");
+			} else if(a.hasClass("icon-caret-down")) { //递增排序
+				/*
+					数据处理代码位置
+				*/
+				$("#table-list thead th i").attr("class", "");
+				a.addClass("icon-caret-up");
+			}
+			$("#table-list thead th,#table-list tbody:eq(0) td").removeClass("row-hover");
+			$(this).addClass("row-hover");
+			tdIndex = $(this).index();
+			$("#table-list tbody:eq(0) tr").each(function() {
+				$(this).find("td").eq(tdIndex).addClass("row-hover");
+			});
+		}
+	});
+});
+</script>
+{else}
+<div class="panel panel-success">
+	<div class="panel-heading">
+		编辑<br><br>
+		1:　<font color=red>粉丝积分数量慎重去修改</font>
+		<br><br>
+		2: 　<font color=red>如需修改粉丝积分数目　格式为: xx.00 如: 100.00</font>
+	</div>
+		<form id="reply-form" class="form-horizontal form"  method="post" enctype="multipart/form-data">
+	<div class="panel-body">
+    <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">昵称</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" class="form-control" name="nickname" value="{$user['nickname']}" />            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">真实姓名</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" class="form-control" name="realname" value="{$user['realname']}" />            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">性别</label>
+            <div class="col-sm-9 col-xs-12">
+                
+					<select name="gender" class="form-control">
+						<option value="0" {if $user['gender']=='0'}selected{/if}>保密</option>
+						<option value="1" {if $user['gender']=='1'}selected{/if}>男</option>
+						<option value="2" {if $user['gender']=='2'}selected{/if}>女</option>
+					</select>            
+		   </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">联系方式</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" class="form-control" name="telephone" value="{$user['telephone']}" />            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">QQ</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" class="form-control" name="qq" value="{$user['qq']}" />            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">微信号</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" class="form-control" name="wechat" value="{$user['wechat']}" />            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">积分数量</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" class="form-control" name="credit1" value="{$member['credit1']}" />            </div>
+        </div>
+		 <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">粉丝所在位置</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" class="form-control" name="lat" value="{$user['lat']}" />            </div>
+        </div>
+		 <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">粉丝所在位置</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" class="form-control" name="lng" value="{$user['lng']}" />            </div>
+        </div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input name="submit" type="submit" value="保存" class="btn btn-primary btn-danger" />
+				<input type="hidden" name="userid" value="{$user['id']}" />
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</div>
+		</div>
+    </div>
+	</form>
+</div>
+
+{/if}
+{template 'common/footer'}

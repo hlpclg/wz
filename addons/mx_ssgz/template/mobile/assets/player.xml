@@ -1,0 +1,35 @@
+{"frames": {
+
+"HeroCatch01.png":
+{
+	"frame": {"x":2,"y":2,"w":181,"h":149},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":181,"h":149},
+	"sourceSize": {"w":181,"h":149}
+},
+"HeroKill01.png":
+{
+	"frame": {"x":2,"y":153,"w":141,"h":143},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":141,"h":143},
+	"sourceSize": {"w":141,"h":143}
+},
+"HeroMove01.png":
+{
+	"frame": {"x":108,"y":298,"w":104,"h":150},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":104,"h":150},
+	"sourceSize": {"w":104,"h":150}
+},
+"HeroMove02.png":
+{
+	"frame": {"x":2,"y":298,"w":104,"h":150},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":104,"h":150},
+	"sourceSize": {"w":104,"h":150}
+}}
+}

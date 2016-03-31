@@ -1,0 +1,98 @@
+{template 'common/header'}
+<div class="main">
+    <ul class="nav nav-tabs">
+        <li><a href="{php echo $this->createWebUrl('formManage');}">商家管理</a></li>
+        <li ><a href="{php echo url('platform/reply/post',array('m'=>'mon_orderform'));}">添加商家</a></li>
+        <li><a href="{php echo $this->createWebUrl('OrderItemEdit',array('fid'=>$fid));}">添加订单类型</a></li>
+        <li ><a href="{php echo $this->createWebUrl('OrderItemlist',array('fid'=>$fid));}">订单类型管理</a></li>
+        <li ><a href="{php echo $this->createWebUrl('Orderlist',array('fid'=>$fid));}">用户订单管理</a></li>
+        <li class="active"><a href="{php echo $this->createWebUrl('OrderDetail',array('fid'=>$fid,'oid'=>$oid));}">订单详细</a></li>
+    </ul>
+
+
+    <div class="panel panel-default">
+        <div class="table-responsive panel-body">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>订单编号</th>
+                    <td colspan="5">{$order['orderno']}</td>
+                </tr>
+
+                <tr>
+                    <th>用户openid</th>
+                    <td colspan="5">{$order['openid']}</td>
+                </tr>
+
+                <tr>
+                    <th>用户昵称</th>
+                    <td colspan="5">{$order['nickname']}</td>
+                </tr>
+                <tr>
+                    <th>用户</th>
+                    <td colspan="5">{$order['uname']}</td>
+                </tr>
+
+                <tr>
+                    <th>手机号</th>
+                    <td colspan="5">{$order['utel']}</td>
+                </tr>
+
+
+                <tr>
+                    <th>订单类型</th>
+
+                    <td colspan="5" >{$item['iname']}</td>
+
+                </tr>
+
+                <tr>
+                    <th>数量</th>
+                    <td colspan="5" >{$order['ordernum']}</td>
+                </tr>
+
+                <tr>
+                    <th>原价</th>
+                    <td colspan="5" >{$order['o_yprice']}</td>
+                </tr>
+                <tr>
+                    <th>现价</th>
+                    <td colspan="5" >{$order['o_xprice']}</td>
+                </tr>
+
+                <tr>
+                    <th>支付总价</th>
+                    <td colspan="5" >{$order['zf_price']}</td>
+                </tr>
+
+
+                <tr>
+                    <th>支付方式</th>
+                    <td colspan="5" >{if $order['pay_type']==1}立即支付{/if}{if $order['pay_type']==2}现场支付{/if}</td>
+                </tr>
+
+
+
+                <tr>
+                    <th>用户备注</th>
+                    <td colspan="5" >{$order['remark']}</td>
+                </tr>
+
+                <tr>
+                    <th>状态</th>
+                    <td>{php echo $this->getStatusText($order['status'])}</td>
+                    <th>预定时间</th>
+                    <td>{php echo date("Y-m-d",$order['ordertime'])}</td>
+                    <th>支付成功时间</td>
+                    <td>{if $order['paytime']}{php echo date("Y-m-d H:i",$order['paytime'])}{/if}</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+</div>
+{template 'common/footer'}

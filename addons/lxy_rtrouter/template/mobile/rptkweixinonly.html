@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>微信上网认证 - RippleTek</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" /><!--响应式网页设计需要-->
+		<link rel="stylesheet" type="text/css" href="Public/css/lg.css">
+
+		<!--
+		下面一句js引用请勿修改，oAuth.js保留使用服务器的版本，以便于及时获取到更新的文件，如您将此js下载到本地，可能在后续平台升级过程中遇到问题。
+		-->
+		<script type="text/javascript" src="http://service.rippletek.com/ext/js/oAuth.js"></script>
+		<!--
+		上面一句js引用请勿修改，oAuth.js保留使用服务器的版本，以便于及时获取到更新的文件，如您将此js下载到本地，可能在后续平台升级过程中遇到问题。
+		-->
+		
+		<script type="text/javascript">
+		function focusStyle(){
+				document.getElementById("loginform").style.border="1px solid #1979FE";
+		}
+		function blurStyle(){
+				document.getElementById("loginform").style.border="1px solid #CFCFCF";
+		}
+		function clickTag(){
+			if (document.getElementById("weixinimg").style.display != "block")
+			{
+				document.getElementById("weixin").style.height="188px";
+				document.getElementById("weixin").style.padding="40px 0";
+				document.getElementById("weixinimg").style.display="block";
+			}else{
+				document.getElementById("weixin").style.height="0px";
+				document.getElementById("weixin").style.padding="0px 0";
+				document.getElementById("weixinimg").style.display="none";
+			}
+		}
+		function hideQr(){
+			document.getElementById("weixin").style.display="block";
+		}
+		function onKeyPress(e)
+	    {
+	        var keyCode = null;
+	        if(e.which)
+	            keyCode = e.which;
+	        else if(e.keyCode) 
+	            keyCode = e.keyCode;
+	            
+	        if(keyCode == 13) 
+	        {
+	            rptk_weixin_submit('loginkey');
+	            return false;
+	        }
+	        return true;
+	    }
+		function rptk_is_ios() {
+		    var u = window.navigator.userAgent;
+		    var device_types = ["iPhone", "iPod", "iPad"];
+		    for (var i in device_types) {
+		        var dt = device_types[i];
+		        if (u.indexOf(dt) >= 0) {
+		            return true;
+		        }
+		    }
+		    return false;
+		}
+		function rptk_display() {
+			if (rptk_is_ios())
+			{
+				document.getElementById("ios_button").style.display="block";
+				document.getElementById("not_ios").style.display="none";
+			}
+			else
+			{
+				document.getElementById("not_ios").style.display="block";
+				document.getElementById("ios_button").style.display="none";
+			}
+		}
+		</script>
+	</head>
+	<body onload="rptk_display()">
+		<article>
+		<div id="content">
+			<!----标题和网站LOGO---->
+			<h1><a href="#" id="logo" title="Rippletek上网登录"></a></h1>
+			<!--微信认证-->
+			<div class="tryonline wx-button" id="ios_button" style="display:none">
+				<a href="javascript:rptk_ios_goto_weixin()" class="try-on2">去微信认证</a>
+			</div>
+			<div class="tryonline wx-button" id="not_ios" style="display:none">
+				<h3 class="logintitle">请直接打开微信并关注公众号后认证</h3>
+			</div>
+			<div class="other">
+				<!----二维码-->
+				<div class="codelink">
+					<a href="#" onclick="clickTag()" title="点击打开二维码">扫描二维码关注官方微信获得上网方式</a>
+				</div>
+			</div>
+		</div>
+		<div id="weixin">
+			<a href="weixin://qr/gEx_Zm-EdTlKrSsF9xmS"><span id="weixinimg"></span></a>
+		</div>
+		</article>
+		<footer>
+			<span>@RippleTek，无线，无限可能</span>
+		</footer>
+	</body>
+</html>

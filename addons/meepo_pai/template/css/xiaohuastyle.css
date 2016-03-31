@@ -1,0 +1,198 @@
+.container2 {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-bottom: 62px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.imgheight{
+    background-color: #f1f1f1;
+    overflow: hidden;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/*.img-box {*/
+    /*display: block;*/
+    /*width: 100px;*/
+    /*height: 100px;*/
+    /*overflow: hidden;*/
+    /*text-align: center;*/
+    /*white-space: nowrap;*/
+/*}*/
+.imgheight img {
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+}
+.imgheight s {
+    display: inline-block;
+    height: 100%;
+    width: 0;
+    vertical-align: middle;
+}
+@media (max-width: 320px) {
+    .container2 {
+        width: 320px;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-bottom: 80px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .imgheight{
+        height: 169px;
+    }
+}
+@media (min-width: 320px) {
+    .container2 {
+        width: 320px;
+        padding-right: 10px;
+        padding-left: 10px;
+        margin-bottom: 80px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .imgheight{
+        height: 169px;
+    }
+}
+
+@media (min-width: 360px) {
+    .container2 {
+        width: 360px;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-bottom: 80px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .imgheight{
+        height: 195px;
+    }
+}
+
+@media (min-width: 640px) {
+    .container2 {
+        width: 520px;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-bottom: 80px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .imgheight{
+        height: 298px;
+    }
+}
+.nickname{
+    font-weight: 500;
+    display: block;
+}
+.school {
+    font-size: 12px;
+    color: #777777;
+    display: block;
+}
+.thumbnail .caption {
+    padding: 5px 0px;
+    color: #333;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+
+.form-signin .checkbox {
+    font-weight: normal;
+}
+
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="name"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="school"] {
+    margin-bottom: -1px;
+    border-radius: 0;
+}
+
+.form-signin input[type="tel"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.pkbox {
+    position: relative;
+}
+
+.report {
+    bottom: 6px;
+    right: 15px;
+    position: absolute;
+}
+.report a{
+    color: #c2c2c2;
+    font-size: 14px;
+}
+.floatBtn{
+	position:absolute;left:50%;margin-left:-32px;
+}
+.listimg{
+    width: 100%;
+}
+.footinfo {
+    margin-top: 60px;
+}
+.footinfo p{
+    margin-bottom: 0px;
+    color: #777777;
+}
+
+div.container{
+             display: none;
+             position: fixed;
+             z-index:1;
+         }
+         div.mask{
+             /*visibility: hidden;*/
+             position: fixed;
+             left: 0;
+             top: 0;
+             width: 100%;
+             height: 100%;
+             background: #000000;
+             opacity: 0.8;
+         }
+        div.container img {
+
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 2;
+
+        }

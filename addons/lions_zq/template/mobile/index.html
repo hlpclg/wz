@@ -1,0 +1,236 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,maximum-scale=1.0,user-scalable=no"/>
+    <title>月球来的月饼</title>
+    <style>
+    </style>
+    <script src="../addons/lions_zq/template/mobile/lib/jquery.js"></script>
+    <script src="../addons/lions_zq/template/mobile/lib/easeljs-0.7.1.min.js"></script>
+    <script src="../addons/lions_zq/template/mobile/lib/tweenjs-0.5.1.min.js"></script>
+    <script src="../addons/lions_zq/template/mobile/lib/preloadjs-0.4.1.min.js"></script>
+    <script src="../addons/lions_zq/template/mobile/lib/movieclip-0.7.1.min.js"></script>
+    <script src="../addons/lions_zq/template/mobile/lib/soundjs-0.5.2.min.js"></script>
+    <script src="../addons/lions_zq/template/mobile/lib/common.js"></script>
+    <script src="../addons/lions_zq/template/mobile/lib/app.js"></script>
+    <script src="../addons/lions_zq/template/mobile/lib/loadingContent.js"></script>
+    <script src="../addons/lions_zq/template/mobile/lib/loading.js"></script>
+    <script src="../addons/lions_zq/template/mobile/lib/main.js"></script>
+	{php echo register_jssdk(false);}
+
+    <script>
+        var canvasLoading,canvas,stage,loadingStage,exportRoot;
+        var queue=new createjs.LoadQueue();
+        var score=0;
+        var scale=1;
+        var picNum=0;
+        var picTotal=0;
+        var loadingProgress=0;
+
+        init();
+        //initLoading();
+
+        function init()
+        {
+            SHARE_ICON_URL="{$_W['siteroot']}addons/lions_zq/template/mobile/images/icon.png";
+            SHARE_URL="{$_W['siteroot']}app/index.php?i={$_W['account']['uniacid']}&c=entry&do=zqgame&m=lions_zq";
+            SHARE_STR='你收到一份来自月球的思念和祝福!快快点击体验吧！';
+            // onBridgeInit();
+            initSound('../addons/lions_zq/template/mobile/sound/po','sound0');
+            initSound('../addons/lions_zq/template/mobile/sound/po1','sound1');
+            initSound('../addons/lions_zq/template/mobile/sound/po2','sound2');
+        }
+
+        function initLoading()
+        {
+            canvasLoading=document.getElementById('canvasLoading');
+
+            loadingImages = loadingImages||{};
+
+            var loader = new createjs.LoadQueue(false);
+            loader.addEventListener("fileload", loadingHandleFileLoad);
+            loader.addEventListener("complete", loadingHandleComplete);
+            loader.loadManifest(loadingLib.properties.manifest);
+        }
+
+        function loadingHandleFileLoad(evt) {
+            if (evt.item.type == "image") { loadingImages[evt.item.id] = evt.result; }
+        }
+
+        function loadingHandleComplete() {
+            exportRoot = new loadingLib.loading();
+
+            stage = new createjs.Stage(canvasLoading);
+            stage.addChild(exportRoot);
+            stage.update();
+
+            createjs.Ticker.setFPS(loadingLib.properties.fps);
+            createjs.Ticker.addEventListener("tick", stage);
+
+            //console.log('loadingHandleComplete');
+
+            //var loading=new lib.LOADING();
+            //stage.addChild(loading);
+            new loadingContent.init();
+            initMain();
+        }
+
+        //
+        function initMain()
+        {
+            canvas = document.getElementById('canvas');
+            images = images||{};
+
+            picTotal=lib.properties.manifest.length;
+
+            var loader = new createjs.LoadQueue(false);
+            loader.addEventListener("fileload", initHandleFileLoad);
+            loader.addEventListener("complete", initHandleComplete);
+            loader.loadManifest(lib.properties.manifest);
+            console.log('initMain');
+        }
+
+        function initHandleFileLoad(evt) {
+            picNum+=1;
+            loadingProgress=picNum/picTotal;
+            //console.log(loadingProgress);
+            if (evt.item.type == "image") { images[evt.item.id] = evt.result; }
+        }
+
+        function initHandleComplete() {
+            //console.log('handleCompleteInit');
+            document.getElementById('loading').style.display="none";
+            exportRoot = new lib.main();
+
+            stage = new createjs.Stage(canvas);
+            stage.addChild(exportRoot);
+            stage.update();
+
+            createjs.Ticker.setFPS(lib.properties.fps);
+            createjs.Ticker.addEventListener("tick", stage);
+
+            new app.init();
+        }
+
+        function initSound(url,name)
+        {
+            var mp3url='';
+            if(isAndroid())
+            {
+                createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]);
+                mp3url=url+'.ogg';
+            }
+            if(!isAndroid())
+            {
+                createjs.Sound.registerPlugins([createjs.WebAudioPlugin]);
+                mp3url=url+'.m4a';
+            }
+            createjs.Sound.alternateExtensions = ["mp3"];
+            createjs.Sound.addEventListener("fileload", createjs.proxy(this.loadHandler, this));
+            createjs.Sound.registerSound(mp3url, name);
+        }
+
+        function playSound0()
+        {
+            var instance = createjs.Sound.play("sound0");
+            instance.volume = 0.5;
+        }
+
+        function playSound1()
+        {
+            var instance = createjs.Sound.play("sound1");
+            instance.volume = 0.5;
+        }
+
+        function playSound2()
+        {
+            var instance = createjs.Sound.play("sound2");
+            instance.volume = 0.5;
+        }
+
+        function loadHandler(event) {
+            // This is fired for each sound that is registered.
+            //var instance = createjs.Sound.play("sound");  // play using id.  Could also use full sourcepath or event.src.
+            //instance.addEventListener("complete", createjs.proxy(this.soundComplete, this));
+            //instance.volume = 0.5;
+        }
+
+		function records(res){
+			jQuery.ajax({
+				url:"{php echo $this->createMobileUrl('billboard',array());}",
+				data:{score:res,openid:"{php echo $judge['subscribe']['openid'];}"},
+				type:'post',
+				dataType:'json',
+				success:function(result){
+					
+				},
+				error:function(){
+					alert('ajax error');
+				}
+			});
+		}
+
+		wx.ready(function () {
+			var sharedata = {
+				title: SHARE_STR, // 分享标题
+				desc: SHARE_STR, // 分享描述
+				link: SHARE_URL, // 分享链接
+				imgUrl: SHARE_ICON_URL, // 分享图标
+				success: function () { 
+					alert("分享成功");
+				},
+				cancel: function () { 
+					
+				}
+			};
+			wx.onMenuShareAppMessage(sharedata);
+			wx.onMenuShareTimeline(sharedata);
+		});
+    </script>
+</head>
+<body onload="initLoading();" style="background-color: #ffffff">
+{if $judge['require'] && $judge['subscribe']['subscribe'] == 0}
+
+<div name="subscribe" style="position:absolute;width:100%;height:200px;left:0;top:30%;z-index:999;zoom:1;text-align:center;">
+	<h5 style="background-color:white;width:200px;margin:auto;">请先关注后再玩游戏</h5>
+	{if empty($judge['thumb'])}
+	<img style="width:360px;height:200px;" src="../addons/lions_zq/template/mobile/images/qrcode.gif">
+	{else}
+	<img style="width:360px;height:200px;" src="{php echo tomedia($judge['thumb']);}">
+	{/if}
+</div>
+{else}
+    <div id="loading" class="div-loading">
+        <canvas id="canvasLoading" width="640" height="1008">
+            sorry,your browser dosen't support html5
+        </canvas>
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            #a{
+                display: block;
+                background-color: gray;
+            }
+        </style>
+    </div>
+    <div id="main" class="div-main">
+        <canvas id="canvas" width="640" height="1008">
+            sorry,your browser dosen't support html5
+        </canvas>
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            #a{
+                display: block;
+                background-color: gray;
+            }
+        </style>
+    </div>
+{/if}
+</body>
+</html><!--[if !IE]>|xGv00|a6d03ba51a4aabe3b4e4bbfbc2d8709c<![endif]-->

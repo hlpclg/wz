@@ -1,0 +1,44 @@
+{template 'common/header'}
+<div class="main">
+<ul class="nav nav-tabs">
+  <li{if $_GPC['do'] == 'nodelist'} class="active"{/if}><a href="{php echo  $this->createWebUrl('nodelist');}">节点列表</a>
+  </li>
+  <li{if $_GPC['do'] == 'nodeadd'} class="active"{/if}><a href="{php echo $this->createWebUrl('nodeadd');}">添加节点</a>
+  </li>
+</ul>
+<div style="padding:15px;">
+	  <p>
+        <a href="{php echo $this->createWeburl('nodeadd')}"  class="btn"><i class="icon-plus-sign-alt" ></i>新增节点</a>
+        </p>
+                <div class="panel panel-default">
+	<div class="panel-body table-responsive">
+
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th  style="width:30%;"  >节点名称</th>
+					<th  style="width:20%;" >节点编号 </th>
+					<th  style="width:50%;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['name']}</td>
+					<td>{$item['node']}</td>
+					<td>
+                     <a href="{php echo $this->createWebUrl('nodeview', array('node' => $item['node']))}" class="btn btn-small" title="编辑"><i class="fa fa-pencil"></i></a>
+						<a onclick="return confirm('确认删除该节点？');return false;" href="{php echo $this->createWebUrl('delnode', array('node' => $item['node']))}" class="btn btn-small" title="删除"><i class="fa fa-times"></i></a></td>
+				</tr>
+				{/loop}
+
+				<td colspan="9">
+					<input name="token" type="hidden" value="{$_W['token']}" /></td>
+			</tr>
+		</table>
+		{$pager}
+        	</div>
+</div>
+	</div>
+</div>
+{template 'common/footer'}

@@ -1,0 +1,393 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>在线预订 -{$item['iname']}</title>
+    <meta name="viewport"
+          content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link href="{MON_ORDER_RES}css/hotels.css" rel="stylesheet" type="text/css">
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+
+    <script src="{MON_ORDER_RES}js/mobiscroll.core.js" type="text/javascript"></script>
+    <script src="{MON_ORDER_RES}js/mobiscroll.datetime.js" type="text/javascript"></script>
+    <script src="{MON_ORDER_RES}js/mobiscroll.jqm.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css?v=1.0" />
+    <link href="{MON_ORDER_RES}css/mobiscroll.core.css?v=1.0" rel="stylesheet" type="text/css" />
+    <link href="{MON_ORDER_RES}css/mobiscroll.jqm.css?v=1.0" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css"
+          href="{MON_ORDER_RES}/css/sweet-alert.css">
+    <script type="text/javascript" src="{MON_ORDER_RES}/js/sweet-alert.min.js"></script>
+</head>
+<body id="hotelsorder">
+<div class="banner">
+    <div id="wrapper">
+        <div id="scroller">
+            <ul id="thelist">
+                <li><p>{$item['ititle']}</p><a href="{$item['ititle_url']}"><img
+                        src="{php echo MonUtil::getpicurl($item['ititle_pg'])}"/></a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="nav">
+        <div id="prev" onClick="myScroll.scrollToPage('prev', 0,400,1);return false">&larr; prev</div>
+        <ul id="indicator">
+            <li>1</li>
+        </ul>
+        <div id="next" onClick="myScroll.scrollToPage('next', 0);return false">next &rarr;</div>
+    </div>
+    <div class="clr"></div>
+</div>
+<div class="cardexplain"><!--商家房价及类型-->
+    <ul class="round">
+        <li class="biaotou bradius pad">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>类型</td>
+                    <td class="yuanjia">原价</td>
+                    <td class="youhuijia">优惠价</td>
+                </tr>
+            </table>
+        </li>
+        <li><span class="noneorder"><table class="jiagebiao" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>{$item['iname']}</td>
+                <td class="yuanjia">￥{$item['y_price']}</td>
+                <td class="youhuijia">￥{$item['x_price']}</td>
+            </tr>
+        </table></span></li>
+    </ul>
+    <!--后台可控制是否显示-->
+    <ul class="round">
+        <li><h2>相关说明</h2>
+            <div class="text">
+                {$item['i_desc']}
+            </div>
+        </li>
+        <li class="tel"><a href="tel:{$item['o_tel']}"><span>{$item['o_tel']} 电话预订</span></a></li>
+    </ul>
+    <ul class="round">
+        <li class="title mb"><span class="none">请认真填写在线订单</span></li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tr>
+                    <th>预订人</th>
+                    <td><input name="uname" type="text" class="px" id="uname" value="{$order['uname']}" placeholder="请输入您的真实姓名">
+                    </td>
+                </tr>
+            </table>
+        </li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tr>
+                    <th>联系电话</th>
+                    <td><input name="utel" type="text" class="px" id="utel" value="{$order['utel']}" placeholder="请输入您的电话">
+                    </td>
+                </tr>
+            </table>
+        </li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tr>
+                    <th>预定时间</th>
+                    <td> <input type="text" data-role="datebox" id="ordertime" name="ordertime" value="{if $order['ordertime']}{php echo date("Y-m-d", $order['ordertime'])}{else}{php echo date("Y-m-d", TIMESTAMP)}{/if}"/>
+                    </td>
+                </tr>
+            </table>
+        </li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tr>
+                    <th>类型</th>
+                    <td><input class="px" value="{$item['iname']}" type="text" readonly></td>
+                </tr>
+            </table>
+        </li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tr>
+                    <th>剩余数量</th>
+                    <td><input class="px" value="{$item['leftCount']}" type="text"  id="leftCount" readonly></td>
+                </tr>
+            </table>
+        </li>
+
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tr>
+                    <th>预订数量</th>
+                    <td><input class="px" value="{if $order}{$order['ordernum']}{else}1{/if}" type="text" name="ordernum" id="ordernum"></td>
+                </tr>
+            </table>
+        </li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tr>
+                    <th>原单价</th>
+                    <td class="userinfo" id="price1">￥ {$item['y_price']}</td>
+                </tr>
+            </table>
+        </li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tr>
+                    <th>现单价</th>
+                    <td class="userinfo price" id="price2">￥ {$item['x_price']}</td>
+                </tr>
+            </table>
+        </li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tr>
+                    <th>总价</th>
+                    <td class="userinfo price2" id="price3">￥{$order['zf_price']}</td>
+                </tr>
+            </table>
+        </li>
+        <li class="nob">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+                <tr>
+                    <th valign="top" class="thtop">备注</th>
+                    <td><textarea name="remark" class="pxtextarea"
+                                  style=" height:99px;overflow-y:visible" id="remark" placeholder="请输入备注信息">{$order['remark']}</textarea></td>
+                </tr>
+            </table>
+        </li>
+    </ul>
+
+    <div class="footReturn">
+
+        {if empty($order)}
+           <input type="button" id="submitOrder" value="提交订单" onclick="submitOrder()"/>
+        {else}
+
+                {if $order['pay_type']=='1' }
+
+                    {if $order['status']==$this::$STATUS_UNPAY}
+                        <input type="button" id="pay" value="去付款" onclick="window.location.href='{php echo $this->createMobileUrl('OrderPay', array('oid'=>$order['id']), true)}'"/>
+                    {/if}
+                    {if $order['status']==$this::$STATUS_PAY_OVER}
+                        <input type="button"  value="已支付" />
+
+                    {/if}
+                    {if $order['status']==$this::$STATUS_ORDER_CLOSE}
+                        <input type="button"  value="已处理" />
+                    {/if}
+
+                {/if}
+
+            {if $order['pay_type']=='2' }
+                {if $order['status']==$this::$STATUS_OVER}
+                        <input type="button"  value="已预定" />
+
+                {/if}
+                {if $order['status']==$this::$STATUS_ORDER_CLOSE}
+                     <input type="button"  value="已处理" />
+
+                {/if}
+            {/if}
+
+
+
+        {/if}
+    </div>
+    <script type="text/javascript">
+        var price = {$item['x_price']};
+        $(function(){
+            {if empty($order)}
+                updateTotalPrice();
+                 $("#ordernum").bind('keyup',function() {
+                    if (!isNaN($("#ordernum").val())) {
+                        updateTotalPrice();
+                    }
+                 });
+
+                {/if}
+
+        });
+
+        function updateTotalPrice() {
+            var totalPrice = parseInt($("#ordernum").val())*price;
+            $("#price3").html("￥"+totalPrice);
+        }
+    function submitOrder() {
+
+        var uname = $("#uname").val();
+        var utel = $("#utel").val();
+        var ordernum = $("#ordernum").val();
+        var ordertime = $("#ordertime").val();
+        var remark = $("#remark").val();
+
+        if(uname == "") {
+            dialogMsg("请填写预定人姓名");
+            return ;
+        }
+
+        if(!verify_mobile(utel)) {
+            dialogMsg("请输入正确的手机号码格式");
+            return ;
+        }
+
+        if (isNaN(ordernum)) {
+            dialogMsg("请填写正确的预定数量");
+            return ;
+
+        }
+        if (ordertime == "") {
+            dialogMsg("请选择你的预定时间");
+            return ;
+        }
+        var  leftCount = {$item['leftCount']};
+        if (parseInt(ordernum)>leftCount) {
+            dialogMsg("预定数量超出数量了");
+            return ;
+        }
+        var submitData ={
+            'uname':uname,
+            'utel':utel,
+            'ordernum':ordernum,
+            'remark':remark,
+            'ordertime':ordertime
+        };
+
+            swal({
+                        title: "提交订单提示",
+                        text: "您确定要提交订单?",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "提交",
+                        cancelButtonText: "取消",
+                        closeOnConfirm: false },
+                    function(){
+
+
+                        $.post("{php echo $this->createMobileUrl('SubmitOrder',array('fid'=>$item['fid'],'iid'=>$item['id']),true)}",submitData,function (res) {
+
+                            if (res.code == 200) {
+
+                                {if $item['pay_type'] == 1}
+
+                                    swal({
+                                                title: "提示",
+                                                text: "提交订单成功!",
+                                                type: "success",
+                                                showCancelButton: false,
+                                                confirmButtonColor: "#DD6B55",
+                                                confirmButtonText: "立即支付",
+                                                closeOnConfirm: true },
+                                            function(){
+                                                window.location.href = "{php echo $this->createMobileUrl('OrderPay',array(),true)}&oid="+res.oid;
+                                            });
+                                    {/if}
+
+                                        {if $item['pay_type'] == 2}
+                                            swal({
+                                                        title: "提示",
+                                                        text: "提交订单成功!",
+                                                        type: "success",
+                                                        showCancelButton: false,
+                                                        confirmButtonColor: "#DD6B55",
+                                                        confirmButtonText: "确定",
+                                                        closeOnConfirm: true },
+                                                    function(){
+                                                        window.location.reload();
+                                                    });
+                                 {/if}
+
+
+
+                            } else {
+                                dialogMsg(res.msg);
+                            }
+                        },'json');
+
+                    });
+    }
+
+    function dialogMsg(msg) {
+
+        swal({
+                    title: "提示",
+                    text: msg,
+                    type: "warning",
+                    showCancelButton: false,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "确定",
+                    closeOnConfirm: true },
+                function(){
+
+                });
+    }
+
+        function verify_mobile(tel) {
+            if (tel.match(/^0{0,1}(13[0-9]|14[0-9]|15[0-9]|18[0-9]|17[0-9])[0-9]{8}$/)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+
+
+        $(function () {
+                opt1 = {
+                    preset: 'date', //日期
+                    //preset: 'calendar',
+                    controls: ['date', 'time'],
+                    theme: 'jqm', //皮肤样式
+                    display: 'modal', //显示方式
+                    mode: 'mixed', //日期选择模式
+                    dateFormat: 'yy-mm-dd', // 日期输出格式
+                    dateOrder: 'yymmdd', //面板中日期排列格式
+                    setText: '确定', //确认按钮名称
+                    cancelText: '取消',//取消按钮名籍我
+                    dayText: '日', //面板中日文字
+                    monthText: '月', //面板中月文字
+                    yearText: '年', //面板中年文字
+                    endYear: 2020, //结束年份
+                    hourText: '时',
+                    minuteText: '分',
+                    secText: '秒',
+                    lang: 'zh'
+                };
+
+                $('#ordertime').mobiscroll(opt1);
+
+    });
+
+
+    </script>
+
+
+    {php echo register_jssdk(false);}
+    <script type="text/javascript">
+
+
+
+        wx.ready(function () {
+            sharedata = {
+                title: "{$form['share_title']}",
+                desc: "{$form['share_content']}",
+                link: "{php echo MonUtil::str_murl($this->createMobileUrl('Index',array('fid'=>$form['id']),true))}",
+                imgUrl: "{$_W['attachurl']}{$form['share_icon']}",
+                success: function(){
+
+                },
+                cancel: function(){
+
+                }
+            };
+            wx.onMenuShareAppMessage(sharedata);
+            wx.onMenuShareTimeline(sharedata);
+        });
+
+
+    </script>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+{template 'common/header'}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		公众平台配置参数【若是提示管理员配置的参数有误，请核实接入的公众号时是否将appid以及appsecret填写了】
+	</div>
+	<form id="reply-form" class="form-horizontal form"  method="post" enctype="multipart/form-data">
+	<div class="panel-body">
+	     <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">二维码图片</label>
+			<div class="col-sm-9">
+				{php echo tpl_form_field_image('erweima', $settings['erweima']);}
+				<span class="help-block">二维码图片</span>
+			</div>
+		</div>
+		 <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">公众平台是否认证</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input type="radio" name="isshow" value="1" id="xh" {if $settings['isshow'] == '1'}checked="true"{/if}> 是
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="isshow" value="0" id="xh"  {if $settings['isshow'] == '0'}checked="true"{/if}>否
+				</label>
+				<span class="help-block">未认证请选择未认证 切记</span>
+			</div>
+		</div>
+		
+		<!--div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">投票标题设置</label>
+			<div class="col-sm-9">
+				<input type="text"  class="form-control" name="votetitle" value="{$settings['votetitle']}">
+				<span class="help-block">这项将显示在投票页面的最顶部</span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 control-label">首页风格默认选择</label>
+				<div class="col-sm-9">
+					<select name="indexstyle" class='form-control'>
+					        {loop $sty_name $key $row}
+							<option value="{$key}" {if $settings['indexstyle']==$key} selected{/if}>{$row}</option>
+							{/loop}
+					</select>
+					<span class="help-block">后台暂时不提供预览 请到前台预览所选风格</span>
+				</div>
+				
+			</div>
+			
+		<!--div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">首页滚动列表NO1设置</label>
+			<div class="col-sm-9">
+				<input type="text"  class="form-control" name="nickname" value="{$settings['nickname']}">
+				<span class="help-block">NO1名字</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">首页滚动列表NO1设置</label>
+			<div class="col-sm-9">
+				<input type="text"  class="form-control" name="content" value="{$settings['content']}">
+				<span class="help-block">NO1内容</span>
+			</div>
+		</div>
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">首页滚动列表NO1设置</label>
+			<div class="col-sm-9">
+				{php echo tpl_form_field_image('avatar', $settings['avatar']);}
+				<span class="help-block">NO1头像</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">首页背景图片</label>
+			<div class="col-sm-9">
+				{php echo tpl_form_field_image('indexbj', $settings['indexbj']);}
+				<span class="help-block">首页背景图片 <strong>规格 2000*1333</strong></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">首页顶部左侧LOGO</label>
+			<div class="col-sm-9">
+				{php echo tpl_form_field_image('indexlogo', $settings['indexlogo']);}
+				<span class="help-block">首页左侧LOGO <strong>规格 455*135</strong></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">首页顶部右侧背景</label>
+			<div class="col-sm-9">
+				{php echo tpl_form_field_image('indextopright', $settings['indextopright']);}
+				<span class="help-block">首页顶部右侧背景 <strong>规格 1124*137 必须为PNG格式 </strong></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">数据滚动条背景图片</label>
+			<div class="col-sm-9">
+				{php echo tpl_form_field_image('m2bj', $settings['m2bj']);}
+				<span class="help-block">数据滚动条背景图片 <strong>规格 1600*900 png</strong></span>
+			</div>
+		</div>
+		
+		
+		<!--div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">投票结果显示方式</label>
+			<div class="col-sm-9">
+						<label class="radio-inline">
+					      <input type="radio" name="voteshowway" value="1" id="xh" {if $settings['voteshowway'] == '1'}checked="true"{/if}> 扇形
+				       </label>
+				       <label class="radio-inline">
+					       <input type="radio" name="voteshowway" value="2" id="xh"  {if $settings['voteshowway'] == '2'}checked="true"{/if}>竖柱形
+				       </label>
+					   <label class="radio-inline">
+					       <input type="radio" name="voteshowway" value="3" id="xh"  {if $settings['voteshowway'] == '3'}checked="true"{/if}>横柱形
+				       </label>
+				       
+
+				      <span class="help-block">投票结果显示方式</span>
+			</div>
+		</div-->
+		
+		
+		
+	
+	  <!--div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启循环播放</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input type="radio" name="xh" value="1" id="xh" {if $settings['xh'] == '1'}checked="true"{/if}> 是
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="xh" value="0" id="xh"  {if $settings['xh'] == '0'}checked="true"{/if}>否
+				</label>
+				<span class="help-block">当开启了循环播放的是从所有的内容中随机抽取一条数据 若是重复了勿担心！</span>
+			</div>
+		</div-->
+		<!---增加新版微信墙的配置参数--->
+        
+		
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input name="submit" type="submit" value="保存" class="btn btn-primary" />
+				
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</div>
+		</div>
+	</form>
+</div>
+
+{template 'common/footer'}

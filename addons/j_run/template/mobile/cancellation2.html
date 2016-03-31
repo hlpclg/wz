@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="wap-font-scale" content="no">
+<link href="./resource/css/bootstrap.min.css" rel="stylesheet">
+<link href="./resource/css/font-awesome.min.css" rel="stylesheet">
+<link href="./resource/css/animate.css" rel="stylesheet">
+<link href="./resource/css/common.css" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="{MODULE_URL}template/mobile/js/sweetalert.css"/>
+{php echo register_jssdk(false);}
+<script src="{MODULE_URL}template/mobile/js/jquery-2.1.1.min.js"></script>
+<script src="{MODULE_URL}template/mobile/js/sweetalert.min.js"></script>
+<style>
+body{background:#F3D556;width:100%;}
+.header{font-size:16px;text-align:center;line-height:40px;position:fixed; left: 0; top:0; right: 0;background:#FFF; z-index:3}
+.header div[class^='boxsize']{border-bottom:1px solid #DDD;}
+.header a{display:block;text-align:center;text-decoration:none;color:#999;font-size:13px;}
+.header a:active{ background:#DDD;}
+.box{display:box;display:-webkit-box;}
+.boxsize-1{-webkit-box-flex:1;box-flex:1;}
+.boxsize-2{-webkit-box-flex:2;box-flex:2;}
+.boxsize-3{-webkit-box-flex:3;box-flex:3;}
+.boxsize-4{-webkit-box-flex:4;box-flex:4;}
+.boxsize-5{-webkit-box-flex:5;box-flex:5;}
+.boxsize-6{-webkit-box-flex:6;box-flex:6;}
+.boxsize-7{-webkit-box-flex:7;box-flex:7;}
+.boxsize-8{-webkit-box-flex:8;box-flex:8;}
+.boxsize-9{-webkit-box-flex:9;box-flex:9;}
+.jtable{display:table; width:100%;}
+.jrow{display:table-row;}
+.j_cell1{ display:table-cell;width:10%}
+.j_cell2{ display:table-cell;width:20%;vertical-align:middle;}
+.j_cell3{ display:table-cell;width:30%;vertical-align:middle;}
+.j_cell4{ display:table-cell;width:40%;vertical-align:middle;}
+.j_cell5{ display:table-cell;width:50%;vertical-align:middle;}
+.j_cell6{ display:table-cell;width:60%;vertical-align:middle;}
+.j_cell7{ display:table-cell;width:70%;vertical-align:middle;}
+.j_cell8{ display:table-cell;width:80%}
+.j_cell9{ display:table-cell;width:90%}
+.boxsize-10{-webkit-box-flex:10;box-flex:10;}
+.fixed_first{ margin-top:20px; height:1px;}
+.client_img{ text-align:center; margin:10px auto;}
+.result_btn_box{ margin:0 15px 15px 15px; background:#d05d44; border:2px solid #f39800; border-radius:8px;color:#FFF;display:-webkit-box;}
+.result_btn_box div{-webkit-box-flex:4;text-align:center;font-size:14px;font-weight:bold;}
+.result_btn_box div span{padding:5px 0;display:block;border-radius:7px;}
+.actvice span{ background:#FFF;color:#d05d44;}
+.result_btn_til{margin:0 auto 5px auto; background:#FFF;border-radius:8px;color:#999;display:table; width:100%;}
+.j_row{display:table-row;}
+.game_btns{ background:#d05d44; border-radius:5px; display:inline-block; padding:5px 20px;color:#FFF; font-size:16px;}
+a:visited{color:#FFF}
+.red{color:#C03}
+.footermenu{ position:fixed;height:40px; border-top:1px solid #DDD; background:#F3D556; bottom:0; left:0;right:0;z-index:3}
+.shake-infobox2{width:96%;margin:10% auto 0 auto;background:#FFF; border-radius:8px; border:#CCC 1px solid;}
+.shake-infobox-head{ border-top-left-radius:8px; border-top-right-radius:8px; padding:10px; background:#EEE; border-bottom:#CCC 1px solid;}
+.shake-infobox-body{background:#FFF;padding:10px;}
+.shake-infobox-footer{text-align:center; padding:10px}
+.ptb5{ padding:5px 0;}
+.showbox{ margin:10px 5px; border-radius:8px; padding:5px; background:rgba(255,255,255,0.5);border:1px dashed #FFF;}
+ul.list, ul.list li{ margin:0; list-style:none; padding:0;}
+ul.list li{ margin-bottom:10px;display:table;width:100%;border-bottom:#FFF 1px dashed; padding-bottom:10px}
+.font12{ font-size:12px;}
+.red{color:#900}
+ul.list li:last-child{ border:none; margin:0}
+.j_getgift{margin:10px 5px; border-radius:8px; padding:5px; background:rgba(255,255,255,0.5);border:1px dashed #FFF;}
+.pb5{padding-bottom:5px}
+.plb5{padding-bottom:5px; padding-left:5px}
+</style>
+
+<form action="" method="post" onsubmit="return formcheck(this)">
+  <div style="padding:50px 10px 10px 10px;">
+    <div class="panel panel-danger">
+      <div class="panel-heading">手机兑奖登陆</div>
+      <div class="panel-body">
+        <div class="form-group">
+          <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">游戏号</label>
+          <div class=" col-xs-12 col-sm-2 col-lg-2">
+            <input class="form-control" name="rid" type="text" maxlength="10" placeholder="输入游戏号">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">验证码</label>
+          <div class=" col-xs-12 col-sm-2 col-lg-2">
+            <input class="form-control" name="code" type="password" maxlength="20" placeholder="输入验证码">
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button type="button" onClick="submitForm()" id="btn_submit" class="btn btn-success btn-block">加载中</button>
+      </div>
+    </div>
+  </div>
+</form>
+{template 'footer'} 
+<script language="javascript">
+function submitForm(){
+	var rid=parseInt($("input[name='rid']").val());
+	var code=$("input[name='code']").val();
+	if(!rid || !code){
+		swal("信息填写错误！");
+		return;
+	}
+	$.getJSON("{php echo $this->createMobileUrl('ajax',array('op'=>'loginmobile'))}",{
+		"rid":rid,
+		"code":code,
+	},function(data){
+		if(data.success){
+			alert("您的资料已经提交，请等待审核"); 
+			wx.closeWindow();
+		}else{
+			swal(data.msg);
+		}
+	});
+}
+wx.ready(function () {
+	wx.hideOptionMenu();
+	if($("#btn_submit").size())$("#btn_submit").removeAttr("disabled").text("登陆");
+});
+</script> 

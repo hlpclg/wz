@@ -1,0 +1,331 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>{if $hc_ybdzs_title}{$hc_ybdzs_title}{else}你还没填写【游戏标题】哦{/if}</title>
+    <meta http-equiv="content" content="text/html" charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0;" />
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" type="text/css" href="../addons/hc_ybdzs/template/mobile/css/main.css"/>
+ 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<!---->{php echo register_jssdk(false);} 
+	<style>
+	.aaa{
+	  margin-top: 10px;
+	  width: 90%;
+	  height: 40px;
+	  line-height:40px;
+	  border: 1px solid #e73308;
+	  background-color: #e73308;
+	  color: #fff;
+	  border-radius: 10px;
+	  font-size: 14px;
+	  font-family: microsoft YaHei;
+		}
+	.aaa a{
+	color:#fff;
+	text-decoration: none;
+	 margin-top: 10px;
+	}
+	.start_wpss{
+	  position: absolute;
+		bottom: 3%;
+		width: 100%;
+		text-align: center;
+		text-decoration: none;
+		color:#e73308;
+		}
+		
+	</style>
+	
+</head>
+
+<body>
+<div class="bg_music">
+    <audio id="bg_music" autoplay="autoplay" loop src="../addons/hc_ybdzs/template/mobile/apple.mp3"></audio>
+    <a href="javascript:;" onClick="playOrPaused(this)">播放</a>
+</div>
+
+
+        <div id="contentdiv">
+                    <div id="startdiv">
+                    <div class="start_wp"><button onClick="begin()">开始游戏</button></div>
+	
+                  <a class="start_wpss" href="{$hc_ybdzs_url}">关注{if $wechat}{$wechat}{else}某公众号{/if}</a>
+            </div>
+            <div id="maindiv">
+                    <div id="scorediv">
+                    <label>分数：</label>
+            <label id="label">0</label>
+            </div>
+            <div class="sus_wp">
+                    <div id="suspenddiv">
+                    <button>继续</button><br/>
+                    <button>重新开始</button>
+            </div>
+            </div>
+            <div class="end_wp">
+            <div id="enddiv">
+                    <p class="plantext">得分</p>
+            <p id="planscore">0</p>
+            <div class="btn_wp">
+            <p class="aaa" style="width:90%;margin:0 auto;height: 40px;line-height:40px;margin-top:10px;"> <a href="{$hc_ybdzs_url}">关注{if $wechat}{$wechat}{else}某公众号{/if}</a></p>
+            <p><button onClick="jixu()">再打一次</button></p>
+            <p><button class="zf_bt"><b>分享朋友圈</b></button></p>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div class="mask"></div>
+            <div class="mooncake_wp">
+                    <div class="mn_wp">
+                    <a class="go_back" href="javascript:;">再打一次</a>
+          
+            </div>
+            </div>
+
+            <script type="text/javascript" src="../addons/hc_ybdzs/template/mobile/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../addons/hc_ybdzs/template/mobile/js/main.js?v=2"></script>
+<script>
+    var audio;
+    $(function(){
+        initAudio();
+        audio.play();
+    });
+    var initAudio = function(){
+        audio = document.getElementById('bg_music');
+    };
+    function playOrPaused(obj){
+        if(audio.paused){
+            audio.play();
+            obj.innerHTML='暂停';
+            obj.className='';
+            return;
+        }
+        audio.pause();
+        obj.innerHTML='播放';
+        obj.className='music_pause';
+    }
+
+    $(function(){
+        var _n = $(window).width()/$(window).height();
+        if(_n < 1){
+            $('.roll_tips').hide();
+        }
+        else{
+            $('.roll_tips').show();
+        };
+
+        $(".fz_btn").click(function(){
+            location.reload();
+        });
+
+        $(".zf_bt").click(function(){
+            $(".mask").show();
+        });
+        $(".mask").click(function(){
+            $(this).hide();
+        });
+        $(".dh_btn").click(function(){
+            $(".mooncake_wp").show();
+        });
+        $(".go_back").click(function(){
+            jixu();
+        });
+    });
+</script>
+
+<script>
+
+
+    $(".zf_bt").click(function(){
+        scores = $("#planscore").text();
+		var mebtnopenurl = '{if $hc_ybdzs_url}http://www.baidu.com{else}http://www.baidu.com{/if}';
+		var thegameurl ="{$homeurl}"; 
+		var guanzhuurl ="{if $hc_ybdzs_url}{$hc_ybdzs_url}{else}http://www.sina.com{/if}";
+        dataForWeixin={
+            appId:"",
+            MsgImg:"{$_W['attachurl']}{$photo}",
+            TLImg:"{$_W['attachurl']}{$photo}",
+            url:thegameurl,
+            title:"我在{if $hc_ybdzs_title}{$hc_ybdzs_title}{else}月饼大战{/if}中获得"+scores+"分，不服来战吧!!",
+            desc:"{if $share_desc}{$share_desc}{else}只用了我一层功力！无人能及！哈哈！{/if}",
+            fakeid:"",
+            callback:function(
+                //这里是分享成功后的回调功能
+                    ){}
+        };
+    });
+	wx.ready(function(){
+			score = $("#planscore").text();
+			var mebtnopenurl = '{if $hc_ybdzs_url}{$hc_ybdzs_url}{else}{$homeurl}{/if}';
+			var thegameurl ="{$homeurl}"; 
+			var guanzhuurl ="{if $hc_ybdzs_url}{$hc_ybdzs_url}{else}{$homeurl}{/if}";
+			dataForWeixin={
+				appId:"",
+				MsgImg:"{$_W['attachurl']}{$photo}",
+				TLImg:"{$_W['attachurl']}{$photo}",
+				url:thegameurl,
+				title:"我在玩{if $hc_ybdzs_title}{$hc_ybdzs_title}{else}月饼大战{/if},求虐中，不服来战吧!!",
+				desc:"{if $share_desc}{$share_desc}{else}只用了我一层功力！无人能及！哈哈！{/if}",
+				fakeid:"",
+				callback:function(
+					//这里是分享成功后的回调功能
+						){}
+			};
+		});
+    (function(){
+
+
+        var onBridgeReady=function(){
+
+
+            //发送给朋友
+
+
+            WeixinJSBridge.on('menu:share:appmessage', function(argv){
+
+
+                WeixinJSBridge.invoke('sendAppMessage',{
+
+
+                    "appid":dataForWeixin.appId,
+
+
+                    "img_url":dataForWeixin.MsgImg,
+
+
+                    "img_width":"120",
+
+
+                    "img_height":"120",
+
+
+                    "link":dataForWeixin.url,
+
+
+                    "desc":dataForWeixin.desc,
+
+
+                    "title":dataForWeixin.title
+
+
+                }, function(res){document.location.href = guanzhuurl });
+
+
+            });
+
+
+            //发送到朋友圈
+
+
+            WeixinJSBridge.on('menu:share:timeline', function(argv){
+
+                WeixinJSBridge.invoke('shareTimeline',{
+
+                    "img_url":dataForWeixin.TLImg,
+
+
+                    "img_width":"120",
+
+
+                    "img_height":"120",
+
+
+                    "link":dataForWeixin.url,
+
+
+                    "desc":dataForWeixin.desc,
+
+
+                    "title":dataForWeixin.title
+
+
+                },function(res){document.location.href = guanzhuurl });});
+
+
+            //分享到微博
+
+
+            WeixinJSBridge.on('menu:share:weibo', function(argv){
+
+
+                WeixinJSBridge.invoke('shareWeibo',{
+
+
+                    "content":dataForWeixin.title,
+
+
+                    "url":dataForWeixin.url
+
+
+                }, function(res){document.location.href =guanzhuurl });
+
+
+            });
+
+
+            //分享到facebook
+
+
+            WeixinJSBridge.on('menu:share:facebook', function(argv){
+
+
+                (dataForWeixin.callback)();
+
+
+                WeixinJSBridge.invoke('shareFB',{
+
+
+                    "img_url":dataForWeixin.TLImg,
+
+
+                    "img_width":"120",
+
+
+                    "img_height":"120",
+
+
+                    "link":dataForWeixin.url,
+
+
+                    "desc":dataForWeixin.desc,
+
+
+                    "title":dataForWeixin.title
+
+
+                }, function(res){document.location.href = guanzhuurl });
+
+
+            });
+
+
+        };
+
+
+        if(document.addEventListener){
+
+
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+
+
+        }else if(document.attachEvent){
+
+
+            document.attachEvent('WeixinJSBridgeReady'   , onBridgeReady);
+
+
+            document.attachEvent('onWeixinJSBridgeReady' , onBridgeReady);
+
+
+        }
+
+
+    })();
+</script>
+<!-- 
+{$counts}
+ -->
+</body>
+</html>

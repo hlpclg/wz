@@ -1,0 +1,9 @@
+﻿{if $reply['adlist']}
+{php $ad_ary=explode(",",$reply['adlist'])}
+{php shuffle($ad_ary)}
+<style>
+.footermenu{position:fixed;bottom:0;left:0;right:0;z-index:3; height:60px; overflow:hidden; padding:0; margin:0;}
+</style>
+{php $ad=pdo_fetch('select * from '.tablename('j_run_ad').' where id='.$ad_ary[0].'');}
+<div class="footermenu"><a href="{$ad['url']}"><img src="{$_W['attachurl']}{$ad['thumb']}" style="width:100%;height:60px"/></a></div>
+{/if}

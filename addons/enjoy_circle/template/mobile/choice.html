@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://weixin10.sinaapp.com/demo/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title>话题列表</title>
+        <link rel="stylesheet" href="../addons/enjoy_circle/public/css/frozen.css">
+        <link rel="stylesheet" href="../addons/enjoy_circle/public/css/demo.css">
+        <script src="../addons/enjoy_circle/public/js/zepto.min.js"></script>
+        <script src="../addons/enjoy_circle/public/js/frozen.min.js"></script>
+    </head>
+    
+    <body ontouchstart="">
+        <header class="ui-header ui-header-positive ui-border-b" style="background:#26337e">
+            <i class="ui-icon-return"></i><h1>话题列表</h1><button class="ui-btn" data-href="{php echo $this->createMobileUrl('more',array('tid'=>$item['tid'],'uid'=>$user[uid]))}">返回</button>
+        </header>
+        
+        
+        <section class="ui-container">
+
+
+
+<section id="list">
+    <div class="demo-item">
+        <div class="demo-block">
+            <ul class="ui-list ui-list-pure ui-border-b">
+               {loop $topics $item}
+                <li class="ui-border-t" data-href="{php echo $this->createMobileUrl('more',array('tid'=>$item['tid'],'uid'=>$user[uid]))}">
+                <a href="{php echo $this->createMobileUrl('more',array('tid'=>$item['tid'],'uid'=>$user[uid]))}">{php echo $this->th($item['title'],$user['nickname'],'')}</a>
+                
+                </li>
+{/loop}
+            </ul>
+        </div>
+    </div>
+</section>
+
+
+ 
+        </section><!-- /.ui-container-->
+        <script>
+        $('ul li').click(function(){
+            location.href= $(this).data('href');
+        });
+        $('.ui-header .ui-btn').click(function(){
+            location.href= "{php echo $this->createMobileUrl('entry',array('uid'=>$user[uid]))}";
+        });
+        </script>
+    
+</body></html>

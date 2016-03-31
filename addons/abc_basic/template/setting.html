@@ -1,0 +1,25 @@
+{template 'common/header'}
+<div class="panel panel-default">
+	 <div class="panel-heading">
+     	用户参数说明<label style="float:right;" class="bg-success">#***#为一个整体，不能任何改动！</label>
+     </div>
+     <div class="panel-body">
+		<table class="table">
+			<thead>
+				<th>参数</th>
+				<th>字段</th>
+			</thead>
+			
+			<tbody>
+				{loop $list $li}
+					<tr>
+						<td>{$li['replace']}</td>
+						<td>{$li['name']}</td>
+					</tr>
+				{/loop}
+			</tbody>
+			
+		</table>
+	</div>
+</div>
+{template 'common/footer'}				

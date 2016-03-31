@@ -1,0 +1,20 @@
+<FOOTER class="footer">
+			<NAV>
+				<UL>
+					<LI>
+						<A class="nav-controller active" href="{php echo $this->createMobileUrl('index')}"><I 
+					  class="fa fa-home"></I>首页</A>
+					</LI>
+					<LI>
+						<A class="nav-controller" href="{php echo $this->createMobileUrl('mygroup',array('op'=>0));}"><I class="fa fa-group"></I>我的团</A>
+					</LI>
+					<LI>
+						<A  id="myorder" class="nav-controller" href="{php echo $this->createMobileUrl('myorder',array('op' => '0'))}"><I class="fa fa-list"></I>我的订单</A>
+					</LI>
+					<LI>
+						<A class="nav-controller" href="{php echo $this->createMobileUrl('person');}">
+							<I class="fa fa-user"></I>个人中心</A>
+					</LI>
+				</UL>
+			</NAV>
+</FOOTER>

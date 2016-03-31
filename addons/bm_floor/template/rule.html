@@ -1,0 +1,187 @@
+{template 'common'}
+<script language="javascript" type="text/javascript" src="./source/modules/bm_floor/template/js/dp/WdatePicker.js"></script>
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="panel panel-default">
+    <div class="panel-heading">
+        活动设置
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 兑奖密码</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="password" class="form-control" placeholder="" name="password" value="{$prompt['password']}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 楼层提示语</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="currentprompt" class="form-control" placeholder="" name="currentprompt" value="{$prompt['currentprompt']}">
+				<div class="help-block">{##FLOOR##} 表示当前楼层，请根据您的需要自己组织语言，如：第{##FLOOR##}楼<br>如果不填，则为默认为：当前楼层是{##FLOOR##}楼</div>
+            </div>
+        </div>		
+		<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 封面图片</label>
+            <div class="col-sm-9 col-xs-12">
+               	{php echo tpl_form_field_image('picture', $prompt['picture'])}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 开始时间</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" name="starttime" id="starttime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate" style="width:300px"  value="{if !empty($prompt['starttime'])} {php echo  $prompt['starttime']}{else}{php echo date('Y-m-d H:i:s', time())}{/if}"/>
+            </div>
+        </div>	
+		<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 结束时间</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" name="endtime" id="endtime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate" style="width:300px"  value="{if !empty($prompt['endtime'])} {php echo  $prompt['endtime']}{else}{php echo date('Y-m-d H:i:s', time())}{/if}"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 未开始提示语</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="memo1" class="form-control" placeholder="" name="memo1" value="{$prompt['memo1']}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 活动结束提示语</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="memo2" class="form-control" placeholder="" name="memo2" value="{$prompt['memo2']}">
+            </div>
+        </div>		
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 中奖提示语</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="awardprompt" class="form-control" placeholder="" name="awardprompt" value="{$prompt['awardprompt']}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 领奖后跳转URL</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="url" class="form-control" placeholder="" name="url" value="{$prompt['url']}">
+            </div>
+        </div>		
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 游戏说明URL</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="url1" class="form-control" placeholder="" name="url1" value="{$prompt['url1']}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 每天抢楼次数</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="total" class="form-control" placeholder="" name="total" value="{$prompt['total']}">
+            </div>
+        </div>	
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 次数用完提示语</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="memo" class="form-control" placeholder="" name="memo" value="{$prompt['memo']}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 分享关键字</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="share_keyword" class="form-control" placeholder="" name="share_keyword" value="{$prompt['share_keyword']}">
+            </div>
+        </div>		
+		<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 分享Logo</label>
+            <div class="col-sm-9 col-xs-12">
+               	{php echo tpl_form_field_image('share_logo', $prompt['share_logo'])}
+            </div>
+        </div>		
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 分享简介</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="share_memo" class="form-control" placeholder="" name="share_memo" value="{$prompt['share_memo']}">
+            </div>
+        </div>	
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 分享规则</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="share_statement" class="form-control" placeholder="" name="share_statement" value="{$prompt['share_statement']}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 分享URL</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="share_url" class="form-control" placeholder="" name="share_url" value="{$prompt['share_url']}">
+            </div>
+        </div>	
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 分享被点击后奖励次数</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="share_point" class="form-control" placeholder="" name="share_point" value="{$prompt['share_point']}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 转发页面广告URL</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="adv_url" class="form-control" placeholder="" name="adv_url" value="{$prompt['adv_url']}">
+            </div>
+        </div>			
+	</div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        奖品设置
+    </div>
+    <div class="panel-body">
+		<div class="help-block">如果奖品为系统会员积分，请将奖品名称会员积分，奖品描述填写积分值<br>如果奖品为系统会员余额，请将奖品名称会员余额，奖品描述填写余额值</div>		
+		<div class="col-sm-9 col-xs-12">
+			<div class="alert alert-block alert-new" style='width:500px;'>
+					<table class='table'>
+						<thead>
+							<tr>
+								<th>中奖楼层</th>
+								<th>奖品名称</th>
+								<th>奖品描述</th>
+								<th>内定微信</th>								
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody id="award-items">
+							{loop $awards $award}
+							<tr class='award_item'>
+								<td><input  name="award_floor[]" type="text" class="form-control span2" value="{$award['floor']}"  maxlength="50"/></td>
+								<td><input  name="award_title[]" type="text" class="form-control span2" value="{$award['title']}" maxlength="10"/></td>
+								<td><input  name="award_description[]" type="text" class="form-control span2" value="{$award['description']}"  maxlength="50"/></td>
+								<td><input  name="award_from_user[]" type="text" class="form-control span2" value="{$award['from_user']}"  maxlength="50"/></td>								
+								<td>
+									<input  name="award_id[]" type="hidden" value="{$award['id']}" />
+									<a href='javascript:;' onclick='removeAward(this)'><i class='icon icon-remove fa fa-times'></i> 删除</a>
+								</td>
+							</tr>
+							{/loop}
+							
+						</tbody>
+					   
+					</table>
+				</div>
+			<a href="javascript:;" onclick="addAward();"><i class="fa fa-plus" title="添加奖品"></i> 添加奖品</a>
+		</div>
+	</div>
+</div>
+
+
+<script language='javascript'>
+    function addAward(){
+              var html = " <tr class='award_item'>";
+                    html+="<td><input  name='award_floor[]' type='text' class='form-control span2' value=''  maxlength='50'/></td>";
+                    html+="<td><input  name='award_title[]' type='text' class='form-control span2' value=''  maxlength='50'/></td> ";
+                    html+="<td><input  name='award_description[]' type='text' class='form-control span2' value=''  maxlength='50'/></td>";
+					html+="<td><input  name='award_from_user[]' type='text' class='form-control span2' value=''  maxlength='50'/></td>";
+                    html+="<td>";
+                                            html+="<input  name='award_id[]' type='hidden' value='' />";
+                                        html+="<a href='javascript:;' onclick='removeAward(this)'><i class='icon icon-remove fa fa-times'></i> 删除</a>";
+                                    html+="</td>";
+                                html+="</tr>";
+                                $("#award-items").append(html);
+    }
+    function removeAward(obj){
+        $(obj).parent().parent().remove();
+    }
+document.getElementById("we7_ValidCode_server").value=we7_ValidCode_server;		
+</script>

@@ -1,0 +1,102 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+    <li ><a href="{php echo create_url('site/entry', array('do' => 'zhifu', 'op' => 'list','m' => 'eso_sale','uniacid'=>$_W['uniacid']))}">满足打款会员</a></li>
+    {if $_GPC['from_user']}<li class="active"><a >会员打款操作</a></li> {/if}
+</ul>
+<div class="main">
+
+    <div class="panel panel-default">
+
+        <div class="panel-heading">代理详细信息</div>
+        <div class="panel-body">
+            <form action="" method="post" class="form-horizontal" role="form">
+
+
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">真实姓名</label>
+                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                        {$profile['realname']}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">联系方式</label>
+                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                        {$profile['mobile']}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">未打款金额</label>
+                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                        {php echo round($profile['commission'] - $profile['zhifu'],2)}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">打款金额</label>
+                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                        <input type="text" name="chargenum" class="form-control" value="" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label"> </label>
+                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                        <input type="hidden"  name="from_user" value="{$_GPC['from_user']}" />
+                        <input type="hidden" name="token" value="{$_W['token']}" />
+                        <input name="submit" type="submit" value="打 款" class="btn btn-primary span2">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <div class="stat">
+
+        <div class="stat-div">
+
+            <div class="sub-item" id="table-list">
+                <h4 class="sub-title" style="float:right;color:red;">总数：{$total} <a href="">刷新</a> </h4>
+                <h4 class="sub-title">打款明细</h4>
+
+                <div class="sub-content">
+                    <table class="table table-hover">
+                        <thead class="navbar-inner">
+                        <tr>
+                            <th class="row-hover">日期</th>
+                            <th class="row-hover">类型</th>
+                            <th class="row-hover">金额</th>
+                            <th class="row-hover">说明</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {loop $list $v}
+
+                        <tr>
+                            <td>
+                                {$v['tid']}
+                            </td>
+                            <td>
+                                打款
+                            </td>
+                            <td>
+                                {$v['fee']}
+                            </td>
+                            <td>
+                                {$v['tag']}
+                            </td>
+                        </tr>
+
+                        {/loop}
+                        </tbody>
+                    </table>
+                </div>
+
+                {$pager}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{template 'common/footer'}

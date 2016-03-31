@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6">
+	<application setting="false">
+		<name><![CDATA[防伪码增强版]]></name>
+		<identifie><![CDATA[hx_securityspro]]></identifie>
+		<version><![CDATA[0.4]]></version>
+		<type><![CDATA[services]]></type>
+		<ability><![CDATA[防伪码]]></ability>
+		<description><![CDATA[批量创建产品防伪码二维码，扫码查询，推送该产品信息，企业或商家用户自动成为会员，并获得积分，积分可可设置多换礼品，这样就会让企业或者商家粉丝主动参与进来，达到企业包装产品，传播品牌，和广范围吸粉的目的。]]></description>
+		<author><![CDATA[梦小生]]></author>
+		<url><![CDATA[http://www.zheyitianshi.com/]]></url>
+	</application>
+	<platform>
+		<subscribes>
+			<message type="text" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="true" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="防伪码列表" do="list" state="" direct="false" />
+			<entry title="生成防伪码" do="create" state="" direct="false" />
+			<entry title="防伪码导入" do="insert" state="" direct="false" />
+			<entry title="防伪码导出" do="output" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install><![CDATA[
+	CREATE TABLE IF NOT EXISTS `ims_hx_securityspro_data_56` (
+  `id` int(16) NOT NULL AUTO_INCREMENT,
+  `code` varchar(100) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `factory` varchar(500) NOT NULL,
+  `creditname` varchar(20) NOT NULL,
+  `creditnum` int(10) unsigned NOT NULL,
+  `creditstatus` tinyint(1) unsigned NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL,
+  `stime` int(10) unsigned NOT NULL,
+  `createtime` decimal(11,0) NOT NULL,
+  `num` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `ims_hx_securityspro_data_67` (
+  `id` int(16) NOT NULL AUTO_INCREMENT,
+  `code` varchar(100) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `factory` varchar(500) NOT NULL,
+  `creditname` varchar(20) NOT NULL,
+  `creditnum` int(10) unsigned NOT NULL,
+  `creditstatus` tinyint(1) unsigned NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL,
+  `stime` int(10) unsigned NOT NULL,
+  `createtime` decimal(11,0) NOT NULL,
+  `num` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `ims_hx_securityspro_data_moban` (
+  `id` int(16) NOT NULL AUTO_INCREMENT,
+  `code` varchar(100) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `factory` varchar(500) NOT NULL,
+  `creditname` varchar(20) NOT NULL,
+  `creditnum` int(10) unsigned NOT NULL,
+  `creditstatus` tinyint(1) unsigned NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL,
+  `stime` int(10) unsigned NOT NULL,
+  `createtime` decimal(11,0) NOT NULL,
+  `num` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `ims_hx_securityspro_logs` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `openid` varchar(50) NOT NULL,
+  `code` varchar(50) NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hx_securityspro_reply` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `rid` int(10) NOT NULL,
+  `weid` int(10) NOT NULL,
+  `Reply` varchar(1000) NOT NULL,
+  `Integral` int(10) NOT NULL,
+  `tnumber` int(10) NOT NULL,
+  `Failure` varchar(1000) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+
+CREATE TABLE IF NOT EXISTS `ims_hx_subscribe_apply` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL,
+  `uid` int(10) unsigned NOT NULL,
+  `realname` varchar(20) NOT NULL,
+  `qq` varchar(50) NOT NULL,
+  `type` tinyint(1) unsigned NOT NULL,
+  `alipay` varchar(50) NOT NULL,
+  `cardid` varchar(50) NOT NULL,
+  `cardfrom` varchar(255) NOT NULL,
+  `cardname` varchar(10) NOT NULL,
+  `credit2` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `mobile` varchar(12) NOT NULL,
+  `status` tinyint(2) NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  `remark` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `ims_hx_subscribe_article` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL,
+  `title` varchar(100) NOT NULL DEFAULT '',
+  `description` varchar(100) NOT NULL DEFAULT '',
+  `content` mediumtext NOT NULL,
+  `thumb` varchar(255) NOT NULL,
+  `source` varchar(255) NOT NULL,
+  `author` varchar(50) NOT NULL,
+  `displayorder` int(10) unsigned NOT NULL DEFAULT '0',
+  `linkurl` varchar(500) NOT NULL DEFAULT '',
+  `createtime` int(10) unsigned NOT NULL DEFAULT '0',
+  `credit` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `ims_hx_subscribe_data` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uniacid` int(10) unsigned NOT NULL,
+  `openid` varchar(50) NOT NULL,
+  `uid` int(10) unsigned NOT NULL,
+  `from_uid` int(10) unsigned NOT NULL,
+  `sn` int(10) unsigned NOT NULL,
+  `follow` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `article_id` int(10) unsigned NOT NULL,
+  `shouyi` int(10) unsigned NOT NULL DEFAULT '0',
+  `zjrs` int(10) unsigned NOT NULL DEFAULT '0',
+  `jjrs` int(10) unsigned NOT NULL DEFAULT '0',
+  `createtime` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11259 ;
+	]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

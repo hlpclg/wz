@@ -1,0 +1,292 @@
+{template 'common/header'}
+<div class="row">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+		素材管理：<span style="float:right">@穿越的一只小猪  947233713</span>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-6" style="color:orange">
+				<p>1、该模块不需要“参数设置”功能，所以点击参数设置时会返回空</p>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-6">
+				<label>标题</label>
+				<input type = "text" id="title" class="form-control" placeholder="标题"/>
+				<p class="help-block">将作为分享文章的标题</p>
+				<label>文章主体</label>
+				<textarea class="form-control" id="content" placeholder="内容"></textarea>
+				<p class="help-block">内容中使用{%姓名%} {%地区%}作为匹配关键字，将会替换为 输入框中的姓名 地区</p>
+				<input type="button" class="btn btn-info" value="保存" onclick="manageAdd();">
+				</div>
+				<div class="col-md-6">
+					<img src="{$_W['siteroot']}addons/sunshine_gaokaotoutiao/common/mine_white.jpg">
+				</div>
+			</div>
+			<br>
+			<input type='hidden' value="{$token}" id='token'>
+			<table class="table">
+			<tr>
+				<th>编号</th>
+				<th>标题</th>
+				<th>添加时间</th>
+				<th>操作</th>
+				<th>图片</th>
+			</tr>
+			{loop $list $row}
+				<tr>
+					<td>{$row['id']}</td>
+					<td>{$row['title']}</td>
+					<td>{$row['add_time']}</td>
+					<td><a href="javascript:;" onclick="manageDelete({$row['id']});">删除</a></td>
+					<td><input type="button" class="btn btn-sm btn-info" value="传图" onclick="manageUpload({$row['id']})"></td>
+					<td><input type="button" class="btn btn-sm btn-info" value="效果预览" onclick="manageDetail({$row['id']})"></td>
+				</tr>
+			{/loop}
+			</table>	
+			<div style="height:10px;"></div> 
+		</div>
+	</div>
+</div>
+<!-- 图片上传模态层 -->
+<div class="modal fade" id="file_upload_modal">
+	<div class="modal-dialog" style="z-index:10000">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4>请上传广告图片</h4>
+				<label class="help-block"></label>
+			</div>
+			<div class="modal-body">
+				<div class="fieldset flash" id="fsUploadProgress"></div>
+				<span id="spanButtonPlaceHolder"></span><span id="btnCancel"></span>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 预览层 -->
+<div class="modal fade" id="modal_detail">
+	<div class="modal-dialog" style="z-index:10000">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 id="detail_title"></h3>
+			</div>
+			<div class="modal-body">
+				<div style="border-bottom:1px solid grey;font-size:11px;color:grey;" id="detail_info">
+					
+				</div>
+				<div id="detail_img"></div>
+				<br>
+				<div id="detail_content" style="text-indent:25px"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="../addons/sunshine_gaokaotoutiao/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{$_W['siteroot']}addons/sunshine_gaokaotoutiao/js/swfupload/fileprogress.js"></script>
+<script type="text/javascript" src="{$_W['siteroot']}addons/sunshine_gaokaotoutiao/js/swfupload/handlers.js"></script>
+<script type="text/javascript" src="{$_W['siteroot']}addons/sunshine_gaokaotoutiao/js/swfupload/swfupload.js"></script>
+<script type="text/javascript" src="{$_W['siteroot']}addons/sunshine_gaokaotoutiao/js/swfupload/swfupload.queue.js"></script>
+<script type="text/javascript">
+// detail
+function manageDetail(id){
+	$.ajax({
+		type:'post',
+		url:"{php echo $this->createWebUrl('ManageDetail');}",
+		data :{id:id},
+		success:function(d) {
+			if(d.res == 100)
+			{
+				// 加载详情信息
+				$("#detail_title").html(d.detail.title);
+				$("#detail_content").html(d.detail.content);
+				if(d.detail.img_url) {
+					var img = "<img src=\""+d.detail.img_url+"\" style=\"width:400px;text-align:center;margin:0px auto;display:block;\" class=\"img-thumbnail\">";
+					$("#detail_img").html(img);
+				}
+				$("#detail_info").html("发布于："+d.detail.add_time);
+				$("#modal_detail").modal('show');
+
+			}
+			else
+			{
+				alert("获取详情失败，请联系管理员");
+			}
+		}
+	});
+}
+
+// add
+function manageAdd() {
+	var title = $("#title").val();
+	var content = $("#content").val();
+
+	$.ajax({
+		type:'post',
+		url:"{php echo $this->createWebUrl('ManageAdd');}",
+		data :{title:title,content:content},
+		success:function(d) {
+			if(d.res == '100')
+			{
+				alert("添加成功");
+				window.location = '';
+			}
+			else
+			{
+				alert("添加失败，请联系开发者");
+			}
+		}
+	});
+
+}
+//delete
+function manageDelete(id) {
+	if(!confirm("确认删除？")) {
+		return false;
+	};
+	$.ajax({
+		type:'post',
+		url:"{php echo $this->createWebUrl('ManageDelete');}",
+		data :{id:id},
+		success:function(d) {
+			if(d.res == 100)
+			{
+				window.location = '';
+			}
+			else
+			{
+				alert("删除失败，请联系开发者");
+			}
+		}
+	});
+}
+var swfu;
+
+function manageUpload(id) {
+	//文件上传
+	var settings = {
+		flash_url : "{$_W['siteroot']}addons/sunshine_gaokaotoutiao/js/swfupload/swfupload.swf",
+		upload_url: "{$_W['siteroot']}web/{php echo $this->createWebUrl('ManageUpload')}",	
+		post_params: {
+			"file_verify":Math.random(),
+			"id":id
+		},
+		file_post_name : "ad_img",
+		file_size_limit : "1MB",
+		file_types : "*.jpg;*.gif",
+		file_types_description : "web images",
+		file_upload_limit : 1,  //配置上传个数
+		file_queue_limit : 1,
+		custom_settings : {
+			progressTarget : "fsUploadProgress",
+			cancelButtonId : "btnCancel"
+		},
+		debug: false,
+
+		// Button settings
+		button_image_url: "",
+		button_width: "100",
+		button_height: "29",
+		button_placeholder_id: "spanButtonPlaceHolder",
+		button_text: '<span class="theFont">点击选择文件</span>',
+		button_text_style: ".theFont { font-size: 14; }",
+		button_text_left_padding: 12,
+		button_text_top_padding: 3,
+		
+		file_queued_handler : fileQueued,
+		file_queue_error_handler : fileQueueError,
+		file_dialog_complete_handler : fileDialogComplete,
+		upload_start_handler : uploadStart,
+		upload_progress_handler : uploadProgress,
+		upload_error_handler : uploadError,
+		//upload_success_handler : uploadSuccess,
+		upload_success_handler : uploadSuccess,
+		upload_complete_handler : uploadComplete,
+		queue_complete_handler : queueComplete	
+	};
+
+	swfu = new SWFUpload(settings);
+
+	$("#file_upload_modal").modal('show');
+}
+
+/* 
+定义swfu的succes
+*/
+var uploadSuccess = function (file,serverData) {
+	serverData = eval("("+serverData+")");
+	try {
+		var progress = new FileProgress(file, this.customSettings.progressTarget);
+		progress.setComplete();
+		progress.setStatus("上传成功:"+serverData.msg);
+		progress.toggleCancel(false);
+		window.location='';
+	} catch (ex) {
+		this.debug(ex);
+	}
+}
+/*
+定义swfu的error
+*/
+var uploadError = function (file, errorCode, message) {
+	try{
+	var progress = new FileProgress(file, this.customSettings.progressTarget);
+	progress.setError();
+	progress.toggleCancel(false);
+
+	switch (errorCode) {
+		case SWFUpload.UPLOAD_ERROR.HTTP_ERROR:
+			progress.setStatus("上传错误: " + message);
+			this.debug("错误代码: HTTP错误, 文件名: " + file.name + ", 信息: " + message+"页面3秒后刷新");
+			break;
+		case SWFUpload.UPLOAD_ERROR.UPLOAD_FAILED:
+			progress.setStatus("上传失败");
+			this.debug("错误代码: 上传失败, 文件名: " + file.name + ", 文件尺寸: " + file.size + ", 信息: " + message+"页面3秒后刷新");
+			break;
+		case SWFUpload.UPLOAD_ERROR.IO_ERROR:
+			progress.setStatus("服务器 (IO) 错误");
+			this.debug("错误代码: IO 错误, 文件名: " + file.name + ", 信息: " + message+"页面3秒后刷新");
+			break;
+		case SWFUpload.UPLOAD_ERROR.SECURITY_ERROR:
+			progress.setStatus("安全错误");
+			this.debug("错误代码: 安全错误, 文件名: " + file.name + ", 信息: " + message+"页面3秒后刷新");
+			break;
+		case SWFUpload.UPLOAD_ERROR.UPLOAD_LIMIT_EXCEEDED:
+			progress.setStatus("超出上传限制.");
+			this.debug("错误代码: 超出上传限制, 文件名: " + file.name + ", 文件尺寸: " + file.size + ", 信息: " + message+"页面3秒后刷新");
+			break;
+		case SWFUpload.UPLOAD_ERROR.FILE_VALIDATION_FAILED:
+			progress.setStatus("无法验证.  跳过上传.");
+			this.debug("错误代码: 文件验证失败, 文件名: " + file.name + ", 文件尺寸: " + file.size + ", 信息: " + message+"页面3秒后刷新");
+			break;
+		case SWFUpload.UPLOAD_ERROR.FILE_CANCELLED:
+			// If there aren't any files left (they were all cancelled) disable the cancel button
+			if (this.getStats().files_queued === 0) {
+				document.getElementById(this.customSettings.cancelButtonId).disabled = true;
+			}
+			progress.setStatus("取消");
+			progress.setCancelled();
+			break;
+		case SWFUpload.UPLOAD_ERROR.UPLOAD_STOPPED:
+			progress.setStatus("停止");
+			break;
+		default:
+			progress.setStatus("未处理的错误: " + errorCode+"页面3秒后刷新");
+			this.debug("错误代码: " + errorCode + ", 文件名: " + file.name + ", 文件尺寸: " + file.size + ", 信息: " + message);
+			break;
+		}
+	} catch (ex) {
+        this.debug(ex);
+    }
+
+	setTimeout(function () {
+		$("#file_upload_modal").modal('hide');
+		window.location='';
+	}, 1000);
+}
+
+</script>
+<script type="text/javascript">
+</script>
+{template 'footer'}

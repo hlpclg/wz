@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>{$systeminfo['shopname']}-服务范围</title> 
+<style type="text/css">
+  body {
+    padding: 0;
+    margin: 0;
+  }
+  img {
+    width: 100%;
+  } 
+  .font-12px {
+    font-size: 0.8em;
+  }
+  .blue-style2 {
+    color: #1aa4f2;
+    padding: 1em 0.9em;
+    border-right: 1px solid #6dc9ff;
+    line-height: 22px;
+  }
+  .blue-bg {
+    background: #6dc9ff;
+    color: #fff;
+  }
+  h4 {
+    background: #6dc9ff;
+    height: 42px;
+    font-size: 1.1em;
+    font-weight: normal;
+    padding: 0;
+    color: #fff;
+    line-height: 42px;
+    margin: 0;
+    text-align: center;
+  }
+  .back-link{
+    /*background: #fff;*/
+    
+    width: 70px;
+    line-height: 34px;
+    color: #666;
+    background: #fff;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    float: right;
+    border-radius: 6px;
+    position: fixed;
+    right: 10px;
+    opacity: 0.9;
+    bottom: 10px;
+  }
+</style>
+</head> 
+<body>
+  <!--  <a href="123" class="back-link">返 回</a> -->
+  <div class="header tex-cen">
+    <h4 style="font-size:0.9em">目前开通服务范围</h4>
+  </div>
+  {loop $citylist $item}
+  <div class="content">
+    <div style="height:10px"></div>
+    <div class="blue-style2 blue-bg" style="text-align:justify;">{$item['cityinfo']}</div>
+    <img src="{$_W['attachurl']}{$item['cityphoto']}">
+  </div>
+  {/loop}
+</body> 
+</html>

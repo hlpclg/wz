@@ -1,0 +1,88 @@
+.c-singleimage {
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+}
+
+.c-singleimage img {
+	width: 100%;
+	height: 100%;
+}
+
+.c-singletext .text-wrap,.c-single-text .text-wrap {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.c-singletext .text-content,.c-single-text .text-content {
+	width: 100%;
+	height: 100%;
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+#globalAudio {
+	width: 70px;
+	height: 70px;
+}
+.copyright{
+	position: fixed;
+	width: 100%;
+	height: 20px;
+	color:gray;
+	font-size:25;
+	text-align:center;
+	z-index: 3;
+	padding-bottom:15px;
+	
+}
+.edit_bless{
+	position: fixed;
+	width: 70px;
+	height: 70px;
+	border: 3px solid white;
+	background: #00B2EE;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 100%;
+	z-index: 1;
+	right: 20px; 
+	top: 120px; 
+	cursor: pointer;
+	text-align : center;	
+	vertical-align:middle;
+}
+#edit_name{
+	display : block;
+	text-decoration: none;
+	padding: 5px auto 5px auto;
+	margin : 5px auto 5px auto;
+	color:#fff;
+	font-size: 20px;
+}
+
+.rename{
+	height: 200px;
+	max-width : 641px;	
+	margin: 0px 0px 0px -320px;
+	padding: 0px;
+	background-color: #fff;
+	position: fixed;
+	left : 50%;
+	right: -1px;
+	top: 0px;
+	z-index : 2;
+	text-align: center;
+}
+.rename-main{
+	padding: 10px 10px 10px 10px;
+}
+.rename-main > p{
+	font-size: 20px;
+	color: gray;
+}
+
+.modal{
+	top: 25%;
+}

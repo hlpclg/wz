@@ -1,0 +1,166 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				图片消息
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">状态</label>
+					<div class="col-sm-9 col-xs-12">
+						<label for="radio_1" class="radio-inline"><input type="radio" name="pic" id="radio_1" value="1" class="ng-valid ng-dirty" {if $settings['pic'] == 1}checked{/if}> 开启</label>
+						<label for="radio_0" class="radio-inline"><input type="radio" name="pic" id="radio_0" value="0" class="ng-valid ng-dirty" {if $settings['pic'] == 0}checked{/if}> 关闭</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">远程地址</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="picurl" class="form-control" value="{$settings['picurl']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">Token</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="pictoken" class="form-control" value="{$settings['pictoken']}" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				语音消息
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">状态</label>
+					<div class="col-sm-9 col-xs-12">
+						<label for="radio_3" class="radio-inline"><input type="radio" name="voice" id="radio_3" value="1" class="ng-valid ng-dirty" {if $settings['voice'] == 1}checked{/if}> 开启</label>
+						<label for="radio_2" class="radio-inline"><input type="radio" name="voice" id="radio_2" value="0" class="ng-valid ng-dirty" {if $settings['voice'] == 0}checked{/if}> 关闭</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">远程地址</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="voiceurl" class="form-control" value="{$settings['voiceurl']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">Token</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="voicetoken" class="form-control" value="{$settings['voicetoken']}" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				视频消息
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">状态</label>
+					<div class="col-sm-9 col-xs-12">
+						<label for="radio_5" class="radio-inline"><input type="radio" name="video" id="radio_5" value="1" class="ng-valid ng-dirty" {if $settings['video'] == 1}checked{/if}> 开启</label>
+						<label for="radio_4" class="radio-inline"><input type="radio" name="video" id="radio_4" value="0" class="ng-valid ng-dirty" {if $settings['video'] == 0}checked{/if}> 关闭</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">远程地址</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="videourl" class="form-control" value="{$settings['videourl']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">Token</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="videotoken" class="form-control" value="{$settings['videotoken']}" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				位置消息
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">状态</label>
+					<div class="col-sm-9 col-xs-12">
+						<label for="radio_7" class="radio-inline"><input type="radio" name="location" id="radio_7" value="1" class="ng-valid ng-dirty" {if $settings['location'] == 1}checked{/if}> 开启</label>
+						<label for="radio_6" class="radio-inline"><input type="radio" name="location" id="radio_6" value="0" class="ng-valid ng-dirty" {if $settings['location'] == 0}checked{/if}> 关闭</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">远程地址</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="locationurl" class="form-control" value="{$settings['locationurl']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">Token</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="locationtoken" class="form-control" value="{$settings['locationtoken']}" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				上报地理位置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">状态</label>
+					<div class="col-sm-9 col-xs-12">
+						<label for="radio_9" class="radio-inline"><input type="radio" name="trace" id="radio_9" value="1" class="ng-valid ng-dirty" {if $settings['trace'] == 1}checked{/if}> 开启</label>
+						<label for="radio_8" class="radio-inline"><input type="radio" name="trace" id="radio_8" value="0" class="ng-valid ng-dirty" {if $settings['trace'] == 0}checked{/if}> 关闭</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">远程地址</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="traceurl" class="form-control" value="{$settings['traceurl']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">Token</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="tracetoken" class="form-control" value="{$settings['tracetoken']}" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				链接消息
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">状态</label>
+					<div class="col-sm-9 col-xs-12">
+						<label for="radio_11" class="radio-inline"><input type="radio" name="link" id="radio_11" value="1" class="ng-valid ng-dirty" {if $settings['link'] == 1}checked{/if}> 开启</label>
+						<label for="radio_10" class="radio-inline"><input type="radio" name="link" id="radio_10" value="0" class="ng-valid ng-dirty" {if $settings['link'] == 0}checked{/if}> 关闭</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">远程地址</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="linkurl" class="form-control" value="{$settings['linkurl']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">Token</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="linktoken" class="form-control" value="{$settings['linktoken']}" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>
+{template 'common/footer'}

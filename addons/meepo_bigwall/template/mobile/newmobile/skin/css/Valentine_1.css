@@ -1,0 +1,19 @@
+@charset "utf-8";
+.wrapBg{background: url(../images/Valentine_1V1.0.jpg) no-repeat center;}
+.avatar{border-radius: 50%; -webkit-border-radius: 50%; -moz-border-radius: 50%;}
+.contIcon{background: url(../images/ValentineConIcons_1V1.0.png) no-repeat;}
+.theResult{background: url(../images/ValentineResult_1V1.0.png) no-repeat center 1px;}
+.pairPerson{background-image: url(../images/ValentinePair_1V1.0.png);}
+
+.colorStyle{color: #ffa3ba!important;}
+.colorOne{color: #5f5f5f!important;}
+
+.borderStyle .play{border-color: rgba(255, 255, 255, 0.35);}
+.borderStyle .animation .play{border-color: #fff;}
+.borderStyle li{border-color: #ffa3ba;}
+.borderStyle .msgFor{border-bottom-color:  #ffa3ba;}
+
+.btnStyle{color: #ffeef2; border-color: #f58ca6; background: #ffa3ba; box-shadow: 0 2px 2px 0 #feccd9 inset; -weibit-box-shadow: 0 2px 2px 0 #feccd9 inset; -moz-box-shadow: 0 2px 2px 0 #feccd9 inset;}
+
+.menuStyle a{border-color: #ffa3ba; background: url(../images/ValentineIcons_1V1.0.png) no-repeat;}
+#yyy {background: url(../images/icons8e0epink2.png) no-repeat !important;background-position: -1.8px -1.5px !important;}

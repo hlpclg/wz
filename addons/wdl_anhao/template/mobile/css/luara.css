@@ -1,0 +1,23 @@
+/*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+ luara
+ version 0.1  2014-8-21
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+/*渐隐*/
+.luara-{position:relative;padding:0;overflow: hidden;}
+.luara- ul{padding: inherit;margin: 0;}
+.luara- ul li{display: none;padding: inherit;margin: inherit;list-style: none;}
+.luara- ul li:first-child{display:block;}
+.luara- ul li img{width: 100%;height: 180px;}
+.example{}
+.example ol{position:relative;width: 80px;height: 20px;top:-30px;left:45%;}
+.example ol li{float:left;width: 10px;height: 10px;margin: 5px;background: #fff;}
+.example ol li.seleted{background: #1AA4CA;}
+
+
+
+
+
+
+
+
+

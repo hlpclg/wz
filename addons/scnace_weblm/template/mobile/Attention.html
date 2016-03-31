@@ -1,0 +1,73 @@
+{template 'common/header'}
+   <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">zafu_EC</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li ><a href="{php echo $this->createMobileUrl('Weblm');}"> <span class="sr-only"></span>我有快递</a></li>
+        {if $check}
+        <li><a href="{php echo $this->createMobileUrl('Help');}">快递盒子</a></li>
+        {/if}
+         <li><a href="{php echo $this->createMobileUrl('MyExpress');}">我的快递</a></li>
+          </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+      {if !$check }
+      <li><a href="{php echo $this->createMobileUrl('WorkerRank');}">快递员注册</a></li>
+       {else}
+      <li><a href="#">欢迎你,{php echo($check['workername']);}</a></li>
+            {/if}
+        <li><a href="{php echo $this->createMobileUrl('Attention');}">用户须知</a></li>
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+<div class="jumbotron">
+  <h2 class="text-success">想获得更好的用户体验,看这里总不会错O(∩_∩)O~~</h2>
+</div>
+<br/>
+<br/>
+
+<p class="bg-primary">Q:这个应用的大致流程是?</p>
+<p class="bg-success">A:本应用采取了类Uber式的交互体验,通过特定的角色扮演,有快递员和雇主之分,当然快递员也是学生,当雇主发出快递请求后,快递员可以来
+接受这个请求，并决定是否帮雇主拿快递，快递员拿到快递后可与雇主联系，雇主在确认收货后，此次快递完成。由于快递员并没有什么限制条件，所以是“全民快递”哦！</p>
+<br/>
+<p class="bg-primary">Q:这个平台的具体操作过程?</p>
+<p class="bg-success">A:用户在初次进入此平台时,是以雇主身份操作的，也就是说只能提交快递请求而不能充当快递员,在用户注册快递员了之后,Running之旅就可以开始啦。
+此时此平台将记住用户的微信号,用户将可以以雇主和快递员双重身份进行活动。没有屏蔽掉自发自抢,有些人闲着无聊也是没办法。用户在请求提交页开始提交请求，请求提交完毕后，相应的
+订单将被送往快递盒子中供各位快递员查看和挑选。快递员异步送货后,用户在自己的订单中确认即可完成此次快递过程.</p>
+<br/>
+<p class="bg-primary">Q:在快递员完成了这次快递后，是否有跑路费可拿?</p>
+<p class="bg-success">A:在本版本中，快递员只秉承着为校友服务,多结识朋友的原则进行快递配送。</p>
+<br/>
+<p class="bg-primary">Q:这个平台存在的意义是什么?</p>
+<p class="bg-success">A:小编觉得这个问题问的简直是有水平。我们这个平台是专为大学校园打造的集社交与便民于一体的特色平台，
+也是我们网协的开山之作。请大家以后多多关注我协,将会有更多的便民利民平台推出。如果你有反馈信息,可向小E留言哦!还有如果你想加入我们的话
+,请跟微信号:scbizu联系。。。小E表示人有点少,压力还是有点的,还有谢谢你读完了这么长的东西。。O(∩_∩)O~~</p>
+
+
+
+
+
+
+
+
+
+
+
+

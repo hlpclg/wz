@@ -1,0 +1,2833 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8">
+		<title>{$ridwall['name']}-{$_W['account']['name']}-微信大屏幕</title>
+		<link rel="stylesheet" href="{$meepo}common/css/common.css" />
+		<link rel="stylesheet" href="{$meepo}common/css/header.css" />
+		<link rel="stylesheet" href="{$meepo}common/css/footer.css" />
+		<link rel="stylesheet" href="{$meepo}common/css/layer.css" />
+		<link rel="stylesheet" href="{$meepo}common/css/tooltips.css" />
+		<link id="skincss" rel="stylesheet" href="{$meepo}/skin/css/{$style}?t={php echo time()}" />
+		<script src="{$meepo}common/js/jquery-1.8.3.min.js" ></script>
+		<script src="{$meepo}common/js/jquery.tooltipster.min.js" ></script>
+		<script src="{$meepo}common/js/head.js"></script>
+		<script src="{$meepo}common/js/chromeTip.js"></script>
+		<script src="{$meepo}qd/signwall.js" /></script>
+		<script type="text/javascript">
+var ws_config = {
+	updateTime     : 0,
+	autoCheckTime  : {php echo intval($ridwall['refreshtime'])},  
+	sayTaskTime    : {php echo intval($ridwall['refreshtime'])}   
+}
+  	
+
+var ws_say={
+	index:0,
+	indexMax:0, 
+	indexDetail:0,
+	page:3,
+	runkey:1, 
+	news:"",
+	list:""
+}
+
+
+function getCount(type){
+	if(type==1){
+		return $("#signlist").children('li.user-had').length;
+	}else if(type==2){
+		
+		//alert(ws_say.list.length);
+
+		return ws_say.list.length;
+
+	}
+}
+  		    
+var task = null; //检查最新任务
+var sayTask = null; //显示留言墙
+var isCheck = 1; //1检查，0不检查
+setInterval("progressBar()",{php echo intval($ridwall['voterefreshtime'])});  	
+function setUpdateTime(t){
+	$("#checkTime").val(t);
+}
+
+function getConfig(key){
+	if(key=='sayTaskTime'){
+		return ws_config.sayTaskTime;
+	}else if(key=='autoCheckTime'){
+		return ws_config.autoCheckTime;
+	}
+}
+function init(){
+
+  	initSay();
+  	initSignin();
+  	startTask(); 
+  	changeWall({php echo intval($ridwall['defaultshow'])});
+	
+	$(".loader").hide("slow");
+}
+function initSignin(){
+	var signCount = getSignSum();
+	var s00 = 28-signCount%28;
+	for(i=0; i<s00; i++){
+		$("#signlist").append('<li class="user-no"><div class="play"></div></li>');
+	}
+}
+function initSay(){
+  	var checkTime = $("#checkTime").val();
+  
+		$.getJSON("{php echo $this->createMobileUrl('init',array('rid'=>$rid))}", function(msg){
+		ws_say.list = msg.list;
+		
+        $("#checkTime").val(msg.time);
+        $("#signcheckTime").val('{$signtotal}');
+		initSayContent();
+		
+	});
+}
+  	
+
+
+function startTask(){
+  	task = setInterval("checkData()",getConfig('autoCheckTime'));
+}
+  	
+
+function startSayTask(){
+  	if(sayTask==null){
+  		sayTask = setInterval("showSay(1)",getConfig('sayTaskTime'));
+  		$("#but_play").removeClass("btnPlay").addClass("btnPause");
+  	}
+}
+
+
+function stopSayTask(){
+	if(sayTask!=null){
+  		window.clearInterval(sayTask);
+  		sayTask=null;
+  	}
+}
+  	
+
+ 
+function checkData(){
+
+	$("#countP").html(getCount(1) + "人签到<br>" + getCount(2) + "条发言");
+
+	//alert(isCheck);
+	if(isCheck==1){
+
+   		$.getJSON("../app/index.php?i={$_W['uniacid']}&j={$_W['account']['acid']}&c=entry&do=getmore2&m=meepo_bigwall&num="+$("#checkTime").val()+"&signnum="+$("#signcheckTime").val()+"&rid={$rid}&jsoncallback="+new Date().getTime(), function(msg){
+			if(msg.hadsign==1 || msg.hadsay==1){
+				
+                if(msg.hadsay==1){
+				$("#sayUpdateTime").val(msg.time);
+				}
+				if(msg.hadsign==1){
+				$("#signUpdateTime").val(msg.time2);
+				}
+				isCheck=0;
+				updateData(msg.hadsign,msg.hadsay);
+			}
+		});
+  	}
+}
+  	
+
+function updateData(hadsign,hadsay){
+  	if(hadsign==1){
+  		updateSignList();
+  	}
+  	if(hadsay==1){
+  		updateSayList()
+  	}
+  	isCheck=1;
+}
+
+  	
+
+function updateSignList(){
+	var updateTime = $("#signUpdateTime").val();
+  	var checkTime = $("#signcheckTime").val();
+  	$.getJSON("../app/index.php?i={$_W['uniacid']}&j={$_W['account']['acid']}&c=entry&do=getmorepollsign&m=meepo_bigwall&utime="+checkTime+"&endtime="+updateTime+"&rid={$rid}&jsoncallback="+new Date().getTime(), function(msg){
+		$("#signcheckTime").val(updateTime);
+		
+		showSignList(msg.list);
+	});
+}
+  	
+
+function showSignList(d){
+  	if(d!=null && d.length>0){
+  		stopSignTask();
+  		var obj = "";
+  		var list = d;
+  		stopSignTask2();
+		
+		var content="";
+		for (i = 0; i < list.length; i++) {
+			$("[id='"+list[i].openid+"']").remove();
+			
+			if(list[i].isblacklist==1){
+				break;
+			}
+			if(list[i].content.length>8){
+				content = '<p style="font-size:35px;">'+list[i].content+'</p>';
+			}else{
+				content = '<p>'+list[i].content+'</p>';
+			}
+			if(list[i].cjstatu != 0){
+			obj = '<li id="'+list[i].openid+'" class="user-had">'+
+						'<div class="play">'+
+		    				'<input type="hidden" name="p'+list[i].sex+'" value="'+list[i].nickname+'|'+list[i].sex+'|'+list[i].avatar+'|'+list[i].openid+'|'+list[i].cjstatu+'">'+
+							'<div class="avatar" ><img src="'+list[i].avatar+'" /><p>'+list[i].nickname+'</p></div>'+
+							'<div class="siginWords"><i class="leftside"></i>'+content+'</div>'+					
+						'</div>'+
+					'</li>';
+			}else{
+			     obj = '<li id="'+list[i].openid+'" class="user-had">'+
+						'<div class="play">'+
+		    				'<input type="hidden" name="p'+list[i].sex+'" value="'+list[i].nickname+'|'+list[i].sex+'|'+list[i].avatar+'|'+list[i].openid+'">'+
+							'<div class="avatar" ><img src="'+list[i].avatar+'" /><p>'+list[i].nickname+'</p></div>'+
+							'<div class="siginWords"><i class="leftside"></i>'+content+'</div>'+					
+						'</div>'+
+					'</li>';
+			}
+			$("#signlist").prepend(obj);
+		}
+		checkUserHead();
+		runSign();
+  	}
+}
+
+
+function checkUserHead(){
+	var signCount = getSignSum();
+	var headNoSum = 28-signCount%28;
+	var old_headNoSum = $("#signlist").children("li.user-no").length;
+	if(headNoSum>old_headNoSum){
+		for(var i=0; i<headNoSum-old_headNoSum; i++){
+			$("#signlist").append('<li class="user-no"><div class="play"></div></li>');
+		}
+	}else if(old_headNoSum > headNoSum){
+		var c00 = old_headNoSum-headNoSum;
+		$("#signlist").children("li.user-no").slice(0,c00).remove();
+	}
+}
+
+  	
+
+function updateSayList(){
+  	var updateTime = $("#sayUpdateTime").val();
+  	var checkTime = $("#checkTime").val();
+	$.getJSON("../app/index.php?i={$_W['uniacid']}&j={$_W['account']['acid']}&c=entry&do=getmorepoll&m=meepo_bigwall&utime="+checkTime+"&endtime="+updateTime+"&rid={$rid}&jsoncallback="+new Date().getTime(), function(msg){
+		$("#checkTime").val(updateTime);
+
+		if(msg){
+			var list = msg.list;
+			for(i=0;i<list.length;i++){
+				ws_say.list.push(list[i]);
+			}
+			
+			ws_say.index = ws_say.indexMax;
+			ws_say.indexDetail = ws_say.indexMax;
+			runSay(1);
+		}
+	});
+}
+  	
+
+function getSignSum(){
+  	return $("#signlist").children("li.user-had").length;
+}
+
+
+function getSignData(){
+	return $("#signlist").children("li.user-had");
+}
+
+
+function runSay(type){
+  	if(type==1){
+   		startSayTask();
+   	}else if(type==0){
+   		stopSayTask();
+   		$("#but_play").removeClass("btnPause").addClass("btnPlay");
+   	}
+}
+
+
+function initSayContent(){
+	$("#saylist").html('');
+	addSayList1();
+}
+  	
+
+function showSay(type){
+	
+  	checkSayIndex();
+  	
+  	if(checkSayHide() && checkSayDetailHide()){
+  		stopSayTask();
+  		return ;
+  	}
+  	
+  	
+  	if(!checkSayHide()){
+	  	if(ws_say.index==ws_say.list.length){
+	  		wallPage('min');
+	  		return ;
+	  	}
+	}else if(!checkSayDetailHide()){
+		if(ws_say.indexDetail==ws_say.list.length){
+	  		wallPage('min');
+	  		return ;
+	  	}
+	}
+  	
+  	if(type==1){
+  		if(!checkSayHide()){//如果是列表找开
+		  	addSayList1();//正序
+			var noSays = $("#saylist").children('li').length;
+			if(noSays>3){
+				msgWallCss();//动效
+			}
+  		}else if(!checkSayDetailHide()){//如果是详情打开
+  			addSayDetial1();
+  		}
+  	}else{//反方向
+		if(!checkSayHide()){//如果是列表找开
+		  	addSayList2();//倒序
+			var noSays = $("#saylist").children('li').length;
+			if(noSays>3){
+				msgWallCss2();//动效
+			}
+  		}else if(!checkSayDetailHide()){//如果是详情打开
+  			addSayDetial2();
+  		}
+  	}
+}
+
+
+function returnSayInto(){
+	var list = ws_say.list;
+	var con = "";
+	var getcount = 0; 
+	var j=0;
+	if(ws_say.list.length>3){
+		getcount = 3;
+	}
+	var contentInfo = "";
+	for(n=0;n<getcount;n++){
+		j = n;
+ 		
+	  	if(list[j].image==''){
+   				if(list[j].content.length<11){
+	   				contentInfo='<p class="msgTxt">'+list[j].content+'</p>';
+   				}else if(list[j].content.length>10 ){
+   					contentInfo='<p class="msgTxt" style="font-size:32px;height:45px;line-height:45px;">'+list[j].content+'</p>';
+   				}
+		}else{
+			contentInfo = '<p class="msgImg"><img src="'+list[j].image+'" /></p>';
+		}
+ 		
+		con = con+'<li onmouseover="showOpenSayInfo(this)" onmouseout="hideOpenSayInfo(this)" onClick="openSayInfo('+j+')">'+
+				'<div class="userAvatar">'+
+					'<i class="avatarFrame"></i>'+
+					'<img src="'+list[j].avatar+'" class="avatar" />'+
+				'</div>'+
+				'<div class="msgBox" >'+
+					'<h3>'+list[j].nickname+'：</h3>'+
+					contentInfo+
+				'</div>'+
+				'<div class="detailBtn" ></div>'+
+			'</li>';
+		ws_say.index = j+1;
+  	}
+  	$("#saylist").prepend(con);
+}
+
+
+function addSayList1(){
+	var list = ws_say.list;
+	var con = "";
+	var j=0;
+	var i = ws_say.index;
+	
+	var contentInfo = "";
+	var noSays = $("#saylist").children('li').length;
+	if(noSays==3){
+		noSays = 0;
+	}
+	for(n=0;n<(ws_say.page-noSays);n++){
+  		j = i+n;
+   		if(j < list.length){
+   			if(list[j].image==''){
+   				if(list[j].content.length<11){
+	   				contentInfo='<p class="msgTxt">'+list[j].content+'</p>';
+   				}else if(list[j].content.length>10 ){
+   					contentInfo='<p class="msgTxt" style="font-size:32px;height:45px;line-height:45px;">'+list[j].content+'</p>';
+   				}
+   			}else{
+   				contentInfo = '<p class="msgImg"><img src="'+list[j].image+'" /></p>';
+   			}
+   			
+			con = con+'<li onmouseover="showOpenSayInfo(this)" onmouseout="hideOpenSayInfo(this)" onClick="openSayInfo('+j+')">'+
+						'<div class="userAvatar">'+
+							'<i class="avatarFrame"></i>'+
+							'<img src="'+list[j].avatar+'" class="avatar" />'+
+						'</div>'+
+						'<div class="msgBox colorStyle" >'+
+							'<h3>'+list[j].nickname+'：</h3>'+
+							contentInfo+
+						'</div>'+
+						'<div class="contIcon detailBtn" ></div>'+
+					'</li>';
+			ws_say.index = j+1;
+			if(ws_say.index>ws_say.indexMax){
+				ws_say.indexMax =  ws_say.index;
+			}
+
+   		}else{
+   			break;
+   		}
+  	}
+	
+  	$("#saylist").append(con);
+}
+
+
+function addSayList2(){
+	var list = ws_say.list;
+	var con = "";
+	var j=0;
+	var i = ws_say.index;
+	var contentInfo = "";
+	for(n=0;n<ws_say.page;n++){
+  		j = i+n;
+   		if(j < list.length){
+   			
+   			if(list[j].image==''){
+   				if(list[j].content.length<11){
+	   				contentInfo='<p class="msgTxt">'+list[j].content+'</p>';
+   				}else if(list[j].content.length>10 ){
+   					contentInfo='<p class="msgTxt" style="font-size:32px;height:45px;line-height:45px;">'+list[j].content+'</p>';
+   				}
+   			}else{
+   				contentInfo = '<p class="msgImg"><img src="'+list[j].image+'" /></p>';
+   			}
+   			
+			con = con+'<li onmouseover="showOpenSayInfo(this)" onmouseout="hideOpenSayInfo(this)" onClick="openSayInfo('+j+')">'+
+						'<div class="userAvatar">'+
+							'<i class="avatarFrame"></i>'+
+							'<img src="'+list[j].avatar+'" class="avatar" />'+
+						'</div>'+
+						'<div class="msgBox colorStyle" >'+
+							'<h3>'+list[j].nickname+'：</h3>'+
+							contentInfo+
+						'</div>'+
+						'<div class="contIcon detailBtn" ></div>'+
+					'</li>';
+			ws_say.index = j+1;
+   		}else{
+   			runSay(0);
+   			break;
+   		}
+  	}
+  	$("#saylist").prepend(con);
+}
+
+function addSayDetial1(){
+	var content = getSayDetail(ws_say.indexDetail);
+	$("#sayDetailList").append('<li>'+content+'</li>');
+	ws_say.indexDetail = ws_say.indexDetail+1; 
+	
+	if(ws_say.indexDetail > ws_say.indexMax){
+		ws_say.indexMax =  ws_say.indexDetail;
+	}
+	
+	if(ws_say.indexDetail>1){
+		ws_say.index = ws_say.indexDetail-2;
+	}else{
+		ws_say.index = 0;
+	}
+	var scrollWidth=$(".msgDetail").width();
+	$("#sayDetailList").animate({"marginLeft":-scrollWidth},1000,function(){
+		$("#sayDetailList li:lt(1)").remove();
+		$(".msgDetail ul").css("marginLeft",0);
+	});
+}
+
+
+function addSayDetial2(){
+	var content = getSayDetail(ws_say.indexDetail-1);
+	$("#sayDetailList").prepend('<li>'+content+'</li>');
+	var scrollWidth=$(".msgDetail").width();
+	$("#sayDetailList").css("marginLeft",-scrollWidth);
+	$("#sayDetailList").animate({"marginLeft":0},1000,function(){
+		$("#sayDetailList li:gt(0)").remove();
+	});
+	
+}
+
+
+function msgWallCss(){
+	var scrollHei=$(".msgWall").height();
+	$(".msgWall ul").animate({"marginTop":-scrollHei},1000,function(){
+		removeMagWallLi(2);
+		$(".msgWall ul").css("marginTop",0)
+	});
+}
+
+
+function msgWallCss2(){
+	var scrollHei=$(".msgWall").height();
+	$(".msgWall li").slice(0,3).show();
+	$(".msgWall ul").css("marginTop",-scrollHei);
+	$(".msgWall ul").stop().animate({"marginTop":0},1000,function(){
+		$(".siginWall ul").css("marginTop",0);
+		removeMagWallLi(1);
+	});
+}
+
+
+function removeMagWallLi(type){
+	
+	if(type==1){
+		$("#saylist li:gt(2)").remove();
+	}else if(type==2){
+		$("#saylist li:lt(3)").remove();
+	}
+}
+
+function showOpenSayInfo(obj){
+	$(obj).children('.detailBtn').show();
+	if(ws_say.runkey == 1){
+		runSay(0);
+	}
+}
+
+
+function hideOpenSayInfo(obj){
+	$(obj).children('.detailBtn').hide();
+	if(ws_say.runkey == 1){
+		runSay(1);
+	}
+}
+
+
+function showOpenSayDetail(obj){
+	if(ws_say.runkey == 1){
+		runSay(0);
+	}
+}
+
+
+function hideOpenSayDetail(obj){
+	if(ws_say.runkey == 1){
+		runSay(1);
+	}
+}
+
+
+function openSayInfo(sindex){
+	var list = ws_say.list;
+	var content = getSayDetail(sindex);
+	$("#sayDetailList").html('');
+	$("#sayDetailList").append('<li>'+content+'</li>');
+	$(".msgWall").fadeOut("fast");
+	$(".msgDetail").slideDown();
+	ws_say.indexDetail = sindex+1; //下一个标
+}
+
+
+function getSayDetail(sindex){
+	var content = '';
+	var list = ws_say.list;
+	if(sindex > list.length){
+		return '';
+	}else{
+		var say_msgContent = '';
+		if(list[sindex].image==''){
+			if(list[sindex].content.length>40){
+				say_msgContent = '<div class="contShow colorStyle">'+
+									'<p style="font-size:32px;">'+list[sindex].content+'</p>'+
+								 '</div>';
+			}else{
+				say_msgContent = '<div class="contShow colorStyle">'+
+									'<p>'+list[sindex].content+'</p>'+
+								 '</div>';
+			}
+		}else{
+			say_msgContent = '<div class="imgShow">'+
+								'<div class="zoomBox">'+
+									'<img style="height:330px;width:auto;" src="'+list[sindex].image+'" />'+
+								'</div>'+
+							 '</div>';
+		}
+		content = '<div class="contBox msgDetailIn" onmouseover="showOpenSayDetail(this)" onmouseout="hideOpenSayDetail(this)">'+
+					'<i class="contIcon msgClose" onClick="closeMsgDetailIn()"></i>'+
+					'<div class="msgBar borderStyle">'+
+						'<dl class="msgFor clearfix">'+
+							'<dt>'+
+								'<i class="avatarFrame"></i>'+
+								'<img src="'+list[sindex].avatar+'" class="avatar"/>'+
+							'</dt>'+
+							'<dd class="colorStyle" id="showSayTitle">'+
+								'<h3>'+list[sindex].nickname+'：</h3>'+
+								'<p>来自微信</p>'+
+							'</dd>'+
+						'</dl>'+
+						say_msgContent +
+					'</div>'+
+				'</div>';
+	}
+	return content;
+}
+
+
+function closeMsgDetailIn(){
+	
+	$(".msgDetail").fadeOut("fast");
+	$("#sayDetailList").html('');
+	
+	ws_say.index = ws_say.indexDetail-1;
+	initSayContent();
+	$(".msgWall").slideDown();
+}
+
+function checkSayOpen(){
+	$("p").is(":hidden")
+}
+  	
+
+function checkSayIndex(){
+  	if(ws_say.indexDetail<=0){
+  		ws_say.indexDetail=0;
+  	}else if(ws_say.indexDetail>=ws_say.list.length){
+  		ws_say.indexDetail=ws_say.list.length;
+  	}
+  	
+  	if(ws_say.index<=0){
+  		ws_say.index=0;
+  	}else if(ws_say.index>=ws_say.list.length){
+  		ws_say.index=ws_say.list.length;
+  	}
+}
+  	
+
+function changeWall(obj){
+  	if(obj==1){
+  		$("#siginWall").show();
+  		//$("body").append("<script src='/wxscreen/web/js/signWallV1.0.js'><\/script>");
+		siginWallInit();
+  	}else if(obj==2){
+  		$("#msgWall").show();
+  		ws_say.runkey = 1;
+  		runSay(1);
+  	}
+}
+  	
+
+function checkSayHide(){
+	return $('.msgWall').is(':hidden');
+}
+
+
+function checkSignHide(){
+	return $('.siginWall').is(':hidden');
+}
+
+
+function checkSayDetailHide(){
+	return $('.msgDetail').is(':hidden');
+}
+
+//公页间隔时间控制  	
+var playButTimeKey = 0;
+function setTimePlayButKey(){
+	playButTimeKey=0;
+}
+
+
+function sayIndexIsMax(){
+	return ws_say.index>=ws_say.list.length;
+}
+
+
+function sayIndexIsMin(){
+	return ws_say.index<=3;	
+}
+
+
+function wallPage(key){
+	if(playButTimeKey!=0){
+		return ;
+	}
+	playButTimeKey = 1;
+	setTimeout("setTimePlayButKey()",1200);
+	if(!checkSayHide() || !checkSayDetailHide()){
+	  	if(key=='next'){
+	  		stopSayTask();
+	  		if(!sayIndexIsMax()){
+	  			showSay(1);
+	  		}
+	  	}else if(key=='last'){
+	  		stopSayTask();
+  			if(!checkSayHide()){
+  				if(!sayIndexIsMin()){
+			  		var noSays = $("#saylist").children('li').length;
+			  		ws_say.index = ws_say.index-noSays-ws_say.page;
+			  		showSay(2);
+	  			}
+	  		}else if(!checkSayDetailHide()){
+	  			if(ws_say.indexDetail>1){
+		  			ws_say.indexDetail = ws_say.indexDetail-1;
+		  			showSay(2);
+	  			}
+	  		}
+	  	}else if(key=='max'){
+	  		stopSayTask();
+		  	if(!checkSayHide()){
+  				if(!sayIndexIsMax()){
+			  		ws_say.index = ws_say.list.length - ws_say.page;
+			  		showSay(1);
+			  	}
+	  		}else if(!checkSayDetailHide()){
+	  			if(ws_say.list.length>ws_say.indexDetail){
+		  			ws_say.indexDetail = ws_say.list.length-1;
+		  			showSay(1);
+	  			}
+	  		}
+	  	}else if(key=='min'){
+	  		stopSayTask();
+	  		if(!checkSayHide()){
+  				if(!sayIndexIsMin()){
+			  		ws_say.index=0;
+			  		showSay(2);
+		  		}
+	  		}else if(!checkSayDetailHide()){
+	  			if(ws_say.indexDetail>1){
+		  			ws_say.indexDetail = 1;
+	  				showSay(2);
+	  			}
+	  		}
+	  	}else if(key=='play'){
+	  		openSay();
+	  		return ;
+	  	}
+	  	runSay(1);
+	  	ws_say.runkey = 1;
+	}else if(!checkSignHide()){
+		setSignPage(key);
+	}
+}
+
+
+function openSay(){
+  	if(sayTask==null){
+  		ws_say.runkey = 1;
+  		runSay(1);
+  	}else{
+  		ws_say.runkey = 0;
+  		runSay(0);
+  	}
+}
+
+
+function fullScreen(element){
+	if(element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if(element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if(element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  }
+}
+
+
+function jumpLogin(){
+	location.href = "/pc/login.do";
+}
+
+
+var arr = new Array();
+$(function() {
+	initTileFn();
+	
+	if (arr[{php echo intval($ridwall['defaultshow'])}] != undefined) {
+		var tag = arr[{php echo intval($ridwall['defaultshow'])}].split("_")[2];
+		var title1 = arr[{php echo intval($ridwall['defaultshow'])}].split("_")[1];
+		
+		if (tag == 1) {
+		 $("#countP").html(getCount(2) + "条发言")
+		} else if (tag == 2) {
+		$("#countP").html(getCount(1) + "人签到")
+		
+		}
+		if (tag == 3) {
+		$("#countP").html("");
+		}
+	}
+	
+		
+		if($.trim(title1).length<1)
+		{
+		title1="关注微信号，发送“签到+任意内容”即可签到";
+		}
+		splits(title1);
+	
+	// 初始化气泡提示
+	var toolTxt;
+	$('.tooltip').mouseover(function() {
+		var toolTxt = $(this).attr("title")
+	}).tooltipster({
+		content : toolTxt,
+		theme : 'tooltipster-shadow',
+		trigger : 'hover',
+		delay : 0,
+		speed : 200
+	});
+	//var strStart = "", strEnd = "";
+	$("div.btnMenu a")
+			.click(
+					function() {
+						
+						var boxClass = $(this).attr("data-class");
+						$("." + boxClass).show().siblings().hide();
+						initTileFn();
+						//clearInterval(timerMsg);
+						//clearTimeout(timerSigin);
+						switch (boxClass) {
+						case "skinSelect": {
+							skinSelectFn();
+							break;
+						}
+						case "siginWall": {
+							// 签到1
+							siginWallFn();
+							break;
+						}
+						case "msgWall": {
+							// 留言2
+							msgWallFn();
+							break;
+						}
+						case "lotteryWall": {
+							// 抽奖3
+							lotteryWallFn();
+							break;
+						}
+						case "voteWall": {
+							// 投票4
+							voteWallFn();
+							break;
+						}
+						case "pairWall": {
+							// 对对碰5
+							pairWallFn();
+							break;
+						}
+						case "onSiteWall":{
+							onSiteWllFn();
+							break;
+						}
+						case "fullWall":{
+							break;
+						}
+						default:
+							break;
+						}
+					});
+	//快捷键
+	document.onkeypress=function(event){
+				 var e = event || window.event;
+		       var keyCode = e.keyCode || e.which;
+       			$.ajaxSetup({
+					async : false
+				});
+				$.getJSON("{php echo $this->createMobileUrl('headmsg',array('rid'=>$rid))}", function(data) {
+					$.each(data.headmessage, function(i, item) {
+						arr[item.wallid] = item.wallid + "_"
+								+ item.title + '_' + item.tag;
+					});
+				});
+        switch (keyCode) {
+           case 102:
+               //f
+               $(".skinSelect").show().siblings().hide();
+               skinSelectFn();
+               break;
+           case 70:
+           	//F
+           	$(".skinSelect").show().siblings().hide();
+           	skinSelectFn();
+          		break;
+           case 113:
+               //q
+                $(".siginWall").show().siblings().hide();
+                siginWallFn();
+               break;
+           case 81:
+               //Q
+                $(".siginWall").show().siblings().hide();
+                siginWallFn();
+               break;
+           case 109:
+           	//m
+           	 $(".msgWall").show().siblings().hide();
+           	 msgWallFn();
+          		break;
+          	case 77:
+           	//M
+           	 $(".msgWall").show().siblings().hide();
+           	 msgWallFn();
+          		break;
+           case 99:
+           	//c
+           	 $(".lotteryWall").show().siblings().hide();
+           	 lotteryWallFn();
+           	break;
+   	    case 67:
+           	//C
+           	 $(".lotteryWall").show().siblings().hide();
+           	 lotteryWallFn();
+           	break;
+       	case 116:
+       		//t
+       		 $(".voteWall").show().siblings().hide();
+       		 voteWallFn();
+       		break;
+   		case 84:
+       		//T
+       		 $(".voteWall").show().siblings().hide();
+       		 voteWallFn();
+       		break;
+       	case 100:
+           	//d
+           	 $(".pairWall").show().siblings().hide();
+           	 pairWallFn();
+           	break;
+       	case 68:
+           	//d
+           	 $(".pairWall").show().siblings().hide();
+           	 pairWallFn();
+           	break;
+       	case 120:
+       		//x
+       		 $(".onSiteWall").show().siblings().hide();
+       		 onSiteWllFn();
+       		break;
+   		case 80:
+       		//x
+       		 $(".onSiteWall").show().siblings().hide();
+       		 onSiteWllFn();
+       		break;
+           default:
+               break;
+        }	
+	}
+	function initTileFn(){
+
+		$.ajaxSetup({
+			async : false
+		});
+		$.getJSON("{php echo $this->createMobileUrl('headmsg',array('rid'=>$rid))}", function(data) {
+			$.each(data.headmessage, function(i, item) {
+				arr[item.wallid] = item.wallid + "_"
+						+ item.title + '_' + item.tag;
+			});
+			//alert(arr[1]);
+		});
+	}
+	//换肤
+	function skinSelectFn(){
+		var title1="关注微信号，发送含有“签到”两字的内容即可签到";
+	   splits(title1);
+	}
+	//签到
+	function siginWallFn(){
+		var title1="关注微信号，发送含有“签到”两字的内容即可签到";
+		if (arr[1] != undefined) {
+		var tag = arr[1].split("_")[2];
+		if($.trim(arr[1].split("_")[1]).length>=1)
+		{
+			var title1 = arr[1].split("_")[1];
+		}
+		if (tag == 1) {
+		$("#countP").html(getCount(2) + "条发言")
+		
+		} else if (tag == 2) {
+		$("#countP").html(getCount(1) + "人签到")
+		}
+		if (tag == 3) {
+		$("#countP").html("");
+		}
+		}
+		splits(title1);
+		siginWallInit();
+	}
+	//留言
+	function msgWallFn(){
+		changeWall(2);
+		var title2="关注微信号，发送“我要上墙“开启上墙模式后，发送想要留言的内容即可上墙";
+		if (arr[2] != undefined) {
+			var tag = arr[2].split("_")[2];
+			if(arr[2].split("_")[1].length>=1){
+				title2=arr[2].split("_")[1];
+			}
+			if (tag == 1) {
+				$("#countP").html(getCount(2) + "条发言")
+
+			} else if (tag == 2) {
+				$("#countP").html(getCount(1) + "人签到")
+			}
+			if (tag == 3) {
+				$("#countP").html("");
+			}
+
+		}
+		splits(title2);
+	}
+	//抽奖
+	function lotteryWallFn(){
+		var title="关注微信号，发送含有“签到”两字的内容即可签到";
+		if (arr[3] != undefined) {
+		var tag = arr[3].split("_")[2];
+		if($.trim(arr[3].split("_")[1]).length>=1)
+		{
+			var title = arr[3].split("_")[1];
+		}
+		if (tag == 1) {
+		$("#countP").html(getCount(2) + "条发言")
+		
+		}
+		if (tag == 2) {
+		$("#countP").html(getCount(1) + "人签到")
+		}
+		if (tag == 3) {
+		$("#countP").html("");
+		}
+		}
+		splits(title);
+		progressLuckBar();
+	}	//投票
+	function voteWallFn(){
+		progressBar();
+		var title="关注微信号，发送含有“签到”两字的内容即可签到";;
+			if (arr[6] != undefined) {
+				var tag = arr[6].split("_")[2];
+				if($.trim(arr[6].split("_")[1]).length>=1)
+				{
+					var title = arr[6].split("_")[1];
+				}
+				if (tag == 1) {
+					$("#countP").html(getCount(2) + "条发言")
+				}
+				if (tag == 2) {
+					$("#countP").html(getCount(1) + "人签到")
+				}
+				if (tag == 3) {
+					$("#countP").html("");
+				}
+			}
+			splits(title);
+			
+		}
+	//对对碰
+	function pairWallFn(){
+		var title="关注微信号，发送含有“签到”两字的内容即可签到";
+		if (arr[5] != undefined) {
+
+			var tag = arr[5].split("_")[2];
+			//$("#title").html(title);
+			if($.trim(arr[5].split("_")[1]).length>=1)
+			{
+				var title = arr[5].split("_")[1];
+			}
+			if (tag == 1) {
+				$("#countP").html(getCount(2) + "条发言")
+			}
+			if (tag == 2) {
+				$("#countP").html(getCount(1) + "人签到")
+			}
+			if (tag == 3) {
+				$("#countP").html("");
+			}
+		}
+		splits(title);
+		
+		progressPairBar();
+	}
+	
+	function onSiteWllFn(){
+		var title="关注微信号，发送含有“签到”两字的内容即可签到";
+		progressInteract();
+		if (arr[4] != undefined) {
+			var tag = arr[4].split("_")[2];
+			
+			if($.trim(arr[4].split("_")[1]).length<1)
+			{
+				var title = arr[4].split("_")[1];
+			}
+			if (tag == 1) {
+				$("#countP").html(getCount(2) + "条发言")
+			}
+			if (tag == 2) {
+				$("#countP").html(getCount(1) + "人签到")
+			}
+		}
+		splits(title);
+		
+	}
+					
+					
+	
+	$(".msgDetail").on({
+		mouseenter : function() {
+			$(this).find(".msgClose").show();
+		},
+		mouseleave : function() {
+			$(this).find(".msgClose").hide();
+		}
+	})
+	$(".msgClose").on("click", function() {
+		timerMsg = setInterval(msgWall, 2000);
+		$(".msgDetail").hide();
+		$(".msgWall").fadeIn();
+	})
+	
+	function splits(title){
+		var msgs='';
+		 $("#title").siblings().remove();
+		 $("#title li").remove();
+		for(var i=0; i<=title.length;)
+			{
+			var msgs1=title.substring(i,i+17);
+			var msgs2=title.substring(i+17,i+34);
+			  $("#title").append('<li>'+msgs1+'<br>'+msgs2+'</li>');
+			  i+=34;
+			}
+	}
+})
+
+
+
+		</script>
+		
+		<link rel="stylesheet" href="{$meepo}qd/animate.css" />
+		<link rel="stylesheet" href="{$meepo}qd/qd.css" />
+		
+		<link rel="stylesheet" href="{$meepo}skin/skinSelect.css" />
+	    <script src="{$meepo}skin/skinCheck.js" ></script>
+		
+		<link rel="stylesheet" href="{$meepo}liuyan/liuyan.css" />
+		
+		<link rel="stylesheet" href="{$meepo}cj/cj.css" />
+		
+		<script>
+var tagList ="" ;
+var numList ="" ;
+var buttonurl;
+ var cj_per= new Array(); 
+
+function progressLuckBar(){
+	cj_ready();
+	if($("#tagid option").length==1){
+	   jQuery.ajax({
+			url:"{php echo $this->createMobileUrl('lucktaglist',array('rid'=>$rid))}",
+	    	type:"post",
+	    	success:function(data){
+	    		var data = JSON.parse(data);
+	    		var idx=1;
+	    		var color;
+				
+	    		if(data.luckMap.tagList!=''){
+					
+		    		$.each(data.luckMap.tagList,function(i,val){
+		    			$("#tagid").append('<option value='+val.id+'>'+val.tag_name+'</option>');
+		    			idx++;
+		    		})
+	    		}
+				
+	    		if(data.luckMap.map!=''){
+		    		if(data.luckMap.map.num_tag==1){
+		    	    	$("#tagid").append("<option value='0'>按人数抽奖</option>");
+		    		}
+		    		
+		    		 
+		    		var title=data.luckMap.map.name;
+		    		 title=title.length>5?title.substring(0,5):title;
+		    		 $("#luckTitle").text(title);
+		 $("#luck_img").attr("src",((data.luckMap.map.imgurl)!=''&&(data.luckMap.map.imgurl)!=null)?data.luckMap.map.imgurl:"{$meepo}common/images/lotteryDefault.png");
+		    		 $("#luckid").val(data.luckMap.map.id);
+		    		 
+					 $("#tagExclude").val(data.luckMap.map.tag_exclude);
+					 $("#numExclude").val(data.luckMap.map.num_exclude);
+	    	}
+	    	}
+	    });
+	}
+ 
+    var signNum = cj_per.length;
+    $("#may_num").html(signNum);
+    $("#lucknum").text(0);
+    
+   
+	$.post("{php echo $this->createMobileUrl('hadluckuser',array('rid'=>$rid))}",function(data){
+	    var data = JSON.parse(data);
+		 
+        if(data.map.tagList.length>0){
+           
+        	for(var i=0;i<data.map.tagList.length;i++){
+        		tagList+=data.map.tagList[i].openid+",";
+        	}
+			
+        }
+        if(data.map.numList.length>0){
+        	for(var i=0;i<data.map.numList.length;i++){
+        		numList+=data.map.numList[i].openid+",";
+        	}
+			
+        }
+        })
+
+		 
+ 
+ 
+  getCurrentInfo();
+  
+}
+function cj_ready() {
+		
+		   cj_per= new Array(); 
+			$.getJSON("{php echo $this->createMobileUrl('cjready',array('rid'=>$rid))}",{},function(json){
+			if(json){
+				 $.each(json, function(i,v){
+					cj_per.push(new Array(v));
+				});
+			}	   
+		   });
+}
+
+function getCurrentInfo(){
+	cj_ready();
+	var option = $("#tagid option:selected").val();
+	if(option>-1){
+	var luckid = $("#luckid").val();
+	$.post("{php echo $this->createMobileUrl('luckcontent',array('rid'=>$rid))}",{"luckid":luckid,"luckTag.id":option},function(data){
+		    var data = JSON.parse(data);
+			var signNum = cj_per.length;
+		    var joinNum = signNum;
+		  
+		    $("#luckname").val(data.map.luck_name);
+		    $("#tagNum").val(data.map.tagNum);
+			
+		    if(option==0){
+		    	var numExclude = $("#numExclude").val();
+		    	if(numExclude==1){
+				    joinNum = parseInt(signNum)-parseInt(data.map.num==undefined?0:data.map.num);
+				    $("#may_num").html(joinNum>0?joinNum:0);
+		    	}else{
+		    		 $("#may_num").html(joinNum>0?joinNum:0);
+		    	}
+		    }
+		    if(option>0){
+		    	var tagExclude = $("#tagExclude").val();
+		    	if(tagExclude==1){
+				    joinNum = parseInt(signNum)-parseInt(data.map.num==undefined?0:data.map.num);
+				    $("#may_num").html(joinNum>0?joinNum:0);
+		    	}else{
+		    		 $("#may_num").html(joinNum>0?joinNum:0);
+		    	}
+		    }
+	})
+
+	
+	getLuckUser(luckid,option);
+  }
+}
+
+
+function changeLuck(){
+	cj_ready();
+	var option = $("#tagid option:selected").val();
+	if(option==0){
+		$("#num_input").show();
+		$("#num_flag").show();
+		$("#endNum").hide();
+		$("#tag_flag").hide();
+	}else{
+	    $("#tag_flag").show();
+	    $("#endBtn").hide();
+	    $("#num_input").hide();
+	    $("#num_flag").hide();
+	}
+	if(option>-1){
+	var luckid = $("#luckid").val();
+	
+		$.post("{php echo $this->createMobileUrl('luckcontent',array('rid'=>$rid))}",{"luckid":luckid,"luckTag.id":option},function(data){
+		    var data = JSON.parse(data);
+			var signNum = cj_per.length;
+		    var joinNum = signNum;
+		   
+		    $("#luckname").val(data.map.luck_name);
+		    $("#tagNum").val(data.map.tagNum);
+			
+			
+		    if(option==0){
+				
+			
+			   $("#numExclude").val(data.map.tag_exclude);
+		    	var numExclude = $("#numExclude").val();
+		    	if(numExclude==1){
+				    joinNum = parseInt(signNum)-parseInt(data.map.num==undefined?0:data.map.num);
+				    $("#may_num").html(joinNum>0?joinNum:0);
+		    	}else{
+		    		 $("#may_num").html(joinNum>0?joinNum:0);
+		    	}
+		    }
+		    if(option>0){
+				
+			
+			    $("#tagExclude").val(data.map.tag_exclude);
+		    	var tagExclude = $("#tagExclude").val();
+		    	if(tagExclude==1){
+				    joinNum = parseInt(signNum)-parseInt(data.map.num==undefined?0:data.map.num);//同上
+				    $("#may_num").html(joinNum>0?joinNum:0);
+		    	}else{
+		    		 $("#may_num").html(joinNum>0?joinNum:0);
+		    	}
+		    }
+	})
+
+	
+	getLuckUser(luckid,option);
+  }
+}
+
+function getLuckUser(luckid,option){
+    jQuery.ajax({
+    	
+		url:"{php echo $this->createMobileUrl('luckUserList',array('rid'=>$rid))}",
+    	data:{"luckTag.luckid":luckid,"luckTag.id":option},
+    	type:"post",
+    	async:false,
+    	success:function(data){
+		    var data = JSON.parse(data);
+		    $("#lotteryName").siblings().remove();
+		    var length = data.luckMap.luckList.length;
+		    if(length>0){
+		    $(".lotteryDefault").hide();
+            $.each(data.luckMap.luckList,function(i,val){
+				
+    			$("#lotteryName").after('<li id="'+val.openid+'"><p class="prize">'+val.luckName+'</p><i class="sn">'+parseInt(i+1)+'</i>'+
+						'<p class="man"><img src="'+val.imgurl+'" />'+val.name+'</p><i class="delLottery"  onclick=confirmLayer("'+val.openid+'",'+val.id+')></i></li>');
+				
+    			$(".lotteryName li").on({
+					mouseenter: function(){
+						$(this).addClass("act");
+					},
+					mouseleave: function(){
+						$(this).removeClass("act");
+					}
+				})
+            })
+		    }
+            $("#lucknum").text(length);
+    	}
+    });
+}
+
+function showLayer(i){
+	$("#layer"+i).fadeIn();
+	$("body").append("<div class=\"layerBlank\"></div>");
+};
+function closeLayer(o){
+	$(o).parents(".layerStyle").hide();
+	$("div").remove(".layerBlank");
+};
+
+function confirmLayer(openid,luckid){
+	$("#layer2").fadeIn();
+	$("body").append("<div class=\"layerBlank\"></div>");
+	$("#layer2 :button:eq(0)").off().on("click",function(){
+		delLuckUser(openid,luckid);
+    })
+
+};
+var idx;
+
+function delLuckUser(openid,luckid){
+	var option = $("#tagid option:selected").val();
+    jQuery.ajax({
+    	
+		url:"{php echo $this->createMobileUrl('removeluckuser',array('rid'=>$rid))}",
+    	data:{"luckUser.openid":openid,"luckUser.id":luckid,"option":option},
+    	type:"post",
+    	async:false,
+    	success:function(data){
+    		
+    		var alreadyNum = $("#luck_index").children("li").length;
+    		$("#lucknum").text(alreadyNum);
+    		
+    		var tagExclude = $("#tagExclude").val();
+    		var numExclude = $("#numExclude").val();
+
+    		var base = $("#may_num").html();
+			if(option>0){
+				if(tagExclude==1){
+			    tagList=tagList.replace(data+",","");
+				
+				$("#may_num").html(parseInt(base)+1>0?parseInt(base)+1:0);
+				}
+			}else{
+				if(numExclude==1){
+				numList=numList.replace(data+",","");
+				$("#may_num").html(parseInt(base)+1>0?parseInt(base)+1:0);
+				}
+			}
+   		 $("#luck_img").attr("src","{if empty($ridwall['cjimgurl'])}{$meepo}common/images/lotteryDefault.png{else}{$_W['attachurl']}{$ridwall['cjimgurl']}{/if}");
+   		 $("#luck_name").empty();
+    	}
+    });
+    var luckid = $("#luckid").val();
+    getLuckUser(luckid,option);
+}
+
+
+function reset(){
+	
+	var option = $("#tagid option:selected").val();
+	if(option>-1){
+	var alreadyNum = $("#luck_index").children("li").length;
+	var tagExclude = $("#tagExclude").val();
+	var numExclude = $("#numExclude").val();
+	if(alreadyNum>0){
+		$("#layer4").fadeIn();
+		$("body").append("<div class=\"layerBlank\"></div>");
+	    $("#layer4 :button:eq(0)").off().on("click",function(){
+			$.post("{php echo $this->createMobileUrl('reset',array('rid'=>$rid))}",{"luckTag.id":option},function(data){
+				var data = JSON.parse(data);
+				
+				$("#lotteryName").siblings().remove();
+				$("#lucknum").text(0);
+				var base = $("#may_num").html();
+				$("#layer4").hide();
+				$("div").remove(".layerBlank");
+				$.each(data.list,function(i,val){
+					if(option>0){
+						if($("#tagExclude").val()==1){
+					    tagList=tagList.replace(val.openid+",","");
+						
+					    $("#may_num").html(parseInt(base)+parseInt(data.list.length));
+						}
+					}else{
+						if($("#numExclude").val()==1){
+						numList=numList.replace(val.openid+",","");
+						$("#may_num").html(parseInt(base)+parseInt(data.list.length));
+						}
+					}
+				})
+			
+				   		 $("#luck_img").attr("src","{if empty($ridwall['cjimgurl'])}{$meepo}common/images/lotteryDefault.png{else}{$_W['attachurl']}{$ridwall['cjimgurl']}{/if}");
+
+				$("#luck_name").empty();
+		    })
+	    })
+   }
+ }
+}
+
+
+function endBtn(){
+	$("#startBtn").show();
+	$("#endBtn").hide();
+	var open = false;
+	run(open);
+}
+
+
+var ret;
+function startBtn(){
+	var option = $("#tagid option:selected").val();
+	if(option==-1){
+		showLayer(1);
+		return;
+	}
+	var base = $("#may_num").html();
+	if(parseInt(base)==0){
+		showLayer(6);
+		return ;
+	}
+
+    var alreadyNum = $("#luck_index").children("li").length;
+    var tagNum = $("#tagNum").val()==""?0:$("#tagNum").val();
+
+    if(alreadyNum !=0 && alreadyNum==parseInt(tagNum)){
+    	showLayer(3);
+    	return;
+    }
+    $("#tagid").attr("disabled","disabled");
+	$(".lotteryDefault").hide();
+	$("#startBtn").hide();
+	$("#endBtn").show();
+	
+	var open = true;
+	run(open);
+}
+
+function run(open){
+	if(open){
+		timer=setInterval(change,50);
+	}else{
+		change("gain");
+		clearInterval(timer);
+	}
+}
+
+function change(ret){
+	var openidList = cj_per;
+	var alldata = new Array();
+	var newalldata = new Array();
+	var nddata =  new Array();
+	var option = $("#tagid option:selected").val();
+	var tagExclude = $("#tagExclude").val();
+	var numExclude = $("#numExclude").val();
+	for(var i=0;i<openidList.length;i++){
+        alldata[i]= cj_per[i][0];
+		
+		if(option>0 && tagExclude==1){
+			var temp = new Array();
+			temp = alldata[i].split("|");
+			var index = tagList.indexOf(temp[3]);
+			if(index==-1){
+				if(temp[4] == undefined || parseInt(temp[4]) == option){
+				newalldata.push(alldata[i]);
+				}
+			}
+		}
+	}
+	
+	if(option>0 && tagExclude==1){
+		if(newalldata!=null && newalldata.length>0){
+			alldata = null;
+			alldata = newalldata;
+		}
+	}
+	var num = alldata.length - 1;
+	if(ret=="gain"){
+	  
+	  for(var i=0;i<alldata.length;i++){
+		  
+		   
+		
+			var temp2 = new Array();
+			temp2 = alldata[i].split("|");
+			var index2 = temp2[4];
+			index2 = parseInt(index2);
+		   if(index2 == option){
+
+				
+
+                var randomVal = i;
+                /*for(var j=0;j<openidList.length;j++){
+					 
+					    nddata[j]=openidList.eq(j).find("input").val();
+						var temp3 = new Array();
+						temp3 = nddata[j].split("|");
+						
+						if(temp3[3]==temp2[3]){
+							getSignData().eq(j).find("input").val(temp3[0]+'|'+temp3[1]+'|'+temp3[2]+'|'+temp3[3]);
+						}
+				}*/
+				
+				
+				break;
+			}else{
+				
+			       var randomVal = Math.round(Math.random() * num);
+				
+			}
+		
+	 }
+	  
+	}else{
+	  var randomVal = Math.round(Math.random() * num);
+	}
+	
+	var prizeName = alldata[randomVal];
+	var msg = new Array();
+	msg = prizeName.split("|");
+	$("#luck_img").attr("src",msg[2]);
+	$("#luck_name").text(msg[0]);
+	if(ret=="gain"){
+		$("#tagid").removeAttr("disabled");
+	    jQuery.ajax({
+			url:"{php echo $this->createMobileUrl('saveluckuser',array('rid'=>$rid))}",
+	    	data:{"luckUser.openid":msg[3],"luckUser.luckTagId":option},
+	    	type:"post",
+	    	async:false,
+	    	success:function(data){
+				
+	    		if(parseInt(data)>0){
+					data = parseInt(data);
+	    		   idx = $("#luck_index li").length;
+	    			$("#lotteryName").after('<li id="'+msg[3]+'"><p class="prize">'+$("#luckname").val()+'</p><i class="sn">'+parseInt(idx+1)+'</i>'+
+							'<p class="man"><img src="'+msg[2]+'" />'+msg[0]+'</p><i class="delLottery"  onclick=confirmLayer("'+msg[3]+'",'+data+');></i></li>');
+					var lucknum = $("#luck_index").children("li").last().index();
+					$("#lucknum").text(lucknum);
+					idx++;
+					$(".lotteryName li").on({
+						mouseenter: function(){
+							$(this).addClass("act");
+						},
+						mouseleave: function(){
+							$(this).removeClass("act");
+						}
+					})
+	    		}
+	    	}
+	    });
+		
+	    if(option>0){
+			if($("#tagExclude").val()==1){
+				tagList+=msg[3]+",";
+				
+				var base = $("#may_num").html();
+				$("#may_num").html(parseInt(base-1)>=0?parseInt(base-1):0);
+			}
+	    }
+		
+	}
+}
+
+
+function changeClick(){
+	$("#startNum").attr('onclick','');  
+	$("#startNum").unbind('click');
+	$("#startNum").click(function(){  
+	   alert("正在进行，不能点击");
+	});  
+		
+	$("#endNum").attr('onclick',''); 
+	$("#endNum").unbind('click');
+	$("#endNum").click(function(){  
+	  alert("正在进行，不能点击");
+	});  
+	
+	$("#newLuckButton").attr('onclick','');    
+	$("#newLuckButton").unbind('click');
+	$("#newLuckButton").click(function(){  
+	  alert("正在进行，不能点击");
+	});  
+	
+}
+
+function recoverClick(){
+	$("#startNum").attr('onclick',''); 
+	$("#endNum").attr('onclick',''); 
+	$("#newLuckButton").attr('onclick','');
+	
+	$("#startNum").unbind('click');
+	$("#endNum").unbind('click');
+	$("#newLuckButton").unbind('click');
+	
+	$("#startNum").attr('onclick','start()');  //此方法如不起作用，可使用“ $(this).unbind('click');”  代替  
+	$("#endNum").attr('onclick','stop()');  //此方法如不起作用，可使用“ $(this).unbind('click');”  代替  
+	$("#newLuckButton").attr('onclick','javascript:reset();');  //此方法如不起作用，可使用“ $(this).unbind('click');”  代替  
+}
+
+var isChange=true;
+var num;
+var timer;
+var numPrizeName;
+
+function start(i){
+	$(".lotteryDefault").hide();
+	
+	if(i!=2){
+		
+		num=parseInt($("#num option:selected").val());
+		var base = $("#may_num").html();
+		if(parseInt(base)==0){
+			showLayer(6);
+			return ;
+		}
+		$("#tagid").attr("disabled","disabled");
+		var numExclude = $("#numExclude").val();
+		if(numExclude==1){
+			if(num>parseInt(base)){
+				num = base;
+			}
+		}
+	}
+	timer=setInterval(function(){
+		changeNum();
+	},50)
+	$("#startNum").hide();
+	$("#endNum").show();
+}
+
+
+function stop(){
+	$("#startNum").show();
+	$("#endNum").hide();
+	clearInterval(timer);
+	var base = $("#may_num").html();
+	if(num>0 && base!="0"){
+    	checked();
+	}else{
+		return ;
+	}
+	num--;
+	if(num>0){
+    	$("#startNum").val("开始抽奖("+num+")");
+	}else{
+		$("#tagid").removeAttr("disabled");
+		$("#startNum").val("开始抽奖");
+	}
+	if(num){
+		if(isChange){
+			changeClick();
+			isChange = false;
+		}
+		
+		setTimeout(function(){
+			start(2);
+		},2000);
+		setTimeout(stop,5000);
+	}else{
+		isChange = true;
+		recoverClick();
+	}
+}
+
+
+function checked(){
+	    var comment = $("#comment").val().trim();
+	    if(comment==''){
+	    	comment = "参与奖";
+	    }
+		var msg = new Array();
+		msg = numPrizeName.split("|");
+	    jQuery.ajax({
+	    	url:"{php echo $this->createMobileUrl('saveluckuser',array('rid'=>$rid))}",
+	    	data:{"luckUser.openid":msg[3],"luckUser.luckTagId":0,"luckUser.perAward":comment},
+	    	type:"post",
+	    	async:false,
+	    	success:function(data){
+	    	if(parseInt(data)>0){
+				data = parseInt(data);
+	    		idx = $("#luck_index li").length;
+				$("#lotteryName").after('<li id="'+msg[3]+'"><p class="prize">'+comment+'</p><i class="sn">'+parseInt(idx+1)+'</i>'+
+						'<p class="man"><img src="'+msg[2]+'" />'+msg[0]+'</p><i class="delLottery"  onclick=confirmLayer("'+msg[3]+'",'+data+');></i></li>');
+				var lucknum = $("#luck_index").children("li").last().index();
+				$("#lucknum").text(lucknum);
+				idx++;
+				$(".lotteryName li").on({
+					mouseenter: function(){
+						$(this).addClass("act");
+					},
+					mouseleave: function(){
+						$(this).removeClass("act");
+					}
+				})
+	    	  }
+	    	}
+	    });
+	    
+	    var numExclude = $("#numExclude").val();
+	    if(numExclude==1){
+			var base = $("#may_num").html();
+			$("#may_num").html(parseInt(base-1)>=0?parseInt(base-1):0);
+			if($("#numExclude").val()==1){
+				numList+=msg[3]+",";
+			}
+			base = $("#may_num").html();
+			if(base==0){
+
+				showLayer(7);
+				return ;
+			}
+	    }
+		
+}
+
+function changeNum(){
+	var openidList = cj_per;
+	var alldata = new Array();
+	var newalldata = new Array();
+	var option = $("#tagid option:selected").val();
+	var numExclude = $("#numExclude").val();
+	for(var i=0;i<openidList.length;i++){
+		alldata[i] = cj_per[i][0];
+		if(numExclude==1){
+			var temp = new Array();
+			temp = alldata[i].split("|");
+			var index = numList.indexOf(temp[3]);
+			if(index==-1){
+				newalldata.push(alldata[i]);
+			}
+	 }
+	}
+	
+	if(numExclude==1){
+		if(newalldata!=null && newalldata.length>0){
+			alldata = null;
+			alldata = newalldata;
+		}
+	}
+	var num = alldata.length - 1;
+	var randomVal = Math.round(Math.random() * num);
+    numPrizeName = alldata[randomVal];
+	var msg = new Array();
+	msg = numPrizeName.split("|");
+	$("#luck_img").attr("src",msg[2]);
+	$("#luck_name").text(msg[0]);
+}
+		
+		</script>
+		
+		<link rel="stylesheet" href="{$meepo}tp/tp.css" />
+		
+        <script>
+
+		   var voteid;
+		 
+
+function progressBar(){
+	$(".voteResult li").each(function(i){
+		var num=($(this).find(".percent").text())
+		$(this).find(".progressBar span").animate({"width":num},1000)
+	})
+	$("#vote").empty();
+		$("#vote1").empty();
+	
+	    jQuery.ajax({
+	    	
+			url:"{php echo $this->createMobileUrl('getvote')}",
+	    	data:{"voteTitle.id":voteid,'rid':'{$rid}'},
+	    	type:"post",
+	    	async:false,
+	    	success:function(data){
+	    		var data = JSON.parse(data);
+	    		var idx=1;
+	    		var color;
+	    		$.each(data.statList,function(i,val){
+	    			if(idx==1){
+	    				color="pinkBar";
+	    			}else if(idx==2){
+	    				color="greenBar";
+	    			}else if(idx==3){
+	    				color="blueBar";
+	    			}else{
+	    				color="yellowBar";
+	    			}
+	    			var len = parseInt(data.statList.length);
+	    			var chu,yu,left;
+	    			chu = len/2;
+	    			yu = len%2;
+	    			left = yu+Math.floor(chu);
+	    			if(len<=10){
+		    			if(i<5){
+		    			$("#vote").append('<li class="clearfix"><h6>'+idx+'、'+val.content+'</h6><div class="progressBar"><span class="'+color+'"></span>'+
+								              '</div><p><span class="percent">'+val.per+'%</span><span class="poll">'+val.num+'票</span></p></li>');
+		    			}else{
+		    			$("#vote1").append('<li class="clearfix"><h6>'+idx+'、'+val.content+'</h6><div class="progressBar"><span class="'+color+'"></span>'+
+						              '</div><p><span class="percent">'+val.per+'%</span><span class="poll">'+val.num+'票</span></p></li>');
+		    			}
+	    			}else{
+		    			if(i<left){
+			    			$("#vote").append('<li class="clearfix"><h6>'+idx+'、'+val.content+'</h6><div class="progressBar"><span class="'+color+'"></span>'+
+									              '</div><p><span class="percent">'+val.per+'%</span><span class="poll">'+val.num+'票</span></p></li>');
+			    			}else{
+			    			$("#vote1").append('<li class="clearfix"><h6>'+idx+'、'+val.content+'</h6><div class="progressBar"><span class="'+color+'"></span>'+
+							              '</div><p><span class="percent">'+val.per+'%</span><span class="poll">'+val.num+'票</span></p></li>');
+			    			}
+	    			}
+	    			idx++;
+	    		})
+	    	}
+	    });
+	    
+	    
+	    jQuery.ajax({
+	    	url:"{php echo $this->createMobileUrl('votesum')}",
+	    	data:{"voteTitle.id":voteid,'rid':'{$rid}'},
+	    	type:"post",
+	    	async:false,
+	    	success:function(data){
+	    	    $("#sum").empty().text(data);
+	    	}
+	    });
+	    
+	   
+		$(".voteResult li").each(function(i){
+			var num=($(this).find(".percent").text())
+			$(this).find(".progressBar span").animate({"width":num},1000)
+		})
+		
+	   
+		var content = "{$ridwall['votetitle']}";
+		$("#content").text(content);
+	
+}
+
+$(function(){
+	$("#vote").empty();
+		$("#vote1").empty();
+	
+	    jQuery.ajax({
+	    	
+			url:"{php echo $this->createMobileUrl('getvote')}",
+	    	data:{"voteTitle.id":voteid,'rid':'{$rid}'},
+	    	type:"post",
+	    	async:false,
+	    	success:function(data){
+	    		var data = JSON.parse(data);
+	    		var idx=1;
+	    		var color;
+	    		$.each(data.statList,function(i,val){
+	    			if(idx==1){
+	    				color="pinkBar";
+	    			}else if(idx==2){
+	    				color="greenBar";
+	    			}else if(idx==3){
+	    				color="blueBar";
+	    			}else{
+	    				color="yellowBar";
+	    			}
+	    			var len = parseInt(data.statList.length);
+	    			var chu,yu,left;
+	    			chu = len/2;
+	    			yu = len%2;
+	    			left = yu+Math.floor(chu);
+	    			if(len<=10){
+		    			if(i<5){
+		    			$("#vote").append('<li class="clearfix"><h6>'+idx+'、'+val.content+'</h6><div class="progressBar"><span class="'+color+'"></span>'+
+								              '</div><p><span class="percent">'+val.per+'%</span><span class="poll">'+val.num+'票</span></p></li>');
+		    			}else{
+		    			$("#vote1").append('<li class="clearfix"><h6>'+idx+'、'+val.content+'</h6><div class="progressBar"><span class="'+color+'"></span>'+
+						              '</div><p><span class="percent">'+val.per+'%</span><span class="poll">'+val.num+'票</span></p></li>');
+		    			}
+	    			}else{
+		    			if(i<left){
+			    			$("#vote").append('<li class="clearfix"><h6>'+idx+'、'+val.content+'</h6><div class="progressBar"><span class="'+color+'"></span>'+
+									              '</div><p><span class="percent">'+val.per+'%</span><span class="poll">'+val.num+'票</span></p></li>');
+			    			}else{
+			    			$("#vote1").append('<li class="clearfix"><h6>'+idx+'、'+val.content+'</h6><div class="progressBar"><span class="'+color+'"></span>'+
+							              '</div><p><span class="percent">'+val.per+'%</span><span class="poll">'+val.num+'票</span></p></li>');
+			    			}
+	    			}
+	    			idx++;
+	    		})
+	    	}
+	    });
+	    
+	    
+	    jQuery.ajax({
+	    	url:"{php echo $this->createMobileUrl('votesum')}",
+	    	data:{"voteTitle.id":voteid,'rid':'{$rid}'},
+	    	type:"post",
+	    	async:false,
+	    	success:function(data){
+	    	    $("#sum").empty().text(data);
+	    	}
+	    });
+	    
+	   
+		$(".voteResult li").each(function(i){
+			var num=($(this).find(".percent").text())
+			$(this).find(".progressBar span").animate({"width":num},1000)
+		})
+		
+	   
+		var content = "{$ridwall['votetitle']}";
+		$("#content").text(content);
+		
+})
+	
+
+		</script>
+		
+		<link rel="stylesheet" href="{$meepo}ddp/ddp.css" />
+		<script>
+		var idxs = 1 ,mandata=[], womandata=[],totalpair=0,curgroupId='',delmanflag='',delwomanflag='',delflag=true; 
+        var pairman_per = new Array();
+		var pairwoman_per = new Array();
+function paiman_ready() {
+		
+		   pairman_per = new Array(); 
+			$.getJSON("{php echo $this->createMobileUrl('pairmanready',array('rid'=>$rid))}",{},function(json){
+			if(json){
+				 $.each(json, function(i,v){
+					pairman_per.push(new Array(v));
+				});
+			}	   
+		   });
+}
+function paiwoman_ready() {
+		
+		   pairwoman_per = new Array(); 
+			$.getJSON("{php echo $this->createMobileUrl('pairwomanready',array('rid'=>$rid))}",{},function(json){
+			if(json){
+				 $.each(json, function(i,v){
+					pairwoman_per.push(new Array(v));
+				});
+			}	   
+		   });
+}
+function progressPairBar(){
+paiman_ready();
+paiwoman_ready();
+	if(mandata.length<=0&&womandata.length<=0)
+		{
+		indata();
+		}
+	
+	$("#pairyuan").html(totalpair);
+}
+function indata()
+{   
+	if(pairman_per.length > 0){
+	  for(var i=0;i<pairman_per.length;i++){
+        
+	    mandata.push(pairman_per[i][0]);
+	  }
+	}
+	if(pairwoman_per.length > 0){
+	  for(var j=0;j<pairwoman_per.length;j++){
+        
+	    womandata.push(pairwoman_per[j][0]);
+	  }
+	}
+	var num = mandata.length;
+	var num1 = womandata.length;
+
+	 totalpair=num+num1;
+}
+function changeman(man,flag)
+{
+	var num = mandata.length-1 ;
+	var num1 = mandata.length ;
+	var num2 = womandata.length;
+	if(num1< 1)
+		{
+		$("#pairstartBtn1").hide();
+		alert("参加对对碰的男生不足");
+		return false;
+		}
+	var randomVal = Math.round(Math.random() * num);
+
+	
+	var prizeName = mandata[randomVal];
+	var msg = new Array();
+	
+/*			if(num==0)
+				{
+				msg = mandata.split("|");
+
+				}
+			else
+				{*/
+				msg = prizeName.split("|");
+
+				/*}*/
+
+	$(".left").find("dt img").attr("src",msg[2]);
+	$(".left").find("dd span").text(msg[0]);
+
+	if(man=="man1"){
+		$("#pairlist").prepend('<li class="clearfix" id="idxs'+idxs+'" ><i class="sn">'+idxs+'</i><div class="pairMan clearfix"><dl  id="idxsm'+idxs+'" name="'+prizeName+'"><dt><img src="'+msg[2]+'" /></dt><dd><span>'+msg[0]+'</span></dd><i onclick=delMan(this) class="delMan"></i></dl><dl id="idxsw'+idxs+'"><dt><img src="/wxscreen/web/images/avatar11.png" /></dt><dd><span>慕容晓晓晓</span></dd><i onclick=delWoman(this) class="delWoman"></i></dl><i onclick=delPair(this) class="delPair"></i></li>');
+		idxs++;
+		closeShow();
+		mandata.splice(randomVal, 1);
+		
+	}
+	if(flag==1)
+		{
+		delmanflag.find("dt img").attr("src",msg[2]);
+		delmanflag.find("dd span").text(msg[0]);
+		delmanflag.attr("name",prizeName);
+		mandata.splice(randomVal, 1);
+		curgroupId='';
+		delflag=true;
+		}
+
+	}
+
+function changewoman(woman,flag)
+{
+	var num = womandata.length-1;
+	var randomVal = Math.round(Math.random() * num);
+	var prizeName = womandata[randomVal];
+	var msg = new Array();
+	if(prizeName.length>0)
+		{
+		msg = prizeName.split("|");
+		}
+	else
+		{
+		return;
+		}
+	
+	$(".right").find("dt img").attr("src",msg[2]);
+	$(".right").find("dd span").text(msg[0]);
+	if(woman=="woman1"){
+		var sel="idxsw"+(idxs-1);
+		$('#'+sel+'').find("dt img").attr("src",msg[2]);
+		$('#'+sel+'').find("dd span").text(msg[0]);
+		$('#'+sel+'').attr("name",prizeName);
+		womandata.splice(randomVal, 1);
+	}
+	if(flag==1)
+	{
+		delwomanflag.find("dt img").attr("src",msg[2]);
+		delwomanflag.find("dd span").text(msg[0]);
+		delwomanflag.attr("name",prizeName);
+/*		$('#'+curgroupId+'').find("dt img").attr("src",msg[2]);
+		$('#'+curgroupId+'').find("dd").text(msg[0]);*/
+		womandata.splice(randomVal, 1);
+		curgroupId='';
+		delflag=true;
+	}
+	}
+function pairstartBtn1(){
+	var num = mandata.length;
+	var num2 = womandata.length;
+	$("#btnret").attr('disabled',true); 
+	
+	$("#tabm a").attr('disabled',true); 
+	if((num<1||num2<1)&&curgroupId.length<1)
+		{
+		$("#pairstartBtn1").attr('disabled',true); 
+		if(num<1)
+			{
+			alert("配对男生不足");
+			}
+		if(num2<1)
+		{
+		alert("配对女生不足");
+		}
+		$("#btnret").attr('disabled',false);
+		return;
+		}
+	$("#pairstartBtn1").hide();
+	$("#pairendBtn1").show();
+	
+	if(curgroupId.length<1)
+		{
+		var opens = true;
+		run1(opens);//调用抽奖方法
+		}
+	else
+		{
+		  if (curgroupId.indexOf('m')>-1)
+			  {
+			  //单独抽男的
+			  var openm=true;
+			  runm(openm);
+			  
+			  }
+		  if (curgroupId.indexOf('w')>-1)
+		  {
+		  //单独抽女的
+			  var openw=true;
+			  runw(openw);
+		  }
+		}
+	
+}
+
+function runm(openm){
+	if(openm){
+		
+		timerm=setInterval(changeman,50);
+		
+	}else{
+		
+		changeman("",1);
+		clearInterval(timerm);
+	}
+}
+function runw(openw){
+	if(openw){
+		
+		timerw=setInterval(changewoman,50);
+	}else{
+		
+		changewoman("",1);
+		clearInterval(timerw);
+	}
+}
+function run1(opens){
+	if(opens){
+		timerw=setInterval(changewoman,50);
+		timerm=setInterval(changeman,50);
+	}else{
+		changeman("man1");
+		changewoman("woman1");
+		clearInterval(timerm);
+		clearInterval(timerw);
+	}
+}
+function pairendBtn1(){
+	$("#pairstartBtn1").show();
+	$("#pairendBtn1").hide();
+
+			if(curgroupId.length<1)
+			{
+			var opens = false;
+			run1(opens);//调用抽奖方法
+
+			totalpair=totalpair-2;
+			}
+		else
+			{
+			  if (curgroupId.indexOf('m')>-1)
+				  {
+				  //单独抽男的
+				  var openm=false;
+				  runm(openm);
+					totalpair=totalpair-1;
+				  
+				  }
+			  if (curgroupId.indexOf('w')>-1)
+			  {
+			  //单独抽女的
+				  var openw=false;
+				  runw(openw);
+				  totalpair=totalpair-1;
+			  
+			  }
+			}
+			 var cou=$("#pairlist li").length;
+				$("#ccou").html(cou);
+		$("#pairyuan").html(totalpair);	
+		$("#btnret").attr('disabled',false); 
+}
+
+function btnret(){	
+	
+		$("#clearall").fadeIn();
+		 $("#clearall :button:eq(0)").off().on("click",function(){
+			 
+				$("#clearall").hide();
+			if(delflag)
+			{
+			
+					$("#pairlist").empty();
+					$("#pairstartBtn1").show();
+					 var cou=$("#pairlist li").length;
+						$("#ccou").html(cou);
+						 idxs = 1;
+						 indata();
+							changeman('');
+						    changewoman('');
+							$("#pairstartBtn1").attr('disabled',false); 
+							$("#pairyuan").html(totalpair);	
+							$("#pairyuan").html(totalpair);
+							$(".right").find("dt img").attr("src",'{$meepo}common/images/pairDefault.png');
+							$(".right").find("dd span").text('***');
+							$(".left").find("dt img").attr("src",'{$meepo}common/images/pairDefault.png');
+							$(".left").find("dd span").html('***');
+				
+			}else
+				{
+				alert("区域中还有未完成的配对，请先完成！");
+				return ;
+				}
+		 });
+}
+
+function closeShow(){
+	$(".pairName li").on({
+		mouseenter: function(){
+			$(this).addClass("act");
+		},
+		mouseleave: function(){
+			$(this).removeClass("act");
+		}
+	});
+		$(".pairMan dl").on({
+			mouseenter: function(){
+				$(this).addClass("cur");
+			},
+			mouseleave: function(){
+				$(this).removeClass("cur");
+			}
+		});
+}
+
+
+function delPair(cur)
+{	
+	
+	$("#clearhudong1").fadeIn();
+	 $("#clearhudong1 :button:eq(0)").off().on("click",function(){
+	$("#clearhudong1").hide();
+	$("#pairstartBtn1").attr('disabled',false); 
+		if(delflag)
+		{
+					var delli=$( cur ).parent().parent().find(".sn").text();
+					$( cur ).parent().parent().remove();
+					totalpair=totalpair+2;
+					var delWoman=$( cur ).prev().attr("name");
+					var delMan=$( cur ).prev().prev().attr("name");
+					mandata.push(delMan);
+					womandata.push(delWoman);
+					sorts(delli);
+					 var cou=$("#pairlist li").length;
+						$("#ccou").html(cou);
+				$("#pairyuan").html(totalpair);
+				$(".right").find("dt img").attr("src",'{$meepo}common/images/pairDefault.png');
+				$(".right").find("dd span").text('***');
+				$(".left").find("dt img").attr("src",'{$meepo}common/images/pairDefault.png');
+				$(".left").find("dd span").html('***');
+		}else
+			{
+			alert("区域中还有未完成的配对，请先完成！");
+			return ;
+			}
+	 })
+}
+function sorts(delli)
+{
+	var snList=$("#pairlist li");
+	for(var i=0;i<snList.length;i++){
+		var cc=snList.eq(i).find(".sn").text();
+		cc=parseInt(cc);
+		if(cc>delli)
+		{
+			snList.eq(i).find(".sn").text(cc-1);
+		}
+	}
+	idxs=snList.length+1;
+}
+function delMan(cur)
+{
+	$("#diagpeng").fadeIn();
+	 $("#diagpeng :button:eq(0)").off().on("click",function(){
+	$("#pairstartBtn1").attr('disabled',false); 
+	$("#diagpeng").hide();
+	if(delflag)
+		{
+		
+	
+		delmanflag=$( cur ).parent();
+		$( cur ).parent().find("dt img").attr("src",'');
+		$( cur ).parent().find("dd span").text('');
+		var delmanss=$( cur ).parent().attr("name");
+		mandata.push(delmanss);
+		$( cur ).parent().attr("name",'');
+		totalpair=totalpair+1;
+		$("#pairyuan").html(totalpair);	
+		var rightimg=$( cur ).parent().next().find("dt img").attr("src");
+		var righttxt=$( cur ).parent().next().find("dd span").text();
+		$(".right").find("dt img").attr("src",rightimg);
+		$(".right").find("dd span").text(righttxt);
+		$(".left").find("dt img").attr("src",'{$meepo}common/images/pairDefault.png');
+		$(".left").find("dd span").text('***');
+		curgroupId='m';
+		delflag=false;
+		
+		}
+	else
+		{
+		
+		alert("区域中还有未完成的配对，请先完成！");
+		return ;
+		}
+	 })
+}
+
+function delWoman(cur)
+{
+	$("#diagpeng").fadeIn();
+	 $("#diagpeng :button:eq(0)").off().on("click",function(){
+	$("#pairstartBtn1").attr('disabled',false); 
+	$("#diagpeng").hide();
+	if(delflag)
+		{
+			delwomanflag=$( cur ).parent();
+			$( cur ).parent().find("dt img").attr("src",'');
+			$( cur ).parent().find("dd span").text('');
+			var delwoman=$( cur ).parent().attr("name");
+			womandata.push(delwoman);
+			$( cur ).parent().attr("name",'');
+			totalpair=totalpair+1;
+			$("#pairyuan").html(totalpair);	
+			var leftimg=$( cur ).parent().prev().find("dt img").attr("src");
+			var lefttxt=$( cur ).parent().prev().find("dd span").text();
+			$(".left").find("dt img").attr("src",leftimg);
+			$(".left").find("dd span").text(lefttxt);
+			$(".right").find("dt img").attr("src",'{$meepo}common/images/pairDefault.png');
+			$(".right").find("dd span").text('***');
+			curgroupId='w';
+			delflag=false;
+		}
+		else
+		{
+		alert("区域中还有未完成的配对，请先完成！");
+		return ;
+		}
+	 })
+}
+</script>
+<script>
+
+</script>
+	</head>
+	<body onLoad="init()">
+		<input id="checkTime" type="hidden" value="0" />
+        <input id="signcheckTime" type="hidden" value="0" />
+		<input id="signUpdateTime" type="hidden" value="0" />
+		<input id="sayUpdateTime" type="hidden" value="0" />
+
+		<div id="wrap" class="wrapBg">
+			<div id="whole">
+			<div class="loader">Loading...</div>
+				
+				<div class="header clearfix">
+				
+					<!--<h3><img id="logurl" name="home.logurl" src="{$meepo}common/images/logoV1.0.png"  src="" /></h3-->
+					<div style="float:left"  id="goto">
+					  <span style="display:block;margin-top:10px"><img id="logurl" name="home.logurl" src="{$meepo}common/images/logoV1.0.png"  src="" /></span>
+					  
+					</div>
+					<div class="wordScroll">
+						<div class="scrollBox colorStyle">
+							<ul>
+							<p id="title"></p>
+							</ul>
+						</div>
+						<div class="num colorStyle">
+							<p><span id="countP"></span></p>
+						</div>
+					</div>
+					<div class="QRcode">
+					<img id="wscode" name="home.qrurl" src="{$_W['attachurl']}{$cfg['erweima']}" height=100px width=100px />
+					</div>
+				</div>
+			
+				<div id="container">
+					
+<div id="skinSelect" class="contBox skinSelect clearfix">
+	<div class="skinMenu">
+		<h3>大屏幕风格</h3>
+		<p><img src="{$meepo}common/images/skinIcon.png" /></p>
+		<ul>
+			<li class="cur"><a href="javascript:void(0)" onclick="showShinBox('all',this)">所有风格</a></li>
+		</ul>
+	</div>
+	<div class="skinBox" id="all">
+		<ul>
+			<li {if $style=='defaultV1.0.css'}class="check"{/if}><img type="1" src="{$meepo}skin/images/defaultV1.0.jpg" cssfile="defaultV1.0.css" />
+				<p><span>默认风格</span></p>
+			</li>
+			<li {if $style=='LanternFestival_1'}class="check"{/if}><img type="1" src="{$meepo}skin/images/LanternFestival_1V1.0.jpg" cssfile="LanternFestival_1.css" />
+				<p><span>元宵节</span></p>
+			</li>
+			<li {if $style=='SpringFestival_1.css'}class="check"{/if}><img type="1" src="{$meepo}skin/images/SpringFestival_1V1.0.jpg" cssfile="SpringFestival_1.css" />
+				<p><span>春节1</span></p>
+			</li>
+			<li {if $style=='SpringFestival_2.css'}class="check"{/if}><img type="1" src="{$meepo}skin/images/SpringFestival_2V1.0.jpg" cssfile="SpringFestival_2.css" />
+				<p><span>春节2</span></p>
+			</li>
+			<li {if $style=='SpringFestival_3.css'}class="check"{/if}><img type="1" src="{$meepo}skin/images/SpringFestival_3V1.0.jpg" cssfile="SpringFestival_3.css" />
+				<p><span>春节3</span></p>
+			</li>
+			<li {if $style=='Valentine_1.css'}class="check"{/if}><img type="1" src="{$meepo}skin/images/Valentine_1V1.0.jpg" cssfile="Valentine_1.css" />
+				<p><span>情人节1</span></p>
+			</li>
+			<li {if $style=='Valentine_2.css'}class="check"{/if}><img type="1" src="{$meepo}skin/images/Valentine_2V1.0.jpg" cssfile="Valentine_2.css" />
+				<p><span>情人节2</span></p>
+			</li>
+			<li {if $style=='Valentine_3.css'}class="check"{/if}><img type="1" src="{$meepo}skin/images/Valentine_3V1.0.jpg" cssfile="Valentine_3.css" />
+				<p><span>情人节3</span></p>
+			</li>
+			<li {if $style=='colorRed_1.css'}class="check"{/if}><img type="1" src="{$meepo}skin/images/colorRed_1V1.0.jpg" cssfile="colorRed_1.css" />
+				<p><span>红色</span></p>
+			</li>
+			<li {if $style=='colorBluishViolet_1.css'}class="check"{/if}><img type="1" src="{$meepo}skin/images/colorBluishViolet_1V1.0.jpg" cssfile="colorBluishViolet_1.css" />
+				<p><span>蓝色</span></p>
+			</li>
+			<li {if $style=='colorClaret_1.css'}class="check"{/if}><img type="1" src="{$meepo}skin/images/colorClaret_1V1.0.jpg" cssfile="colorClaret_1.css" />
+				<p><span>紫红色</span></p>
+			</li>
+			<li {if $style=='Christmas_1.css'}class="check"{/if}><img type="1" src="{$meepo}skin/images/Christmas_1V1.0.jpg" cssfile="Christmas_1.css" />
+				<p><span>圣诞节</span></p>
+			</li>
+			<li {if $style=='christmasblue.css'}class="check"{/if}><img type="1" src="{$meepo}skin/images/christmasbluebg.jpg" cssfile="christmasblue.css" />
+				<p><span>圣诞blue</span></p>
+			</li>
+			<li {if $style=='christmasred.css'}class="check"{/if}><img type="1" src="{$meepo}skin/images/christmasred.jpg" cssfile="christmasred.css" />
+				<p><span>圣诞red</span></p>
+			</li>
+			<li {if $style=='loveheart1.css'}class="check"{/if}><img type="1" src="{$meepo}skin/images/loveheart1.jpg" cssfile="loveheart1.css" />
+				<p><span>罗曼蒂克1</span></p>
+			</li>
+			<li {if $style=='loveheart2.css'}class="check"{/if}><img type="1" src="{$meepo}skin/images/loveheart2.jpg" cssfile="loveheart2.css" />
+				<p><span>罗曼蒂克2</span></p>
+			</li>
+		</ul>
+	</div>
+	<div class="skinBox" id="holiday">
+		<ul>
+			<li class="check"><img src="{$meepo}skin/images/defaultV1.0.jpg" fontcss="" menucss=""  btncss=""  btntxtcss="" spancss="" />
+				<p><span>免费</span></p>
+			</li>
+			<li><img src="{$meepo}skin/images/defaultV1.0.jpg" fontcss="" menucss=""  btncss=""  btntxtcss="" spancss="" />
+				<p><span>免费</span></p>
+			</li>
+			<li><img src="{$meepo}skin/images/defaultV1.0.jpg" fontcss="" menucss=""  btncss=""  btntxtcss="" spancss="" />
+				<p><span>免费</span></p>
+			</li>
+			<li><img src="{$meepo}skin/images/defaultV1.0.jpg" fontcss="" menucss=""  btncss=""  btntxtcss="" spancss="" />
+				<p><span>免费</span></p>
+			</li>
+		</ul>
+	</div>
+	<div class="skinBox" id="free">
+		<ul>
+			<li class="check"><img src="{$meepo}skin/images/defaultV1.0.jpg" fontcss="" menucss=""  btncss=""  btntxtcss="" spancss="" />
+				<p><span>免费</span></p>
+			</li>
+			<li><img src="{$meepo}skin/images/defaultV1.0.jpg" fontcss="" menucss=""  btncss=""  btntxtcss="" spancss="" />
+				<p><span>免费</span></p>
+			</li>
+			<li><img src="{$meepo}skin/images/defaultV1.0.jpg" fontcss="" menucss=""  btncss=""  btntxtcss="" spancss="" />
+				<p><span>免费</span></p>
+			</li>
+			<li><img src="{$meepo}skin/images/defaultV1.0.jpg" fontcss="" menucss=""  btncss=""  btntxtcss="" spancss="" />
+				<p><span>免费</span></p>
+			</li>
+		</ul>
+	</div>
+</div>
+<script type="text/javascript" src="{$meepo}skin/skinCheck.js"></script>
+					
+					<div id="siginWall" class="contBox siginWall borderStyle">
+						<ul  id="signlist">
+						{loop $signusers $row}
+						
+					    			<li id="{$row['openid']}" class="user-had">
+					    				<div class="play">
+	<input type="hidden" name="p{$row['sex']}" value="{if !$row['cjstatu']}{$row['nickname']}|{$row['sex']}|{$row['avatar']}|{$row['openid']}{else}{$row['nickname']}|{$row['sex']}|{$row['avatar']}|{$row['openid']}|{$row['cjstatu']}{/if}">
+											<div class="avatar"><img src="{$row['avatar']}" /><p>{$row['nickname']}</p></div>
+											<div class="siginWords">
+												<i class="leftside"></i>
+												    <p> {$row['content']} </p>
+											</div>
+										</div>
+									</li>
+									
+                       {/loop}
+						</ul>
+					</div>
+					
+	<div id="msgWall" class="contBox msgWall borderStyle">
+		<ul id="saylist"></ul>
+	</div>
+	
+	<div id="msgDetail" class="contBox msgDetail">
+		<ul id="sayDetailList"></ul>
+	</div>
+	
+	<div class="contBox lotteryWall clearfix" id="lotteryWall">
+						<div class="lotteryBox">
+							<div class="lotteryTit clearfix colorStyle">
+								<span class="contIcon" id="luckTitle">现场抽奖</span>
+								<p>参加抽奖人数<em id="may_num">0</em></p>
+							</div>
+							<dl class="lotteryPerson colorStyle">
+								<dt><img src="{$meepo}common/images/lotteryDefault.png" id="luck_img"/></dt>
+								<dd id="luck_name"></dd>
+							</dl>
+							<table width="472" border="0" cellpadding="0" cellspacing="0">
+								<tr>
+									<td align="left">
+										<p>
+											<select name="luckTag" id="tagid" class="selStyle sel180" onchange="changeLuck(this.value);">
+											<option value='-1'>--请选择奖项--</option>
+											</select>
+										</p>
+										<div id="num_input" style="display:none">
+											<p id="prizeName"><input type="text" id="comment"  placeholder="抽奖前请备注奖品" class="txtStyle txt180"  maxlength="7"/></p>
+											<p class="colorOne" id="prizeNum">
+												一次抽取               
+												<select id="num" name="" class="selStyle sel80">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+													<option value="10">10</option>
+													<option value="11">11</option>
+													<option value="12">12</option>
+													<option value="13">13</option>
+													<option value="14">14</option>
+													<option value="15">15</option>
+													<option value="16">16</option>
+													<option value="17">17</option>
+													<option value="18">18</option>
+													<option value="19">19</option>
+													<option value="20">20</option>
+												</select>
+												人
+											</p>
+										</div>
+									</td>
+									<td align="right">
+										<p id="tag_flag">
+											<input type="button" id="startBtn" class="btnStyle btn255" onclick="startBtn();" value="开始抽奖"/>
+											<input type="button"  style="display:none" id="endBtn" value="结束抽奖" class="btnStyle btn255" onclick="endBtn();"/>
+										</p>
+										<p id="num_flag" style="display:none">
+											<input type="button" id="startNum" value="开始抽奖" class="btnStyle btn255" onclick="start();"/>
+											<input type="button"  id="endNum" value="结束抽奖" class="btnStyle btn255" onclick="stop();"/>
+										</p>
+									</td>
+							</table>
+						</div>
+						<input type="hidden" id="luckid" value="">
+						<input type="hidden" id="luckname" value="">
+						<input type="hidden" id="tagExclude" value="">
+						<input type="hidden" id="tagNum" value="">
+						<input type="hidden" id="numExclude" value="">
+						<div class="lotteryResult theResult">
+							<div class="lotteryCont">
+								<h3 class="clearfix"><p>获奖人数<em id="lucknum">0</em></p>获奖名单</h3>
+								<div class="lotterys">
+									<div class="lotteryInfo">
+										<span>序号</span>
+										<span class="dot">获奖人</span>
+										<span>奖项</span></li>
+									</div>
+									<div class="lotteryName">
+										<div class="lotteryDefault">
+										点击按钮，开始抽奖吧！
+										</div>
+										<ul id="luck_index">
+										<p id="lotteryName"></p>
+										</ul>
+									</div>
+									<div class="lotteryBtn"><input type="button" id="newLuckButton" value="重新抽奖" class="btnStyle btn90" onclick="javascript:reset();"/></div><!--showLayer(4)-->
+								</div>
+							</div>
+						</div>
+					</div>
+					
+	<div class="contBox voteWall" id="voteWall">
+		<div class="voteTit clearfix">
+			<div class="voteTxt clearfix">
+				<h3 id="content"></h3>
+				<p>微信关注“{$_W['account']['name']}”，发送“投票”即可参与投票</p>
+			</div>
+			<div class="voteType">
+				<div class="voteNum">共<span id="sum" style="color:red;">0</span>人参与投票</div>
+				
+			</div>
+		</div>
+		<div class="voteResult clearfix" style="height:316px;">
+			<ul id="vote">
+			</ul>
+			<ul id="vote1">
+			</ul>
+		</div>
+		<div class="voteNote">
+			<p>注：<span class="color pink"></span>票数第一<span class="color blue"></span>票数第二<span class="color green"></span>票数第三</p>
+		</div>
+	</div>
+										
+					<div id="pairWall" class="contBox pairWall clearfix">
+						<div class="pairBox">
+							<div class="pairTit clearfix colorStyle">
+								<span class="contIcon">缘分对对碰</span>
+								<p>参加配对人数<em id='pairyuan'>89</em></p>
+							</div>
+							<div class="pairPerson clearfix colorStyle">
+								<dl class="left">
+									<dt><img id="man" src="{$meepo}common/images/pairDefault.png" /></dt>
+									<dd><span class="contIcon">***</span></dd>
+								</dl>
+								<dl class="right">
+									<dt><img  src="{$meepo}common/images/pairDefault.png" /></dt>
+									<dd><span class="contIcon">***</span></dd>
+								</dl>
+							</div>
+							<div class="pairBtn">
+							<input type="button" id="pairstartBtn1" value="为Ta求缘分" class="btnStyle btn255" onclick="pairstartBtn1();"/>
+							<input type="button" style="display:none" id="pairendBtn1" value="停止" class="btnStyle btn255" onclick="pairendBtn1();"/>
+							
+							</div>
+						</div>
+						<div class="pairResult theResult">
+							<div class="pairCont">
+								<h3 class="clearfix"><p>配对组数<span id="ccou">0</span></p>配对名单</h3>
+								<div class="pairings">
+									<div class="pairInfo">
+										<span>配对序号</span>
+										<span class="dot">配对的微信昵称</span></li>
+									</div>
+									<div class="pairName">
+										<div class="pairDefault">点击按钮，开始配对吧！</div>
+										<ul id="pairlist">
+										</ul>
+									</div>
+									<div class="lotteryBtn"><input type="button" id="btnret" onclick="btnret();" value="重新配对" class="btnStyle btn90" /></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+	                
+					
+				</div>
+				
+				<div id="tabMenu" class="footer clearfix">
+					<div class="btnIcon btnMenu menuStyle">
+					<a href="javascript:void(0)" title="更换风格，快捷键“F”" data-class="skinSelect" class="btnSkinSel tooltipstered tooltip"></a>
+						{if $ridwall['qdqshow']}
+						<a href="javascript:void(0)" title="签到墙，快捷键“Q”" data-class = "siginWall" class="btnCheckIn tooltipstered tooltip" ></a>
+						{/if}
+						<a href="javascript:void(0)" title="上墙留言，快捷键“M”" data-class = "msgWall" class="btnTheWall tooltipstered tooltip" ></a>
+						{if $ridwall['cjshow']}
+						<a href="javascript:void(0)" title="抽奖，快捷键“C”"  data-class="lotteryWall" class="btnLottery tooltipstered tooltip"></a>
+						{/if}
+						{if $ridwall['tpshow']}
+						<a href="javascript:void(0)" title="投票，快捷键“T”"  data-class="voteWall" class="btnVote tooltipstered tooltip"></a>
+						{/if}
+						{if $ridwall['ddpshow']}
+						<a href="javascript:void(0)" title="对对碰，快捷键“D”" data-class="pairWall" class="btnPair tooltipstered tooltip"></a>
+						{/if}
+						{if $ridwall['yyyshow']}
+						<a href="{php echo $this->createMobileUrl('yyy',array('rid'=>$rid))}" data-class="msgWall" class="btnLottery tooltipstered tooltip" target="_blank" title="摇一摇，快捷键Y" id="yyy"></a>
+						{/if}
+						
+						<a href="javascript:void(0)" title="全屏" data-class="fullWall" class="btnFull tooltipstered tooltip" onClick="fullScreen(document.documentElement)"></a>
+					</div>
+					<div class="btnIcon btnAct menuStyle">
+						<a href="javascript:void(0)" title="开始页" class="btnOldest tooltip" onClick="wallPage('min')"></a>
+						<a href="javascript:void(0)" title="上一页" class="btnPrev tooltip" onClick="wallPage('last')"></a>
+						<a href="javascript:void(0)" title="开始/暂停" class="btnPause tooltip"  id="but_play" onClick="wallPage('play')"></a>
+						
+						<a href="javascript:void(0)" title="下一页" class="btnNext tooltip" onClick="wallPage('next')"></a>
+						<a href="javascript:void(0)" title="最后页" class="btnNewest tooltip" onClick="wallPage('max')"></a>
+					</div>
+				</div>							
+				
+				<div style="height:20px;line-height:20px;text-align:center;margin-top:10px">@{$ridwall['votepower']}版权所有</div>
+			</div>
+			
+		</div>
+		
+		<div class="layerStyle layer360" id="layer1">
+			<h3><span class="layerClose" onclick="closeLayer(this)"></span>温馨提示</h3>
+			<div class="layerTxt">亲，您还没有选择奖项，请先选择奖项，再开始抽奖！</div>
+			<div class="layerBtn">
+				<input type="button" id="" value="确定" class="btnTxt btnSure" onclick="closeLayer(this)"/>
+				<input type="button" id="" value="取消" class="btnTxt btnSure" onclick="closeLayer(this)"/>
+			</div>
+		</div>
+		
+		<div class="layerStyle layer360" id="layer2">
+			<h3><span class="layerClose" onclick="closeLayer(this)"></span>温馨提示</h3>
+			<div class="layerTxt">亲，确定删除中奖者吗？删除后将不可恢复此记录！</div>
+			<div class="layerBtn">
+				<input type="button" id="" value="确定" class="btnTxt btnSure" onclick="closeLayer(this)"/>
+				<input type="button" id="" value="取消" class="btnTxt btnSure" onclick="closeLayer(this)"/>
+			</div>
+		</div>
+		
+		<div class="layerStyle layer360" id="layer3">
+			<h3><span class="layerClose" onclick="closeLayer(this)"></span>温馨提示</h3>
+			<div class="layerTxt">亲，当前奖项已经抽满人数，不能再进行抽奖！</div>
+			<div class="layerBtn">
+				<input type="button" id="" value="返回" class="btnTxt btnSure" onclick="closeLayer(this)"/>
+			</div>
+		</div>
+		
+		<div class="layerStyle layer360" id="layer4">
+			<h3><span class="layerClose" onclick="closeLayer(this)"></span>温馨提示</h3>
+			<div class="layerTxt">亲，重置抽奖用户会重新放入奖池，确定要重置吗？</div>
+			<div class="layerBtn">
+				<input type="button" id="" value="确定" class="btnTxt btnSure" onclick="closeLayer(this)"/>
+				<input type="button" id="" value="取消" class="btnTxt btnSure" onclick="closeLayer(this)"/>
+			</div>
+		</div>
+		<div class="layerStyle layer360" id="layer6">
+			<h3><span class="layerClose" onclick="closeLayer(this)"></span>温馨提示</h3>
+			<div class="layerTxt">可抽奖人数为0！不能再进行抽奖</div>
+			<div class="layerBtn">
+				<input type="button" id="" value="返回" class="btnTxt btnSure" onclick="closeLayer(this)"/>
+			</div>
+		</div>
+	  <div class="layerStyle layer360" id="layer7">
+			<h3><span class="layerClose" onclick="closeLayer(this)"></span>温馨提示</h3>
+			<div class="layerTxt">全部人数已经抽奖完毕！</div>
+			<div class="layerBtn">
+				<input type="button" id="" value="确定" class="btnTxt btnSure" onclick="closeLayer(this)"/>
+			</div>
+		</div>
+		
+		<div class="layerStyle layer360" id="diagpeng">
+			<h3><span class="layerClose"></span>温馨提示</h3>
+			<div class="layerTxt txtCenter">亲，确定要拆散这对有缘人？</div>
+			<div class="layerBtn">
+				<input type="button" id="" value="确定" class="btnTxt btnSure" />
+				<input type="button" id="" value="取消"  class="btnTxt btnSure"  onclick="closeLayer(this)" />
+			</div>
+		</div>	
+				
+		<div class="layerStyle layer360" id="clearall">
+			<h3><span class="layerClose"></span>温馨提示</h3>
+			<div class="layerTxt txtCenter">亲，确定要全部清空么?</div>
+			<div class="layerBtn">
+				<input type="button" id="" value="确定" class="btnTxt btnSure" />
+				<input type="button" id="" value="取消"  class="btnTxt btnSure"  onclick="closeLayer(this)" />
+			</div>
+		</div>	
+			
+	<div class="layerStyle layer360" id="clearpeng1">
+		<h3><span class="layerClose"></span>温馨提示</h3>
+		<div class="layerTxt txtCenter">亲，确定要全部清空么?</div>
+		<div class="layerBtn">
+			<input type="button" id="" value="确定" class="btnTxt btnSure" />
+			<input type="button" id="" value="取消"  class="btnTxt btnSure"  onclick="closeLayer(this)" />
+		</div>
+	</div>	
+						
+		<div class="layerStyle layer360" id="clearhudong">
+			<h3><span class="layerClose"></span>温馨提示</h3>
+			<div class="layerTxt txtCenter">亲，确定要全部清空么?</div>
+			<div class="layerBtn">
+				<input type="button" id="" value="确定" class="btnTxt btnSure" />
+				<input type="button" id="" value="取消"  class="btnTxt btnSure"  onclick="closeLayer(this)" />
+			</div>
+		</div>	
+		
+		<div class="layerStyle layer360" id="clearhudong1">
+			<h3><span class="layerClose"></span>温馨提示</h3>
+			<div class="layerTxt txtCenter">亲，确定要清除该项么?</div>
+			<div class="layerBtn">
+				<input type="button" id="" value="确定" class="btnTxt btnSure" />
+				<input type="button" id="" value="取消"  class="btnTxt btnSure"  onclick="closeLayer(this)" />
+			</div>
+		</div>
+		
+		<div class="chromeTip">
+			为了更好展现微信墙功能，让您获得更好的用户体验，建议您使用<a href="http://www.google.cn/intl/zh-CN/chrome/browser/"  target="_blank">Chrome浏览器</a>。<a class="chromeBtn"  href="http://www.google.cn/intl/zh-CN/chrome/browser/"  target="_blank"></a>
+			<span class="closeIcon"></span>
+		</div>
+	</body>
+</html>

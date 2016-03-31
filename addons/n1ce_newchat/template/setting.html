@@ -1,0 +1,88 @@
+{template 'common/header'}
+<div class="main">
+{php load()->func('tpl');}
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data" id="form1">
+		<div class="panel panel-default">
+			<div class="panel-heading">客服设置</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">粉丝呼叫客服回复</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="wait" class="form-control" value="{$settings['wait']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">非客服在线时段回复</label>
+					<div class="col-sm-9 col-xs-12">
+						<input type="text" name="busy" class="form-control" value="{$settings['busy']}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">客服在线时间段Ⅰ</label>
+					<div class="col-sm-4 col-xs-6">
+						<select class="form-control" name="start1" id="start1">
+							<option value="-1">请选择每天开始接入时间</option>
+							<?php
+								for($i = 0; $i < 24; $i ++) {
+									echo '<option value="'. $i . '" ' . (($settings['start2'] != '' && $settings['start1'] == $i) ? ' selected ' : '') . '>'. $i .'时</option>';
+								}
+							?>
+						</select>
+					</div>
+					<div class="col-sm-4 col-xs-6">
+						<select class="form-control" name="end1" id="end1">
+							<option value="-1">请选择每天开始接入时间</option>
+							<?php
+								for($i = 0; $i < 24; $i ++) {
+									echo '<option value="'. $i . '" ' . (($settings['start2'] != '' && $settings['end1'] == $i) ? ' selected ' : '') . '>'. $i .'时</option>';
+							}
+							?>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">客服在线时间段Ⅱ</label>
+					<div class="col-sm-4 col-xs-6">
+						<select class="form-control" name="start2" id="start2">
+							<option value="-1">请选择每天开始接入时间</option>
+							<?php
+								for($i = 0; $i < 24; $i ++) {
+									echo '<option value="'. $i . '" ' . (($settings['start2'] != '' && $settings['start2'] == $i) ? ' selected ' : '') . '>'. $i .'时</option>';
+							}
+							?>
+						</select>
+					</div>
+					<div class="col-sm-4 col-xs-6">
+						<select class="form-control" name="end2" id="end2">
+							<option value="-1">请选择每天开始接入时间</option>
+							<?php
+								for($i = 0; $i < 24; $i ++) {
+									echo '<option value="'. $i . '" ' . (($settings['start2'] != '' && $settings['end2'] == $i) ? ' selected ' : '') . '>'. $i .'时</option>';
+							}
+							?>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+					<div class="col-sm-8 col-xs-12">
+						<div class="help-block">请选择每天接入时间段。您最多可以设置两个时间段,只有在这两个时间段的用户消息会转到多客服里。</div>
+						<strong class="text-danger">如果您只有一个时间段,请将第二个时间段留空。</strong>
+					</div>
+				</div>
+			</div>
+		</div>
+<div class="alert alert-info" style="margin-top:0;">
+	<p>
+		腾讯多客服功能说明: 设置关键词触发多客服. 那么将会把这条消息转发至腾讯多客服系统. 使用多客服客户端的客服人员如果接入了这条消息(接待本次客服对话)后, 以后的消息都将发送至多客服系统(<span style="color:red;">不会继续把消息发送至本系统</span>) <br>
+		直到客服人员关闭本地对话, 公众平台官方才会继续把消息发送至微擎系统进行处理. <br>
+		<span style="color:red;">因此, 客服人员接待完成后, 一定要点击关闭按钮来结束客服接待. 否则本平台不会生效.</span>
+	</p>
+</div>
+		<div class="form-group col-sm-12">
+			<input type="submit" name="submit" value="提交" class="btn btn-primary col-lg-1" />
+			<input type="hidden" name="token" value="{$_W['token']}" />
+		</div>
+	</form>
+</div>		
+{template 'common/footer'}

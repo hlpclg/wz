@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0 , maximum-scale=1.0, user-scalable=0">
+<title>排行榜</title>
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<style type="text/css">
+.phb_box{ min-height: 200px; width: 100%; margin-right: auto; margin-left: auto; }
+.phb_box_table{ height: auto; width: 95%; margin-right: auto; margin-left: auto; padding-top: 10px; margin-bottom: 20px; }
+.phb_box_table table{ width: 100%;}
+.phb_box_table table thead tr{ }
+.phb_box_table table thead th{ text-align: center; line-height: 30px; color: #FFF; font-size: 0.9em; font-weight: 500; height:30px;color:#333;border-bottom:1px solid #cacaca;}
+.phb_box_table table tbody td{ text-align: center; line-height: 30px; color: #ccc; font-size: 0.9em; font-weight: 500; height:30px; }
+.phb_box_table table tbody td a{ border-radius: 5px; height: 20px; width: 50px; color:#333; line-height: 20px; background-color: #efefef; display: block;  margin-top: 2px; margin-left: auto; margin-right: auto; }
+.phb_box_table table tbody tr.two{ }
+.phb_box_table table tbody .top td{ color: #EA4D00; }
+.round{
+       background: #fff;height:auto;   border-radius:5px;
+        -webkit-border-radius:5px;
+        -moz-border-radius:5px;;-moz-box-shadow:0 1px 2px #cacaca; -webkit-box-shadow:0 1px 2px #cacaca; box-shadow:0 1px 2px #cacaca;
+    }
+    
+    </style>
+<script src="../addons/ewei_takephotoa/style/jquery.js" type="text/javascript"></script>
+<base target="_self">
+</head>
+<body>
+<section class="phb_box round clearfix">
+    <div class="phb_box_table clearfix">
+    	<table cellpadding="0" cellspacing="0" >
+        	<thead>
+            	<tr>
+                    <th>排名</th>
+                    <th>用户</th>
+                    <th>分数</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+              {template 'rank_more'}
+             </tbody>
+             <tbody>
+             <tr><td colspan="3" style="height:45px;padding-bottom:5px;"><a id='pager' href='javascript:;' style="width:90%;display:block;padding:10px;text-decoration: none">获取更多排行</a></td></tr>
+             </tbody>
+        </table>
+    </div>
+</section>
+  <script language='javascript'>
+            $(function() {
+                var pindex = 1;
+    
+     
+          function loadPage() {
+                 
+	pindex++;
+	var pager = $('#pager');
+	pager.html('正在加载数据...');
+	var url = "{php echo $this->createMobileUrl('rankmore',array('rid'=>$rid))}";
+	$.get(url, {'page' : pindex}, function(html){
+		if (html.indexOf('<tr') > - 1) {
+                                                      $("#tbody").append($(html))
+			pager.html('加载更多');
+			pager.unbind('click').click(function(){
+				loadPage(pindex);
+			});
+		} else {
+                                                    pager.unbind('click');
+	                                 pager.html('已经加载完全部排名');
+		}
+	});
+}
+$("#pager").click(function(){
+     loadPage();
+})
+});
+
+
+
+            </script>
+</body>
+</html>

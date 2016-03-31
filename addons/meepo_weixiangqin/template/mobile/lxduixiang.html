@@ -1,0 +1,629 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>理想对象</title>
+    <style>
+        html,body,div,span,iframe,h1,h2,h3,h4,h5,h6,p,pre,a,em,img,small,strong,b,i,dl,dt,dd,ol,ul,li,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,footer,header,menu,nav,section{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}aside,footer,header,menu,nav,section{display:block}ol,ul{list-style:none}table{border-collapse:collapse;border-spacing:0}a{display:inline-block;text-decoration:none;cursor:default}
+        body{background:#f0f0f0;color:#999;font-size:16px;height:100%;width:100%}html{height:100%;width:100%}a{display:inline-block;text-decoration:none;color:#75b9c6;background-color:rgba(0,0,0,0)}img{background:#f0f0f0 url(/resources/v20/images/loading.gif) center center no-repeat;background-size:16px}.hidden{display:none}.pink{color:#ee3869}.yellow{color:#fff17e}.blue{color:#75b9c6}.waiting{width:104px;height:82px;line-height:120px;background:rgba(0,0,0,0.5) url(/resources/v20/images/loading.gif) center 14px no-repeat;background-size:20px;position:fixed;left:50%;top:150px;margin:-41px 0 0 -52px;border-radius:10px;color:#fff;text-align:center;display:none;z-index:1000}.tips{width:80%;height:50px;overflow:hidden;line-height:50px;background:rgba(0,0,0,0.5);border-radius:10px;color:#fff;text-align:center;display:none;position:fixed;top:20%;left:10%;z-index:1000;border:1px solid #fff}.loading{display:none;width:100%;height:50px;line-height:50px;text-align:center}.loading i{display:inline-block;height:20px;width:30px;margin-bottom:-4px;background:url(/resources/v20/images/loading.gif) 10% center no-repeat;background-size:20px}.nav{width:100%;height:50px;line-height:50px;border-bottom:2px solid #f78aa9;background:rgba(249,249,249,1);text-align:center;position:fixed;left:0;top:0;right:0;z-index:100;box-shadow:1px 1px 2px rgba(0,0,0,0.1)}.nav h2{color:#555;font-size:16px;font-weight:bold}.nav .left,.nav .right{display:block;font-size:16px;position:absolute;top:0;height:50px;color:#555;padding:0 10px}.nav .left{left:0}.nav .right{right:0}.nav .le_trg{margin:18px 0 0 0}.le_trg{display:inline-block;width:9px;height:9px;border-right:2px solid #555;border-bottom:2px solid #555;transform:rotate(135deg);-webkit-transform:rotate(135deg);-moz-transform:rotate(135deg);-o-transform:rotate(135deg);-ms-transform:rotate(135deg)}.re_trg{display:inline-block;width:9px;height:9px;border-right:2px solid #ccc;border-bottom:2px solid #ccc;transform:rotate(-45deg);-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-o-transform:rotate(-45deg);-ms-transform:rotate(-45deg)}.bot_trg{display:inline-block;width:9px;height:9px;border-right:2px solid #ccc;border-bottom:2px solid #ccc;transform:rotate(45deg);-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);-ms-transform:rotate(45deg);margin-top:-10px}.top_trg{display:inline-block;width:9px;height:9px;border-right:2px solid #ccc;border-bottom:2px solid #ccc;transform:rotate(-135deg);-webkit-transform:rotate(-135deg);-moz-transform:rotate(-135deg);-o-transform:rotate(-135deg);-ms-transform:rotate(-135deg)}.top_blank{margin-top:52px}.content{padding:10px}.see_more{font-size:16px;display:block;height:42px;line-height:42px;background:#fff;color:#72bac6;text-align:center;margin:10px 0;box-shadow:1px 1px 2px rgba(0,0,0,0.1);font-weight:bold}.box-shadow{box-shadow:1px 1px 2px rgba(0,0,0,0.1)}.phone,.identity,.vip{display:inline-block;height:22px;line-height:22px;padding:0 5px 0 20px;border-radius:2px;margin-right:3px;color:#fff;font:12px/24px "寰蒋闆呴粦","Microsoft YaHei";font-style:normal}.phone{background:#00c5c4 url(/resources/v20/images/icon_phone.png) no-repeat 4px center;background-size:14px 14px}.identity{background:#2acb64 url(/resources/v20/images/icon_write.png) no-repeat 4px center;background-size:14px 14px}.vip{background:#f1668f;padding:0 7px}.noCheck{background-color:#d5d5d5}.icon-loading{background-image:url(/resources/v20/images/loading.gif);background-size:contain;display:inline-block;width:16px;height:16px;margin:0 5px;vertical-align:middle}.loadApp{padding:8px 10px;background:#fff;position:relative;overflow:hidden}.loadApp dt{float:left;height:42px}.loadApp dt img{display:block;width:40px;height:40px}.loadApp dd{float:left;margin:0 0 0 8px}.loadApp dd b{display:block;color:#555;font-size:16px}.loadApp dd p{padding:7px 0 0;font-size:14px;color:#717171}.loadApp .upload_btn{position:absolute;right:10px;top:15px;display:block;width:72px;height:26px;line-height:26px;text-align:center;color:#ee356e;border:1px solid #f3c4d4}.attention{width:100%;height:54px;background:rgba(0,0,0,.7);position:fixed;left:0;bottom:0;padding:0 10px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;-o-box-sizing:border-box;-ms-box-sizing:border-box;color:#fff;display:none}.attention dt{float:left}.attention dd{float:left;margin:8px 0 0}.attention dd>p{font-size:12px;margin:2px 0 0}.attention dt>img{display:block;width:38px;background:rgba(0,0,0,.0);margin:8px 10px 0 0}.attention .atte_btn{position:absolute;right:10px;top:12px;display:block;width:74px;height:30px;line-height:30px;color:#fff;background:#ec2e90;font-size:12px;text-align:center;border-radius:3px}.min_nav{width:100%;height:50px;line-height:50px;background:#fafafa;position:fixed;left:0;top:0;right:0;z-index:100;box-shadow:1px 1px 2px rgba(0,0,0,0.1);text-align:center}.min_nav .title{color:#555;font-weight:bold}.min_nav .title .vip{display:inline-block;width:24px;height:14px;line-height:14px;background:#ef678f;text-align:center;border-radius:2px;color:#fff;font-size:10px;margin:0 0 0 4px}.min_nav .reture{position:absolute;left:0;top:0}.min_nav .reture .le_trg{float:left;margin:20px 0 0 10px}.min_nav .reture .but,.min_nav .next{display:inline;float:left;color:#555;font-size:1em}.min_nav .next,.min_nav .repair{position:absolute;right:10px;top:0;color:#555;font-size:.9em}.min_nav .repair .house_icon{display:block;width:20px;height:50px;background:url(../images/house.png) center center no-repeat;background-size:16px}.min_nav .seach_sure{display:block;width:50px;height:26px;line-height:26px;background:#ed376a;position:absolute;right:10px;top:7px;text-align:center;color:#fff;border-radius:3px;font-size:.9em}.min_nav .give_up{position:absolute;left:10px;top:0}.personIcon{width:22px;height:22px;display:inline-block;position:relative;bottom:-4px;margin-left:5px;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;display:none;background:url('/resources/v20/images/personIcon.png') no-repeat center center,-webkit-radial-gradient(#fff7d7,#ffd739);background:url('/resources/v20/images/personIcon.png') no-repeat center center,-moz-radial-gradient(#fff7d7,#ffd739);background:url('/resources/v20/images/personIcon.png') no-repeat center center,radial-gradient(#fff7d7,#ffd739);background-size:100%}.mask{width:100%;height:100%;background:rgba(0,0,0,.5);position:fixed;left:0;top:0;z-index:200}.msg_tip{width:240px;height:154px;background:#fff;-webkit-border-radius:5px;-moz-border-radius:5px;-ms-border-radius:5px;border-radius:5px;position:absolute;top:50%;left:50%;margin-top:-75px;margin-left:-120px;color:#646464;overflow:hidden;box-shadow:0 0 5px rgba(245,245,245,.2)}.msg_tip h3,.checkInfor h3{height:30px;font:bold 14px/30px '宋体';padding-left:12px;border-bottom:1px solid #ccc;margin-bottom:10px}.msg_tip p,.checkInfor p{font:14px/24px '宋体';padding:0 10px}.msg_tip ul{width:100%;height:34px;border-top:1px solid #ccc;margin-top:6px}.msg_tip ul li{width:50%;font:bold 14px/34px '宋体';color:#fff;height:34px;text-align:center;float:left}.msg_tip ul li:nth-child(1){background:#ff729a}.msg_tip ul li:nth-child(2){background:#ff3c8f}@font-face{font-family:'icomoon';src:url('/resources/v20/fonts/icomoon.eot');src:url('/resources/v20/fonts/icomoon.eot?#iefix-z8fok3') format('embedded-opentype'),url('/resources/v20/fonts/icomoon.woff') format('woff'),url('/resources/v20/fonts/icomoon.ttf') format('truetype'),url('/resources/v20/fonts/icomoon.svg') format('svg');font-weight:normal;font-style:normal}[class^="icon-"],[class*=" icon-"]{font-family:'icomoon';speak:none;font-style:normal;font-weight:normal;font-variant:normal;text-transform:none;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.icon-right:before{content:"\100"}.icon-pencil:before{content:"\101"}.icon-face:before{content:"\102"}.icon-message:before{content:"\103";margin:0 4px}.icon-talk:before{content:"\104";margin:0 4px}.icon-male:before{content:"\105"}.icon-female:before{content:"\106"}.icon-delete:before{content:"\107"}.icon-area:before{content:"\108";margin:0 4px}.icon-love:before{content:"\109"}.icon-like:before{content:"\10a";margin:0 4px;vertical-align:baseline}.icon-spinner3:before{content:"\10b"}.icon-plus:before{content:"\10c"}.float{float:left}img{vertical-align:middle}
+        .option_box{box-shadow:1px 1px 2px rgba(0,0,0,0.1)}.option_box .top{background:#fff;padding:5px;line-height:22px;position:relative;font-size:.9em;overflow:hidden}.option_box .top h2{float:left;padding:0 0 0 10px;color:#555;font-size:16px}.option_box .top .unlimit{float:right;font-size:16px;margin-right:10px;position:relative}.option_box .top .unlimit i{margin-left:5px}.option_box ul li{width:100%;margin-top:1px;height:38px;clear:both;color:#333}.option_box ul li span{display:block;float:left;width:50%;height:38px;line-height:38px;text-align:center;font-size:14px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;-o-box-sizing:border-box;-ms-box-sizing:border-box;background:#fff;border-right:1px solid rgba(0,0,0,0);-moz-background-clip:content-box;-webkit-background-clip:content-box;background-clip:content-box}.option_box ul li span:last-child{border-right:0}.option_box ul.four_list{overflow:hidden;margin:0}.option_box ul.four_list li{width:100%}.option_box ul.four_list li span{width:25%}.option_box .single_list{background:#fefefe;margin-top:1px;padding:10px 0;float:left;width:100%}.option_box .single_list li{width:90%;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;-o-box-sizing:border-box;-ms-box-sizing:border-box;border:1px solid #e6e6e6;margin:0 auto 10px}.option_box .single_list li span{width:100%;background:0;border:0}.option_box .three_list{margin-top:1px;background:#fefefe;padding:5px 0 10px 0;float:left;width:100%}.option_box .three_list li span{width:30%;border:1px solid #e6e6e6;margin:5px 0 0 2.5%}.option_box ul.three_list li span:last-child{border-right:1px solid #e6e6e6}.option_box .two_list{padding:10px;overflow:hidden;background:#fff;margin-top:1px}.option_box .two_list>li{width:100%;overflow:hidden;margin-bottom:10px}.option_box .two_list>li span{display:block;float:left;color:#333;border:1px solid #e6e6e6;text-align:center;width:48%;height:38px;line-height:38px;background:#fff}.option_box .two_list>li span.pink{color:#ee3869}.option_box .two_list>li span{display:block;float:left;color:#333;border:1px solid #e6e6e6;text-align:center;width:48%;height:38px;line-height:38px;background:#fff}.option_box .two_list>li span:nth-child(2n){float:right;border:1px solid #e6e6e6}.bMsg{font-size:14px;margin:5px;line-height:22px}.option_box .choose_list{padding:0 0 10px 0;margin-bottom:14px}.option_box .choose_list li{;color:#333;border:1px solid #e6e6e6;text-align:center;width:94%;height:38px;line-height:38px;background:#fff;margin:10px 3%;box-sizing:border-box;font-size:14px}.option_box .choose_list li.pink{color:#ee3869}.option_box .choose_list li{;color:#333;border:1px solid #e6e6e6;text-align:center;width:94%;height:38px;line-height:38px;background:#fff;margin:10px 3%;box-sizing:border-box}.option .qa h2{line-height:22px}.option .Qa_age h2{line-height:38px}.option_boxcol_1 ul{overflow:hidden}.option_boxcol_1 ul li{overflow:hidden;float:left;width:50%;clear:none;text-align:center;height:38px;line-height:38px;background:#fff;border-right:1px solid #f0f0f0;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;-ms-box-sizing:border-box;-o-box-sizing:border-box}.option_boxcol_1 ul li:nth-child(2n){border:0}
+        .habit-top{margin-bottom:10px;line-height:22px;color:#555;font-size:.9em}.habit-list{overflow:hidden;font-size:.9em;box-shadow:1px 1px 2px rgba(0,0,0,0.1)}.habit-list li{height:37px;line-height:37px;margin:0 0 1px 0;background:#fff;padding:0 10px}.habit-list li .left{float:left;color:#555}.habit-list li .right{float:right;position:relative;height:37px;line-height:37px}.habit-list li .right .select{float:left;margin:0;position:relative;height:37px}.habit-list li .right .value{color:#555;margin:0 10px 0 22px}.habit-list li .right .value_select{width:90%;height:37px;line-height:37px;position:absolute;right:0;top:0;opacity:0;margin:0;padding:0}.habit-list li .right input{border:1px solid #eee;margin:5px -4px 0 0;height:27px;line-height:27px;padding-right:4px;text-align:right}.bot_trged{width:0;height:0;border:3px solid transparent;border-top:6px solid #ccc;position:absolute;right:0;top:50%;margin:-3px 0 0 0}.seach_sure{display:block;width:50px;height:26px;line-height:26px;background:#ed376a;position:absolute;right:10px;top:12px;text-align:center;color:#fff;border-radius:3px;font-size:.8em}.desc_textarea{height:150px;width:100%;resize:none;padding:5px;border:1px #ccc solid;font-size:16px;line-height:20px;color:#333}.content .limit{margin:10px 0 0;font-size:.9em}
+    </style>
+</head>
+<body><div class="tips" style="display: none;"></div><div class="waiting" style="display: none;"></div>
+<div class="top_blank"></div>
+<nav class="nav" style="position: absolute;">
+    <h2>理想对象条件</h2>
+    <div class="left" onclick="history.go(-1)">
+        <i class="le_trg"></i>返回
+    </div>
+    <div class="right">
+        <span id="save_btn" class="seach_sure">确定</span>
+    </div>
+</nav>
+<div class="content">
+    <div class="option_box">
+        <div class="top">
+            <h2>年龄范围</h2>
+            <span class="unlimit"><span class="title pink">{if $member['uage'] == '0' && $member['age']=='0'}不限{else}{$member['age']}-{$member['uage']}岁{/if}</span><i class="bot_trg"></i></span>
+        </div>
+        <ul data-type="age" class="hidden">
+            
+                <li>
+                
+                <span  data-value="0" data-max="0" {if $member['uage'] == '0' && $member['age']=='0'}class="pink"{/if}>不限</span>
+                
+                
+                
+                
+                <span data-value="18" data-max="25" {if $member['age'] == '18' && $member['uage']=='25'}class="pink"{/if}>18-25岁</span>
+                
+                </li>
+            
+                <li>
+                <span data-value="26" data-max="35" {if $member['age'] == '26' && $member['uage']=='35'}class="pink"{/if}>26-35岁</span>
+                
+                
+            
+                
+                <span data-value="36" data-max="45" {if $member['age'] == '36' && $member['uage']=='45'}class="pink"{/if}>36-45岁</span>
+                
+                </li>
+            
+                <li>
+                <span data-value="46" data-max="55" {if $member['age'] == '46' && $member['uage']=='55'}class="pink"{/if}>46-55岁</span>
+                
+                
+            
+                
+                <span data-value="56" data-max="100" {if $member['age'] == '56' && $member['uage']=='100'}class="pink"{/if}>55岁以上</span>
+                
+                </li>
+            
+
+        </ul>
+    </div>
+    <div class="option_box" style="margin-top: 10px">
+        <div class="top">
+            <h2>身高范围</h2>
+                <span class="unlimit"><span class="title pink">{if $member['uheightH'] == '0' && $member['uheightL']=='0'}不限{else}{$member['uheightL']}-{$member['uheightH']}{/if}</span><i class="bot_trg"></i></span>
+        </div>
+        <ul class="hidden" data-type="height">
+            
+                <li>
+                <span  data-value="0" data-max="0" {if $member['uheightH'] == '0' && $member['uheightL']=='0'}class="pink"{/if}>不限</span>
+
+                
+                
+
+            
+                
+                <span data-value="0" data-max="160" {if $member['uheightH'] == '160' && $member['uheightL']=='0'}class="pink"{/if}>160cm以下</span>
+
+                
+                </li>
+
+            
+                <li>
+                <span data-value="161" data-max="165"{if $member['uheightH'] == '165' && $member['uheightL']=='161'}class="pink"{/if}>161-165cm</span>
+
+                
+                
+
+            
+                
+                <span data-value="166" data-max="170" {if $member['uheightH'] == '170' && $member['uheightL']=='166'}class="pink"{/if}>166-170cm</span>
+
+                
+                </li>
+
+            
+                <li>
+                <span data-value="171" data-max="250" {if $member['uheightH'] == '250' && $member['uheightL']=='171'}class="pink"{/if}>170以上</span>
+
+                <span></span>
+                </li>
+
+            
+        </ul>
+    </div>
+
+    <div class="option_box" style="margin-top: 10px">
+        <div class="top">
+            <h2>最低学历</h2>
+            <span class="unlimit"><span class="title pink">{if $member['ueducation'] == '0'}不限{else}{$member['ueducation']}{/if}</span><i class="bot_trg"></i></span>
+        </div>
+        <ul class="hidden" data-type="edu">
+            
+                <li>
+                <span data-value="0" {if $member['ueducation'] == '0'}class="pink"{/if}>不限</span>
+                
+                
+            
+                
+                <span  data-value="高中,中专及以上" {if $member['ueducation'] == '高中,中专及以上'}class="pink"{/if}>高中,中专及以上</span>
+                
+                </li>
+            
+                <li>
+                <span data-value="大专及以上" {if $member['ueducation'] == '大专及以上'}class="pink"{/if}>大专及以上</span>
+                
+                
+            
+                
+                <span data-value="本科及以上" {if $member['ueducation'] == '本科及以上'}class="pink"{/if}>本科及以上</span>
+                
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="option_box" style="margin-top: 10px">
+        <div class="top">
+            <h2>收入范围</h2>
+            <span class="unlimit"><span class="title pink">{if $member['urevenue'] == '0'}不限{else}{$member['urevenue']}{/if}</span><i class="bot_trg"></i></span>
+        </div>
+        <ul class="hidden" data-type="salary">
+            
+                <li>
+                <span data-value="0" {if $member['urevenue'] == '0'}class="pink"{/if}>不限</span>
+                
+                
+            
+                
+                <span  data-value="2000元以上" {if $member['urevenue'] == '2000元以上'}class="pink"{/if}>2000元以上</span>
+                
+                </li>
+            
+                <li>
+                <span data-value="5000元以上" {if $member['urevenue'] == '5000元以上'}class="pink"{/if}>5000元以上</span>
+                
+                
+            
+                
+                <span data-value="10000元以上" {if $member['urevenue'] == '10000元以上'}class="pink"{/if}>10000元以上</span>
+                
+                </li>
+            
+            
+        </ul>
+    </div>
+
+    <div class="option_box" style="margin-top: 10px">
+        <div class="top">
+            <h2>居住地</h2>
+                <span class="unlimit"><span class="title pink">{if $member['position'] == '0'}不限{else}{$member['position']}{/if}</span><i class="bot_trg"></i></span>
+        </div>
+        <ul class="four_list hidden" data-type="province">
+
+            
+                <li>
+                       <span data-value="北京" {if $member['position'] == '北京'}class="pink"{/if}>北京</span>
+                
+                
+            
+                
+                       <span data-value="上海" {if $member['position'] == '上海'}class="pink"{/if}>上海</span>
+                
+                
+            
+                
+                       <span data-value="天津" {if $member['position'] == '天津'}class="pink"{/if}>天津</span>
+                
+                
+            
+                
+                       <span data-value="重庆" {if $member['position'] == '重庆'}class="pink"{/if}>重庆</span>
+                
+                </li>
+            
+                <li>
+                       <span data-value="安徽" {if $member['position'] == '安徽'}class="pink"{/if}>安徽</span>
+                
+                
+            
+                
+                       <span data-value="湖南" {if $member['position'] == '湖南'}class="pink"{/if}>湖南</span>
+                
+                
+            
+                
+                       <span data-value="湖北" {if $member['position'] == '湖北'}class="pink"{/if}>湖北</span>
+                
+                
+            
+                
+                       <span data-value="江苏" {if $member['position'] == '江苏'}class="pink"{/if}>江苏</span>
+                
+                </li>
+            
+                <li>
+                       <span data-value="浙江" {if $member['position'] == '浙江'}class="pink"{/if}>浙江</span>
+                
+                
+            
+                
+                       <span data-value="10" {if $member['position'] == '四川'}class="pink"{/if}>四川</span>
+                
+                
+            
+                
+                       <span data-value="贵州" {if $member['position'] == '贵州'}class="pink"{/if}>贵州</span>
+                
+                
+            
+                
+                       <span data-value="甘肃" {if $member['position'] == '甘肃'}class="pink"{/if}>甘肃</span>
+                
+                </li>
+            
+                <li>
+                       <span data-value="青海" {if $member['position'] == '青海'}class="pink"{/if}>青海</span>
+                
+                
+            
+                
+                       <span data-value="山西" {if $member['position'] == '山西'}class="pink"{/if}>山西</span>
+                
+                
+            
+                
+                       <span data-value="山东" {if $member['position'] == '山东'}class="pink"{/if}>山东</span>
+                
+                
+            
+                
+                       <span data-value="陕西" {if $member['position'] == '陕西'}class="pink"{/if}>陕西</span>
+                
+                </li>
+            
+                <li>
+                       <span data-value="河南" {if $member['position'] == '河南'}class="pink"{/if}>河南</span>
+                
+                
+            
+                
+                       <span data-value="黑龙江" {if $member['position'] == '黑龙江'}class="pink"{/if}>黑龙江</span>
+                
+                
+            
+                
+                       <span data-value="河北" {if $member['position'] == '河北'}class="pink"{/if}>河北</span>
+                
+                
+            
+                
+                       <span data-value="福建" {if $member['position'] == '福建'}class="pink"{/if}>福建</span>
+                
+                </li>
+            
+                <li>
+                       <span data-value="云南" {if $member['position'] == '云南'}class="pink"{/if}>云南</span>
+                
+                
+            
+                
+                       <span data-value="江西" {if $member['position'] == '江西'}class="pink"{/if}>江西</span>
+                
+                
+            
+                
+                       <span data-value="广东" {if $member['position'] == '广东'}class="pink"{/if}>广东</span>
+                
+                
+            
+                
+                       <span data-value="辽宁" {if $member['position'] == '辽宁'}class="pink"{/if}>辽宁</span>
+                
+                </li>
+            
+                <li>
+                       <span data-value="吉林" {if $member['position'] == '吉林'}class="pink"{/if}>吉林</span>
+                
+                
+            
+                
+                       <span data-value="内蒙古" {if $member['position'] == '内蒙古'}class="pink"{/if}>内蒙古</span>
+                
+                
+            
+                
+                       <span data-value="广西" {if $member['position'] == '广西'}class="pink"{/if}>广西</span>
+                
+                
+            
+                
+                       <span data-value="新疆" {if $member['position'] == '新疆'}class="pink"{/if}>新疆</span>
+                
+                </li>
+            
+                <li>
+                       <span data-value="西藏" {if $member['position'] == '西藏'}class="pink"{/if}>西藏</span>
+                
+                
+            
+                
+                       <span data-value="宁夏" {if $member['position'] == '宁夏'}class="pink"{/if}>宁夏</span>
+                
+                
+            
+                
+                       <span data-value="海南" {if $member['position'] == '海南'}class="pink"{/if}>海南</span>
+                
+                
+            
+                
+                       <span data-value="台湾" {if $member['position'] == '台湾'}class="pink"{/if}>台湾</span>
+                
+                </li>
+            
+                <li>
+                       <span data-value="澳门" {if $member['position'] == '澳门'}class="pink"{/if}>澳门</span>
+                
+                
+            
+                
+                       <span data-value="香港" {if $member['position'] == '香港'}class="pink"{/if}>香港</span>
+                 <span></span><span></span>
+                </li>
+            
+            
+        </ul>
+    </div>
+    
+</div>
+<input type="hidden" id="con_age_min" value="{$member['age']}">
+<input type="hidden" id="con_age_max" value="{$member['uage']}">
+<input type="hidden" id="con_height_min" value="{$member['uheightL']}">
+<input type="hidden" id="con_height_max" value="{$member['uheightH']}">
+<input type="hidden" id="con_income" value="{$member['urevenue']}">
+<input type="hidden" id="con_province" value="{$member['position']}">
+<input type="hidden" id="con_edu" value="{$member['ueducation']}">
+<input type="hidden" id="con_girlCareId" value="">
+
+
+<script src="{RES}/mobile/style2/zepto.min.js"></script>
+<script>
+    $.stopPropagation = function(a) {
+	a = a || window.event;
+	if (a.stopPropagation) {
+		a.stopPropagation()
+	} else {
+		a.cancelBubble = true
+	}
+};
+
+function getCookie(c) {
+	var e = document.cookie;
+	var a = e.split("; ");
+	for (var d = 0; d < a.length; d++) {
+		var b = a[d].split("=");
+		if (b[0] == c) {
+			return b[1]
+		}
+	}
+	return ""
+}
+function browser() {
+	var a = navigator.userAgent.toLowerCase(),
+		c = Index.getTarget();
+
+	function b(d) {
+		$(".book_mark").hide();
+		if (c && c == "myspace") {
+			if (d.length > 0) {
+				d.show()
+			}
+		} else {
+			$("body").on("tap", ".see_more", function() {
+				var e = Index.getTarget();
+				if ((e && e == "found") || (e && e == "mail")) {
+					return
+				}
+				setTimeout(function() {
+					if (d.length > 0) {
+						d.show()
+					}
+				}, 1000)
+			})
+		}
+	}
+	switch (true) {
+	case a.indexOf("mqq") > -1 || a.indexOf("opios") > -1 || a.indexOf("uc") > -1 || a.indexOf("tiantian") > -1 || a.indexOf("360 aphone"):
+		b($(".book_mark_botCenter"));
+		break;
+	case a.indexOf("iphone") > -1 && a.indexOf("safari") > -1:
+		b($(".book_mark_botCenter"));
+		break;
+	case a.indexOf("sogou") > -1:
+		b($(".book_mark_bot_Right"));
+		break;
+	default:
+		$(".book_mark").hide();
+		break
+	}
+}
+$.fn.isShow = function() {
+	return $(this).css("display") != "none"
+};
+$("body").on("tap", "[data-goback]", function(b) {
+	$.stopPropagation(b);
+	var a = $(this).data("goback");
+	a = a ? a : -1;
+	window.history.go(a);
+	return false
+}).on("tap", "[href]", function(a) {
+	a.preventDefault();
+	$.stopPropagation(a);
+	location.href = $(this).attr("href");
+	return false
+}).on("tap", "[data-remove]", function() {
+	$(".book_mark").remove();
+	document.cookie = "showBrowser=1;path=/"
+}).on("tap", ".close,.gray_col,.blue_col,.pink_col", function() {
+	$(".Receive_alert").addClass("hidden")
+});
+$.waiting = (function() {
+	if (window.youyuan && window.youyuan.showWaiting && window.youyuan.hideWaiting) {
+		return {
+			show: function(a) {
+				window.youyuan.showWaiting(a)
+			},
+			hide: function() {
+				window.youyuan.hideWaiting()
+			}
+		}
+	} else {
+		if ($(".waiting").length == 0) {
+			$('<div class="waiting"></div>').prependTo("body")
+		}
+		$(".waiting").empty().hide();
+		return {
+			show: function(a) {
+				$(".waiting").html(a).show()
+			},
+			hide: function() {
+				$(".waiting").empty().hide()
+			}
+		}
+	}
+})();
+$.tips = (function() {
+	if (window.youyuan && window.youyuan.toast) {
+		return function(a) {
+			window.youyuan.toast(a)
+		}
+	} else {
+		if ($(".tips").length == 0) {
+			$('<div class="tips"></div>').prependTo("body")
+		}
+		$(".tips").empty().hide();
+		return function(a) {
+			$(".tips").html(a).show();
+			setTimeout(function() {
+				$(".tips").empty().hide()
+			}, 2000)
+		}
+	}
+})();
+var Match = (function() {
+	return {
+		param: {
+			con_age_min: $("#con_age_min").val(),
+			con_age_max: $("#con_age_max").val(),
+			con_height_min: $("#con_height_min").val(),
+			con_height_max: $("#con_height_max").val(),
+			con_income: $("#con_income").val(),
+			con_province: $("#con_province").val(),
+			con_edu: $("#con_edu").val(),
+			con_girlCareId: $("#con_girlCareId").val()
+		},
+		changeEvent: function(d) {
+			var b = d.closest(".option_box"),
+				e = b.find(".top"),
+				a = b.find(".title"),
+				c = d.closest("ul");
+			c.find("li span").removeClass("pink");
+			d.addClass("pink");
+			a.addClass("pink").html(d.html());
+			Match.toggle(e)
+		},
+		changeAge: function(a, b) {
+			Match.param.con_age_max = b;
+			Match.param.con_age_min = a
+		},
+		changeHeight: function(a, b) {
+			Match.param.con_height_min = a;
+			Match.param.con_height_max = b
+		},
+		changeSalary: function(a) {
+			Match.param.con_income = a
+		},
+		changeEducation: function(a) {
+			Match.param.con_edu = a
+		},
+		changeProvince: function(a) {
+			Match.param.con_province = a
+		},
+		changeInterest: function(a) {
+			Match.param.con_girlCareId = a
+		},
+		save: function() {
+			$.waiting.show("处理中...");
+			//alert(Match.param);
+			$.ajax({
+				url: "{php echo  $this->createMobileUrl('lxduixiang')}",
+				data: Match.param,
+				dataType: "json",
+				type: "post",
+				success: function(a) {
+					$.waiting.hide();
+					if (a) {
+						$.tips("保存成功");
+						location.href = "{php echo  $this->createMobileUrl('homecenter')}"
+					}
+				},
+				error: function() {
+					$.waiting.hide();
+					$.tips("网络异常，请稍后再试")
+				}
+			})
+		},
+		toggle: function(b) {
+			var a = b.next("ul");
+			if (a.hasClass("hidden")) {
+				$(".top i").removeClass("top_trg").addClass("bot_trg");
+				$(".option_box ul").addClass("hidden");
+				b.find("i").addClass("top_trg").removeClass("bot_trg");
+				a.removeClass("hidden")
+			} else {
+				b.find("i").removeClass("top_trg").addClass("bot_trg");
+				a.addClass("hidden")
+			}
+		}
+	}
+})();
+$(function() {
+	$("body").on("tap", ".top", function() {
+		Match.toggle($(this))
+	}).on("tap", "#save_btn", function() {
+		Match.save()
+	}).on("tap", "[data-value]", function() {
+		var d = $(this),
+			a = d.closest("[data-type]").data("type"),
+			b = d.data("value"),
+			c = d.data("max");
+		if (a == "age") {
+			Match.changeAge(b, c)
+		} else {
+			if (a == "height") {
+				Match.changeHeight(b, c)
+			} else {
+				if (a == "edu") {
+					Match.changeEducation(b)
+				} else {
+					if (a == "salary") {
+						Match.changeSalary(b)
+					} else {
+						if (a == "province") {
+							Match.changeProvince(b)
+						} else {
+							if (a == "girlCare") {
+								Match.changeInterest(b)
+							}
+						}
+					}
+				}
+			}
+		}
+		Match.changeEvent(d)
+	}).on("tap", "#careField span", function() {
+		var a = $(this).data("value");
+		$.ajax({
+			url: "",
+			data: {
+				careFieldId: a
+			},
+			dataType: "json",
+			type: "post",
+			success: function(g) {
+				if (g) {
+					var f = "";
+					for (var e = 0; e < g.length; e++) {
+						var c = g[e];
+						f += "<li>";
+						for (var d in c) {
+							f += "<span data-value=" + d + ">" + c[d] + "</span>"
+						}
+						f += "</li>"
+					}
+					$("ul[data-type='girlCare']").html(f)
+				}
+			}
+		})
+	})
+});
+</script>
+</body></html>

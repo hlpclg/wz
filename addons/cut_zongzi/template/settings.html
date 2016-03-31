@@ -1,0 +1,159 @@
+{template 'common/header'}
+<div class="main">
+		<!--模板设置-->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion"
+					href="#collapse1">
+					是否要求关注后才能玩游戏？
+				</a>
+				</h4>
+			</div>
+			<div id="collapse1" class="panel-collapse collapse in">
+				<div class="panel-body">
+					<div class="form-horizontal form">
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 control-label">当前公众号类型：</label>
+							<div class="col-sm-9 col-xs-12">
+								<input type="text" class="form-control" disabled="disabled" value="{$setting['level']}"/>
+							</div>
+						</div>
+						{if $level == 3}
+							<div class="form-group">
+								<label class="col-xs-12 col-sm-3 col-md-2 control-label">关注后方可玩游戏：</label>
+								<div class="col-sm-9 col-xs-12">
+									<select name="require-subscribe" class="form-control">
+										<option {if $setting['require_subscribe'] == 0} selected="selected"{/if} value="0">不要求</option>
+										<option {if $setting['require_subscribe'] == 1} selected="selected"{/if} value="1">要求</option>
+									</select>
+									<span class="help-block">若‘要求’，请确保在<a href="./index.php?c=home&a=welcome&do=setting&">‘功能选项’</a>中设置<a href="./index.php?c=mc&a=passport&do=oauth&">‘借用oAuth权限'</a>,同时当前公众号和借用的公众号绑定在了<a href="http://open.weixin.qq.com" target="_blank">“微信开发平台”</a>。（unionid机制)</span>
+								</div>
+							</div>
+						
+						{elseif $level == 4}
+							<div class="form-group">
+								<label class="col-xs-12 col-sm-3 col-md-2 control-label">关注后方可玩游戏：</label>
+								<div class="col-sm-9 col-xs-12">
+									<select name="require-subscribe" class="form-control">
+										<option {if $setting['require_subscribe'] == 0} selected="selected"{/if} value="0">不要求</option>
+										<option {if $setting['require_subscribe'] == 1} selected="selected"{/if} value="1">要求</option>
+									</select>
+
+								</div>
+							</div>
+						{else}
+							<div class="form-group">
+								<label class="col-xs-12 col-sm-3 col-md-2 control-label">关注后方可玩游戏：</label>
+								<div class="col-sm-9 col-xs-12">
+									<input type="text" class="form-control" disabled="disabled" value="无权限（只有&nbsp;‘认证订阅号’&nbsp;或&nbsp;’认证服务号‘&nbsp;方可设置此项）"/>
+
+								</div>
+							</div>
+						{/if}
+						{if $level > 3}
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+							<div class="col-sm-9 col-xs-12">
+								<button class="btn btn-primary" name="btn-subscribe">提交</button>
+							</div>
+						</div>
+						{/if}
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<!--模板设置-->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion"
+					href="#collapse1">
+					关注图片设置
+				</a>
+				</h4>
+			</div>
+			<div id="collapse1" class="panel-collapse collapse in">
+				<div class="panel-body">
+					<div class="form-horizontal form">
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 control-label">引导关注图：</label>
+							<div class="col-sm-9 col-xs-12">
+								{php echo tpl_form_field_image('thumb', $setting['thumb'])}
+								<span class="help-block">此图可引导用户关注，注意，只有设置为’要求关注后才能玩游戏‘时，此图才会显示。</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 control-label"></label>
+							<div class="col-sm-9 col-xs-12">
+								<button class="btn btn-primary" name="btn-thumb">提交</button>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-3 col-md-2 control-label">引导关注图（参考）：</label>
+
+							<div class="col-sm-9 col-xs-12">
+								<img src="../addons/cut_zongzi/template/mobile/images/asdf.gif">
+								<span class="help-block">最佳尺寸：360*200px</span>
+							</div>
+						</div>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+</div>
+	<script>
+		require(['bootstrap','util'],function($,util){
+			$('button[name=btn-subscribe]').click(function(){
+				setting.save_template();
+			});
+			$('button[name=btn-thumb]').click(function(){
+				setting.save_thumb();
+			});
+
+			var setting = {
+				save_template:function(){
+					$.ajax({
+						url: "{php echo wurl('site/entry/setting',array('m'=>'cut_zongzi','op'=>'setting','item'=>'ajax','key'=>'require'));}",
+						type: 'POST',
+						data: {require: $("select[name=require-subscribe]").val()},
+						success:function(res){
+							if(res > 0){
+								util.message('消息提示: 设置成功','', 'success');
+
+							}else{
+								util.message('消息提示: 设置失败','', 'error');
+							}
+						},
+						error:function(){
+							alert('ajax error');
+						}
+					});
+				},
+				save_thumb:function(){
+					$.ajax({
+						url: "{php echo wurl('site/entry/setting',array('m'=>'cut_zongzi','op'=>'setting','item'=>'ajax','key'=>'thumb'));}",
+						type: 'POST',
+						data: {thumb: $("[name=thumb").val()},
+						success:function(res){
+							console.log(res);
+							if(res > 0){
+								util.message('消息提示: 设置成功','', 'success');
+
+							}else{
+								util.message('消息提示: 设置失败','', 'error');
+							}
+						},
+						error:function(){
+							alert('ajax error');
+						}
+					});
+				}
+			}
+		});
+	</script>
+	{template 'common/footer'}

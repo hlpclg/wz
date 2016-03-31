@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class=" js canvas no-touch opacity svg"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<title>{$reply['title']}</title>
+
+
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+<link rel="shortcut icon" href="">
+<link rel="stylesheet" href="../addons/jdg_dream/style/mobile/styles/css/style.css">
+<script src="../addons/jdg_dream/style/mobile/styles/js/c7c484cf.modernizr.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+
+
+  wx.config({
+      debug: false,
+      appId: '<?php echo $signPackage["appId"];?>',
+      timestamp: '<?php echo $signPackage["timestamp"];?>',
+      nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+      signature: '<?php echo $signPackage["signature"];?>',
+      jsApiList: [
+        'onMenuShareAppMessage',
+        'onMenuShareTimeline',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+      ]
+  });
+ 
+  wx.ready(function () {
+
+  // 2. 分享接口
+  // 2.1 监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
+    wx.onMenuShareAppMessage({
+      title: '{$reply['share_title']}',
+      desc: '{$reply['share_content']}',
+      link: '{php echo $_W['siteroot'].str_replace('./','app/',$this->createMobileurl('index',array('id' => $id)))}',
+      imgUrl: '{php echo $_W['attachurl'].$reply['picurl']}',
+      trigger: function (res) {
+      //  alert('用户点击发送给朋友');
+      },
+      success: function (res) {
+       // alert('已分享1');
+      },
+      cancel: function (res) {
+       // alert('已取消');
+      },
+      fail: function (res) {
+       // alert(JSON.stringify(res));
+      }
+    });
+
+     wx.onMenuShareTimeline({
+		   title: '{$reply['share_title']}',
+       desc: '{$reply['share_content']}',
+      link: '{php echo $_W['siteroot'].str_replace('./','app/',$this->createMobileurl('index',array('id' => $id)))}',
+      imgUrl: '{php echo $_W['attachurl'].$reply['picurl']}',
+        
+      trigger: function (res) {
+        //alert('用户点击分享到朋友圈');
+      },
+      success: function (res) {
+       // alert('已分享');
+      },
+      cancel: function (res) {
+       // alert('已取消');
+      },
+      fail: function (res) {
+       // alert(JSON.stringify(res));
+      }
+    });
+     wx.onMenuShareQQ({
+      title: '{$reply['share_title']}',
+      desc: '{$reply['share_content']}',
+      link: '{php echo $_W['siteroot'].str_replace('./','app/',$this->createMobileurl('index',array('id' => $id)))}',
+      imgUrl: '{php echo $_W['attachurl'].$reply['picurl']}',
+      trigger: function (res) {
+       // alert('用户点击分享到QQ');
+      },
+      complete: function (res) {
+        //alert(JSON.stringify(res));
+      },
+      success: function (res) {
+       // alert('已分享');
+      },
+      cancel: function (res) {
+      //  alert('已取消');
+      },
+      fail: function (res) {
+     //   alert(JSON.stringify(res));
+      }
+    });
+      wx.onMenuShareWeibo({
+      title: '{$reply['share_title']}',
+      desc: '{$reply['share_content']}',
+      link: '{php echo $_W['siteroot'].str_replace('./','app/',$this->createMobileurl('index',array('id' => $id)))}',
+      imgUrl: '{php echo $_W['attachurl'].$reply['picurl']}',
+      trigger: function (res) {
+       // alert('用户点击分享到微博');
+      },
+      complete: function (res) {
+       // alert(JSON.stringify(res));
+      },
+      success: function (res) {
+        //alert('已分享');
+      },
+      cancel: function (res) {
+       // alert('已取消');
+      },
+      fail: function (res) {
+        //alert(JSON.stringify(res));
+      }
+    });
+  });
+</script> 
+
+<link rel="stylesheet" href="../addons/jdg_dream/style/mobile/styles/css/styles.css"></head><body oncontextmenu="self.event.returnValue=false" onselectstart="return false">
+
+<img class="sharing-poster" src="../addons/jdg_dream/style/mobile/styles/images/3b252cb0.share.jpg" width="0" height="0">
+
+<section class="backgrounds">
+
+	<div class="stars-wrapper">
+		<div class="stars">
+			<div class="star1"></div>
+			<div class="star2"></div>
+			<div class="star3"></div>
+			<div class="star4"></div>
+			<div class="star5"></div>
+			<div class="star6"></div>
+			<div class="star7"></div>
+			<div class="star8"></div>
+			<div class="star9"></div>
+			<div class="star10"></div>
+		</div>
+		<img class="city-dream" src="../addons/jdg_dream/style/mobile/styles/images/442bb2b5.city-dream.png">
+	</div>
+
+	<div class="clouds">
+		<img class="cloud-1" src="../addons/jdg_dream/style/mobile/styles/images/6f0e0b6d.clouds-3.png">
+		<img class="cloud-2 right" src="../addons/jdg_dream/style/mobile/styles/images/fc6b649d.clouds-4.png">
+		<img class="cloud-3" src="../addons/jdg_dream/style/mobile/styles/images/6f0e0b6d.clouds-3.png">
+		<img class="cloud-4 right" src="../addons/jdg_dream/style/mobile/styles/images/fc6b649d.clouds-4.png">
+		<img class="cloud-5" src="../addons/jdg_dream/style/mobile/styles/images/6f0e0b6d.clouds-3.png">
+		<img class="moon" src="../addons/jdg_dream/style/mobile/styles/images/c2d6eea3.moon.png">
+	</div>
+	
+	<canvas class="canvas-firework" id="canvas" width="1920" height="909"></canvas>
+	
+	<div class="final-message">
+		<canvas id="finalCanvas" class="final-canvas" width="1862" height="182"></canvas> 
+	</div>
+	
+	<img class="bottle" src="../addons/jdg_dream/style/mobile/styles/images/24b26a7c.bud-bottle.png" style="">
+	
+</section>
+
+<section class="top-informations">
+	<div class="logo" style="transform: translate(0%, 0%) translate3d(0px, 33.95px, 0px);">
+		<div class="bud-logo-color"><img class="bud-logo" src="{$_W['attachurl']}{$reply['logo']}"></div>
+		<br/>
+		<img class="bud-title" src="../addons/jdg_dream/style/mobile/style/images/8cb8c364.logo.png">
+		
+	</div>
+	
+	<span class="toast-informations no">祝福</span> 
+	<span class="toast-informations from"><span class="toast-from"></span>祝福</span>
+	<span class="toast-informations from-to"><span class="toast-from"></span>祝<span class="toast-to"> 
+</section>
+
+<section class="wrapper-container input-container active" style="opacity: 0;">
+  <form action="" name="form" method="post" data-ajax="false">
+				<input type="hidden" id="rid" value="{$reply['rid']}">
+				<input type="hidden" id="weid" value="{$reply['weid']}">
+			
+	<div class="input-wrapper">
+		<p>{$reply['slogans']}</p>
+		<div class="input-item">
+			<span class="legend left">梦想是...... (最多10字)</span>
+			<input class="input-text dream" name="dream"  id="dream" maxlength="10"> 
+			<div class="line"></div>
+			<span class="counter">10</span>
+		</div>
+		<div class="input-item half first">
+			<span class="legend left">你的小名(可选)</span>
+			<input class="input-text from" name="dream_name" id="from" maxlength="10">
+			<div class="line"></div>
+		</div>
+		<div class="input-item half second">
+			<span class="legend left">好友大名(可选)</span>
+			<input class="input-text to" name="to_name" id="to" maxlength="10">
+			<div class="line"></div>
+		</div>
+		<div class="launch"  >
+			<a href="javascript:void(0);"   class="launch-link"  >
+				<div class="fake-border left"></div>
+				<div class="fake-border top"></div>
+				<div class="fake-border right"></div>
+				<div class="fake-border bottom"></div>
+				<span>梦想升空</span>
+			</a>
+			<div class="overlay-link active"></div>
+		</div>
+	</div>
+	</form>
+</section>
+
+<section class="wrapper-container toast-container sending">
+	<div class="sprite-container touch">
+		<div class="sprite-anim toast"><img src="../addons/jdg_dream/style/mobile/styles/images/481566a2.sprite-1.png"></div>
+		<div class="sprite-anim touch active"><img src="../addons/jdg_dream/style/mobile/styles/images/80b044fc.sprite-2.png"></div>
+	</div>
+	<span class="toast-copy mobile-toast">握紧手机<br>快速高举</span>
+	<span class="toast-copy mobile-notoast">猛戳向上滑<br>为梦想举杯</span>
+	<span class="toast-copy desktop-notoast">长按鼠标向上拖动<br>为梦想举杯</span>
+	<canvas id="motionCanvas" width="380" height="909" class="active"></canvas>
+</section>
+
+<section class="wrapper-container toast-container receiving">
+	<div class="receive-wrapper">
+		<div class="sprite-container touch">
+			<div class="sprite-anim toast"><img src="../addons/jdg_dream/style/mobile/styles/images/481566a2.sprite-1.png"></div>
+			<div class="sprite-anim touch active"><img src="../addons/jdg_dream/style/mobile/styles/images/80b044fc.sprite-2.png"></div>
+		</div>
+		<span class="toast-copy mobile-toast">握紧手机<br>快速高举</span>
+		<span class="toast-copy mobile-notoast">猛戳向上滑<br>为梦想举杯</span>
+		<span class="toast-copy desktop-notoast">长按鼠标向上拖动<br>为梦想举杯</span>
+	</div>
+	<img class="loader" src="../addons/jdg_dream/style/mobile/styles/images/2d3bac8d.loader.gif">
+	<a href="http://www.17sucai.com/preview/125871/2015-03-13/dreamV1.0_/dreams.html#" class="start-receive" data-analytics="dreamentry.receive">开启新年梦</a>
+</section>
+
+<section class="wrapper-container share-container">
+	<div class="action-wrapper">
+		<a href="" class="actions create active" data-analytics="dreamentry.create"> 
+		<img class="end-icon" src="../addons/jdg_dream/style/mobile/styles/3f9a3572.create.svg"> <span>再许个愿</span> </a>
+		<a href="" class="actions replay active" data-analytics="dreamentry.replay"> 
+		<img class="end-icon" src="../addons/jdg_dream/style/mobile/styles/d1291ed5.replay.svg"> <span>重播一次</span> </a>
+		<a href="{php echo $this->createMobileUrl('index', array('id' => $id))}" class="actions home active" data-analytics="dreamentry.backhome"> 
+		<img class="end-icon" src="../addons/jdg_dream/style/mobile/styles/25385fba.home.svg"> <span>首页</span> </a>
+	</div>
+
+	
+</section>
+
+
+	
+</div>
+
+<div class="rotate-device">
+	<div class="overlay"></div>
+	<img class="rotate-img" src="../addons/jdg_dream/style/mobile/styles/c77b3b55.rotate.svg">
+</div>
+
+<div class="qr-code-overlay"></div>
+
+
+
+</body></html>
+
+
+<script>
+var add_zz  = "{php echo $this->createMobileUrl('wish',array('rid' => $reply['rid']))}";
+</script>
+
+
+<script src="../addons/jdg_dream/style/mobile/styles/js/2eefd7f9.vendor.js"></script>
+<script src="../addons/jdg_dream/style/mobile/styles/js/7780b872.script.js"></script>

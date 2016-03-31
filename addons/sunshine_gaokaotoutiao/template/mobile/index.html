@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html style="height: 654px;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>高考上头条</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta charset="utf-8">
+<script type="text/javascript">
+</script>
+  </head>
+  <body style="height: 654px;">
+    <div class="builder-wrapper">
+      <div class="builder">
+        <form action="{php echo $_W['siteroot'].$this->createMobileUrl('Article')}" name="form1" method="GET">
+          <input type="hidden" name="token" value="{$_W['token']}" />
+          <input type="text" class="name" name="realname" id="realname" placeholder="输入我或朋友的名称">
+          <input type="text" class="area" name="place" id="place" placeholder="输入所在地区">
+          <input type="hidden" name="typeid" id="typeid" value="{$info['id']}">
+          <a  id="link" href="javascript:;" onclick="form_submit()">生成头条</a>
+          <div class="push"></div>
+        </form>
+      </div>
+    </div>
+    <div class="footer">
+          <div class="wrapper-fixed-bottom download-block">
+          </div> 
+    </div>
+    <link rel="stylesheet" media="screen" href="../addons/sunshine_gaokaotoutiao/css/css.css">
+    <script type="text/javascript" src="../addons/sunshine_gaokaotoutiao/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+    function form_submit() {
+    	var realname = $("#realname").val();
+    	var place = $("#place").val();
+    	var typeid = $("#typeid").val();
+      var domain = "{php echo $this->createMobileUrl('Article')}"+"&realname="+realname+"&place="+place+"&typeid="+typeid;
+    	window.location.href=domain;
+    }
+    </script>
+</body>
+</html>

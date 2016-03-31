@@ -1,0 +1,71 @@
+{template 'common/header'}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		微信邮件配置参数
+	</div>
+	<form id="reply-form" class="form-horizontal form"  method="post" enctype="multipart/form-data">
+	<div class="panel-body">
+	    
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">附件大小限制(M)</label>
+			<div class="col-sm-9">
+				<input type="text" name="size" value="{$settings['size']}" class="form-control">
+				<span class="help-block">附件大小，默认10M    特别强调必须为数字哈 不要单位</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">附件类型设置</label>
+			<div class="col-sm-9">
+						<input type="text" name="type" value="{$settings['type']}" class="form-control">
+
+				<span class="help-block">以英文逗号依次隔开例如 jpg,xml,js,css等等</span>
+			</div>
+		</div>
+       
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">头图文字说明</label>
+			<div class="col-sm-9">
+				<input type="text" name="headtitle" class="form-control" value="{$settings['headtitle']}" />
+				<span class="help-block">指的是模块功能介绍</span>
+			</div>
+		</div>
+		<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label">定义头图</label>
+					<div class="col-sm-9 col-xs-12">
+						{php echo tpl_form_field_image('logo', $settings['logo'])}
+					</div>
+				</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">SMTP服务器</label>
+			<div class="col-sm-9">
+				<input type="text" name="smtp" class="form-control" value="{$settings['smtp']}" />
+				<span class="help-block">首先要在邮箱后台开启这个服务，然后一般地址都是smtp.qq.com,smtp.163.com</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">发件箱账户</label>
+			<div class="col-sm-9">
+				<input type="text" name="mailadd" class="form-control" value="{$settings['mailadd']}" />
+				<span class="help-block">发送邮件的账号,一定要开启这个邮箱的SMTP服务，否则有可能收不到邮件.</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">发件箱密码</label>
+			<div class="col-sm-9">
+				<input type="text" name="password" class="form-control" value="{$settings['password']}" />
+				<span class="help-block">发送邮件的密码</span>
+			</div>
+		</div>
+        
+	
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input name="submit" type="submit" value="保存" class="btn btn-primary" />
+				
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</div>
+		</div>
+	</form>
+</div>
+
+{template 'common/footer'}

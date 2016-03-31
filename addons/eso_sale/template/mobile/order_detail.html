@@ -1,0 +1,178 @@
+{php $bootstrap_type = 3;}
+{template 'header'}
+<link type="text/css" rel="stylesheet" href="../addons/eso_sale/images/style.css">
+<div class="head">
+    <a href="javascript:history.back();" class="bn pull-left"><i class="icon-angle-left"></i></a>
+    <span class="title">订单详情</span>
+    <a href="{php echo $this->mturl('mycart')}" class="bn pull-right"><i class="icon-eso_sale-cart"></i></a>
+</div>
+
+<div class="myoder img-rounded" style='padding-bottom: 10px;'>
+    <div class="myoder-hd">
+        <span class="pull-left">订单编号：{$item['ordersn']}</span>
+        <span class="pull-right">{php echo date('Y-m-d H:i', $item['createtime'])}</span>
+    </div>
+
+    {loop $goods $g}
+    <div class="myoder-detail">
+        <a href="{php echo $this->mturl('detail', array('id' => $g['id']))}"><img src="{$_W['attachurl']}{$g['thumb']}" width="160"></a>
+        <div class="pull-left">
+            <div class="name"><a href="{php echo $this->mturl('detail', array('id' => $g['id']))}">{$g['title']}</a></div>
+            <div class="price">
+                <span>{$g['marketprice']} 元{if $g['unit']} / {$g['unit']}{/if}</span>
+                <span class="num">{$g['total']}{if $g['unit']} {$g['unit']}{/if}</span>
+            </div>
+        </div>
+    </div>
+    {/loop}
+    <div class="myoder-express">
+        <span class="express-company">状态</span>
+		<span class="express-num">
+		{if $item['paytype'] == 3}
+			{if $item['status'] == -1}
+			<span class="text-muted">订单取消</span>
+			{elseif $item['status'] < 3}
+			<span class="text-danger">货到付款 / 未付款</span>
+			{else}
+			<span class="text-success">已完成</span>
+			{/if}
+		{else}
+			{if $item['status'] == -1}
+			<span class="text-muted">订单取消</span>
+			{elseif $item['status'] == 0}
+			<span class="text-danger">未付款</span>
+			{elseif $item['status'] == 1}
+			<span class="text-warning">已付款</span>
+			{elseif $item['status'] == 2}
+			<span class="text-warning">已发货</span>
+			{else}
+			<span class="text-success">已完成</span>
+			{/if}
+		{/if}
+		</span>
+    </div>
+    <div class="myoder-express">
+        <span class="express-company">配送方式</span>
+        <span class="express-num">{$dispatch['dispatchname']}</span>
+    </div>
+    {if ($item['status'] == '2' || $item['status']==3) && !empty($item['expresssn'])}
+    <div class="myoder-express">
+        <span class="express-company">快递: {$item['expresscom']}</span>
+		<span class="express-num">
+                    单号: {$item['expresssn']}
+
+		 </span>
+    </div>
+    <div class="myoder-total" style='margin:5px 0;'>
+        <a href="http://m.kuaidi100.com/index_all.html?type={$item['express']}&postid={$item['expresssn']}#input" class="btn btn-success pull-right btn-sm" >查看快递</a>
+    </div>
+
+    {/if}
+    {if !empty($item['remark'])}
+    <div class="myoder-express" style='margin-top:5px;'>
+        <span class="express-company">订单备注</span>
+
+    </div>
+
+    <div style='float:left;margin:10px;overflow:hidden;word-break:break-all;width:100%;'>
+        {$item['remark']}
+    </div>
+    {/if}
+    <div class="myoder-total" style='margin-bottom:5px;'>
+		<span>共计：<span class="false">
+                     {if $item['dispatchprice']<=0}
+                        {$item['price']} 元
+                        {else}
+                        {$item['price']} 元 (含运费 {$item['dispatchprice']} 元) 
+                        {/if}
+                    </span></span>
+        {if $item['paytype'] != 3}
+        {if $item['status'] == 0}
+        <a href="{php echo $this->mturl('pay', array('orderid' => $item['id']))}" class="btn btn-danger pull-right btn-sm">立即支付</a>
+        {/if}
+        {/if}
+        {if $item['status'] == 2 || ($item['paytype'] == 3 && $item['status'] < 3)}
+        <a href="{php echo $this->mturl('myorder', array('orderid' => $item['id'], 'op' => 'confirm'))}" class="btn btn-success pull-right btn-sm" onclick="return confirm('点击确认收货前，请确认您的商品已经收到。确定收货吗？'); ">确认收货</a>
+        {/if}
+    </div>
+</div>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+    //获取指定cookes函数
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+
+        if(arr=document.cookie.match(reg))
+
+            return unescape(arr[2]);
+        else
+            return null;
+    }
+
+    if(navigator.appName == 'Microsoft Internet Explorer'){
+        if(navigator.userAgent.indexOf("MSIE 5.0")>0 || navigator.userAgent.indexOf("MSIE 6.0")>0 || navigator.userAgent.indexOf("MSIE 7.0")>0) {
+            alert('您使用的 IE 浏览器版本过低, 推荐使用 Chrome 浏览器或 IE8 及以上版本浏览器.');
+        }
+    }
+
+    // jssdk config 对象
+    jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+    // 是否启用调试
+    jssdkconfig.debug = false;
+    //
+    jssdkconfig.jsApiList = [
+        'checkJsApi',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+        'hideMenuItems',
+        'showMenuItems',
+        'hideAllNonBaseMenuItem',
+        'showAllNonBaseMenuItem',
+        'translateVoice',
+        'startRecord',
+        'stopRecord',
+        'onRecordEnd',
+        'playVoice',
+        'pauseVoice',
+        'stopVoice',
+        'uploadVoice',
+        'downloadVoice',
+        'chooseImage',
+        'previewImage',
+        'uploadImage',
+        'downloadImage',
+        'getNetworkType',
+        'openLocation',
+        'getLocation',
+        'hideOptionMenu',
+        'showOptionMenu',
+        'closeWindow',
+        'scanQRCode',
+        'chooseWXPay',
+        'openProductSpecificView',
+        'addCard',
+        'chooseCard',
+        'openCard'
+    ];
+
+    var wxData = {
+        //"appId": "{$_W['account']['key']}",
+        "imgUrl" : '{$_W['siteroot']}/source/modules/eso_sale/icon.jpg',
+        "link" : '{php echo $_W['siteroot']."app/".$this->mturl('list',array('id'=>$id))}&mid='+getCookie("mid"),
+        "desc" : '看你能捞多少佣金',
+        "title" : '{$_W['account']['name']}'
+    };
+
+    wx.config(jssdkconfig);
+    wx.ready(function () {
+        wx.onMenuShareAppMessage(wxData);
+        wx.onMenuShareTimeline(wxData);
+        wx.onMenuShareQQ(wxData);
+        wx.onMenuShareWeibo(wxData);
+    });
+</script>
+{template 'footerbar'}

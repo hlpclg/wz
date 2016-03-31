@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<title>我的参与记录</title>
+<link href="/addons/wdl_anhao/template/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body style="background-color:#0cbb84; color:#fff;">
+  <div>
+	<table width="100%" height="100">
+		<tr>
+			<td style="border-bottom:1px dashed #fff; font-size:14px" width="30%" height="40" align="center">暗号</td>
+			<td style="border-bottom:1px dashed #fff; font-size:14px" width="35%" align="center">参与编号</td>
+			<td style="border-bottom:1px dashed #fff; font-size:14px" width="35%" align="center">是否中奖</td>
+		</tr>
+		{loop $huyaa $row}
+		<tr>
+			<td style="border-bottom:1px dashed #fff;" height="50" align="center">{$row[wdl_anhao]}</td>
+			<td style="border-bottom:1px dashed #fff;" align="center">{$row[suiji]} {if $row[suiji1]=='0'}{else}{$row[suiji1]}{/if} {if $row[suiji2]=='0'}{else}{$row[suiji2]}{/if}
+			{if $row[suiji3]=='0'}{else}{$row[suiji3]}{/if} {if $row[suiji4]=='0'}{else}{$row[suiji4]}{/if} {if $row[suiji5]=='0'}{else}{$row[suiji5]}{/if}</td>
+			<td style="border-bottom:1px dashed #fff;" align="center">{loop $huyaaa $rew}
+			{if $rew[yuanwdl_anhao]==$row[suiji]||$rew[yuanwdl_anhao]==$row[suiji1]||$rew[yuanwdl_anhao]==$row[suiji2]||$rew[yuanwdl_anhao]==$row[suiji3]||$rew[yuanwdl_anhao]==$row[suiji4]||$rew[yuanwdl_anhao]==$row[suiji5]}中奖{else}{/if}{/loop}</td>
+		</tr>
+		
+		{/loop}
+	</table>
+</div>
+</body>
+</html>

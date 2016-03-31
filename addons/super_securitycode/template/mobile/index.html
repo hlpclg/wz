@@ -1,0 +1,39 @@
+{template 'common/header'}
+<style type="text/css">
+    .main{ padding:0px; font-family: "Microsoft YaHei UI", "微软雅黑", "宋体"}
+    .thislist{}
+    .thislist ul{list-style: none; padding: 0px; margin:  0px;}
+    .thislist ul li{ border-bottom: 1px #eee double; display:block; line-height: 2em; font-size:1.2em; margin: 10px;}
+    .thislist ul li span{ float:right;}
+</style>
+<div class="main">
+    <div class="head_box" style=" height:100px; width:100%;background-color: #008200; ">
+        <div class="head_logo" style="  height:100px;">
+            <img src="{$_W['attachurl']}{$member['img_logo']}" style="width:80px; height:80px;  margin: 10px;" align="left" />
+            <div class="head_title" style=" padding-top: 10px; font-size:1.5em;color:#fff;
+">{$member['type']}</div>
+            <div class="head_fac" style=" margin-top: 20px;font-size:1.1em;color:#fff;">{$member['factory']}</div>
+        </div>
+    </div>
+
+    {if !empty($member['video']) }
+    <div class="" style="margin: 5px;">
+        <video width="100%" src="{$member['video']}" controls="controls" class="video" node-type="ts">
+        </video>
+    </div>
+    {/if}
+    <div class="thislist">
+        <ul>
+            <a href="{php echo $this->createMobileUrl('result',array('wd_code'=>$_GPC['wd_code']))}"><li>防伪查询</li></a>
+            <li>{$member['creditname']} <span>+{$member['creditnum']} </span></li>
+            <a href="{$member['buyurl']}"><li>购买 <span>小店购买 </span></li></a>
+            <li></li>
+        </ul>
+
+    </div>
+
+
+
+
+</div>
+{template 'common/footer'}

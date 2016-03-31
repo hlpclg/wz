@@ -1,0 +1,38 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form">
+		<h4>参数设置</h4>
+		<table class="tb">
+			<tr>
+				<th>百度ak</th>
+				<td>
+					<input name="ak" type="text" value="{$settings['ak']}" class="span5" placeholder="百度api的ak"/>
+							<span class="help-block"><a target="_blank" href="http://lbsyun.baidu.com/apiconsole/key">	
+							百度ak申请地址：http://lbsyun.baidu.com/apiconsole/key</a></span>
+				</td>
+		
+			
+			</tr>
+		   <tr>
+		  
+	      <tr>
+		  <th width="85">链接网址：</th>
+		  
+		  <td>
+			<input name="url" type="text" value="{$settings['url']}" class="span5" />
+			<span class="help-block">此处为粉丝点击图文天气跳转的网址，http：//开头</span>
+		  </td>
+	      </tr>
+
+			<tr>
+				<th></th>
+				<td>
+					<input type="hidden" name="token" value="{$_W['token']}" />
+					<input name="submit" type="submit" value="提交" class="btn btn-primary span3" />
+					
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+{template 'common/footer'}

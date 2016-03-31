@@ -1,0 +1,58 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>{$systeminfo['shopname']}</title>
+<link href="../addons/water_super/template/css/index.css" rel="stylesheet" type="text/css">
+ <link href="../addons/water_super/template/css/shouye.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../addons/water_super/template/js/jquery-1.8.2.min.js"></script>
+<style media="all and (orientation:landscape)" type="text/css">
+  .container {
+    padding-bottom: 55px;
+  }
+
+</style>
+<style media="all and (orientation:landscape)" type="text/css">
+  .container {
+    padding-bottom: 35px;
+  }
+
+</style>
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	WeixinJSBridge.call('hideOptionMenu');
+});
+</script>
+</head>
+<body style="background: rgb(0,180,255);">
+<form action="{php echo $this->createMobileUrl('test');}" method="POST">
+{php echo $this->createMobileUrl('test');}
+<input type="text" name="rrrrrr" value ="神啊"/>
+<input type="submit" value="提交"/>
+
+</form>
+
+<!-- 页脚导航-->
+<footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                	<a href="{php echo $this->createMobileUrl('index', array())}"><span class=" home-index-active">首页</span></a>
+                	<a href="{php echo $this->createMobileUrl('ordering', array('openid' => $item['id']))}"><span class=" Order-index">订单</span></a>
+                	<a href="{php echo $this->createMobileUrl('usercenter', array('openid' => $item['id']))}"><span class="card-index">我的</span></a>
+              </div>
+        </div>
+    </div>
+</footer>
+</body>
+
+</html>
+

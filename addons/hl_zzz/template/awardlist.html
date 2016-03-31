@@ -1,0 +1,85 @@
+{template 'common/header'}
+
+<div class="panel panel-info">
+    <div class="panel-heading">筛选</div>
+    <div class="panel-body">
+        <form action="./index.php" method="get" class="form-horizontal" role="form">
+            <input type="hidden" name="c" value="site"/>
+            <input type="hidden" name="a" value="entry"/>
+            <input type="hidden" name="m" value="hl_zzz"/>
+            <input type="hidden" name="do" value="awardlist"/>
+            <input type="hidden" name="id" value="{$_GPC['id']}"/>
+
+            <div class="form-group">
+                <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">个人信息</label>
+                <div class=" col-sm-3 col-xs-12">
+                    <select name="profile" class="form-control">
+                        <option value="" selected="selected">请选择搜索用户资料</option>
+                        <option {if $_GPC['profile'] == 'realname'} selected {/if} value="realname">姓名</option>
+                        <option {if $_GPC['profile'] == 'nickname'} selected {/if} value="nickname">昵称</option>
+                        <option {if $_GPC['profile'] == 'mobile'} selected {/if} value="mobile">手机</option>
+                    </select>
+                </div>
+                <div class=" col-sm-3 col-xs-12">
+                    <input type="text" name="profilevalue" value="{$_GPC['profilevalue']}" class="form-control"/>
+                </div>
+                <div class="col-sm-1 col-xs-12">
+                    <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                </div>
+                <div class="col-sm-2 col-xs-12">
+                    <button class="btn btn-default" name="export" value="export"><i class="fa fa-download"></i> 导出全部数据</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">详细数据</div>
+    <div class="panel-body">
+        <form action="" method="post">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th style="max-width:5%;">选择</th>
+                    <th style="max-width:15%;">姓名</th>
+                    <th style="max-width:15%;">昵称</th>
+                    <th style="max-width:15%;">手机</th>
+                    <th style="max-width:15%;">分数</th>
+                    <th style="max-width:15%;">时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                {loop $list $row}
+                <tr>
+                    <td><input type="checkbox" name="select[]" value="{$row['id']}"/></td>
+                    <td>{$row['realname']}</td>
+                    <td>{$row['nickname']}</td>
+                    <td>{$row['mobile']}</td>
+                    <td>{$row['points']}</td>
+                    <td>
+                        {php echo date('Y-m-d H:i:s', $row[createtime]);}
+                    </td>
+                </tr>
+                {/loop}
+                </tbody>
+            </table>
+
+            <table class="table">
+                <tr>
+                    <td style="width:40px;" class="row-first">
+                        <input type="checkbox" onclick="var ck = this.checked;$(':checkbox').each(function(){this.checked = ck})"/>
+                    </td>
+                    <td>
+                        <input type="submit" name="delete" value="删除" class="btn btn-primary"/>
+                        <input type="hidden" name="token" value="{$_W['token']}"/>
+                    </td>
+                </tr>
+            </table>
+
+        </form>
+    </div>
+</div>
+
+{$pager}
+
+{template 'common/footer'}

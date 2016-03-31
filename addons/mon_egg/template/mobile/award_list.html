@@ -1,0 +1,12 @@
+{loop $userwards  $userward}
+<li>
+    <span class="time fr">
+        {php echo date("Y-m-d H:i", $userward['createtime'])}
+   </span>
+    <span class="phone01">
+      {php echo substr($userward['utel'],0,3).'****'.substr($userward['utel'],7); }
+    </span>
+    <span class="award">{$userward['ppname']}</span>
+    <div class="clr"></div>
+</li>
+{/loop}

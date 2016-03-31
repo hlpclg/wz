@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>个人中心</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+    <link type="text/css" rel="stylesheet" href="{RES_CSS}base.css" />
+    <link type="text/css" rel="stylesheet" href="{RES_CSS}style.css" />
+    <script type="text/javascript" src="{RES_JS}jquery-1.7.2.min.js"></script>
+</head>
+
+<body>
+	<!--主界面-->
+    <div class="mainInterface" id="mainInterface">
+        <!--item-->
+        <div class="userItem">
+            <a href="#" onClick="javascript:setOne();">
+                <img src="{RES_IMG}userImg.jpg" width="60" height="60" />
+                <dl>
+                	<dt>胡汉三(huhansan)</dt>
+                	<dd>积分：133</dd>
+                </dl>    
+            </a>
+        </div>
+        <!--item end-->
+        <!--item-->
+        <div class="item">
+        	<ul>
+            	<li><a href="#" onClick="javascript:setOne();"><img src="{RES_IMG}set_icon.jpg" />设置一</a></li>
+            	<li><a href="#" onClick="javascript:setTwo();"><img src="{RES_IMG}set_icon.jpg" />设置二</a></li>
+            </ul>
+        </div>
+        <!--item end-->
+        <!--item-->
+        <div class="item">
+        	<ul>
+            	<li><a href="#" onClick="javascript:setOne();"><img src="{RES_IMG}wallet_icon.jpg" />卡包</a></li>
+            	<li><a href="#" onClick="javascript:setOne();"><img src="{RES_IMG}wallet_icon.jpg" />钱包</a></li>
+            </ul>
+        </div>
+        <!--item end-->
+    </div>    
+    <!--主界面 end--> 
+    <!--设置一-->
+    <div class="setOneMain" id="setOneMain">
+        <!--header-->
+        <header class="header">
+            <a href="#" class="back_btn" onclick="javascript:setMain()"></a>
+            <h2><span>设置</span></h2>
+        </header>
+        <!--header end-->
+    	<!--item-->
+        <div class="item">
+        	<ul>
+            	<li><a href="#" onClick="javascript:setTwo();">新消息提醒</a></li>
+            	<li><a href="#" onClick="javascript:setTwo();">勿扰模式</a></li>
+            	<li><a href="#" onClick="javascript:setTwo();">聊天</a></li>
+            	<li><a href="#" onClick="javascript:setTwo();">隐私</a></li>
+            	<li><a href="#" onClick="javascript:setTwo();"><img src="{RES_IMG}set_icon.jpg" />通用</a></li>
+            	<li><a href="#" onClick="javascript:setTwo();">帐号与安全<em><img src="{RES_IMG}icon1.jpg" />已保护</em></a></li>
+            </ul>
+        </div>
+        <!--item end-->
+    </div>
+    <!--设置一 end--> 
+    <!--设置二-->
+    <div class="setTwoMain" id="setTwoMain">
+        <!--header-->
+        <header class="header">
+            <a href="#" class="back_btn" onclick="javascript:setMain()"></a>
+            <h2><span>设置</span></h2>
+        </header>
+        <!--header end-->
+    	<!--item-->
+        <div class="item">
+        	<ul>
+            	<li>
+                	<dl>
+                    	<dt>接收新消息通知<span class="on"><em></em></span></dt>
+                    </dl>
+                </li>    
+                <li>    
+                	<dl>
+                    	<dt><img src="{RES_IMG}set_icon.jpg" />通知显示消息详情</dt>
+                        <dd>若关闭，当收到微信消息时，通知提示将不显示发信人和内容摘要。</dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        <!--item end-->
+    	<!--item-->
+        <div class="item">
+        	<ul>
+            	<li>
+                	<dl>
+                    	<dt>接收新消息通知<span class="on"><em></em></span></dt>
+                    </dl>
+                </li>    
+                <li>    
+                	<dl>
+                    	<dt>通知显示消息详情<span class="off"><em></em></span></dt>
+                        <dd>若关闭，当收到微信消息时，通知提示将不显示发信人和内容摘要。</dd>
+                    </dl>
+                </li>
+            	<li>
+                	<dl>
+                    	<dt>接收新消息通知<span class="on"><em></em></span></dt>
+                    </dl>
+                </li>    
+                <li>    
+                	<dl>
+                    	<dt>通知显示消息详情<span class="off"><em></em></span></dt>
+                        <dd>若关闭，当收到微信消息时，通知提示将不显示发信人和内容摘要。</dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        <!--item end-->
+    </div>
+    <!--设置二 end--> 
+    <script type="text/javascript">
+    	$(function(){
+			
+			
+			$("#setTwoMain dt").find("span").click(function(){
+				if($(this).hasClass("off")){
+					$(this).stop().animate({top:"0px",right:"0px"},200,function(){
+						$(this).removeClass("off");	
+						$(this).addClass("on");	
+					});	
+				}else{
+					$(this).stop().animate({top:"0px",left:"0px"},200,function(){
+						$(this).removeClass("on");	
+						$(this).addClass("off");	
+					});
+				}	
+			});
+		});
+		//设置一
+		function setOne(){
+			$("#mainInterface").hide();
+			$(".header").show();
+			$("#setOneMain").show();
+			$("#setTwoMain").hide();
+		}
+		//设置一
+		function setTwo(){
+			$("#mainInterface").hide();
+			$(".header").show();
+			$("#setOneMain").hide();
+			$("#setTwoMain").show();
+		}
+		//设置一
+		function setMain(){
+			$("#mainInterface").show();
+			$("#setOneMain").hide();
+			$("#setTwoMain").hide();
+		}
+	//	//header
+//		function headShow(){
+//			$(".header").show();	
+//		}
+//		function headHide(){
+//			$(".header").hide();	
+//		}	
+//		//主界面
+//		function mainShow(){
+//			$("#mainInterface").show();	
+//		}
+//		function mainHide(){
+//			$("#mainInterface").hide();	
+//		}	
+//		//设置一
+//		function setOneShow(){
+//			$("#setOneMain").show();	
+//		}
+//		function setOneHide(){
+//			$("#setOneMain").hide();	
+//		}
+//		//设置二
+//		function setTwoShow(){
+//			$("#setTwoMain").show();	
+//		}
+//		function setTwoHide(){
+//			$("#setTwoMain").hide();	
+//		}	
+    </script>  
+</body>
+</html>

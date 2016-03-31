@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>{$systeminfo['shopname']}</title>
+
+
+<link href="../addons/water_super/template/css/footer.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/css/base.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/css/wap.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/css/myOrder.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../addons/water_super/template/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/js/jscommon.js"></script>
+</head>
+<body>
+  <!-- 我的订单 -->
+  <div class="channel-nav three-nav">
+    <ul>
+      <li ><a href="{php echo $this->createMobileUrl('workorder', array('openid' => $openid))}">未处理订单</a></li>
+      <li class=""><a href="{php echo $this->createMobileUrl('myworkorder', array('openid' => $openid))}">工作订单</a></li>
+      <li class="active"  class=""><a href="{php echo $this->createMobileUrl('myworkendorder', array('openid' => $openid))}">完成订单</a></li>
+    </ul>
+  </div>
+  <div class="myOrder">
+    <!-- 订单服务中 -->
+    <div class="myOrder_list p10" id = "p10">
+      <ul id = "add_order">
+      {loop $orderList $item} 
+                <!-- 每个订单 -->
+        <li class="order_item">
+
+                      <div class="item_list_ordersn">
+              <a href = "{php echo $this->createMobileUrl('orderShow', array('id' => $item['id']))}" >
+                <div class="item_list_box borderD">订单编号：{$item['ordercode']}<img src="../addons/water_super/template/images/arrow-2.png" class="pull-right" style="margin-right:0;width:16px;margin-top:4px">
+                
+              </div>
+              </a>
+            </div>
+              <!-- 订单信息 -->
+            <div class="item_list_number navlist">
+              <div class="item_list_box borderD">客户姓名：{$item['customername']}</div>
+            </div>
+           	<div class="item_list_number navlist">
+              <div class="item_list_box borderD">客户电话：<a href="tel:{$item['customertel']}"><b style="font: bold;">{$item['customertel']}</b></a></div>
+            </div> 
+            <!-- 订单状态 -->
+            <div class="item_list_state"><div class="item_list_box borderD">订单地址：{$item['customercity']}{$item['customerarea']}{$item['xiangxdz']}<em></em></div></div>
+            <!-- 物流状态 -->
+            <div class="item_list_time"><div class="item_list_box borderD">支付方式：{if $item['paystate']==1}已付款:{if $item['paytype']== 1}当面付{elseif $item['paytype']== 2}微信付{elseif $item['paytype']== 3}支付宝{elseif $item['paytype']== 4}余额付{/if}{else}尚未支付{/if}</div></div>
+            <!-- 订单服务付款金额 -->
+            <div class="item_list_money navlist">
+              <div class="item_list_box"><div class="">应付总额：{$item['ordercost']}元</div></div>
+            </div>
+            <!-- 订单提交按钮 -->
+            <div class="item_list_btn">
+              <div class="wx_confirm_btns">
+              <a href="tel:{$item['customertel']}"><button id="codGoPayCancel" type="cancel" >拨打客户电话</button></a>
+              <button id="codGoPay" type="submit" disabled="disabled" >已付款</button>
+             
+              </div><!-- style="background-color: #F0EFEA;color: #808080" -->
+          </div>
+        </li>
+      {/loop}          
+      </ul>
+    </div>
+     </div>
+  <div id = "prompt" style = "text-align:center;line-height:40px;color:#999;display:none">订单加载中...</div>
+    <!-- ／我的订单 -->
+   <!-- 页脚导航-->
+<!-- <footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                	<a href="{php echo $this->createMobileUrl('index')}"><span class=" home-index">首页</span></a>
+                	<a href="{php echo $this->createMobileUrl('ordering', array('openid' => $openid))}"><span class=" Order-index-active">订单</span></a>
+                	<a href="{php echo $this->createMobileUrl('usercenter', array('openid' => $openid))}"><span class="card-index">我的</span></a>
+              </div>
+        </div>
+    </div>
+</footer> -->
+<!--  -->
+    <script type="text/javascript">
+    var $pindex = 2;
+    var show_more = "0";
+
+    function add_title(msg){
+      $("#prompt").html(msg);
+    }
+    function add_order_1(add_o,str){
+      str = str + add_o;
+      $("#add_order").html(str);
+      show_more = 1;
+      $("#prompt").hide();
+    }
+    function showmore($pindexpindexpindex){
+      $("#prompt").show();
+      var str = $("#add_order").html(); 
+      submitData = {
+                  pindex : $pindex
+                };
+/*       $.post("mobile.php?act=module&from_user=oMWhZty4E4lKPvSyv0UKE5hHSfWY&name=washing&do=add_order&weid=5",submitData,
+                function (data){
+                  if (data.message.state == 1) {
+                    add_order_1(data.message.add_order,str);
+                  }else if(data.message.state == 0){
+                    add_title(data.message.msg);
+                  }
+              },"json") */
+    }
+    window.onscroll=function(){
+      var a = document.documentElement.clientHeight;
+      var b = document.documentElement.scrollTop==0? document.body.scrollTop : document.documentElement.scrollTop;
+      var c = document.documentElement.scrollTop==0? document.body.scrollHeight : document.documentElement.scrollHeight;
+      if(a+b==c && show_more == 1){
+        show_more = 0;
+        showmore($pindex);
+        $pindex ++;
+      }
+    }
+    </script>
+
+    <!-- 展开与收缩 -->
+    <script type="text/javascript">
+    navList(12);
+    </script>
+    <!-- 选择框表单--> 
+    {php $deleteurl = $this->createMobileUrl('orderCancel',array());}
+    {php $dealorder =  $this->createMobileUrl('orderDeal', array());}
+    <script>
+    $(function() {
+      selectcont('.select01', '.selectBx');
+    });
+    function cancelorder(orderid,status){
+    	$("#orderid").val(orderid);
+    	$("#status").val(status);
+    	$("#codFloat").show();
+    }
+    
+    function payorder(orderid,status){
+    	$("#payorderid").val(orderid);
+    	$("#paystatus").val(status);
+    	//$("#choosepay").show();
+    	var url = '{php echo $dealorder}';
+    	var newurl = url.replace('?','?id='+orderid+'&');  
+    	//alert(newurl);
+    	window.location.href=newurl;
+    }
+    
+    function cancelorderok(){
+    	var orderid = $("#orderid").val();
+    	var status = $("#status").val();
+    	$("#codGoPay_2").attr("disabled",true); 
+    	$("#codGoPayCancel_2").attr("disabled",true); 
+    	//$("#codGoPay").attr("disabled",true);
+    	//var link = {php echo $deleteurl}'+'&id='+orderid;
+    	window.location.href='{php echo $deleteurl}'+'&id='+orderid;
+    }
+    function cancelno(){
+    	$("#codFloat").hide();
+    	return false;
+    }
+    
+    function paycancelno(){
+    	$("#choosepay").hide();
+    	return false;
+    }
+    
+    function payorderok(){
+    	var orderid = $("#payorderid").val();
+    	var status = $("#paystatus").val();
+    	$("#codGoPay_3").attr("disabled",true); 
+    	$("#codGoPayCancel_3").attr("disabled",true); 
+    	//$("#codGoPay").attr("disabled",true);
+    	//var link = {php echo $deleteurl}'+'&id='+orderid;
+    	//window.location.href='{php echo $deleteurl}'+'&id='+orderid;
+    	window.location.href='http://www.baidu.com';
+    }
+    
+/*     function payorder(order_id,status){
+      var paytype = $("#paytype_"+order_id).val();
+      var link = "mobile.php?act=module&status="+status+"&from_user=oXXX&user_type=1&name=washing&do=orderpay&weid=5&order_id="+order_id+"&paytype="+paytype;
+      window.location.href=link;
+    } */
+   
+    </script>
+    <!-- /选择框表单--> 
+    <div id="codFloat" style="display:none" class="cod">
+        <div class="wx_mask"></div>
+        <div class="wx_confirm">
+            <div class="wx_confirm_inner">
+                <div class="wx_confirm_hd">
+                    <div class="wx_confirm_tit">是否确认取消订单？</div>
+                </div>
+                <div class="wx_confirm_bd">
+                    
+                    <div class="wx_confirm_btns">                        
+                        <button type="cancel" onclick="javascript:cancelno()" id="codGoPayCancel_2">返回</button>
+                        <button type="submit" onclick="javascript:cancelorderok()" id="codGoPay_2">确认</button>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="orderid" name="orderid" value="">
+            <input type="hidden" id="status" name="status" value="">
+        </div>
+    </div> 
+        <!-- 付款界面--> 
+    <div id="choosepay" style="display:none" class="cod">
+        <div class="wx_mask"></div>
+        <div class="wx_confirm">
+            <div class="wx_confirm_inner">
+                <div class="wx_confirm_hd">
+                    <div class="wx_confirm_tit">暂时只支持现金付款</div>
+                </div>
+                <div class="wx_confirm_bd">
+                    
+                    <div class="wx_confirm_btns">                        
+                        <button type="cancel" onclick="javascript:paycancelno()" id="codGoPayCancel_3">返回</button>
+                        <button type="submit" onclick="javascript:payorderok()" id="codGoPay_3">确认</button>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="payorderid" name="payorderid" value="">
+            <input type="hidden" id="paystatus" name="paystatus" value="">
+        </div>
+    </div> 
+  </body>
+  </html>

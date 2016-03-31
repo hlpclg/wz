@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>验证手机号码</title>
+<link href="../addons/water_super/template/css/welcome.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/base.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../addons/water_super/template/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/js/jscommon.js"></script>
+</head>
+<body style="background: rgb(0,180,255)">
+
+<div class = "welcome-index "  id="wx_mask">
+  <div style = "height:20px;"></div>
+  <form action = "javascript:void(0)" method = "POST">
+    <table>  
+      <tr>
+        <td width="65%">
+          <div>
+            <img src="../addons/water_super/template/imagesn/e_login_icon_phone.png"><input name = "tel"  id = "tel" type = "text" placeholder="请输入手机号" value="">
+          </div>
+        </td>
+        <td>
+           <a href = "javascript:void(0)" id = "get_verification_code"  class="btn-public">获取验证码</a>
+        </td>
+        </td> 
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div>
+            <img src="../addons/water_super/template/imagesn/e_login_icon_captcha.png"><input name = "code"  id = "code" type = "text" placeholder="请输入验证码"  >
+          </div>
+        </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="padding-top:20px;padding-bottom:10px">
+            <a href="javascript:void(0)" id = "submit_form" class="btn-public">立即绑定</a>
+          </td>
+        </tr>
+      </tr>
+    </table>
+  </form>
+</div>
+<div id="codFloat" style="display:none" class="cod" style="height:60px">
+    <div class="wx_mask"></div>
+      <div class="wx_confirm ">
+          <div class="wx_confirm_inner" id="wx_confirm_float">
+            <div class="wx_confirm_hd">
+                <div class="wx_confirm_tit" id = "show_mes">fsfdsrfsdrf</div>
+            </div>
+          </div>
+      </div>
+    </div>
+ </div>
+
+
+ <div id="error_tip" style="display:none" class="cod">
+        <div class="wx_mask"></div>
+        <div class="wx_confirm">
+            <div class="wx_confirm_inner">
+                <div class="wx_confirm_hd">
+                    <div class="" id="tip_div" >亲~请确认是用本人手机号绑定奥~</div>
+                </div>
+                <input type = "hidden" id ="delete_id">
+                <div class="wx_confirm_bd">
+                    <div class="wx_confirm_btn manage-btn">
+                        <button type="button" onclick="onclose_hide();" class="okbtn blue-btn" id="codGoPay" >取消</button>
+                        <button type="button"  class="okbtn orange-btn" id="second-ok">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div id = "add"></div>
+<script type="text/javascript">
+ var InterValObj; //timer变量，控制时间  
+  var count = 60; //间隔函数，1秒执行  
+  var curCount;//当前剩余秒数 
+  var re = /^[0-9]{11}$/;
+  var sw = 1;
+  var user_type = 20;
+  $("#submit_form").click(function(){
+    // if(sw == 1){  
+    var tel = $("#tel").val().trim();
+      if(tel == ''){
+           alert_1("请输入手机号");
+            return false;
+          }
+          if (!re.test(tel)) {
+            alert_1("请正确填写手机号");
+            return false;
+          };
+          if($("#code").val().trim() == ''){
+            alert_1("请输入验证码");
+            return false;
+          }
+          if(user_type == 20){
+                var second_ok = document.getElementById("second-ok"); 
+                second_ok.click(); 
+          }else{
+                $("#error_tip").show();        
+          }
+  // }
+});
+
+   function onclose_hide(){
+    sw = 1;
+    $("#error_tip").hide();
+    return false;
+  }
+
+ 
+  function SetRemainTime() {  
+    if (curCount == 0) {  
+        sw = 1;               
+        window.clearInterval(InterValObj);//停止计时器  
+        $("#get_verification_code").removeAttr("disabled");//启用按钮  
+        $("#get_verification_code").html("重新发送验证码");   
+    }  
+    else {  
+        curCount--;  
+        $("#get_verification_code").html("重新发送(" + curCount+")" );  
+    }  
+  }  
+  function verification_code(){
+    $("#get_verification_code").html("重新发送(" + curCount + ")");  
+    InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次  
+  }
+$("#windowclosebutton").click(function() {
+    $("#windowcenter").slideUp(500);
+
+  });
+  $("#alertclose").click(function() {
+    $("#windowcenter").slideUp(500);
+
+  });
+  function hide_res(){
+      $("#codFloat").hide();
+    }
+  function show_res(){
+    setTimeout("hide_res()",2000);
+  }
+  function alert_1(title) {
+    $("#show_mes").html(title);
+      $("#codFloat").show();
+      show_res();
+  }
+  function alertToUrl(title) {
+    var url = '{php echo $this->createMobileUrl("index");}';
+    if (title == '') {
+      window.location.href = url;
+    }else{
+      alert_1(title);
+      setTimeout("window.location.href='" + url + "'", 500);
+          //window.location.href = url;
+    }
+  }
+ $(document).ready(
+    function (){
+      $("#get_verification_code").click(
+        function(){
+          var tel = $("#tel").val().trim();
+          if(tel == ''){
+            alert_1("请输入手机号");
+            return false;
+          }
+          if (!re.test(tel)) {
+            alert_1("请正确填写手机号");
+            return false;
+          };
+          var submit_data = { tel : $("#tel").val().trim() };
+        if(sw == 1){
+           sw = 0;
+           curCount = count; 
+           
+           $.ajax({
+        		 type:'GET',
+        		 data:{tel : $("#tel").val().trim()},
+        		 url:'{php echo $this->createMobileUrl("SendVerifyCode");}',
+        		 success:function(data){
+        			  var json = eval("("+data+")");
+                	  if(json.result == 1){
+                		 alert_1(json.code);
+                		  verification_code();
+              		  }else if(json.result == 0){
+              			  sw = 1;
+                          alert_1(json.code);
+              		  }
+        		 }
+        	 }); 
+           
+        }
+        });
+      $("#second-ok").click(
+        function(){
+          $("#error_tip").hide();
+          var submit_data = { tel : $("#tel").val().trim(), code : $("#code").val().trim()};
+          //$("#submit_form").attr("disabled","true");  
+          $("#submit_form").attr("class","btn-public select"); 
+          
+          $.ajax({
+     		 type:'GET',
+     		 data:{tel : $("#tel").val().trim(), code : $("#code").val().trim()},
+     		 url:'{php echo $this->createMobileUrl("VerifyCode");}',
+     		 success:function(data){
+     			  var json = eval("("+data+")");
+	      	  	  if(json.result == 1){
+	      	  		   sw = 1
+	                   alertToUrl(json.msg);
+	       		  }else if(json.result == 0){
+	       			   sw = 1
+	                   $("#submit_form").attr("class","btn-public ");
+	                   $("#submit_form").removeAttr("disabled"); 
+	                   alert_1(json.msg);
+	       		  }
+     		 }
+     	 }); 
+          
+          
+          
+          
+          /* $.post('{php echo $this->createMobileUrl("VerifyCode")}',submit_data,
+                function (data){
+        	  	  var json = eval("("+data+")");
+        	  	  if(json.result == 1){
+        	  		 sw = 1
+                     alertToUrl(json.msg);
+         		  }else if(json.result == 0){
+         			 sw = 1
+                     $("#submit_form").attr("class","btn-public ");
+                     $("#submit_form").removeAttr("disabled"); 
+                     alert_1(json.msg);
+         		  };
+                  
+                },"json") */
+    });
+  });
+</script>
+<div class="server_tel">若未收到验证码或无法绑定请拨打客服电话<b><a href="tel:{$systeminfo['kefutel']}" style="color:#fff;font-size:16px">{$systeminfo['kefutel']}</a></b><div>
+</body>
+
+
+</html>

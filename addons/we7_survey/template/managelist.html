@@ -1,0 +1,128 @@
+{template 'common/header'}
+{php load()->func('tpl')}
+<style>
+.field label{float:left;margin:0 !important; width:140px;}
+</style>
+<ul class="nav nav-tabs">
+	<li><a href="{php echo $this->createWebUrl('display')}">调研活动列表</a></li>
+	<li><a href="{php echo $this->createWebUrl('post')}">新建调研活动</a></li>
+	<li class="active"><a href="{php echo $this->createWebUrl('manage', array('id' => $sid))}">调研活动详情</a></li>
+</ul>
+<div class="main">
+    <div class="panel panel-info">
+        <div class="panel-heading">筛选</div>
+        <div class="panel-body">
+            <form action="./index.php" method="get" class="form-horizontal" role="form">
+                <input type="hidden" name="c" value="site" />
+                <input type="hidden" name="a" value="entry" />
+                <input type="hidden" name="m" value="we7_survey" />
+                <input type="hidden" name="do" value="managelist" />
+                <input type="hidden" name="id" value="{$sid}" />
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">调研内容情况</label>
+                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                        <div style="font-weight:normal;">
+                            <label class="checkbox-inline" id="field-all"><input type="checkbox" id="selectAll" onchange="selectall(this, 'select');"> 全选</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label"></label>
+                    <div class="col-xs-12 col-sm-10 col-lg-10">
+                    	{loop $ds $field $comment}
+                        	<label class="checkbox-inline"><input type="checkbox" name="select[]" value="{$field}" {if in_array($field, $select)} checked="checked"{/if} /> {$comment}</label>
+                        {/loop}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">调研提交时间</label>
+                    <div class="col-xs-12 col-sm-4">
+                        {php echo tpl_form_field_daterange('daterange',array('starttime'=>date('Y-m-d H:i', $starttime),'endtime'=>date('Y-m-d H:i', $endtime)))}
+                    </div>
+                    <div class=" col-xs-12 col-sm-6">
+                        <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                        <input type="button" onclick="location.href='{php echo $this->createWebUrl('manage',array('id' => $sid));}'" value="查看统计" class="btn btn-default">
+						<button type="submit" name="export" value="导出全部数据" class="btn btn-default"><i class="fa fa-download"></i>导出全部数据</button>
+					</div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">详细数据</div>
+        <div class="panel-body table-responsive">
+				<form action="" method="post" onsubmit="">
+				<div class="sub-content">
+					<table class="table table-hover">
+						<thead class="navbar-inner">
+							<tr>
+								<th style="width:15%;">粉丝昵称</th>
+								<th style="width:10%;">真实姓名</th>
+								<th style="width:15%;">手机号</th>
+								{loop $select $fid}
+								<th>{$ds[$fid]}</th>
+								{/loop}
+								<th style="width:15%;">提交时间</th>
+								<th style="width:10%;">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							{loop $lists $row}
+							<tr>
+								<td height="60">
+									{if $row['nickname'] != ''}
+									<a href="javascript:;">{php echo $row['nickname']}</a>
+									{else}
+									<span class="label label-danger">未完善</span>
+									{/if}
+								</td>
+								<td>
+									{if $row['realname']!=''}{$row['realname']}{else}未完善{/if}
+								</td>
+								<td>
+									{if $row['mobile']!=''}{$row['mobile']}{else}未完善{/if}
+								</td>
+								{loop $select $fid}
+								<td>
+									{$row['fields'][$fid]}
+								</td>
+								{/loop}
+								<td>
+									{php echo date('Y-m-d H:i:s', $row[createtime]);}
+								</td>
+								<td>
+									<a href="{php echo $this->createWebUrl('detail', array('id' => $row['srid']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="查看详情"><i class="fa fa-eye"></i></a>
+									<a href="{php echo $this->createWebUrl('surveydelete', array('id' => $row['srid']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="删除"><i class="fa fa-times"></i></a>
+								</td>
+							</tr>
+							{/loop}
+						</tbody>
+					</table>
+				</div>
+				</form>
+				{$pager}
+			</div>
+		</div>
+	</div>
+<script type='text/javascript'>
+	$('#selectAll').prop('checked', true);
+	$('input[name="select[]"]').each(function() {
+		if (false == $(this).prop('checked')) {
+			$('#selectAll').prop('checked', false);
+			return false;
+		}
+	});
+	require(['bootstrap'],function($){
+		$('.btn').hover(function(){
+			$(this).tooltip('show');
+		},function(){
+			$(this).tooltip('hide');
+		});
+	});
+    function selectall(obj, name){
+		$('input[name="'+name+'[]"]:checkbox').each(function() {
+			$(this).get(0).checked =  $(obj).get(0).checked;
+		});
+	}
+</script>
+{template 'common/footer'}

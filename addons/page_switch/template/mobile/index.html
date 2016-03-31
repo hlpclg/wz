@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-cn" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		
+		
+		<link rel="stylesheet" type="text/css" href="../addons/page_switch/template/mobile/css/default.css" />
+		<link rel="stylesheet" type="text/css" href="../addons/page_switch/template/mobile/css/component.css" />
+		<link rel="stylesheet" type="text/css" href="../addons/page_switch/template/mobile/css/animations.css" />
+		
+
+	</head>
+	<body>	
+		<div id="pt-main" class="pt-perspective">
+			{loop $pictures $picture}
+			<div class="pt-page"><img src="<?php echo '../attachment/'.$picture;?>" width="100%" height="100%" alt={$picture}/></div>
+			{/loop}
+		</div>
+		
+		<script src="../addons/page_switch/template/mobile/js/jquery-2.1.1.min.js"></script>
+		<script src="../addons/page_switch/template/mobile/js/jquery.touchSwipe.min.js"></script>
+		<script src="../addons/page_switch/template/mobile/js/modernizr.custom.js"></script>
+		<script src="../addons/page_switch/template/mobile/js/pagetransitions.js"></script>
+		
+	</body>
+</html>

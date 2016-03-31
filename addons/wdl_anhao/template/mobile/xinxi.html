@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<title>中奖信息填写</title>
+<style>
+body{font-family:微软雅黑;}
+.header{position:relative;}
+.header span{position:absolute;font-size:46px;top:71%;right:49%;color:#2bfe0f;}
+input[type="button"], input[type="submit"], input[type="reset"] {-webkit-appearance: none;}
+</style>
+</head>
+
+<body style="background-color:#260b34; color:#fff;">
+	<!--中奖-->
+	{if $yonghu1['wdl_anhao']!=''}
+	<div class="header"><img src="/addons/wdl_anhao/template/mobile/zj.jpg" width="100%"><span>{if $yonghu1['state']=='1'}1{/if}{if $yonghu1['state']==''}2{/if}{if $yonghu1['state']=='3'}3{/if}</span></div>
+    <div style="text-align:center; font-size:16px;">
+		<h2>请认真填写您的信息：</h2>
+		<form action="" method="post">
+		<div style=" height:50px; line-height:50px;">姓名：<input type="text" name="name" value="{php echo $yonghu1['name']}" style="height:30px;"></div>
+		<div style=" height:50px; line-height:50px;">电话：<input type="tel" name="tel" value="{php echo $yonghu1['tel']}" style="height:30px;"></div>
+		<input type="submit" value="提交" style="background:#e72634; border:none; width:200px; height:40px; margin:20px; color:#fff; font-size:16px;">
+		</form>
+	</div>
+	{else}
+	<!--未中奖-->
+	<div style="margin-top:25%;"><img src="sj.png" width="100%"></div>
+	{/if}
+</body>
+</html>

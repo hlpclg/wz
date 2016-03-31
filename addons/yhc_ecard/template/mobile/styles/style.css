@@ -1,0 +1,113 @@
+@font-face {
+  font-family: 'iconfont';
+  src: url('//at.alicdn.com/t/font_1445310186_7429416.eot');
+  src: url('//at.alicdn.com/t/font_1445310186_7429416.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('//at.alicdn.com/t/font_1445310186_7429416.woff') format('woff'), /* chrome、firefox */ url('//at.alicdn.com/t/font_1445310186_7429416.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1445310186_7429416.svg#iconfont') format('svg');
+  
+  /* IE9*/
+  /* iOS 4.1- */
+}
+.icon-base {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  background-color: #FBF9FE;
+  color: #2A2A2A;
+}
+img {
+  vertical-align: top;
+}
+a {
+  text-decoration: none;
+}
+.header .avatar {
+  width: 1.26rem;
+  height: 1.26rem;
+  border-radius: 12px;
+}
+.footer-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  background: #fff;
+  border-top: 1px solid #ccc;
+}
+.footer-nav a {
+  display: inline-block;
+  width: 33%;
+  font-size: .3rem;
+}
+.footer-nav a:active {
+  background: #FBF9FE;
+}
+.view {
+  margin-bottom: 2rem;
+}
+.view .header {
+  position: relative;
+  padding-left: 1.92rem;
+  padding-top: .28rem;
+  height: 1.98rem;
+}
+.view .header .avatar {
+  position: absolute;
+  left: .38rem;
+  top: .28rem;
+}
+.view .header .name {
+  font-size: .38rem;
+  line-height: 1;
+  margin-bottom: .1rem;
+}
+.view .header .corp,
+.view .header .position {
+  font-size: .20rem;
+  color: #A4A4A4;
+  line-height: .32rem;
+}
+.view .qr {
+  position: absolute;
+  font-size: .5rem;
+  top: .28rem;
+  right: .24rem;
+  line-height: 1;
+}
+.view .weui_cells a:not(.weui_btn) {
+  color: #3A5173;
+}
+.view .qr_dialog img {
+  max-width: 100%;
+}
+.view .qr_dialog .weui_dialog_ft {
+  margin-top: 0;
+}
+.form .header {
+  text-align: center;
+  padding: 0.4rem 0;
+}
+.pocket {
+  margin-bottom: 2rem;
+}
+.pocket .header {
+  margin-bottom: .6rem;
+}
+.pocket .add {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  line-height: 1.64rem;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(255, 255, 255, 0)), color-stop(1, #ffffff));
+}
+.pocket .add a {
+  font-size: 1.24rem;
+  color: #04be02;
+  text-shadow: 0 0 2px #000;
+}

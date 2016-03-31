@@ -1,0 +1,424 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="MobileOptimized" content="236">
+    <title>花语</title>
+<meta name="author" content="m.hua.com">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<link rel="stylesheet" type="text/css" href="../addons/wang_huayu/template/huayu/wap1.css" charset="utf-8">
+<link rel="stylesheet" type="text/css" href="../addons/wang_huayu/template/huayu/list.css" charset="utf-8">
+<link href="../addons/wang_huayu/template/huayu/common1107.css" rel="stylesheet" type="text/css">
+<link href="../addons/wang_huayu/template/huayu/wap1107.css" rel="stylesheet" type="text/css">
+<style>
+.huayu_top{ margin-top:10px;height:65px;}
+.huayu_top ul{}
+.huayu_top ul li{ float:left; margin-right:18px;}
+.huayu_top ul li dl{ font-size: 0.75em;text-align: left; line-height:18px;}
+</style>
+<script type="text/javascript" src="../addons/wang_huayu/template/huayu/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="../addons/wang_huayu/template/huayu/common.js"></script>
+<script type="text/javascript">
+function reqUrlParam(paras)
+{ 
+	var url = location.href; 
+	var paraString = url.substring(url.indexOf("?")+1,url.length).split("&"); 
+	var paraObj = {} 
+	for (i=0; j=paraString[i]; i++){ 
+	paraObj[j.substring(0,j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=")+1,j.length); 
+	} 
+	var returnValue = paraObj[paras.toLowerCase()]; 
+	if(typeof(returnValue)=="undefined"){ 
+	return ""; 
+	}else{ 
+	return returnValue; 
+	} 
+}
+String.prototype.trim = function() { return this.replace(/^\*|\s*$/gi, "") }
+
+$(function (){
+	var sid,uid;
+	sid=reqUrlParam("sid");
+	uid=reqUrlParam("u_id");
+	sid=sid.trim();
+	uid=uid.trim();
+	
+	if(sid != ""){
+		$.post("/ajax/from.asp","sid=" + sid + "&u_id=" + uid,null);		
+	}
+	
+});
+</script>
+</head>
+
+<body>
+
+<!--头部导航开始-->
+<header>
+  <div class="header">
+        <div class="logo">
+        花语
+        </div>
+  </div>
+</header>
+<!--头部导航End-->
+<div class="spmc_huayu">
+<div class="huayu_top">
+	<ul>
+    	<li>
+        	<dl>
+            	<dt><a href=""><img src="../addons/wang_huayu/template/huayu/huayu_03.png" width="48" height="48"></a></dt>
+            	<dd>枝数花语</dd>
+            </dl>
+        </li>
+    	<li>
+        	<dl>
+            	<dt><a href="#hchy"><img src="../addons/wang_huayu/template/huayu/huayu_05.png" width="48" height="48"></a></dt>
+            	<dd>花材花语</dd>
+            </dl>
+        </li>
+    	<li>
+        	<dl>
+            	<dt><a href="#shgl"><img src="../addons/wang_huayu/template/huayu/huayu_07.png" width="48" height="48"></a></dt>
+            	<dd>送花攻略</dd>
+            </dl>
+        </li>
+    </ul>
+</div>
+<table cellspacing="0" cellpadding="0" id="zshy">
+    <tbody>
+      <tr>
+        <th width="30%">枝数</th>
+        <th width="70%" style="border-left:1px solid #D0D0D0;border-radius: 0 5px 0 0;">花语</th>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>1朵 <span class="arrow"></span></a></td>
+        <td><a>情有独钟、你是我的唯一<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>2朵<span class="arrow"></span></a></td>
+        <td><a>心目中只有我倆<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>3朵<span class="arrow"></span></a></td>
+        <td><a>我爱你<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>4朵<span class="arrow"></span></a></td>
+        <td><a>誓言、承诺、山盟海誓<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>5朵<span class="arrow"></span></a></td>
+        <td><a>无怨无悔<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>6朵<span class="arrow"></span></a></td>
+        <td><a>愿你一切顺利<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>7朵<span class="arrow"></span></a></td>
+        <td><a>喜相逢<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>8朵<span class="arrow"></span></a></td>
+        <td><a>深表歉意、盼您原谅<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>9朵<span class="arrow"></span></a></td>
+        <td><a>终生相爱、无怨无悔<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>10朵<span class="arrow"></span></a></td>
+        <td><a>完美的爱情、十全十美<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>11朵<span class="arrow"></span></a></td>
+        <td><a>一心一意<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>12朵<span class="arrow"></span></a></td>
+        <td><a>圆满组合、心心相印<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>13朵<span class="arrow"></span></a></td>
+        <td><a>暗恋<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>15朵<span class="arrow"></span></a></td>
+        <td><a>对你感到抱歉<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>16朵<span class="arrow"></span></a></td>
+        <td><a>爱的最高点<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>17朵<span class="arrow"></span></a></td>
+        <td><a>好聚好散<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>18朵<span class="arrow"></span></a></td>
+        <td><a>真诚的心<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>19朵<span class="arrow"></span></a></td>
+        <td><a>期待陪伴<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>20朵<span class="arrow"></span></a></td>
+        <td><a>此情不渝、永远爱你<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>21朵<span class="arrow"></span></a></td>
+        <td><a>你是我的最爱<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>22朵<span class="arrow"></span></a></td>
+        <td><a>双双对对、你浓我浓、两情相悦<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>24朵<span class="arrow"></span></a></td>
+        <td><a>思念<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>25朵<span class="arrow"></span></a></td>
+        <td><a>祝你好运<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>29朵<span class="arrow"></span></a></td>
+        <td><a>不须言语的爱<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>30朵<span class="arrow"></span></a></td>
+        <td><a>爱到永久<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>33朵<span class="arrow"></span></a></td>
+        <td><a>深情呼喚、我爱你三生三世 <span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>36朵<span class="arrow"></span></a></td>
+        <td><a>浪漫心情、我心属于你<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>44朵<span class="arrow"></span></a></td>
+        <td><a>亘古不变的誓言<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>50朵<span class="arrow"></span></a></td>
+        <td><a>无怨无悔<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>55朵<span class="arrow"></span></a></td>
+        <td><a>无悔的爱<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>56朵<span class="arrow"></span></a></td>
+        <td><a>吾爱<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>60朵<span class="arrow"></span></a></td>
+        <td><a>爱情永固<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+      
+      </tr><tr>
+        <td class="no-bl"><a>66朵<span class="arrow"></span></a></td>
+        <td><a>心情顺利、真爱不变<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>77朵<span class="arrow"></span></a></td>
+        <td><a>相逢自是有缘<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>88朵<span class="arrow"></span></a></td>
+        <td><a>用心弥补一切的错<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>99朵<span class="arrow"></span></a></td>
+        <td><a>长相厢守、坚定<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>100朵<span class="arrow"></span></a></td>
+        <td><a>百分之百的爱、百年好合<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>101朵<span class="arrow"></span></a></td>
+        <td><a>您是我的唯一<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>108朵<span class="arrow"></span></a></td>
+        <td><a>嫁給我吧、求婚<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>123朵<span class="arrow"></span></a></td>
+        <td><a>爱情自由<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>144朵<span class="arrow"></span></a></td>
+        <td><a>爱你日日月月生生世世<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>365朵<span class="arrow"></span></a></td>
+        <td><a>天天想你、天天爱你<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>999朵<span class="arrow"></span></a></td>
+        <td><a>天长地久、爱无止休<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl no-bb">
+        <a href="http://m.hua.com/help/OrderReview_List.asp">1001朵<span class="arrow"></span></a>
+        </td>
+        <td class="no-bb"><a href="">忠诚的爱、直到永远<span class="arrow"></span></a></td>
+      </tr>
+    </tbody>
+  </table>
+  
+<table cellspacing="0" cellpadding="0" id="hchy">
+    <tbody>
+      <tr>
+        <th width="30%">花材</th>
+        <th width="70%" style="border-left:1px solid #D0D0D0;border-radius: 0 5px 0 0;">花语</th>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>红玫瑰<span class="arrow"></span></a></td>
+        <td><a>热情、热恋、热爱着你<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>粉玫瑰</a></td>
+        <td><a>初恋、爱的宣言、关心<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>白玫瑰</a></td>
+        <td><a>天真、纯洁、纯真的爱</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>紫玫瑰</a></td>
+        <td><a>浪漫真情、珍贵独特</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>蓝玫瑰</a></td>
+        <td><a>清醇的爱、敦厚善良<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>香槟玫瑰</a></td>
+        <td><a>我只钟情你一个</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>黄玫瑰</a></td>
+        <td><a>为爱道歉</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>红色康乃馨</a></td>
+        <td><a>思念、祝健康长寿</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>粉色康乃馨</a></td>
+        <td><a>祝永远美丽</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>黄色康乃馨</a></td>
+        <td><a>对母亲的感激之情、热爱着您</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>郁金香</a></td>
+        <td><a>爱的告白、永恒的祝福<span class="arrow"></span></a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>马蹄莲<span class="arrow"></span></a></td>
+        <td><a>永恒、优雅、希望、纯洁</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>百合</a></td>
+        <td><a>顺利、心想事成、祝福</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>向日葵</a></td>
+        <td><a>勇敢地去追求幸福、沉默的爱</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>非洲菊<span class="arrow"></span></a></td>
+        <td><a>有毅力、不畏艰难、互敬互爱</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>绣球花</a></td>
+        <td><a>希望、忠贞、美满</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>满天星</a></td>
+        <td><a>关怀、思恋、配角</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>勿忘我</a></td>
+        <td><a>永恒的爱、浓情厚谊</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>洋桔梗</a></td>
+        <td><a>富于感情、感动</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>红掌</a></td>
+        <td><a>大展宏图</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>剑兰</a></td>
+        <td><a>用心、福禄、康宁</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl no-bb"><a>紫罗兰</a></td>
+        <td class="no-bb"><a>永恒的美与爱</a></td>
+      </tr>
+<tr>
+        <td class="no-bl"><a>蝴蝶兰</a></td>
+        <td><a>高洁、清雅、富贵</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>大花蕙兰</a></td>
+        <td><a>高贵雍容</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>君子兰</a></td>
+        <td><a>高贵、有君子之风</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl"><a>凤梨花</a></td>
+        <td><a>完美无缺</a></td>
+      </tr>
+      <tr>
+        <td class="no-bl no-bb"><a>仙客来</a></td>
+        <td class="no-bb"><a>喜悦</a></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+<table cellspacing="0" cellpadding="0" id="shgl">
+    <tbody>
+      <tr>
+        <th>送花攻略</th>
+      </tr>
+      <tr>
+        <td class="no-bl"><div style=" border-bottom:1px dashed #999;"><a><span class="red"><strong style="line-height:28px;">不同的送花对象——</strong><br><br></span><span class="red">恋人：</span>适合送玫瑰以及百合、郁金香、马蹄莲等。<br><br>             <span class="red">父母/长辈/老师：</span>适合送康乃馨，最好是康乃馨搭配百合、扶郎、玫瑰的花束和花篮。<br><br>            <span class="red">朋友/同事：</span>适合送百合、扶郎、郁金香、马蹄莲，也可以搭配玫瑰一起赠送。<br><br>
+</a></div>
+
+<div style=" border-bottom:1px dashed #999;"><a><span class="red"><strong style="line-height:28px;">不同颜色的鲜花——</strong><br><br></span><span class="red">红色：</span>红色代表吉祥、喜气、热烈，红色鲜花适合出现在喜庆的场合，以及用来表达炽热的情感，如代表热恋的红玫瑰。<br><br>             <span class="red">粉色：</span>粉色代表可爱、温馨、青春、恋爱等，多用在女性的身上，粉色花朵主要用来送给女性，所以粉色康乃馨被认为是母爱的象征。<br><br>            <span class="red">白色：</span>白色代表纯洁、圣洁、严肃，白色花朵适合出现在庄重的场合，以及用来表达真挚的情感，如白玫瑰代表纯真的爱。<br><br>             <span class="red">黄色：</span>黄色被认为是快乐和希望的颜色，黄色花朵适合用来祝病人早日康复，以及表达祝福。不过，黄玫瑰比较特别，虽然可代表美好的祝福，但重在为爱道歉。<br><br>
+</a></div>
+
+<div><a><span class="red"><strong style="line-height:28px;">花朵朵数的选择——</strong><br><br></span>时下，比较常见且受欢迎的是11朵、19朵、29朵、33朵、66朵、99朵的花束。<br><br>             <span class="red">11朵</span>代表一心一意，经济实惠之选，常用来表白示爱。<br><br>            <span class="red">19朵</span>代表期待陪伴，正式恋爱后可赠送，特别适合异地恋的情侣。<br><br>             <span class="red">29朵</span>代表不需言语的爱，热恋时送花的心意之选。<br><br>
+<span class="red">33朵</span>代表三生三世的爱，适合在相爱纪念日赠送。<br><br>
+<span class="red">66朵</span>代表真爱不变，适合恋爱走过轰轰烈烈后送给对方。<br><br>
+<span class="red">99朵</span>代表长长久久的爱，较多用于示爱/求婚。<br><br>
+如果是很有纪念意义的重要场合，通常送29朵、66朵、99朵这种朵数较多的花束比较合适。<br><br>
+
+</a></div>
+
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+</div>
+
+</body></html>

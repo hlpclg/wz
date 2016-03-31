@@ -1,0 +1,71 @@
+{template 'common/header'}
+<div class="main">
+<ul class="nav nav-tabs">
+  <li{if $_GPC['do'] == 'routerlist'} class="active"{/if}><a href="{php echo  $this->createWebUrl('routerlist');}">路由器管理</a>
+  </li>
+  <li{if $_GPC['do'] == 'routeradd'} class="active"{/if}><a href="{php echo $this->createWebUrl('routeradd');}">添加路由器</a>
+  </li>
+</ul>
+
+
+<div class="panel panel-info">
+	<div class="panel-heading">筛选</div>
+	<div class="panel-body">
+		<form action="" method="get" class="form-horizontal" role="form">
+        	<input type="hidden" name="c" value="site">
+			<input type="hidden" name="a" value="entry">
+			<input type="hidden" name="do" value="routerlist">
+		<input type="hidden" name="m" value="lxy_rtrouter" />
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">路由器名称</label>
+				<div class="col-sm-8 col-lg-4">
+					<input class="form-control" name="keyword" id="" type="text" value="{$_GPC['keyword']}">
+				</div>
+               <div class=" col-xs-12 col-sm-2 col-lg-2">
+				  <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+			  </div>
+			</div>
+
+		</form>
+	</div>
+</div>
+
+	
+	<div style="padding:15px;">
+        <a href="{php echo $this->createWeburl('routeradd', array())}"  class="btn"><i class="icon-plus-sign-alt" ></i>新增路由器</a>
+        <div class="panel panel-default">
+	<div class="panel-body table-responsive">
+
+		<table class="table table-hover">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:20%;"  >路由器名称</th>
+					<th style="width:20%;" >nodeId </th>
+					<th style="width:20%;" >状态</th>
+					<th style="width:40%;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $item}
+				<tr>
+					<td>{$item['rname']}</td>
+					<td>{$item['nodeid']}</td>
+					<td><span class='label label-default label-info'>{if $item['status']}运行{else}停止{/if}</span></td>
+					<td>
+                    <a href="{php echo $this->createWebUrl('routeradd', array('id' => $item['id']))}" class="btn btn-small" title="编辑"><i class="fa fa-pencil"></i></a>
+						<a onclick="return confirm('确认删除该路由器？');return false;" href="{php echo $this->createWebUrl('delrouter', array('id' => $item['id']))}" class="btn btn-small" title="删除"><i class="fa fa-times"></i></a>
+                        
+                     </td>
+				</tr>
+				{/loop}
+
+				<td colspan="9">
+					<input name="token" type="hidden" value="{$_W['token']}" /></td>
+			</tr>
+		</table>
+		{$pager}
+        	</div>
+	</div>
+	</div>
+</div>
+{template 'common/footer'}

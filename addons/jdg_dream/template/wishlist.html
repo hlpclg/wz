@@ -1,0 +1,86 @@
+{template 'common/header'}
+{template 'common'}
+<div class="main">
+	<ul class="nav nav-tabs">
+		<li{if $_GPC['do'] == 'manage'} class="active"{/if}><a href="{php echo $this->createWebUrl('manage');}">为梦想举杯管理</a></li>
+		<li{if $_GPC['do'] == 'post'} class="active"{/if}><a href="{php echo url('platform/reply/post',array('m'=>'jdg_dream'));}">添加为梦想举杯规则</a></li>
+		<li{if $_GPC['do'] == 'awardlist'} class="active"{/if}><a href="{php echo $this->createWebUrl('wishlist',array('name'=>'scratch', 'rid' => $rid));}">许愿名单</a></li>
+	</ul>
+    <div class="panel panel-info">
+	<div class="panel-heading">筛选</div>
+	<div class="panel-body">
+		<form action="./index.php" method="get" class="form-horizontal" role="form">
+			<input type="hidden" name="c" value="site" />
+			<input type="hidden" name="a" value="entry" />
+        	<input type="hidden" name="m" value="jdg_dream" />
+        	<input type="hidden" name="do" value="wishlist" />
+        	<input type="hidden" name="rid" value="{$_GPC['rid']}" />
+			<div class="form-group">
+				<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">关键字</label>
+				<div class="col-xs-12 col-sm-8 col-lg-9">
+					<input class="form-control" name="keywords" id="" type="text" value="{$_GPC['keywords']}" placeholder="愿望"> 
+				</div>
+				                <div class=" col-xs-12 col-sm-2 col-lg-2">
+					<button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+				</div>
+			</div>
+			
+		</form>
+	</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+	<div class="row-fluid">
+    	<div class="span8 control-group">
+			<!-- <a class="btn btn-default" href="{php echo $this->createWebUrl('download',array('rid'=>$rid))}"><i class="icon-download-alt"></i>导出许愿信息</a> -->
+			<a class="btn btn-default" href="{php echo $this->createWebUrl('wishlist',array('rid'=>$rid))}">全部</a>
+			<a class="btn btn-default" href="{php echo $this->createWebUrl('wishlist',array('rid'=>$rid,'status'=>0))}">已取消</a>
+			<a class="btn btn-default" href="{php echo $this->createWebUrl('wishlist',array('rid'=>$rid,'status'=>1))}">已确认</a>
+        </div>
+    </div>
+	<div class="alert" style="margin-bottom:0;">
+		本次活动共：{$dreamnum}人参与　　本次活动共：{$viewnum}人浏览
+	</div>
+</div>
+	<div style="position:relative">
+		<div class="panel-body table-responsive">
+			<table class="table table-hover" style="position:relative">
+			<thead class="navbar-inner">
+				<tr>
+					<th style="width:50px;">序号</th>
+					<th style="width:80px;">许愿人</th>
+					<th style="width:150px;">愿望</th>
+					<th style="width:80px;">被许愿人</th>
+					<th style="width:80px;">状态</th>
+					<th style="width:120px;">许愿时间</th>
+					<th style="width:300px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{loop $list $row}
+				<tr>
+					<td>{$row['id']}</td>
+                	<td>{$row['drea_mname']}</td>
+					<td>{$row['dream']}</td>
+					<td>{$row['to_name']}</td>
+					<td>{if $row['status']==0}<span class="label label-default">隐藏</span>
+						{else}<span class="label label-success">显示</span>
+						{/if}</td>
+					<td>{php echo date('Y/m/d H:i',$row['createtime']);}</td>
+					
+					<td>
+						<a class="btn btn-default" href="{php echo  $this->createWebUrl('setstatus',array('status'=>0,'id'=>$row['id'],'rid'=>$row['rid']))}" ><i class="fa fa-ban"></i> 隐藏</a>
+						<a class="btn btn-default" href="{php echo $this->createWebUrl('setstatus',array('status'=>1,'id'=>$row['id'],'rid'=>$row['rid']))}" ><i class="fa fa-times-circle-o"></i> 显示</a>
+						
+					</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+	</div>
+</div>
+</div>
+{$pager}
+</div>
+
+{template 'common/footer'}

@@ -1,0 +1,71 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>在线预订</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes"/>
+    <link href="{MON_ORDER_RES}css/hotels.css" rel="stylesheet" type="text/css">
+    <script src="{MON_ORDER_RES}js/jquery.min.js" type="text/javascript"></script>
+    <script src="{MON_ORDER_RES}js/tel.js" type="text/javascript"></script>
+    <style type="text/css">
+
+        #allmap{height:500px;width:100%;}
+
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=U5oHB8gErPyXcmb3i7jj717l"></script>
+</head>
+<body id="hotelsmore">
+<div class="qiandaobanner"><img src="{php echo MonUtil::getpicurl($form['p_title_pg'])}"></div>
+<div class="cardexplain">
+
+    <div id="allmap"></div>
+
+</div>
+
+</body>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    map.centerAndZoom(new BMap.Point({$form['lng']},{$form['lat']}),11);
+    map.enableScrollWheelZoom(true);
+    theLocation();
+
+    // 用经纬度设置地图中心点
+    function theLocation(){
+
+            map.clearOverlays();
+            var new_point = new BMap.Point({$form['lng']},{$form['lat']});
+            var marker = new BMap.Marker(new_point);  // 创建标注
+            map.addOverlay(marker);              // 将标注添加到地图中
+            map.panTo(new_point);
+
+    }
+</script>
+
+{php echo register_jssdk(false);}
+<script type="text/javascript">
+
+    wx.ready(function () {
+        sharedata = {
+            title: "{$form['share_title']}",
+            desc: "{$form['share_content']}",
+            link: "{php echo MonUtil::str_murl($this->createMobileUrl('Index',array('fid'=>$form['id']),true))}",
+            imgUrl: "{$_W['attachurl']}{$form['share_icon']}",
+            success: function(){
+
+            },
+            cancel: function(){
+
+            }
+        };
+        wx.onMenuShareAppMessage(sharedata);
+        wx.onMenuShareTimeline(sharedata);
+    });
+
+
+</script>
+
+</html>

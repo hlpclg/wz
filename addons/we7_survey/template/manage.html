@@ -1,0 +1,129 @@
+{template 'common/header'}
+{php load()->func('tpl')}
+<style>
+    .field label{float:left;margin:0 !important; width:140px;}
+</style>
+<ul class="nav nav-tabs">
+    <li><a href="{php echo $this->createWebUrl('display')}">调研活动列表</a></li>
+    <li><a href="{php echo $this->createWebUrl('post')}">新建调研活动</a></li>
+    <li class="active"><a href="{php echo $this->createWebUrl('manage', array('id' => $sid))}">调研活动详情</a></li>
+</ul>
+<div class="main">
+    <div class="panel panel-info">
+        <div class="panel-heading">筛选</div>
+        <div class="panel-body">
+            <form action="./index.php" method="get" class="form-horizontal" role="form">
+                <input type="hidden" name="c" value="site" />
+                <input type="hidden" name="a" value="entry" />
+                <input type="hidden" name="m" value="we7_survey" />
+                <input type="hidden" name="do" value="manage" />
+                <input type="hidden" name="id" value="{$sid}" />
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">调研内容情况</label>
+                    <div class="col-xs-12 col-sm-8 col-lg-8">
+                        <div style="font-weight:normal;">
+                            <label class="checkbox-inline" id="field-all"><input id="selectAll" type="checkbox" onchange="selectall(this, 'select');"> 全选</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label"></label>
+                    <div class="col-xs-12 col-sm-10 col-lg-10">
+                    	{loop $ds $field $comment}
+                        	<label class="checkbox-inline"><input type="checkbox" name="select[]" value="{$field}" {if in_array($field, $select)} checked="checked"{/if} /> {$comment}</label>
+                        {/loop}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-2 control-label">调研提交时间</label>
+                    <div class="col-xs-12 col-sm-6 col-lg-7">
+                        {php echo tpl_form_field_daterange('daterange',array('starttime'=>date('Y-m-d H:i', $starttime),'endtime'=>date('Y-m-d H:i', $endtime)))}
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-lg-3 text-center">
+                        <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                        <input type="button" onclick="location.href='{php echo $this->createWebUrl('managelist',array('id' => $sid));}'" name="" value="详细信息" class="btn btn-primary">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">详细数据&nbsp;&nbsp;&nbsp;&nbsp;<span class="label label-success" style="height:16px;line-height:16px">共 {$total} 人参与调研</span></div>
+        <div class="panel-body">
+            {loop $datas $key $val}
+           <script type="text/javascript">
+				$(function () {
+					$("#{$val['sfid']}").highcharts({
+						chart: {
+							type: 'column',
+							margin: [ 50, 50, 100, 100]
+						},
+						title: {
+							text: {$val['title']}
+						},
+						xAxis: {
+							categories: [
+								{$val['str']}
+							],
+							labels: {
+								rotation: - 45,
+								align: 'right',
+								style: {
+									fontSize: '13px',
+									fontFamily: 'Verdana, sans-serif'
+								}
+							}
+						},
+						yAxis: {
+							min: 0,
+							title: {
+								text: '所占百分比'
+							}
+						},
+						legend: {
+							enabled: false
+						},
+						tooltip: {
+							pointFormat: '所占比例： <b>{point.y:.1f}% </b>',
+						},
+						credits:{enabled:false},
+						series: [{
+							name: 'Population',
+							data: [{$val['nums']}],
+							dataLabels: {
+								enabled: true,
+								rotation: - 90,
+								color: '#FFFFFF',
+								align: 'right',
+								x: 4,
+								y: 10,
+								style: {
+									fontSize: '13px',
+									fontFamily: 'Verdana, sans-serif',
+									textShadow: '0 0 3px black'
+								}
+							}
+						}]
+					});
+				});
+			</script>
+            <div id="{$val['sfid']}" style="width:33%; height:500px;float:left"></div>
+        {/loop}
+        </div>
+    </div>
+<script src="../addons/we7_survey/style/highcharts.js"></script>
+<script language='javascript'>
+	$('#selectAll').prop('checked', true);
+	$('input[name="select[]"]').each(function() {
+		if (false == $(this).prop('checked')) {
+			$('#selectAll').prop('checked', false);
+			return false;
+		}
+	});
+	function selectall(obj, name){
+		$('input[name="'+name+'[]"]:checkbox').each(function() {
+			$(this).get(0).checked =  $(obj).get(0).checked;
+		});
+	}
+</script>
+{template 'common/footer'}

@@ -1,0 +1,87 @@
+{template 'common/header'}
+<div class="main">
+  <form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+    <div class="panel panel-default">
+      <div class="panel-heading">使用说明</div>
+      <div class="panel-body">
+
+        <div class="form-group">
+          <label class="col-xs-12 col-sm-4 col-md-3 col-lg-2 control-label">如何安装菜单</label>
+          <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10">
+            请前往各个模块的【参数设置】中安装菜单。说明：为什么不在这里统一安装？因为分散安装扩展性更强。比如发布了一个新模块，要加菜单到菜单中心中，只需要在新模块里面带上菜单就行，无需升级菜单中心。
+          </div>
+        </div>
+
+
+        {if $_W['isfounder']}
+        <div class="form-group">
+          <?php
+          echo FormTpl::label("记账本多模板");
+          echo FormTpl::getWebControl('select', 'template', $settings['template'], $template_items, 3);
+          echo FormTpl::tip("选择要启用的模板。选择后，如果未生效，请清空微信缓存。<br>自定义模板，请参考quicktemplate/quick_center/目录下的pink模板，将该模板的目录<b>复制</b>改名，然后在新目录中修改即可。注意，pink目录不可删除，当找不到其它模板的时候，会默认使用pink模板。");
+          ?>
+        </div>
+        {/if}
+
+        <div class="form-group">
+          <?php
+          echo FormTpl::label("自定义'上线'称呼");
+          echo FormTpl::getWebControl('text', 'uplevelname', $settings['uplevelname']);
+          echo FormTpl::tip('觉得称作"上线"太土?这里可以自定义为任意称呼，例如:介绍人，导师，师傅,等等，就看你的想象力啦!');
+          ?>
+        </div>
+
+        <div class="form-group">
+          <?php
+          echo FormTpl::label('自定义"Banner标题"');
+          echo FormTpl::getWebControl('text', 'title', $settings['title']);
+          echo FormTpl::tip('仅仅负责改顶部标题。这个不负责底部菜单，底部菜单需要直接去改模板代码!');
+          ?>
+        </div>
+
+        <div class="form-group">
+          {php echo FormTpl::label2('VIP名称自定义', 'col-xs-12 col-sm-3 col-md-2 col-lg-2'); }
+          <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
+          {php echo FormTpl::getWebControl2('textarea', 'vip', $settings['vip'])}
+          <span class="help-block">VIP设定示例:</span>
+            <span class="help-block bg-danger">
+            例1：<br />
+            0 | 麻雀<br />
+            1 | 一饼<br />
+            2 | 二饼<br />
+            3 | 三饼<br />
+            4 | 四饼<br />
+            5 | 五饼<br />
+            6 | 六饼<br />
+            7 | 七饼<br />
+            8 | 八饼<br />
+            9 | 九饼<br />
+            10 | 和了<br />
+          </span>
+          <span class="help-block bg-danger">
+            例2：<br />
+            0 | 女娲 遗石<br />
+            1 | 横空出世<br />
+            2 | 仙山石猴<br />
+            3 | 三星洞徒<br />
+            4 | 赐名悟空<br />
+            5 | 灵台悟道<br />
+            6 | 花果霸王<br />
+            7 | 东海夺宝<br />
+            8 | 醉闹地府<br />
+            9 | 天界马夫<br />
+            10 | 齐天大圣<br />
+          </span>
+        </div>
+
+        <div class="form-group">
+          <?php
+          echo FormTpl::label('');
+          echo FormTpl::getWebControl('submit', 'submit', '提交');
+          echo FormTpl::getWebControl('hidden', 'token', $_W['token']);
+          ?>
+        </div>
+
+    </form>
+</div>
+{template 'common/footer'}

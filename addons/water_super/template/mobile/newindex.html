@@ -1,0 +1,137 @@
+<html style="overflow:hidden">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="black" name="apple-mobile-web-app-status-bar-style">
+  <meta content="telephone=no" name="format-detection">
+  <meta content="email=no" name="format-detection">
+  <meta content="" name="pgv">
+  <title>{$systeminfo['shopname']}</title>
+  <link href="../addons/water_super/template/cssn/index.css" rel="stylesheet" type="text/css">
+    <link href="../addons/water_super/template/cssn/base.css" rel="stylesheet" type="text/css">
+  <link href="../addons/water_super/template/css/footer.css" rel="stylesheet" type="text/css">
+  <link href="../addons/water_super/template/cssn/box.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="../addons/water_super/template/jsn/jquery-1.8.2.min.js"></script>
+  <script type="text/javascript" src="../addons/water_super/template/jsn/jscommon.js"></script>
+
+</head>
+<body style="overflow:hidden">
+  <div class="address_tab">
+    <!-- <img src="../addons/water_super/template/imagesn/logo-weixin.png" class="nav-log"> -->
+    <span>{$systeminfo['indexad']}</span>
+  </div>
+
+  <div id="warp" style="max-width: 640px; margin: 0px auto; height: 434px;">
+    <div style="height:38px;"></div>
+    <div class="banner">
+      <section id="slider" class="swipe" style="visibility: visible;">
+        <div class="swipe-wrap" style="width: 1080px;">
+             <div class="wrap goods_img" data-index="0" style="width: 360px; left: 0px; transition-duration: 300ms; -webkit-transition-duration: 300ms; -webkit-transform: translate(-360px, 0px) translateZ(0px);">
+                 <a href="{$systeminfo['imgurl1']}"><img width="100%" src="{if empty($systeminfo['imglb1'])}../addons/water_super/template/imagesn/summer.jpg{else}{$_W['attachurl']}{$systeminfo['imglb1']}{/if}"></a></div>
+             <div class="wrap goods_img" data-index="1" style="width: 360px; left: -360px; transition-duration: 300ms; -webkit-transition-duration: 300ms; -webkit-transform: translate(0px, 0px) translateZ(0px);">
+                 <a href="{$systeminfo['imgurl2']}"><img width="100%" src="{if empty($systeminfo['imglb2'])}../addons/water_super/template/imagesn/xishouyindao.png{else}{$_W['attachurl']}{$systeminfo['imglb2']}{/if}"></a>
+               </div>
+             <div class="wrap goods_img" data-index="2" style="width: 360px; left: -720px; transition-duration: 0ms; -webkit-transition-duration: 0ms; -webkit-transform: translate(360px, 0px) translateZ(0px);">
+                 <a href="{$systeminfo['imgurl3']}"><img width="100%" src="{if empty($systeminfo['imglb3'])}../addons/water_super/template/imagesn/recharge_banner_v1.png{else}{$_W['attachurl']}{$systeminfo['imglb3']}{/if}"></a>
+               </div>
+           </div>
+        <div class="bgboxgo">
+          <div class="botton-box mBxCm" id="sbsd"><span class=""></span><span class="on"></span><span class=""></span></div>
+        </div>
+      </section>
+      <!--幻灯结束-->
+    </div>
+
+    <div class="menu-con">
+            <a href="{php echo $this->createMobileUrl('recharge', array())}">
+        <img src="{if empty($systeminfo['pczjs'])}../addons/water_super/template/imagesn/chongzhi_v1.png{else}{$_W['attachurl']}{$systeminfo['pczjs']}{/if}">
+      </a>
+            <a href="{php echo $this->createMobileUrl('Fuwufw')}">
+        <img src="{if empty($systeminfo['pfwfw'])}../addons/water_super/template/imagesn/fuwufanwei_v1.png{else}{$_W['attachurl']}{$systeminfo['pfwfw']}{/if}">
+      </a>
+            <a href="{if $isjmmb =="1" }{php echo $this->createMobileUrl('jiamu')}{else}{$systeminfo['goodsinfourl']}{/if}">
+        <img src="{if empty($systeminfo['pxctp1'])}../addons/water_super/template/imagesn/9_v1.png{else}{$_W['attachurl']}{$systeminfo['pxctp1']}{/if}">
+      </a>
+            <a href="{if $isjmmb =="1" }{php echo $this->createMobileUrl('jiamu')}{else}{$systeminfo['goodsinfourl']}{/if}">
+        <img src="{if empty($systeminfo['pxctp2'])}../addons/water_super/template/imagesn/99_v1.png{else}{$_W['attachurl']}{$systeminfo['pxctp2']}{/if}">
+      </a>
+       
+    </div>
+  </div>
+
+  <div class="order-round" ontouchstart="" style="max-width: 640px; margin:0 auto; ">
+    <div style="min-width:320px;margin: 0 auto;position:relative;" class="all-icon">
+      <div class="cloth1 bg"><img src="../addons/water_super/template/imagesn/cloth3.png"></div>
+      <div class="cloth4 bg"><img src="../addons/water_super/template/imagesn/cloth2.png"></div>
+      <div class="cloth2 bg">
+        <img src="../addons/water_super/template/imagesn/cloth4.png">
+      </div>
+      <div class="cloth3 bg"><img src="../addons/water_super/template/imagesn/cloth1.png"></div>
+      <div class="guanquan"></div>
+      <a class="xiadan-link" href="{php echo $this->createMobileUrl('confirmfee')}">
+      </a>
+      <span id="imgflag">
+        <img src="../addons/water_super/template/imagesn/order-btn.png">
+        <img src="../addons/water_super/template/imagesn/order_hover.png" style="display:none;">
+      </span> 
+    </div>
+    
+  </div>
+  <div id="error_tip" style="display:none" class="cod">
+    <div class="wx_mask"></div>
+    <div class="wx_confirm">
+      <div class="wx_confirm_inner">
+        <div class="wx_confirm_hd">
+          <div class="wx_confirm_tit" id="tip_div"></div>
+        </div>
+        <input type="hidden" id="delete_id">
+        <div class="wx_confirm_bd">
+          <div class="wx_confirm_btn manage-btn">
+            <button type="button" onclick="javascript:onclose();" class="okbtn" id="codGoPay">取消</button>
+            <button type="button" onclick="javascript:todingweicity();" class="okbtn blue-btn" id="gotodelete">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <input id="city_select_url" type="hidden" value=""><p>
+  <script type="text/javascript">
+  $("#warp").height($(window).height() - 236);
+  </script>
+
+<script type="text/javascript">
+$(".xiadan-link").click(function(){
+  $("#imgflag>img").toggle();
+});
+
+</script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/Swipe.js"></script>
+<script>
+$(function() {
+            slider(3000);//参数为自动切换描述
+            
+          });
+</script>
+
+<script type="text/javascript">
+
+function onclose(){
+ $('#error_tip').hide();
+}
+</script>
+ <!-- 页脚导航-->
+</p><footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                	<a href="{php echo $this->createMobileUrl('index')}"><span class=" home-index-active">首页</span></a>
+                	<a href="{php echo $this->createMobileUrl('ordering', array('openid' => $openid))}"><span class=" Order-index">订单</span></a>
+                	<a href="{php echo $this->createMobileUrl('usercenter', array('openid' => $openid))}"><span class="card-index">我的</span></a>
+              </div>
+        </div>
+    </div>
+</footer>
+</body></html>

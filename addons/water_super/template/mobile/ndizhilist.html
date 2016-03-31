@@ -1,0 +1,154 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>e袋洗</title>
+<link href="../addons/water_super/template/cssn/index.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/base.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/footer.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/card.css" rel="stylesheet" type="text/css" media="all">
+<script type="text/javascript" src="../addons/water_super/template/jsn/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/page.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/touchslider.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/klass.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/photoswipe.jquery-3.0.5.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/jsAddress.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/jscommon.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/ali_address.js"></script>
+</head>
+<body>
+  <div class="headerPlace header-address">
+   <div class="choose-time">
+        <span class=""><a href="" style="float:right">添加地址</a></span>
+              </div>
+  </div>
+    
+  <div class="cardexplain" style="margin-top:10px">
+    <ul class="round operate navlist">
+            <li>
+        <div class="list-titel no-img">
+          <div class="address_0" style="padding-left:0">
+            <div>董   
+
+              <em style="padding-left:10px">15318981071</em></div>
+            
+            <p>北京  朝阳  经济技术开发区</p>
+            
+          <div class="edit-btn">
+            <b class="no-img"><a href="" class="edit-btn">编辑</a></b>
+            <b class="delete-btn" onclick="onclose1(940462)"> 删除</b>
+          
+           </div>        			
+	      
+    	    <input type="hidden" value="" id="order_address_id">
+    	    <input type="hidden" value="" id="delete_id">
+      </div></div></li>
+            </ul>   
+      <div style="height:30px"></div>
+ </div>
+<!-- 确定删除 -->
+	<div id="error_tip" style="display: none;" class="cod">
+        <div class="wx_mask"></div>
+        <div class="wx_confirm">
+            <div class="wx_confirm_inner">
+                <div class="wx_confirm_hd">
+                    <div class="wx_confirm_tit" id="tip_div">确定删除吗？</div>
+                </div>
+                <input type="hidden" id="delete_id">
+                <div class="wx_confirm_bd manage-btn">
+                    <div class="wx_confirm_btn">
+                        <button type="cancel" onclick="javascript:onclose2();" class="okbtn" id="codGoPay">取消</button>
+                        <button type="button" onclick="javascript:toDeleteAddress();" class="okbtn blue-btn" id="gotodelete">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--选择ali_address-->
+  <script type="text/javascript">
+  var user_type = "1";
+  if(user_type == 6){
+    
+    document.getElementById('selectAddress').addEventListener('click', function () {
+        am.selectAddress(function (data) {
+               data['address'] =  encodeURIComponent(data['address']);
+                var url = "mobile.php?m=wap&act=address&do=ali_get_address&";
+                window.location.href = url+"link_from=address_list&username="+data['fullname']+"&tel="+data['mobilePhone']+"&address="+data['address'];
+        })
+    }, false);
+  }
+  </script>
+<!--end-->
+   <script type="text/javascript">
+   function toDeleteAddress(){
+                $("#error_tip").hide();
+		  var delete_id = $("#delete_id").val();
+		  var sign = "delete";
+		  $("#gotodelete").attr("disabled",true);
+              var submit_data = {address_id:delete_id,sign:sign};
+              $.post("mobile.php?m=wap&act=address&do=manage_address&",
+                        submit_data,
+                        function(data){
+                              var url ="mobile.php?m=wap&act=address&do=address_list&" ;
+                              alter_to_url('地址删除成功',url);
+                          }
+              )
+    }
+   $("#error_tip").hide();
+   function onclose1($delete_id){
+		$("#error_tip").show();
+		$("#delete_id").val($delete_id);
+		return false;
+	}
+   function onclose2(){
+		$("#error_tip").hide();
+		return false;
+	}
+function hide_res(){
+    $("#delete_address_show").hide();
+  }
+  function show_res(){
+    setTimeout("hide_res()",2000);
+  }
+function alert_1(title) {
+    $("#show_mes").html(title);
+    $("#delete_address_show").show();
+    show_res();
+  }
+  function alter_to_url(title,url) {
+      alert_1(title);
+      setTimeout("window.location.href='" + url + "'", 500);
+  }
+</script>
+<div id="delete_address_show" style="display:none" class="cod">
+        <div class="wx_confirm ">
+              <div class="wx_confirm_inner" id="wx_confirm_float">
+                      <div class="wx_confirm_hd">
+                              <div class="wx_confirm_tit" id="show_mes"></div>
+                      </div>
+              </div>
+        </div>
+</div>
+
+  <!-- 页脚导航-->
+<footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                	<a href="mobile.php?m=wap&amp;act=homepage&amp;do=index&amp;"><span class=" home-index">洗衣</span></a>
+                	<a href="mobile.php?m=wap&amp;act=order&amp;do=order_list&amp;"><span class=" Order-index">订单</span></a>
+                	<a href="mobile.php?m=wap&amp;act=icard&amp;do=my_icard&amp;"><span class="card-index">我的</span></a>
+              </div>
+        </div>
+    </div>
+</footer>
+
+
+
+</body></html>

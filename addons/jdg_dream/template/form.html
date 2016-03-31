@@ -1,0 +1,68 @@
+{template 'common'}
+{php load()->func('tpl')}
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="panel panel-default">
+    <div class="panel-heading">
+        添加为梦想举杯
+    </div>
+    <div class="panel-body">
+		<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 自定义logo</label>
+            <div class="col-sm-9 col-xs-12">
+               	{php echo tpl_form_field_image('logo',$reply['logo']);}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 引导关注素材</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="gzurl" class="form-control" placeholder="请输入关注页面的链接地址" name="gzurl" value="{$reply['gzurl']}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 活动标题</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="title" class="form-control" placeholder="" name="title" value="{$reply['title']}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 活动宣传语</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="slogans" class="form-control" placeholder="" name="slogans" value="{$reply['slogans']}">
+            </div>
+        </div>
+ 		<div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 活动图片</label>
+            <div class="col-sm-9 col-xs-12">
+               	{php echo tpl_form_field_image('picurl',$reply['picurl']);}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 活动时间</label>
+            <div class="col-sm-9 col-xs-12">
+               	{php echo tpl_form_field_daterange('datelimit', array('starttime'=>date('Y-m-d',$reply['starttime']),'endtime'=>date('Y-m-d',$reply['endtime'])))}
+            </div>
+        </div>
+	</div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        分享设置
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 分享标题</label>
+            <div class="col-sm-9 col-xs-12">
+               	<input type="text" id="share_title" class="form-control" placeholder="" name="share_title" value="{$reply['share_title']}">
+            </div>
+        </div>
+ 			
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label"><span style='color:red'>*</span> 分享描述</label>
+            <div class="col-sm-9 col-xs-12">
+               	<textarea style="height:60px;" id='share_content' name="share_content" class="form-control" cols="60">{$reply['share_content']}</textarea>
+            </div>
+        </div>
+       
+	</div>
+</div>
+

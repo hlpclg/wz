@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <title> {$detail['title']} </title>
+    {php echo register_jssdk(false);}
+    <link rel="stylesheet" type="text/css" href="{RES}css/page_mp_article_improve24f185.css">
+    <link rel="stylesheet" type="text/css" href="{RES}css/page_mp_article_improve_combo24f185.css">
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" type="text/css"
+          href="http://res.wx.qq.com/mmbizwap/zh_CN/htmledition/style/page/appmsg/page_mp_article_improve_pc24ed02.css">
+    <![endif]-->
+</head>
+<body id="activity-detail" class="zh_CN " ontouchstart="">
+<div id="js_article" class="rich_media">
+    <div id="js_top_ad_area" class="top_banner"></div>
+    <div class="rich_media_inner">
+        <div id="page-content">
+            <div id="img-content" class="rich_media_area_primary"><h2 class="rich_media_title" id="activity-name">
+                {$detail['title']}
+            </h2>
+
+            <div class="rich_media_meta_list">
+                <em id="post-date" class="rich_media_meta rich_media_meta_text">
+                    {php echo date('Y-m-d', $detail['createtime'])}
+                </em>
+                <a class="rich_media_meta rich_media_meta_link rich_media_meta_nickname"  {if !empty($subscribeurl)}href="{$subscribeurl}"{else}href="{$set['guanzhuUrl']}"{/if}>
+                    {$_W['account']['name']}
+                </a>
+                <span  class="rich_media_meta rich_media_meta_text rich_media_meta_nickname">{$account['name']}</span>
+
+                <div id="js_profile_qrcode" class="profile_container" style="display:none;">
+                    <div class="profile_inner"><strong class="profile_nickname">{$account['name']}</strong>
+                        <img class="profile_avatar" src="{$_W['attachurl']}qrcode_{$_W['acid']}.jpg" alt="">
+
+                        <p class="profile_meta"><label class="profile_meta_label">微信号</label> <span
+                                class="profile_meta_value">{$account['account']}</span></p>
+
+                        <p class="profile_meta"><label class="profile_meta_label">功能介绍</label> <span
+                                class="profile_meta_value">{$account['description']}</span>
+                        </p></div>
+                    <span class="profile_arrow_wrp" id="js_profile_arrow_wrp">
+                        <i class="profile_arrow arrow_out"></i>
+                        <i class="profile_arrow arrow_in"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="rich_media_content" id="js_content">
+                {$detail['content']}
+            </div>
+
+            <div class="rich_media_tool" id="js_toobar">
+                <div class="media_tool_meta tips_global meta_primary">阅读
+                    <span id="readNum">{$detail['clickNum']}</span>
+                </div>
+
+                <span class="media_tool_meta meta_primary tips_global meta_praise" id="like">
+                  <i class="icon_praise_gray"></i>
+                  <span class="praise_num" id="likeNum">{$detail['zanNum']}</span>
+                </span>
+
+                <a href="tel:{$detail['tel']}" >一键拨号</a>
+
+                <a id="" class="media_tool_meta tips_global meta_extra" href="{php echo $this->createMobileUrl('jubao')}">举报</a></div>
+            </div>
+
+            <div class="rich_media_area_extra">
+                <div class="mpda_bottom_container" id="js_bottom_ad_area"></div>
+                <div id="js_iframetest" style="display:none;"></div>
+            </div>
+
+            {if $set && $set['iscomment']=='1'}
+            <div class="rich_media_extra" id="js_cmt_area" style="display: block;">
+                <div class="discuss_container" id="js_cmt_main" style="display: block;">
+                    <div class="rich_tips with_line title_tips discuss_title_line">
+                        <span class="tips">精选评论</span>
+                    </div>
+                    <p class="tips_global tc title_bottom_tips" id="js_cmt_nofans1" style="display:none;">关注该公众号可参与评论</p>
+                    <p class="discuss_icon_tips title_bottom_tips tr" id="js_cmt_addbtn1" style="display: block;">
+                        <a href="{php echo $this->createMobileUrl("comment", array("artid" => $detail['id'],'openid'=>$openid))}">写评论
+                        <img class="icon_edit" src="http://res.wx.qq.com/mmbizwap/zh_CN/htmledition/images/icon/appmsg/icon_edit25ded2.png" alt="">
+                        </a>
+                    </p>
+                    <ul class="discuss_list" id="js_cmt_list">
+                        {loop $cList $comment}
+
+                        <li class="discuss_item" id="{$comment['id']}">
+                            <div class="discuss_opr">
+                                <span class="media_tool_meta tips_global meta_praise js_comment_praise " data-status="0" contentid="{$comment['id']}">
+                                    <i class="icon_praise_gray" id="comment_praise"></i>
+                                    <span class="praise_num" >{$comment['praise_num']} </span>
+                                </span>
+                            </div>
+
+                            <div class="user_info">
+                                <strong class="nickname">{$comment['author']}</strong>
+                                {if $comment['thumb']}<img class="avatar" src="{$comment['thumb']}">{/if}
+                            </div>
+                            <div class="discuss_message"><span class="discuss_status"></span>
+                                <div class="discuss_message_content">
+                                    {$comment['js_cmt_input']}
+                                </div>
+                            </div>
+                            <p class="discuss_extra_info"> {php echo get_timelineauction($comment['createtime'])} </p>
+                            {if $comment['js_cmt_reply']}
+                            <div class="reply_result">
+                                <div class="nickname">作者回复</div>
+                                <div class="discuss_message">
+                                    <div class="discuss_message_content">{$comment['js_cmt_reply']} </div>
+                                </div>
+                                <p class="discuss_extra_info"> {php echo get_timelineauction($comment['updatetime'])}</p>
+                            </div>
+                            {/if}
+                        </li>
+                        {/loop}
+                    </ul>
+                </div>
+
+                <div class="tips_global rich_split_tips tc" id="js_cmt_nofans2" style="display:none;">
+                    关注该公众号可参与评论
+                </div>
+
+                <p class="discuss_icon_tips rich_split_tips tr" id="js_cmt_addbtn2" style="display:none">
+                    <a href="{php echo $this->createMobileUrl("comment", array("artid" => $detail['id'],'openid'=>$openid))}">写评论
+                    <img class="icon_edit" src="http://res.wx.qq.com/mmbizwap/zh_CN/htmledition/images/icon/appmsg/icon_edit25ded2.png" alt="">
+                    </a>
+                </p>
+
+                <p class="rich_split_tips tc tips_global" id="js_cmt_tips" style="display: none;"></p>
+                <div class="rich_tips tips_global loading_tips" id="js_cmt_loading" style="display: none;">
+                    <img src="http://res.wx.qq.com/mmbizwap/zh_CN/htmledition/images/icon/common/icon_loading_white2805ea.gif" class="rich_icon icon_loading_white" alt="">
+                    <span class="tips">加载中</span>
+                </div>
+                <div class="rich_tips with_line tips_global" id="js_cmt_statement" style="display: block;">
+                    <span class="tips">以上评论由公众帐号筛选后显示</span>
+                </div>
+
+                <p class="rich_split_tips tc" id="js_cmt_qa" style="display: block;">
+                    <a href="http://kf.qq.com/touch/sappfaq/150211YfyMVj150313qmMbyi.html?scene_id=kf264">
+                        了解评论功能详情
+                    </a>
+                </p>
+            </div>
+            {/if}
+        </div>
+            <div id="js_pc_qr_code" class="qr_code_pc_outer" style="display:none;">
+                <div class="qr_code_pc_inner">
+                    <div class="qr_code_pc">
+                        <img src="{$_W['attachurl']}qrcode_{$_W['acid']}.jpg?time=1428632464" class="qr_code_pc_img">
+                        <p>微信扫一扫<br>关注该公众号</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var uin = "";
+        var key = "";
+        var pass_ticket = "";
+        //全局变量
+        gSound = '{$detail['musicurl']}';
+    </script>
+<script type="text/javascript">var _speedMark = new Date(), _loadTime = '1429101314';</script>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js" type="text/javascript"  charset="utf-8"></script>
+    <script type="text/javascript" src="{RES}js/weixin_new.js"></script>
+    <div id='audiocontainer'></div>
+
+    {template 'rec_adv'}
+
+ </div>
+
+	<!--<div style=' position:fixed;left:0; bottom:0px; right:0px;width:100%; background:#4F2D2D; height:30px; line-height:35px; font-family: 微软雅黑'>
+    <div align='center' style='height:35px; line-height:30px;background:#4F2D2D; color:#fff; display:block; '>
+        <a href="{$set['historyUrl']}"  style='color:#fff;font-size:16px;'>历史消息</a>
+        <span  style='color:#fd6b6b; margin:0 15px'>|</span>
+        <a href="{php echo $this->createMobileUrl('index', array('weid' => $_W['acid']),true)}" style='color:#fff;font-size:16px;'>经典回顾</a>
+        <span  style='color:#fd6b6b; margin:0 15px'>|</span>
+         
+        <a href="{$set['guanzhuUrl']}"  style='color:#fff;font-size:16px; '>
+		{if !empty($set['guanzhutitle'])}{$set['guanzhutitle']}{else}免费订阅{/if}
+		</a>
+   </div>
+</div>-->
+<!--{if !empty($set['cnzz'])}
+{php echo htmlspecialchars_decode($set['cnzz']);}
+{/if}-->
+</div>
+<!--js部分-->
+<script>
+    $(function(){
+        $("#like").click(function() {
+            var id="{$detail['id']}";
+            var ajaxurl="{php echo $_W['siteroot'].'app/'.murl('entry//like',array('m'=>'amouse_article'),true)}";
+            $.ajax({
+                url: ajaxurl,
+                type: "post",
+                dataType: "json",
+                data: {"articleid": id},
+                success: function (r) {
+                    $(".rich_media_tool .red").removeClass("red");
+                    var v = $("#likeNum");
+                    var c = v.text()*1+1;
+                    v.text(c);
+                },
+                error: function (r) {
+                    console.log(r);
+                }
+            });
+
+        });
+    })
+    initShare();
+    function initShare(){
+        wx.ready(function () {
+            shareMeta = {
+                imgUrl:"{$shareimg}",
+                link :  "{$url}",
+                desc : "{$detail['title']}",
+                title : "{$detail['title']}",
+                success: function(){
+
+                },
+                cancel: function(){
+                    // alert("分享失败，可能是网络问题，一会儿再试试？");
+                }
+            };
+            wx.onMenuShareTimeline(shareMeta);
+            wx.onMenuShareAppMessage(shareMeta);
+            wx.onMenuShareWeibo(shareMeta);
+            wx.onMenuShareQQ(shareMeta);
+            wx.onMenuShareQZone(shareMeta);
+        });
+    }
+
+
+    $("#comment_praise").click(function() {
+        var d = {};
+        d['commentid'] =$(this).parent().attr("contentid");
+        $.ajax({
+            url: "{php echo $_W['siteroot'].'app/'.murl('entry//ajaxpraise',array('m'=>'amouse_article'),true)}",
+            type: "post",
+            data : d,
+            dataType: "json",
+            success: function (res) {
+                console.log(res);
+                if(res && res.code ===200){
+                    location.reload(true);
+                }else{
+
+                }
+            },
+            error: function (r) {
+                console.log(r);
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>

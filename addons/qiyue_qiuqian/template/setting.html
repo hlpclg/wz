@@ -1,0 +1,134 @@
+{template 'common/header'}
+<style>
+    #listimage .thumbnail {position: relative;margin-bottom: 5px;}
+    #listimage .thumbnail .f-icon {position: absolute; color: #FFF;}
+    #listimage .thumbnail .f-icon-move {bottom:3px; right: 0px; }
+    #listimage .thumbnail .f-icon-delete {bottom:3px; left: 0px; }
+    #listimage .thumbnail-input {margin-bottom: 20px;}
+</style>
+{php load()->func('tpl');}
+    <form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+        <div class="panel panel-default">
+            <div class="panel-heading">签文详细设置</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-3 col-lg-2 control-label">
+                        分享/浏览
+                    </label>
+                    <div class="col-sm-8 col-xs-12 col-lg-6">
+                        <span class="help-block">{$qian_r['sharenum']} / {$qian_r['viewnum']}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-3 col-lg-2 control-label">
+                        <span class="text-danger">*</span> 分享标题
+                    </label>
+                    <div class="col-sm-8 col-xs-12 col-lg-6">
+                        <input type="text" id="title" name="add[title]" class="form-control" value="{$settings['title']}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-3 col-lg-2 control-label">
+                        <span class="text-danger">*</span> 分享摘要
+                    </label>
+                    <div class="col-sm-8 col-xs-12 col-lg-6">
+                        <textarea name="add[desc]" class="form-control" rows="2" cols="60">{$settings['desc']}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-3 col-lg-2 control-label">
+                        <span class="text-danger">*</span> 分享图片
+                    </label>
+                    <div class="col-sm-8 col-xs-12 col-lg-6">
+                        {php echo tpl_form_field_image('imgUrl',$settings['imgUrl']);}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-3 col-lg-2 control-label">
+                        <span class="text-danger">*</span> CNZZ统计站点ID
+                    </label>
+                    <div class="col-sm-8 col-xs-12 col-lg-6">
+                        <input type="text" id="cnzzid" name="add[cnzzid]" class="form-control" value="{$settings['cnzzid']}">
+                        <span class="help-block">* CNZZ统计的站点ID，不能为空！</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-3 col-md-3 col-lg-2 control-label">
+                        <span class="text-danger">*</span> 签文图片
+                    </label>
+                    <div class="col-sm-8 col-xs-12 col-lg-9">
+                        <!-- 多图上传按钮, 点击开始上传 -->
+                        <span id="multiimage" class="btn btn-success"><i class="fa fa-plus"></i> 上传签文</span>
+                        <!-- 此处呈现上传的图片 -->
+                        <div class="row" style="margin-top:20px">
+                            <div id="listimage" class="alert alert-success clearfix">
+                                {loop $morepic $val}
+                                <div class="listbox col-xs-6 col-md-4">
+                                    <div class="thumbnail">
+                                        <img src="{php echo tomedia($val['filename'])}" />
+                                        <span class="btn f-icon f-icon-move"><i class="glyphicon glyphicon-move"></i></span>
+                                        <span class="btn f-icon f-icon-delete" data-filename="{$val['filename']}"><i class="glyphicon glyphicon-trash"></i></span>
+                                    </div>
+                                    <div class="thumbnail-input">
+                                        <input type="hidden" name="qian[filename][]" value="{$val['filename']}" />
+                                        <input type="text" name="qian[title][]" class="form-control" value="{$val['title']}">
+                                    </div>
+                                </div>
+                                {/loop}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-lg-offset-2 col-sm-6">
+                        <button type="submit" class="btn btn-primary btn-lg col-lg-5" name="submit" value="提交">提交</button>
+                        <input type="hidden" name="token" value="{$_W['token']}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script id="qianTpl" type="text/html">
+    </script>
+    <script type="text/javascript">
+        var QIYUE = {
+            orderMove: function(){
+                var $list = $('#listimage');
+                $list.sortable({
+                    cursor: "move",
+                    item: ".listbox",
+                    handle:'.f-icon-move',
+                    opacity: 0.8
+                });
+            }
+        }
+        require(['jquery', 'util', 'jquery.ui', '{MODULE_URL}static/js/template.js'], function($, util, ui, tpl){
+            $(function(){
+                // 对象绑定点击事件
+                $('#multiimage').click(function(){
+                    util.uploadMultiPictures(function(list){
+                        // your code here
+                        var imgList = '';
+                        for(var i=0; i<list.length; i++){
+                            $('#listimage').append('<div class="col-xs-6 col-md-4"><div class="thumbnail"><img src="'+list[i]['url']+'"><span class="btn f-icon f-icon-move"><i class="glyphicon glyphicon-move"></i></span><span class="btn f-icon f-icon-delete" data-filename="'+list[i]['filename']+'"><i class="glyphicon glyphicon-trash"></i></span></div><div style="margin-bottom:15px"><input type="hidden" name="qian[id][]" value="" /><input type="text" name="qian[title][]" class="form-control" value=""><input type="hidden" name="qian[filename][]" value="'+list[i]['filename']+'" /></div></div>');
+                            imgList+= list[i]['filename']+"\n";
+                        }
+                    },{'dest_dir': '{php echo $this->modulename}/{$_W['uniacid']}'});
+                });
+                $('.thumbnail .f-icon-delete').click(function(){
+                    $(this).parent().parent().remove();
+                    var filename = $(this).attr('data-filename');
+                    if(filename){
+                        $.post(window.location.href, {'op':'delete', 'filename':filename}, function(ret){
+                            if(ret!='ok'){
+                                alert('未知错误');
+                                return false;
+                            }
+                        });
+                    }
+                });
+            });
+            QIYUE.orderMove();
+        });
+    </script>
+{template 'common/footer'}

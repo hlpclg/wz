@@ -1,0 +1,88 @@
+<html>
+<head><title>{$form['oname']}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link href="{MON_ORDER_RES}css/hotels.css" rel="stylesheet" type="text/css">
+</head>
+<body id="">
+<div class="qiandaobanner"><img src="{php echo MonUtil::getpicurl($form['p_title_pg'])}"/>
+</div>
+<div class="cardexplain"><!--普通用户登录时显示--><!--商家房价及类型-->
+    <ul class="round">
+        <li class="title"><span class="none">{$form['pname']}</span></li>
+
+
+       {loop $items $item}
+        <li class="dandanb"><!--订房--><a
+                href="{php echo $this->createMobileUrl('orderItem',array('iid'=>$item['id']))}"><span><table
+                class="jiagebiao" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>
+                    <div>{$item['iname']}</div>
+                    <div><img src="{php echo MonUtil::getpicurl($item['ititle_pg'])}"
+                              class="showimg">
+
+                        <p>{$item['i_summary']}</p>
+
+                        <p>原价：<a class="yuanjia">￥{$item['y_price']}</a></p>
+
+                        <p>优惠价：<a class="youhuijia">￥{$item['x_price']}</a></p>
+                </td>
+            </tr>
+        </table></span></a>
+
+        </li>
+        {/loop}
+
+    </ul>
+    <!--后台可控制是否显示-->
+    <ul class="round">
+        <li class="title"><span class="none">订单说明</span></li>
+        <li>
+            <div class="text">
+                {$form['odesc']}
+
+            </div>
+        </li>
+    </ul>
+    <!--后台可控制是否显示-->
+    <ul class="round">
+        <li class="addr"><a href="{php echo $this->createMobileUrl('address',array('fid'=>$form['id']))}"><span>{$form['address']}</span></a>
+        </li>
+        <li class="tel"><a href="tel://{$form['p_tel']}"><span>{$form['p_tel']} 联系电话</span></a></li>
+
+        <li class="detail"><a
+                href="{$form['p_titile_url']}"><span>查看商家详情</span></a>
+        </li>
+    </ul>
+</div>
+{php echo register_jssdk(false);}
+<script type="text/javascript">
+
+
+
+    wx.ready(function () {
+        sharedata = {
+            title: "{$form['share_title']}",
+            desc: "{$form['share_content']}",
+            link: "{php echo MonUtil::str_murl($this->createMobileUrl('Index',array('fid'=>$form['id']),true))}",
+            imgUrl: "{$_W['attachurl']}{$form['share_icon']}",
+            success: function(){
+
+            },
+            cancel: function(){
+
+            }
+        };
+        wx.onMenuShareAppMessage(sharedata);
+        wx.onMenuShareTimeline(sharedata);
+    });
+
+
+</script>
+</body>
+</html>

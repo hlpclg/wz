@@ -1,0 +1,356 @@
+@charset "utf-8";
+/* 
+	@名称: base
+	@功能: 重设浏览器默认样式
+	@作者：zuozuo
+*/
+
+body, h1, h2, h3, p, dl, dd, ol, ul, th, td, form, fieldset, input, button, textarea {
+	margin: 0;
+	padding: 0
+}
+body{
+	overflow: hidden;
+	position:relative;
+}
+html {
+	word-wrap: break-word;
+	-webkit-text-size-adjust: none
+}
+h1, h2, h3, h4, h5, h6 {
+	font-size: 100%;
+	font-weight: normal;
+}
+ol, ul {
+	list-style: none
+}
+table {
+	border-collapse: collapse;
+	empty-cells: show;
+	font-size: inherit;
+	border-spacing: 0
+}
+fieldset, img {
+	border: 0
+}
+cite, em, s, i, b {
+	font-style: normal
+}
+input, button, textarea, select {
+	font-size: 100%
+}
+body, input, button, textarea, select, option {
+	font-size: normal
+}
+a, input, textarea {
+	outline: 0;
+	text-decoration: none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0)
+}
+li, img, label, input {
+	vertical-align: middle
+}
+var {
+	font-style: normal
+}
+ins {
+	text-decoration: none
+}
+body {
+	font-size: 20px
+}
+a {
+	cursor: pointer;
+}
+.w640 {
+	/*
+	overflow: hidden;
+	*/
+	margin: auto;
+	max-width: 640px
+}
+/* 防止用户自定义背景颜色对网页的影响，添加让用户可以自定义字体 */
+html {
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+	height: 100%;
+}
+*:focus{
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+*:hover{
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+/* 内外边距通常让各个浏览器样式的表现位置不同 */
+*{	
+	margin: 0;
+	outline: 0;
+	padding: 0;
+	font-size: 100%;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-overflow-scrolling:touch;  /*让HTML页面内的元素出现滚动条时，滚动会有弹性滚动*/
+}
+/* 要注意表单元素并不继承父级 font 的问题 */
+body, button, input, select, textarea {
+	font: 12px/1.5 Helvetica, Arial, sans-serif;
+}
+input,textarea,select {
+	font-family:inherit;
+	font-size:inherit;
+	font-weight:inherit;
+	outline:none;
+	border-radius: 0;
+}
+textarea {
+	resize: none;
+	outline: none;
+}
+/* 去掉各Table  cell 的边距并让其边重合 */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* 去除默认边框 */
+fieldset, img {
+	border: 0;
+}
+
+/* 去掉列表前的标识, li 会继承 */
+ol, ul {
+	list-style: none;
+}
+
+q:before, q:after {
+	content: '';
+}
+/* 让链接在 hover 状态下显示下划线 */
+a:hover {
+	text-decoration: none;
+}
+/* 默认不显示下划线，保持页面简洁 */
+ins, a {
+	text-decoration: none;
+}
+/* 清理浮动 */
+.fn-clear:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+.fn-clear {
+	zoom: 1; /* for IE6 IE7 */
+}
+/* 隐藏, 通常用来与 JS 配合 */
+body .fn-hide {
+	display: none;
+}
+body .fn-show {
+	display: block;
+}
+/* 设置内联, 减少浮动带来的bug */
+
+.fn-left {
+	float: left;
+}
+.fn-right {
+	float: right;
+}
+.padding-t-10 {
+	padding-top: 10px;
+}
+.padding-t-15 {
+	padding-top: 15px;
+}
+.padding-t-20 {
+	padding-top: 20px;
+}
+.padding-b-10 {
+	padding-bottom: 10px;
+}
+.padding-b-30 {
+	padding-bottom: 30px;
+}
+.padding-10 {
+	padding: 10px;
+}
+.margin-t-5 {
+	margin-top: 5px;
+}
+.margin-t-10 {
+	margin-top: 10px;
+}
+.margin-t-15 {
+	margin-top: 15px;
+}
+.margin-t-20 {
+	margin-top: 20px;
+}
+.margin-t-25 {
+	margin-top: 25px;
+}
+.margin-t-30 {
+	margin-top: 30px;
+}
+.margin-t-35 {
+	margin-top: 35px;
+}
+a.t-blue:hover {
+	text-decoration: underline;
+}
+.underline a:hover {
+	text-decoration: underline;
+}
+
+
+/*输入框提示*/
+.input-hover{
+	animation:myfirst 2s;
+	-webkit-animation:myfirst 2s; /* Safari and Chrome */
+}
+
+@-webkit-keyframes myfirst 
+{
+	from {
+		-webkit-box-shadow: 0px 0px 10px #FF0000 inset;
+	
+		}
+	to {
+		-webkit-box-shadow: 0px 0px 0px #903 inset;
+		
+	}
+}
+
+/*弹性布局*/
+.box {
+	width: 100%;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	-webkit-box-orient: horizontal;
+	-moz-box-orient: horizontal;
+	-ms-flex-direction: row;
+}
+.box-flex {
+	-webkit-box-flex: 1;/* android 2.1-3.0, ios 3.2-4.3 */
+	-webkit-flex: 1;/* Chrome 21+ */
+	-ms-flex: 1;/* WP IE 10 */
+	flex: 1;/* android 4.4 */
+	-moz-box-flex: 1;/*Firefox*/
+	box-flex: 1;
+}
+.box-align {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	-webkit-box-pack: center;/*左右居中*/
+	-webkit-box-align: center;/*Chrome*/
+	-moz-box-pack: center;/*左右居中*/
+	-moz-box-align: center;/*Firefox*/
+	-ms-flex-pack: center;/*左右居中*/
+	-ms-flex-align: center;/*IE*/
+}
+/*分享层样式*/
+.fn-layer, .box-layer {
+	position: fixed;
+	z-index: 999;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	left: 0;
+	top: 0;
+}
+.fn-layer {
+	position: fixed;
+	top:0;
+	left: 0;
+}
+.layer-cont {
+	float: right;
+	margin-right: 20px;
+	width: 181px;
+	height: 126px;
+	overflow: hidden;
+	position: relative;
+}
+.layer-cont a {
+	display: inline-block;
+	position: absolute;
+	top: 57px;
+	width: 57px;
+	height: 57px;
+}
+.layer-cont a.share {
+	left: 25px;
+}
+.layer-cont a.lq {
+	left: 100px;
+}
+/*弹出框*/
+.box-content{
+
+	position: absolute;
+	top: 10%;
+	left: 15%;
+	right: 15%;
+}
+.box-content h2{
+	text-align: center;
+	color: #40cc04;
+	font-size: 20px;
+}
+.box-content .text{
+	padding: 20px;
+	background: #fff;
+	border-radius: 10px;
+	color: #959595;
+	font-size: 12px;
+	max-height: 300px;
+	overflow-y: auto;
+}
+
+.box-content .text p.but{
+	text-align: center;
+	padding: 10px 0 0;
+}
+.box-content .text button{
+	background: #4ed913;
+	padding: 3px 20px;
+	color: #fff;
+	font-size: 16px;
+	border: none;
+	border-radius: 5px;
+}
+.close-but{
+	padding: 10px 0;
+}
+.close-but a{
+	margin: 0 auto;
+	display: block;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 50px;
+	background: #ff5373;
+	color: #fff;
+	font-size: 28px;
+	
+}
+
+/*微景通footer*/
+footer a {
+	text-align: center;
+	padding: 20px 0;
+	display: block;
+	color: #aaa;
+	font-size: 14px;
+}
+footer a {
+	color:#aaa;
+	font-size:14px;
+	
+}

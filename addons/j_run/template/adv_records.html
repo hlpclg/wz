@@ -1,0 +1,48 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+  <li><a href="{php echo $this->createWebUrl('user',array('rid'=>$rid));}">会员管理</a></li>
+  <li class="active"><a href="{php echo $this->createWebUrl('record',array('rid'=>$rid));}">领取记录</a></li>
+</ul>
+{if $op == 'post'}
+
+{elseif $op == 'display'}
+<div class="main">
+  <div class="category">
+    <form action="" method="post" onsubmit="return formcheck(this)">
+      <div class="panel panel-default">
+      <div class="panel-body table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th style="width:50px;"></th>
+            <th>头像</th>
+            <th>昵称</th>
+            <th>奖品</th>
+            <th>领取时间</th>
+            <th>管理</th>
+          </tr>
+        </thead>
+        <tbody>
+        {php $i=1;}
+        {loop $list $row}
+        <tr>
+          <td>{php echo $i+($pindex-1)*$psize}</td>
+          <td><img src="{$row['headimgurl']}" width="64" class="img-rounded" /></td>
+          <td>{$row['nickname']}</td>
+          <td>{$row['giftname']}</td>
+          <td>{php echo date('Y-m-d H:i',$row['createtime'])}</td>
+          <td style="text-align:right"><a href="{php echo $this->createWeburl('record',array('op'=>'delete','rid'=>$rid,'id'=>$row['id']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="删除" onclick="return confirm('确认删除此吗？删除不可恢复');return false;"><i class="fa fa-times"></i></a></td>
+        </tr>
+        {php $i++}
+        {/loop}
+          </tbody>
+        
+      </table>
+    </form>
+  </div>
+</div>
+{$pager}
+</div>
+</div>
+{/if}
+{template 'common/footer'} 

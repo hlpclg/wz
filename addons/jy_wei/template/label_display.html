@@ -1,0 +1,54 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li {if $op == 'display'}class="active"{/if}><a href="{php echo $this->createWebUrl('label', array('op'=>'display'));}">标签列表</a></li>
+	<li><a href="{php echo $this->createWebUrl('label', array('op'=>'set'));}">添加标签</a></li>
+</ul>
+
+{if $op == 'display'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" id="form">
+		<div class="panel panel-default">
+			<div class="panel-heading">微招聘 - 标签</div>
+			<div class="panel-body">
+				<div class="table-responsive panel-body">
+					<table class="table table-hover" style="min-width: 300px;">
+						<thead class="navbar-inner">
+							<tr>
+								<th>名称</th>
+								<th>描述</th>
+								<th>创建时间</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							{loop $cache $key $item}
+							<tr>
+								<td>
+									<a href="{php echo $this->createWebUrl('label', array('op'=>'set', 'unicode'=>$item['unicode']));}" class="btn btn-default btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="删除">
+										<i class="">{$item['name']}</i>
+									</a>
+								</td>
+								<td>{$item['description']}</td>
+								<td>{$item['createtime']}</td>
+								<td>
+									<a onclick="if(!confirm('删除后将不可恢复,确定删除吗?')) return false;" href="{php echo $this->createWebUrl('label', array('op'=>'delete', 'unicode'=>$item['unicode']));}" class="btn btn-default btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="删除"><i class="fa fa-times"></i></a>
+								</td>
+							</tr>
+							{/loop}
+							{if empty($cache)}
+							<tr>
+								<td colspan="4">
+									尚未添加
+								</td>
+							</tr>
+							{/if}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+{/if} <!-- end of display -->
+
+{template 'common/footer'}

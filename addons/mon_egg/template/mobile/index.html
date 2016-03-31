@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>{$egg['title']}</title>
+    <!--<meta content="width=device-width,scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"-->
+          <!--name="viewport">-->
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+          name="viewport">
+    <meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+    <meta content="no-cache" http-equiv="pragma">
+    <meta content="0" http-equiv="expires">
+    <meta content="telephone=no, address=no" name="format-detection">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" type="text/css" href="{MON_EGG_RES}css/reset.css" media="all">
+    <link rel="stylesheet" type="text/css" href="{MON_EGG_RES}css/main.css" media="all">
+    <link rel="stylesheet" type="text/css" href="{MON_EGG_RES}css/dialog.css" media="all">
+    <link href="{MON_EGG_RES}css/err.css" rel="stylesheet" type="text/css">
+    <link href="{MON_EGG_RES}css/bstyle.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css"
+          href="{MON_EGG_RES}/css/sweet-alert.css">
+    <script type="text/javascript" src="{MON_EGG_RES}/js/sweet-alert.min.js"></script>
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.2/jquery.js"></script>
+    <script src="{MON_EGG_RES}js/dialog_min.js" type="text/javascript"></script>
+    <script src="{MON_EGG_RES}js/main.js" type="text/javascript"></script>
+    <script src="{MON_EGG_RES}js/alert.js" type="text/javascript"></script>
+
+    <style type="text/css">
+
+        .window {
+            width: 290px;
+            position: absolute;
+            display: none;
+            bottom: 30px;
+            left: 50%;
+            z-index: 9999;
+            margin: -50px auto 0 -145px;
+            padding: 2px;
+            border-radius: 0.6em;
+            -webkit-border-radius: 0.6em;
+            -moz-border-radius: 0.6em;
+            background-color: #ffffff;
+            -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            font: 14px/1.5 Microsoft YaHei, Helvitica, Verdana, Arial, san-serif;
+        }
+
+        .window .title {
+
+            background-color: #A3A2A1;
+            line-height: 26px;
+            padding: 5px 5px 5px 10px;
+            color: #ffffff;
+            font-size: 16px;
+            border-radius: 0.5em 0.5em 0 0;
+            -webkit-border-radius: 0.5em 0.5em 0 0;
+            -moz-border-radius: 0.5em 0.5em 0 0;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#585858), to(#565656)); /* Saf4+, Chrome */
+            background-image: -webkit-linear-gradient(#585858, #565656); /* Chrome 10+, Saf5.1+ */
+            background-image: -moz-linear-gradient(#585858, #565656); /* FF3.6 */
+            background-image: -ms-linear-gradient(#585858, #565656); /* IE10 */
+            background-image: -o-linear-gradient(#585858, #565656); /* Opera 11.10+ */
+            background-image: linear-gradient(#585858, #565656);
+
+        }
+
+        .window .content {
+            /*min-height:100px;*/
+            overflow: auto;
+            padding: 10px;
+            background: linear-gradient(#FBFBFB, #EEEEEE) repeat scroll 0 0 #FFF9DF;
+            color: #222222;
+            text-shadow: 0 1px 0 #FFFFFF;
+            border-radius: 0 0 0.6em 0.6em;
+            -webkit-border-radius: 0 0 0.6em 0.6em;
+            -moz-border-radius: 0 0 0.6em 0.6em;
+        }
+
+        .window #txt {
+            min-height: 30px;
+            font-size: 16px;
+            line-height: 22px;
+        }
+
+        .window .txtbtn {
+
+            background: #f1f1f1;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#DCDCDC), to(#f1f1f1)); /* Saf4+, Chrome */
+            background-image: -webkit-linear-gradient(#ffffff, #DCDCDC); /* Chrome 10+, Saf5.1+ */
+            background-image: -moz-linear-gradient(#ffffff, #DCDCDC); /* FF3.6 */
+            background-image: -ms-linear-gradient(#ffffff, #DCDCDC); /* IE10 */
+            background-image: -o-linear-gradient(#ffffff, #DCDCDC); /* Opera 11.10+ */
+            background-image: linear-gradient(#ffffff, #DCDCDC);
+            border: 1px solid #CCCCCC;
+            border-bottom: 1px solid #B4B4B4;
+            color: #555555;
+            font-weight: bold;
+            text-shadow: 0 1px 0 #FFFFFF;
+            border-radius: 0.6em 0.6em 0.6em 0.6em;
+            display: block;
+            width: 100%;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            cursor: pointer;
+            text-align: windowcenter;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 6px;
+            margin: 10px 0 0 0;
+        }
+
+        .window .txtbtn:visited {
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#cccccc)); /* Saf4+, Chrome */
+            background-image: -webkit-linear-gradient(#ffffff, #cccccc); /* Chrome 10+, Saf5.1+ */
+            background-image: -moz-linear-gradient(#ffffff, #cccccc); /* FF3.6 */
+            background-image: -ms-linear-gradient(#ffffff, #cccccc); /* IE10 */
+            background-image: -o-linear-gradient(#ffffff, #cccccc); /* Opera 11.10+ */
+            background-image: linear-gradient(#ffffff, #cccccc);
+        }
+
+        .window .txtbtn:hover {
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#cccccc)); /* Saf4+, Chrome */
+            background-image: -webkit-linear-gradient(#ffffff, #cccccc); /* Chrome 10+, Saf5.1+ */
+            background-image: -moz-linear-gradient(#ffffff, #cccccc); /* FF3.6 */
+            background-image: -ms-linear-gradient(#ffffff, #cccccc); /* IE10 */
+            background-image: -o-linear-gradient(#ffffff, #cccccc); /* Opera 11.10+ */
+            background-image: linear-gradient(#ffffff, #cccccc);
+        }
+
+        .window .txtbtn:active {
+            background-image: -webkit-gradient(linear, left top, left bottom, from(#cccccc), to(#ffffff)); /* Saf4+, Chrome */
+            background-image: -webkit-linear-gradient(#cccccc, #ffffff); /* Chrome 10+, Saf5.1+ */
+            background-image: -moz-linear-gradient(#cccccc, #ffffff); /* FF3.6 */
+            background-image: -ms-linear-gradient(#cccccc, #ffffff); /* IE10 */
+            background-image: -o-linear-gradient(#cccccc, #ffffff); /* Opera 11.10+ */
+            background-image: linear-gradient(#cccccc, #ffffff);
+            border: 1px solid #C9C9C9;
+            border-top: 1px solid #B4B4B4;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) inset;
+        }
+
+        .window .title .close {
+            float: right;
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACTSURBVEhL7dNtCoAgDAZgb60nsGN1tPLVCVNHmg76kQ8E1mwv+GG27cestQ4PvTZ69SFocBGpWa8+zHt/Up+IN+MhgLlUmnIE1CpBQB2COZibfpnXhHFaIZkYph0SOeeK/QJ8o7KOek84fkCWSBtfL+Ny2MPpCkPFMH6PWEhWhKncIyEk69VfiUuVhqJefds+YcwNbEwxGqGIFWYAAAAASUVORK5CYII=");
+            width: 26px;
+            height: 26px;
+            display: block;
+        }
+
+        #share_conver {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            z-index: 20000;
+        }
+    </style>
+</head>
+<body onselectstart="return true;" ondragstart="return false;">
+<div class="window" id="windowcenter">
+    <div id="title" class="title">消息提醒<span class="close" id="alertclose"></span></div>
+    <div class="content">
+        <div id="txt"></div>
+        <input type="button" value="确定" id="windowclosebutton" name="确定" class="txtbtn">
+    </div>
+</div>
+<style>.gjz2 {
+    background: none repeat scroll 0 0 #274e9c;
+    border-radius: 8px;
+    font-size: 0.9em;
+    line-height: 26px;
+    margin: 5px 10px;
+    padding: 4px 6px;
+}
+</style>
+<style>html, body {
+    margin: 0 auto;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    -webkit-overflow-touch: none;
+}
+
+.ui-page {
+    margin: 0 auto;
+}
+
+#scratchpad {
+    position: absolute;
+    z-index: 3;
+    top: 7px;
+    left: 4px;
+}
+
+#scratchpad div:nth-child(2) {
+    display: none
+}
+
+#prize {
+    position: absolute;
+    z-index: 1;
+    top: 7px;
+    left: 4px;
+    width: 282px;
+    height: 158px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.jpjp {
+    position: absolute;
+    z-index: 2;
+    top: 7px;
+    left: 4px;
+    width: 282px;
+    height: 158px;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.jptp {
+    float: left;
+    width: 130px;
+    height: 130px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 12px 10px;
+}
+
+.jpwz {
+    margin: 10px 10px 10px 120px;
+    text-align: left;
+    overflow: hidden;
+}
+
+.jpmc {
+    color: #ff0000;
+    margin-top: 5px;
+}
+
+.ljlj {
+    position: absolute;
+    bottom: 16px;
+    width: 90px;
+}
+
+.hyh {
+    line-height: 158px;
+    text-align: center
+}
+
+.jpjp {
+    background-image: url(http://pic.vxiaoxin.com/Public/Newgames/134/gbj2.jpg);
+    background-size: 282px auto
+}
+
+.prize3 ul {
+    overflow: hidden;
+    margin: 0 10px;
+    color: #FFF
+}
+
+.prize3 ul li {
+    float: left;
+    text-align: center;
+    width: 32%;
+    margin-right: 2%;
+    margin-bottom: 10px;
+}
+
+.prize3 ul li:nth-child(3n) {
+    margin-right: 0;
+}
+
+.prize3 ul li .hdjptp {
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+}
+
+.prize3 ul li .jptu {
+    position: relative;
+    margin-bottom: 2px;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #FFF
+}
+
+.prize3 ul li .jpgs {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #FFF;
+    padding: 2px 0;
+    width: 100%;
+    font-size: 12px;
+    text-align: center
+}
+
+.prize3 ul li .jpdj {
+    font-size: 14px;
+    color: #ffe400;
+}
+
+.prize3 ul li .jpmc {
+    font-size: 12px;
+    color: #FFF
+}
+
+.prize2 ul {
+    overflow: hidden;
+    margin: 0 10px;
+    color: #FFF
+}
+
+.prize2 ul li {
+    float: left;
+    width: 49%;
+    margin-right: 2%;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.prize2 ul li:nth-child(2n) {
+    margin-right: 0;
+}
+
+.prize2 ul li .hdjptp {
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+}
+
+.prize2 ul li .jptu {
+    position: relative;
+    margin-bottom: 2px;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: #FFF
+}
+
+.prize2 ul li .jpgs {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #FFF;
+    padding: 2px 0;
+    width: 100%;
+    font-size: 12px;
+    text-align: center
+}
+
+.prize2 ul li .jpdj {
+    font-size: 14px;
+    color: #ffe400;
+}
+
+.prize2 ul li .jpmc {
+    font-size: 14px;
+    color: #FFF
+}
+
+.prize1 ul {
+    overflow: hidden;
+    margin: 0 10px;
+    color: #FFF
+}
+
+.prize1 ul li {
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.prize1 ul li:nth-child(2n) {
+    margin-right: 0;
+}
+
+.prize1 ul li .hdjptp {
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    overflow: hidden
+}
+
+.prize1 ul li .jptu {
+    position: relative;
+    margin-bottom: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: #FFF;
+    width: 80px;
+    height: 80px;
+    float: left;
+}
+
+.prize1 ul li .jptu img {
+    width: 100%
+}
+
+.prize1 ul li .jpms {
+    margin-left: 95px;
+    overflow: hidden;
+    text-align: left;
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    -webkit-box-orient: vertical;
+    height: 80px;
+}
+
+.prize1 ul li .jpgs {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #FFF;
+    padding: 0;
+    width: 100%;
+    font-size: 12px;
+    text-align: center
+}
+
+.prize1 ul li .jpdj {
+    font-size: 16px;
+    width: 100%;
+    color: #ffe400;
+}
+
+.prize1 ul li .jpmc {
+    font-size: 14px;
+    width: 100%;
+    color: #FFF
+}
+
+img {
+    max-width: 100%;
+}
+
+.button_01 {
+    border: 1px solid #aa7d2a;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #aa2022;
+    color: #a22d04;
+    cursor: pointer;
+    display: block;
+    font-family: Microsoft YaHei, Helvitica, Verdana, Tohoma, Arial, san-serif;
+    font-size: 14px;
+    padding: 5px;
+    text-align: center;
+}
+
+.instro_wall2 ul li .button {
+    float: right;
+    width: 20%;
+}
+
+.clr {
+    clear: both;
+}
+
+.instro_wall2 ul li .award {
+    float: left;
+    padding-top: 3px;
+    width: 25%;
+}
+
+.instro_wall2 ul li .time {
+    float: left;
+    font-size: 12px;
+    overflow: hidden;
+    padding-top: 4px;
+    width: 35%;
+}
+
+.instro_wall2 ul li {
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    font-size: 14px;
+    margin: 2% 0;
+    padding: 2%;
+    text-align: center;
+}
+
+.instro_wall2 .text {
+    color: #fff;
+    font-size: 15px;
+    padding: 0 10px;
+}
+
+.pop .box {
+    width: auto;
+}
+
+.button_02 {
+    border: 1px solid #cecece;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #aa2022;
+    color: #676767;
+    cursor: pointer;
+    font-family: Microsoft YaHei, Helvitica, Verdana, Tohoma, Arial, san-serif;
+    font-size: 14px;
+    padding: 5px;
+    text-align: center;
+    width: 100%;
+}
+
+.box {
+    display: block;
+}
+</style>
+
+<div id="mcovear" class="pop" style="display:none;">
+    <div class="box">
+        <b class="closeb" onclick="document.getElementById('mcovear').style.display='none';">
+        </b>
+
+        <h1>填写领奖相关信息</h1>
+        <div class="inputqy">
+            <h2 class="jptp2">恭喜你获得:<span id="jdj"></span>-<span class="jpmc"></span></h2>
+            <h2><span id="tipMsg" data-id=""></span></h2>
+            <h2><img src="" id="pimg"></h2>
+            <input type="text" id="username" value="" placeholder="请填入真实的姓名">
+            <input type="text" id="tel" value="" placeholder="请输入手机号，以便领取奖品">
+        </div>
+        <div class="but_con">
+            <button class="button_yes" onclick="registUser()">领奖</button>
+        </div>
+    </div>
+</div>
+
+<div id="mcovear1" class="pop" style="display:none;">
+    <div class="box">
+        <b class="closeb" onclick="document.getElementById('1').style.display='none';">
+        </b>
+
+        <h1>恭喜中奖啦!!</h1>
+        <div class="inputqy">
+            <h2 class="jptp2">恭喜你获得:<span id="jdj1"></span>-<span class="jpmc1"></span></h2>
+            <h2><span id="tipMsg1" data-id=""></span></h2>
+            <h2><img src="" id="pimg1"></h2>
+
+        </div>
+        <div class="but_con">
+            <button class="button_yes" id="btnWin" onclick="window.location.reload()">再砸一次</button>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="dh" class="pop" style="display:none;">
+    <div class="box"><b class="closeb" onclick="document.getElementById('dh').style.display='none';"></b>
+
+        <h1>申请兑换</h1>
+
+        <div class="inputqy">
+            <input type="hidden" id="rid" value="">
+            <input type="text" readonly="" id="pname" value="">
+            <input type="password" id="dpassword" placeholder="请输入兑换密码">
+        </div>
+        <div class="but_con">
+            <button class="button_yes" onclick="submitDh()">确定</button>
+        </div>
+    </div>
+</div>
+
+<div class="body pb_10">
+    <div style="position:absolute;left:10px;top:10px;z-index:350;">
+
+        <a href="javascript:;" id="playbox" class="btn_music on"> </a>
+        <audio id="audio"  autoplay="autoplay" loop="" src="{if $egg['music']}{php echo MonUtil::getpicurl($egg['music'])}{else}{MON_EGG_RES}images/default.mp3{/if}"
+               style="pointer-events:none;display:none;width:0!important;height:0!important;"></audio>
+    </div>
+    <section class="stage">
+        <img src="{php echo MonUtil::defaultImg(MonUtil::$IMG_BANNER_BG,$egg)}">
+
+        <div id="shape" class="cube on">
+            <div class="plane one"><span><figure>&nbsp;</figure></span></div>
+            <div class="plane two"><span><figure>&nbsp;</figure></span></div>
+            <div class="plane three"><span><figure>&nbsp;</figure></span></div>
+        </div>
+        <div id="hit" class="hit"><img src="{MON_EGG_RES}images/1.png"></div>
+    </section>
+    <section>
+        <div class="instro_wall">
+            <article><h6>抽奖次数说明</h6>
+                <div>
+                    总积分:{$userCredit}</br>
+                    {if $leftCount > 0}您今天还有{$leftCount}次抽奖机会 {/if}
+                    <br/>
+                    {$shareTip}
+
+                    {if $leftCount==0 && $shareTip==''}
+                       亲，您今天的抽奖次数全部用完，明天再来吧！
+                    {/if}
+                </div>
+            </article>
+            <article class="a3"><h6>奖品设置</h6>
+
+                <div class="prize3" id="jp_list">
+                    <ul>
+
+                        {loop $prizes  $prize}
+                        <li>
+                            <div class="hdjptp">
+                                <div class="jptu"><img src="{php echo MonUtil::getpicurl($prize['pimg'])}"></div>
+                                <div class="jpms"><p class="jpdj">{$prize['plevel']}</p>
+                                    <p class="jpmc">{$prize['pname']}</p></div>
+                            </div>
+                        </li>
+                        {/loop}
+
+                    </ul>
+                </div>
+            </article>
+            <article><h6>活动说明</h6>
+
+                <div>
+                    {$egg['intro']}
+
+                </div>
+            </article>
+            <article class="instro_wall2"><h6>我的奖品</h6>
+
+                <div id="user_zjlist">
+
+
+
+                   {if empty($myawards)}
+                    暂无中奖记录
+                    {else}
+                    <ul>
+                        {loop $myawards $award}
+                        <li>
+                            <span class="time"> {php echo date("Y-m-d H:i", $award['createtime'])} </span><span class="award">{$award['ppname']}</span>
+                            {if $award['status'] == self::$STATUS_ZJ}
+                            <button class="button_01 button"  onclick="dh({$award['id']}, '{$award['ppname']}')">兑换</button>
+                            {/if}
+                            {if $award['status'] == self::$STATUS_DH}
+                            <button class="button_02 button" disabled="disabled">已兑</button>
+                            {/if}
+
+                            <div class="clr"></div>
+                        </li>
+
+                        {/loop}
+
+                    </ul>
+
+                    {/if}
+
+
+
+
+
+                </div>
+            </article>
+            <article class="instro_wall2"><h6>中奖名单</h6>
+
+                <div id="all_zjlist">
+                    <p></p>
+                    <ul id ="uwards">
+
+                    </ul>
+                    <p id="u_more" style="text-align: center">加载更多...</p>
+                </div>
+            </article>
+        </div>
+    </section>
+    <footer style="text-align:center; color:#fff;margin-right:20px">
+        <div class="copyright">{$egg['copyright']}</div>
+    </footer>
+</div>
+
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+        var shape = document.getElementById("shape");
+        var hitObj = {
+            handleEvent: function (evt) {
+                if ("SPAN" == evt.target.tagName) {
+                    shape.removeEventListener("click", hitObj, false);
+
+                    var leftCount = {$leftCount};
+
+                    var tipMsg = "{$shareTip}";
+                    if (leftCount == 0 && tipMsg == "") {
+
+                        dialogMsg("今天机会已没有了，明天再来吧");
+                        return ;
+                    }
+
+                    if (leftCount == 0 && tipMsg != '') {
+                        dialogMsg(tipMsg);
+                        return ;
+                    }
+
+                    $.ajax({
+                        url: '{php echo $this->createMobileUrl('AjaxSmashing',array(),true)}',
+                        dataType: "json",
+                        data: {
+                            egid: "{$egg['id']}"
+                        },
+                        success: function (res) {
+
+                            $("#hit").addClass("on").css({left: evt.pageX + "px", top: evt.pageY + "px"});
+                            evt.target.classList.toggle("on");
+
+                            if (res.code == 200) { //没用中奖
+
+                                    var audio = new Audio();
+                                    audio.src = "{MON_EGG_RES}images/smashegg.mp3";
+                                    audio.play();
+                                    setTimeout(function () {
+                                        noWin(res.left, res.shareTip);
+                                 }, 2000);
+
+                            } else if (res.code == 250) {//已中奖
+                                var audio = new Audio();
+                                audio.src = "{MON_EGG_RES}images/smashegg.mp3";
+                                audio.play();
+
+                                var urls = ["{MON_EGG_RES}images/coin.png"];
+                                getCoin(urls);
+
+                                var tipMsg = '您还有' + res.left + '次抽奖机会';
+
+                                if (res.shareTip !='') {
+                                    tipMsg += ";" +res.shareTip;
+                                }
+                                if (res.uname == '' || res.tel == '') { //没有绑定用户信息
+                                    $('#jdj').html(res.plevel);
+                                    $('.jpmc').html(res.pname);
+                                    $('#tipMsg').text(tipMsg);
+                                    $("#pimg").attr('src', "{$_W['attachurl']}"+res.pimg);
+                                    setTimeout(function () {
+                                        $('#mcovear').show();
+                                    }, 2000);
+                                } else {
+
+
+                                    $('#jdj1').html(res.plevel);
+                                    $('.jpmc1').html(res.pname);
+                                    $('#tipMsg1').text(tipMsg);
+                                    if (res.shareTip == '' && res.left == 0) {
+                                        $("#btnWin").html("明天再来吧");
+                                    } else {
+                                        $("#btnWin").html("再来一次");
+                                    }
+
+                                    $("#pimg1").attr('src', "{$_W['attachurl']}"+res.pimg);
+                                    setTimeout(function () {
+                                        $('#mcovear1').show();
+                                    }, 2000);
+
+                                }
+
+                            } else { //出现错误
+                                dialogMsg(res.msg);
+                            }
+
+                        },
+                        error: function () {
+                            dialogMsg("请求失败");
+                        },
+                        timeout: 20000
+                    });
+                }
+
+            }
+        }
+        shape.addEventListener("click", hitObj, false);
+    }, false);
+
+
+
+
+    $(function(){
+        $("#playbox").click(function() {
+            if ($(this).hasClass('on')) {
+                $("#audio").get(0).pause();
+                $(this).removeClass('on');
+            } else {
+                $(this).addClass('on');
+                $("#audio").get(0).play();
+            }
+
+        });
+
+        var follow = {$follow};
+
+        if (follow ==1){
+            swal({
+                        title: "提示",
+                        text: "{$egg['follow_dlg_tip']}",
+                        type: "info",
+                        showCancelButton: false,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "{$egg['follow_btn_name']}",
+                        closeOnConfirm: false },
+                    function(){
+
+                        window.top.location.href ="{$egg['follow_url']}";
+
+                    });
+        }
+
+    });
+
+    function dh(rid, pname) {
+        $("#rid").val(rid);
+        $("#pname").val(pname);
+        $("#dh").show();
+    }
+
+</script>
+<script>
+
+
+    function dialogMsg(msg) {
+
+        swal({
+                    title: "提示",
+                    text: msg,
+                    type: "info",
+                    showCancelButton: false,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "确定",
+                    closeOnConfirm: true },
+                function(){
+
+                });
+    }
+
+
+    function noWin(leftCount, tipMsg) {
+
+        if (tipMsg != '') {  //有分享次数
+
+            swal({
+                title: "下次再努力",
+                text: "您还有"+leftCount+"次砸金蛋机会;"+tipMsg,
+                type: "info",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                confirmButtonText: "分享",
+                cancelButtonText: "取消"
+              }, function(){
+                   $("#share_conver").show();
+               });
+        } else {
+
+            var tipMsg ='';
+            var confirmText ='再来一次';
+            var closeOnConfirm = false;
+            if (leftCount > 0) {
+                tipMsg = "您还有"+leftCount+"次砸金蛋机会,再努力哦";
+            } else {
+                tipMsg = "今天机会已经没有了，下次再来吧";
+                confirmText = '明天再来';
+                closeOnConfirm = true;
+            }
+
+                 swal({
+                    title: "下次再努力",
+                    text: tipMsg,
+                    type: "info",
+                    confirmButtonText: confirmText,
+                    showCancelButton: false,
+                    closeOnConfirm: closeOnConfirm
+                }, function(){
+                    if (leftCount > 0) {
+                        window.location.reload();
+                    }
+
+                });
+
+
+
+        }
+
+    }
+
+    function lq2() {
+        $('#mcovear').show();
+        $('#sncode').text(jp_sncode).attr('data-id', jp_sncode);
+    }
+    /*弹出用户资料收集*/
+    function lq3() {
+        $('#userinfo_ct').show();
+    }
+
+    function verify_mobile(tel) {
+        if (tel.match(/^0{0,1}(13[0-9]|14[0-9]|15[0-9]|18[0-9]|17[0-9])[0-9]{8}$/)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    function registUser() {
+        var username = $.trim($("#username").val());
+        var tel = $.trim($("#tel").val());
+        if (username == '') {
+            dialogMsg("请输入姓名");
+            return false;
+        }
+
+        if(!verify_mobile(tel)) {
+            dialogMsg("请输入正确的手机号码格式");
+            return ;
+        }
+
+        var submitData = {
+            uname: username,
+            egid: "{$egg['id']}",
+            tel: tel
+        };
+        $.post('{php echo $this->createMobileUrl('BindUser',array('egid'=>$egg['id']),true)}', submitData, function (res) {
+            if (res.code == 200) {
+                window.location.reload();
+            } else {
+                dialogMsg(res.msg);
+            }
+        }, "json");
+
+    }
+
+    function submitDh() {
+        var dpassword = $("#dpassword").val();
+        if (dpassword == '') {
+            dialogMsg("请输入兑换密码");
+            return false;
+        }
+
+
+        var submitData = {
+            dpassword: dpassword,
+            rid: $("#rid").val()
+        };
+        $.post('{php echo $this->createMobileUrl('DH', array('egid' => $egg['id']), true)}', submitData, function (res) {
+
+            if (res.code == 200) {
+
+                swal({
+                    title: "提示",
+                    text: "恭喜您兑换成功",
+                    type: "success",
+                    confirmButtonText: "好的，谢谢",
+                    showCancelButton: false,
+                    closeOnConfirm: true
+                }, function(){
+                        window.location.reload();
+                });
+
+
+
+            } else {
+                dialogMsg(res.msg);
+            }
+
+        }, "json");
+
+    }
+
+    function refreash() {
+        window.location.href = location.href;
+    }
+
+    $(function() {
+        getUserWardsList();
+
+        $("#u_more").click(function () {
+            getUserWardsList();
+        });
+    });
+
+
+     var page = 1;
+
+    function getUserWardsList() {
+        $.get("{php echo $this->createMobileUrl('AjaxUserAwards',array('egid' => $egg['id']), true)}", {"page": page}, function(res) {
+
+            if (res != '') {
+                $("#uwards").append(res);
+                page ++ ;
+            } else {
+                $("#u_more").remove()
+            }
+
+        });
+
+    }
+
+
+</script>
+
+<div id="share_conver" onclick="$(this).hide()"><img src="{php echo MonUtil::defaultImg(MonUtil::$IMG_SHARE_BG,$egg)}"></div>
+
+</body>
+
+{php echo register_jssdk(false);}
+<script type="text/javascript">
+
+
+
+    wx.ready(function () {
+        sharedata = {
+            title: "{$egg['share_title']}",
+            desc: "{$egg['share_content']}",
+            link: "{if $egg['share_url']}{$egg['share_url']}{else}{php echo MonUtil::str_murl($this->createMobileUrl('Index',array('egid'=>$egg['id']),true))}{/if}",
+            imgUrl: "{$_W['attachurl']}{$egg['share_icon']}",
+            success: function(){
+
+                {if $egg['share_enable'] ==1}
+
+                    $.post("{php echo MonUtil::str_murl($this->createMobileUrl('userShare',array('egid'=>$egg['id']),true))}",function(res){
+                        $("#mcover").hide();
+                        if (res.code==250) {
+                            var tipMsg ="";
+                            if (res.leftShare !=0) {
+                                tipMsg = "恭喜您获得了"+res.awardCount+"次抽奖机会，您还有"+res.leftShare+"分享奖励机会";
+                            } else {
+                                tipMsg = "恭喜您获得了"+res.awardCount+"次抽奖机会!";
+                            }
+                            swal({
+                                        title: "提示",
+                                        text: tipMsg,
+                                        type: "success",
+                                        showCancelButton: false,
+                                        confirmButtonColor: "#DD6B55",
+                                        confirmButtonText: "确定",
+                                        closeOnConfirm: true },
+                                    function(){
+                                        window.location.reload();
+                                    });
+
+                        }
+                    },'json');
+
+                    {/if}
+
+
+                    },
+                    cancel: function(){
+
+                    }
+                };
+                wx.onMenuShareAppMessage(sharedata);
+                wx.onMenuShareTimeline(sharedata);
+            });
+
+
+</script>
+</html>

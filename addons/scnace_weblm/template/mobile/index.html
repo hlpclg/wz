@@ -1,0 +1,148 @@
+{template 'common/header'}
+   <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">zafu_EC</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#"> <span class="sr-only"></span>我有快递</a></li>
+        {if $check}
+        <li><a href="{php echo $this->createMobileUrl('Help');}">快递盒子</a></li>
+        {/if}
+         <li><a href="{php echo $this->createMobileUrl('MyExpress');}">我的快递</a></li>
+          </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+      {if !$check }
+      <li><a href="{php echo $this->createMobileUrl('WorkerRank');}">快递员注册</a></li>
+       {else}
+      <li><a href="#">欢迎你,{php echo($check['workername']);}</a></li>
+            {/if}
+        <li><a href="{php echo $this->createMobileUrl('Attention');}">用户须知</a></li>
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="jumbotron">
+  <h2 class="text-danger">以下为快递大小说明:</h2>
+  <br/>
+  <p class="text-success">大件为<mark>大于10Kg的物件</mark></p>
+  <p class="text-success">小件为<mark>小于等于10Kg的物件</mark></p>
+  <font color="red"></font>
+</div>
+
+{if !$databutton}
+<p class="text-danger">填写有误哦,再试一次吧.</p>
+{/if}
+
+
+
+
+<form  method="post"  action="{php echo $this->createMobileUrl('Weblm',array('submitbutton'=>true));}" class="form-horizontal" >
+  <div class="form-group">
+    <label for="Name" class="col-sm-2 control-label">姓名</label>
+       <div class="col-sm-10">
+    <input type="text" class="form-control" name="Weblm[Name]" placeholder="请配合快递员，输入真实姓名"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="phone"  class="col-sm-2 control-label">短号</label>
+           <div class="col-sm-10">
+    <input type="text" class="form-control" name="Weblm[Phone]" placeholder="请输入你的短号"/>
+    </div>
+  </div>
+  <div class="form-group">
+      <label for="addressap"  class="col-sm-2 control-label">楼号</label>
+                 <div class="col-sm-10">
+ <select class="form-control" name="Weblm[addressap]" >
+    <option value="none">请选择要送往的楼层号</option>
+    <option value="a1">a1</option>
+    <option value="a2">a2</option>
+    <option value="a3">a3</option>
+    <option value="a4">a4</option>
+    <option value="a5">a5</option>
+    <option value="a6">a6</option>
+    <option value="a7">a7</option>
+    <option value="b1">b1</option>
+    <option value="b2">b2</option>
+    <option value="b3">b3</option>
+    <option value="b4">b4</option>
+    <option value="b5">b5</option>
+    <option value="b6">b6</option>
+    <option value="b7">b7</option>
+    <option value="b8">b8</option>
+    <option value="b9">b9</option>
+    <option value="b10">b10</option>
+    <option value="c1">c1</option>
+    <option value="c2">c2</option>
+    <option value="c3">c3</option>
+    <option value="c4">c4</option>
+    <option value="c5">c5</option>
+    <option value="c6">c6</option>
+     <option value="c7">c7</option>
+    <option value="c8">c8</option>
+    <option value="c9">c9</option>
+    <option value="c10">c10</option>
+    <option value="c11">c11</option>
+     <option value="c12">c12</option>
+</select>
+</div>
+  </div>
+  
+    <div class="form-group">
+    <label for="addressrm"  class="col-sm-2 control-label">寝室号</label>
+           <div class="col-sm-10">
+    <input type="text" class="form-control" name="Weblm[addressrm]" placeholder="请输入你的寝室号">
+    </div>
+  </div>
+  
+      <div class="form-group">
+    <label for="addressrm"  class="col-sm-2 control-label">快递地点（暂时提供以下地点）</label>
+           <div class="col-sm-10">
+ <select class="form-control" name="Weblm[expressname]" >
+     <option value="none">请选择快递拿取地点</option>
+    <option value="圆通">C区圆通</option>
+    <option value="申通">C区申通</option>
+    <option value="韵达">C区韵达</option>
+    <option value="中通">C区中通</option>
+    <option value="国通">C区国通</option>
+    <option value="阿华电脑店">C区阿华电脑店</option>
+    <option value="C区印象工作室">C区印象工作室</option>
+    <option value="B区楼下">B区楼下</option>
+    <option value="教一邮政">教一邮政</option>
+</select>
+    </div>
+  </div>
+  
+      <div class="form-group">
+    <label for="addressrm"  class="col-sm-2 control-label">快递大小(请参照上方说明)</label>
+           <div class="col-sm-10">
+ <select class="form-control" name="Weblm[type]" >
+     <option value="none">选择快递大小</option>
+    <option value="大件">大件</option>
+    <option value="小件">小件</option>
+</select>
+    </div>
+  </div>
+  <br/>
+	<div class="form-group">
+		<div class="col-xs-12 col-sm-9 col-md-10 col-lg-10 col-sm-offset-3 col-md-offset-2 col-lg-offset-2">
+			<input name="submit" type="submit" value="开始召唤快递员" class="btn btn-primary" />
+		</div>
+	</div>
+</form>
+
+</html>

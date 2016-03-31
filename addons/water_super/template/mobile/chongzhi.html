@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>{$systeminfo['shopname']}</title>
+<link href="./source/modules/eorder/template/css/footer.css" rel="stylesheet" type="text/css">
+<link href="./source/modules/eorder/template/css/base.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="./source/modules/eorder/template/css/card.css" media="all">
+<link href="./source/modules/eorder/template/css/wap.css" rel="stylesheet" type="text/css">
+<link href="./source/modules/eorder/template/css/myOrder.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="./source/modules/eorder/template/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="./source/modules/eorder/template/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="./source/modules/eorder/template/js/page.js"></script>
+<script type='text/javascript' src="./source/modules/eorder/template/js/touchslider.min.js"></script>
+<script type='text/javascript' src="./source/modules/eorder/template/js/klass.min.js"></script>
+<script type='text/javascript' src="./source/modules/eorder/template/js/photoswipe.jquery-3.0.5.min.js"></script>
+<script type='text/javascript' src="./source/modules/eorder/template/js/jsAddress.js"></script>
+</head>
+<body>
+ <div>
+    <img src="./source/modules/eorder/template/images/bannercz.png" style="width:100%;">
+    
+  </div>
+<div class="p10 white_bg orange_color" style="font-size:1.1em">
+  账户余额：0.0</div>
+<!--充值卡充值-->
+ <div class="" style="margin-top:10px;overflow:scroll-y;padding-bottom:50px">
+  <ul class="round" style="border-radius:0">
+    <li style="padding-left:0"><span class=" p10 none" style="font-size:1.1em">充值卡充值</span></li>
+    <li class="nob" style="padding-left:0">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0"
+        class="kuang">
+        <tbody>
+          <tr>
+            <td width="60%"> 
+              <form  action="javascript:;"  method = "POST">
+
+                <input type = "text" name = "sncode" id = "charge_money_3"  placeholder = "请输入充值卡密码" class="px"  style="border:0;margin-left:5px;padding-left:5px;width:96%">
+
+              </form>
+            </td>
+            <td>
+              <div class="footReturn">
+                <a id="showcard" class=" coupon-btn" href="javascript:void(0)">确定</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+    </li>
+  </ul>
+<div class="p10 white_bg" id="input_jquery">
+  <form  action="mobile.php?act=module&from_user=oMWhHSfWY&weid=5&name=icard&do=WapCharge" onsubmit = "return check_form_1();" method = "POST">
+      <li  class="order_item ">
+      <div class=" borderD" style="padding:0px 0 20px 0">
+          <img src = "./source/modules/eorder/template/images/icon-weixin-pay.png" style="width:30px"/>
+          微信支付 
+          <span class="pull-right orange_color">
+            <input id = "weixin_pay" type = "radio" name = "paytype" value = "2" class="check_box" checked>
+          </span>
+      
+      </div>
+    </li>
+        <table width="100%" class="table-price">
+      <tr>
+        <td><button  class = "charge_money" id = "charge_1000"> 充1000<span class="orange_color">返260</span></button></td>
+        <td><button class = "charge_money" id = "charge_500"> 充500<span class="orange_color">返100</span></button></td>
+        <td><button class = "charge_money" id = "charge_300"> 充300<span class="orange_color">返50</span></button></td>
+        <td >
+            <input type = "hidden" value = "0" name = "fee_2" id = "charge_money_2">
+            <input class = "charge_money" type = "text" name = "fee"   id = "charge_money_1" value = ""  placeholder = "其他金额" style="margin:0;vertical-align: top;height:34px;" >
+        </td>
+      </tr>
+    </table>    
+    <div class="myOrder_list pay_order_list">
+      <div class="p10"></div>
+    </div>
+    <div style="padding:0px 0">
+        <button type = "submit"  value = "确定" id = "submit_pay" class="coupon-btn"> 确 定</button>   
+    </div> 
+</div> 
+<!--end在线充值-->
+<div id="codFloat" style="display:none" class="cod" style="height:60px">
+    <div class="wx_mask"></div>
+      <div class="wx_confirm ">
+          <div class="wx_confirm_inner" id="wx_confirm_float">
+            <div class="wx_confirm_hd">
+                <div class="wx_confirm_tit" id = "show_mes">提示信息</div>
+            </div>
+          </div>
+      </div>
+    </div>
+ </div>
+</div>  
+<!-- <div id = "move_up" style = "height:1000px;display:none;">
+</div> -->
+<!--end充值卡-->
+<!--充值金额选择-->
+<script type="text/javascript">
+  $("#charge_1000").click(function(){
+    var fee_2 = $("#charge_money_2").val();
+    if(fee_2){
+      $(".select_charge").attr("class","charge_money");
+    }
+    $("#charge_money_2").val('1000');
+    $("#charge_1000").attr("class","charge_money select_charge");
+    $("#charge_money_1").attr("placeholder","其他金额");
+    $("#charge_money_1").val('');
+    return false;
+  });
+  $("#charge_500").click(function(){
+    var fee_2 = $("#charge_money_2").val();
+    if(fee_2){
+      $(".select_charge").attr("class","charge_money");
+    }
+    $("#charge_money_2").val('500');
+    $("#charge_500").attr("class","charge_money select_charge");
+    $("#charge_money_1").attr("placeholder","其他金额");
+    $("#charge_money_1").val('');
+    return false;
+  });
+  $("#charge_300").click(function(){
+    var fee_2 = $("#charge_money_2").val();
+    if(fee_2){
+      $(".select_charge").attr("class","charge_money");
+    }
+    $("#charge_money_2").val('300');
+    $("#charge_300").attr("class","charge_money select_charge");
+    $("#charge_money_1").attr("placeholder","其他金额");
+    $("#charge_money_1").val('');
+    return false;
+  });
+  $("#charge_money_1").click(function(){
+    var fee_2 = $("#charge_money_2").val();
+    if(fee_2){
+      $(".select_charge").attr("class","charge_money");
+    }
+    $("#charge_money_2").val('0');
+    $("#charge_money_1").attr("class","charge_money select_charge");
+  });
+</script>
+<script>
+//上移一段距离
+/*$("#charge_money_3").click(function(){
+  $("#move_up").show();
+  window.scroll(0,20);
+  setTimeout($("#move_up").hide(),1000);
+});*/
+  $(document).ready(
+    function (){
+      $("#showcard").click(
+        function(){
+          var submitData = {
+              sncode : $("#charge_money_3").val()
+          };
+        if($("#charge_money_3").val().trim() == ""){
+          alert_1("请输入充值卡密码");
+          return false;
+        }
+        $.post("mobile.php?act=module&do=UpdateUserinfocharge&from_user=oMWhZty4E4lKPvSyv0UKE5hHSfWY&name=icard",submitData,
+            function (data){
+              if(data.message.state == 1){
+                alertToUrl(
+                  data.message.msg,
+                  "mobile.php?act=module&do=wapindex&from_user=oMWhZty4E4lKPvSyv0UKE5hHSfWY&name=icard");
+              }else{
+                alert_1(data.message.msg);
+              }
+        },"json")
+    });
+  });
+  function hide_res(){
+      $("#codFloat").hide();
+    }
+  function show_res(){
+      setTimeout("hide_res()",2000);
+   }
+  function alert_1(title) {
+    $("#show_mes").html(title);
+      $("#codFloat").show();
+      show_res();
+  }
+  function alertToUrl(title, url) {
+    if (title == '') {
+          window.location.href = url;
+        }else{
+          alert_1(title);
+          setTimeout("window.location.href='" + url + "'", 500);
+        }
+  }
+function check_form_1(){
+  var charge_money_1 = $("#charge_money_1").val().trim();
+  var charge_money_2 = $("#charge_money_2").val().trim();
+  if(!charge_money_1  && charge_money_2 == "0"){
+    alert_1("请您选择或输入充值金额");
+    return false;
+  }
+  if(charge_money_2 == "0" && (charge_money_1<=0 || charge_money_1>999999999)){
+    alert_1("请您输入合理金额");
+    return false;    
+  }
+  $("#submit_pay").attr("disabled",true);
+}
+</script>
+
+<footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                	<a href="{php echo $this->createMobileUrl('index', array())}"><span class="home-index">首页</span></a>
+                	<a href="{php echo $this->createMobileUrl('ordering', array('openid' => $item['id']))}"><span class="Order-index">订单</span></a>
+                	<a href="{php echo $this->createMobileUrl('usercenter', array('openid' => $item['id']))}"><span class="card-index">我的</span></a>
+              </div>
+        </div>
+    </div>
+</footer>
+<div style="display:none">
+	<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F6eb8d3e8f50829c93d53de9c63a9ebcd' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+</div>
+
+</body>
+</html>

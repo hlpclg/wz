@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title>{php echo $this->config[show_title]?$this->config[show_title]:'周边商铺'}</title>
+<link rel="stylesheet" href="{$css}style.css">
+<script type="text/javascript" src="{$js}jquery.js" ></script> 
+<script>
+	$(function(){
+		$("#checkall").click(function(){
+			if($(this).is(":checked")){
+				$(".checkbox").addClass("che_this")
+				$(".checks").attr("checked","checked");
+			}else{
+				$(".checkbox").removeClass("che_this");
+				$(".checks").removeAttr("checked");
+			}
+		})
+		$(".checks").click(function(){
+			if($(this).is(":checked")){
+				$(this).parent().addClass("che_this")
+			}else{
+				$(this).parent().removeClass("che_this");
+			}
+		})
+		$(".saixuan_btn span").click(function(){
+			$(".saixuan_btn span").removeClass("this");
+			$(this).addClass("this")
+		})
+		$("#more_shop").click(function(){
+			ajaxGetShopList($(this));
+		})
+		$(window).scroll( function() {
+			if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+				ajaxGetShopList($("#more_shop"));
+			}
+		});
+	})
+	var pagenumber={$number};
+	var page=1;
+	function ajaxGetShopList(dom){
+		dom.html("加载中...");
+		page++;
+		var url="{php echo $this->createMobileUrl('ajaxlists')}";
+		var data={
+			"page":page,
+			"pagenumber":pagenumber,
+			"keyword":'{$_GPC['keyword']}'
+		}
+		var callback=function(data){
+			var str="";
+			$.each(data,function(key,value){
+				str+='<li>'
+				str+='	<div class="le xx_op">'
+				str+='		<!--<div class="icon"></div>-->'
+				str+='		<h2>'+value.name+'</h2>'
+				str+='		<span>电话：<a href="tel:'+value.tel+'">'+value.tel+'</a></span>'
+				str+='		<span>地址：'+value.address+'</span>'
+				str+='	</div>'
+				str+='</li>'
+			})
+			$(".xiaoxi_list ul").append(str);
+			if(str){
+				dom.html("更多商家");
+			}else{
+				dom.html("暂无更多商家，欢迎加入")
+			}
+			
+		}
+		var type="json";
+		$.post(url,data,callback,type);
+	}
+</script>
+</head>
+
+<body>
+<header>
+	<a href=""><div class="hea_lebtn hea_ren"></div></a>
+    <div class="hea_title">{php echo $this->config[show_title]?$this->config[show_title]:'周边商铺'}</div>
+    <!--<div class="hea_ribtn hea_add"></div>-->
+</header>
+<div class="sousuo_bg">
+	<form method="get">
+    <div class="sousuo">
+        <input type="text" placeholder="请输入您要搜索的商家" id="keyword"  name="keyword" value="{$_GPC[keyword]}" class="txt">
+		<input type="hidden" name="i" value="{$_GPC[i]}" />
+			<input type="hidden" name="c" value="{$_GPC[c]}"/>
+			<input type="hidden" name="do" value="{$_GPC[do]}"/>
+			<input type="hidden" name="m" value="{$_GPC[m]}"/>
+		<input type="submit" value="" class="btn">
+    </div>
+	</form>
+</div>
+<!--<div class="saixuan_btn">
+	<span class="this"><em></em>订房</span>
+    <span>订餐</span>
+    <span>投诉</span>
+    <a href="xiaoxi_con.html"><span>建议</span></a>
+</div>-->
+<div class="xiaoxi_list">
+	<ul>
+		{loop $list $value}
+    	<li>
+        	<div class="le xx_op">
+                <!--<div class="icon"></div>-->
+                <h2>{$value[name]}</h2>
+				<span>电话：<a href="tel:{$value[tel]}">{$value[tel]}</a></span>
+                <span>地址：{$value[address]}</span>
+            </div>
+          
+        </li>
+		{/loop}
+    </ul>
+	
+</div>
+<div style="text-align: center; cursor: pointer; margin:  0 0 70px 0"><span id="more_shop">更多商家</span></div>
+<nav>
+	<!--<a href="xiaoxi.html"  class="this"><em class="nav_xx"><span class="nav_xxts">21</span></em>信息</a>-->
+    <!--<a href="apply.html"><em class="nav_yy"></em>应用</a>-->
+    <a href="{php echo $this->createMobileUrl('reg')}"><em class="nav_fx"></em>申请加入</a>
+    <!--<a href="shangjia_xinxi.html"><em class="nav_wd"></em>我的</a>-->
+</nav>
+</body>
+</html>

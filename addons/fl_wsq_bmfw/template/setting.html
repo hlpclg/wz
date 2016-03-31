@@ -1,0 +1,15 @@
+{template 'common/header'}
+<form method="post">
+	<input type="hidden" name='token' value='{$_W[token]}' />
+	<table>
+		<tr>
+			<td>显示名称：</td>
+			<td><input type="" name="show_title" value="{php echo $data[show_title]?$data[show_title]:'周边商户'}" /></td>
+		</tr>
+	</table>
+	<input name="submit" type="submit" value="提交" />
+</form>
+
+
+
+{template 'common/footer'}

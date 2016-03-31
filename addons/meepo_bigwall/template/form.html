@@ -1,0 +1,298 @@
+<div class="panel panel-success">
+	<div class="panel-heading">
+		添加微信墙<br><br>
+		注意: <span class="label label-danger">若是想删除某个活动规则，请先删除这个活动的投票以及奖品等冗余数据！</span>
+	</div>
+	<input type="hidden" name="reply_id" value="{$reply['id']}" />
+	<div class="panel-body">
+	    <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">本次活动是否需要参与者录入手机号码以及真实姓名</label>
+			<div class="col-sm-9 col-lg-8">
+				<label class="radio-inline">
+					<input type="radio" name="lurumobile" value="1" id="isshow_1" {if $reply['lurumobile'] == '1'}checked="true"{/if}> 是
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="lurumobile" value="0" id="isshow_0"  {if $reply['lurumobile'] == '0'}checked="true"{/if}>否
+				</label>
+				<span class="help-block">当用户在本次活动时间内发表的内容，是否需要审核，为否为则直接显示内容。</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">参与者发送的内容是否需要审核</label>
+			<div class="col-sm-9 col-lg-8">
+				<label class="radio-inline">
+					<input type="radio" name="isshow" value="1" id="isshow_1" {if $reply['isshow'] == '1'}checked="true"{/if}> 是
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="isshow" value="0" id="isshow_0"  {if $reply['isshow'] == '0'}checked="true"{/if}>否
+				</label>
+				<span class="help-block">当用户在本次活动时间内发表的内容，是否需要审核，为否为则直接显示内容。</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">参与者进入本次活动提示的提示内容</label>
+			<div class="col-sm-9 col-lg-8">
+				<textarea style="height:200px;" class="form-control" name="enter-tips" id="enter-tips" cols="70">{$reply['enter_tips']}</textarea>
+				<span class="help-block">当参与者进入此次活动时，返回的提示信息。
+					<a class="" href="javascript:;" onclick="setemotion(this,'enter-tips');"><i class="fa fa-github-alt"></i> 表情</a>
+					<script type="text/javascript">
+						function setemotion(obj, id){
+							require(['util', 'jquery'], function(util, $){
+								var t = $('#'+id).get(0);
+								util.emotion(obj, t, function(txt, obj, t){
+									t.value = $(target).get(0).value;
+								});
+							});
+						}
+					</script>
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">参与者关注扫码关注提示内容</label>
+			<div class="col-sm-9 col-lg-8">
+				<textarea style="height:200px;" class="form-control" name="subit_tips" id="subit_tips" cols="70">{$reply['subit_tips']}</textarea>
+				<span class="help-block">参与者是首次关注本公众号提示内容。<a class="" href="javascript:;" onclick="setemotion(this,'subit_tips');"><i class="fa fa-github-alt"></i> 表情</a></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">参与者发表图片或者文字成功提示内容</label>
+			<div class="col-sm-9 col-lg-8">
+				<textarea style="height:200px;" class="form-control" name="send-tips" id="send-tips" cols="70">{$reply['send_tips']}</textarea>
+				<span class="help-block">参与者发表图片或者文字成功提示内容<a class="" href="javascript:;" onclick="setemotion(this,'send-tips');"><i class="fa fa-github-alt"></i> 表情</a></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">参与者退出本次活动关键字</label>
+			<div class="col-sm-9 col-lg-8">
+				<input type="text" value="{$reply['quit_command']}" class="form-control" name="quit-command">
+				<span class="help-block">参与者退出活动的关键字，如果未设置则默认为“退出”</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">参与者主动退出提示内容</label>
+			<div class="col-sm-9 col-lg-8">
+				<textarea style="height:200px;" class="form-control" name="quit-tips" id="quit-tips" cols="70">{$reply['quit_tips']}</textarea>
+				<span class="help-block">参与者主动退出本次活动提示内容。<a class="" href="javascript:;" onclick="setemotion(this,'quit-tips');"><i class="fa fa-github-alt"></i> 表情</a></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">被系统自动踢出后，再次回复非本次活动关键词提示内容</label>
+			<div class="col-sm-9 col-lg-8">
+				<textarea style="height:200px;" class="form-control" name="chaoshi-tips" id="quit-tips" cols="70">{$reply['chaoshi_tips']}</textarea>
+				<span class="help-block">有部分参与者可能长时间脱离活动，即为超时，将被自动系统踢出！<a class="" href="javascript:;" onclick="setemotion(this,'quit-tips');"><i class="fa fa-github-alt"></i> 表情</a></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">超时时间【单位:秒】</label>
+			<div class="col-sm-9 col-lg-8">
+				<div class="input-group">
+					<input type="text" name="timeout" class="form-control"  value="{$reply['timeout']}" />
+					<span class="input-group-addon">秒</span>
+				</div>
+				<span class="help-block">当参与者长时间未参与本次活动，超过此处设置的超时间时，用户自动被踢出话题。</span>
+			</div>
+		</div>
+		<div class="form-group">
+				<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">活动风格选择</label>
+				<div class="col-sm-9 col-lg-8">
+					<select name="indexstyle" class='form-control'>
+					        {loop $sty_name $key $row}
+							<option value="{$key}" {if $reply['indexstyle']==$key} selected{/if}>{$row}</option>
+							{/loop}
+					</select>
+					<span class="help-block">后台暂时不提供预览 请到前台预览所选风格</span>
+				</div>
+				
+			</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">主持人登录密码</label>
+			<div class="col-sm-9 col-lg-8">
+				<input type="text"  class="form-control" name="loginpass" value="{$reply['loginpass']}">
+				<span class="help-block">主持人登录密码</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">留言墙滚动所需时间</label>
+			<div class="col-sm-9 col-lg-8">
+			<div class="input-group">
+			<input type="text" name="refreshtime" class="form-control"  value="{$reply['refreshtime']}" />
+					<span class="input-group-addon">秒</span>
+			</div>
+			<span class="help-block">留言墙滚动所需时间 不要设置低于3秒</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">是否开启签到墙</label>
+			<div class="col-sm-9 col-lg-8">
+				<label class="radio-inline">
+					<input type="radio" name="qdqshow" value="1" id="xh" {if $reply['qdqshow'] == '1'}checked="true"{/if}> 是
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="qdqshow" value="0" id="xh"  {if $reply['qdqshow'] == '0'}checked="true"{/if}>否
+				</label>
+				<span class="help-block">不开启将不显示</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">进入首页默认开启哪面墙</label>
+			<div class="col-sm-9 col-lg-8">
+				<label class="radio-inline">
+					<input type="radio" name="defaultshow" value="1" id="xh" {if $reply['defaultshow'] == '1'}checked="true"{/if}>签到墙
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="defaultshow" value="2" id="xh"  {if $reply['defaultshow'] == '2'}checked="true"{/if}>留言墙
+				</label>
+				<span class="help-block">选择哪个默认将打开哪个</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">是否开启摇一摇</label>
+			<div class="col-sm-9 col-lg-8">
+				<label class="radio-inline">
+					<input type="radio" name="yyyshow" value="1" id="xh" {if $reply['yyyshow'] == '1'}checked="true"{/if}> 是
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="yyyshow" value="0" id="xh"  {if $reply['yyyshow'] == '0'}checked="true"{/if}>否
+				</label>
+				<span class="help-block">不开启将不显示</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">是否开启对对碰</label>
+			<div class="col-sm-9 col-lg-8">
+				<label class="radio-inline">
+					<input type="radio" name="ddpshow" value="1" id="xh" {if $reply['ddpshow'] == '1'}checked="true"{/if}> 是
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="ddpshow" value="0" id="xh"  {if $reply['ddpshow'] == '0'}checked="true"{/if}>否
+				</label>
+				<span class="help-block">不开启将不显示</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">是否开启抽奖</label>
+			<div class="col-sm-9 col-lg-8">
+				<label class="radio-inline">
+					<input type="radio" name="cjshow" value="1" id="xh" {if $reply['cjshow'] == '1'}checked="true"{/if}> 是
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="cjshow" value="0" id="xh"  {if $reply['cjshow'] == '0'}checked="true"{/if}>否
+				</label>
+				<span class="help-block">不开启将不显示</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">是否开启投票</label>
+			<div class="col-sm-9 col-lg-8">
+				<label class="radio-inline">
+					<input type="radio" name="tpshow" value="1" id="xh" {if $reply['tpshow'] == '1'}checked="true"{/if}> 是
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="tpshow" value="0" id="xh"  {if $reply['tpshow'] == '0'}checked="true"{/if}>否
+				</label>
+				<span class="help-block">不开启将不显示</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">本次活动 抽奖名称</label>
+			<div class="col-sm-9 col-lg-8">
+						<input type="text" name="cjname" value="{$reply['cjname']}" class="form-control">
+
+				<span class="help-block">本次活动抽奖活动名称 <strong>尽量精简 不超过5个汉字 </strong></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">抽奖页主题图片</label>
+			<div class="col-sm-9 col-lg-8">
+				{php echo tpl_form_field_image('cjimgurl', $reply['cjimgurl']);}
+				<span class="help-block">抽奖页主题图片 <strong>规格 172*172 最好为PNG格式 </strong></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">按人数抽奖是否开启</label>
+			<div class="col-sm-9 col-lg-8">
+				<label class="radio-inline">
+					<input type="radio" name="cjnum_tag" value="1" id="xh" {if $reply['cjnum_tag'] == '1'}checked="true"{/if}> 是
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="cjnum_tag" value="2" id="xh"  {if $reply['cjnum_tag'] == '2'}checked="true"{/if}>否
+				</label>
+				<span class="help-block">选择否将不显示按人数抽奖</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">按人数抽奖是否可以重复中奖</label>
+			<div class="col-sm-9 col-lg-8">
+				<label class="radio-inline">
+					<input type="radio" name="cjnum_exclude" value="1" id="xh" {if $reply['cjnum_exclude'] == '1'}checked="true"{/if}> 否
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="cjnum_exclude" value="2" id="xh"  {if $reply['cjnum_exclude'] == '2'}checked="true"{/if}>是
+				</label>
+				<span class="help-block">选择是 抽奖将可能出现一个人中多次的情况</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">摇一摇主题设置设置</label>
+			<div class="col-sm-9 col-lg-8">
+						<input type="text" name="yyyzhuti" value="{$reply['yyyzhuti']}" class="form-control">
+
+				<span class="help-block">摇一摇主题设置设置</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">摇一摇活动最大摇晃次数</label>
+			<div class="col-sm-9 col-lg-8">
+						<input type="text" name="yyyendtime" value="{$reply['yyyendtime']}" class="form-control">
+
+				<span class="help-block">摇一摇活动最大摇晃次数</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">摇一摇显示的总人数设置</label>
+			<div class="col-sm-9 col-lg-8">
+						<input type="text" name="yyyshowperson" value="{$reply['yyyshowperson']}" class="form-control">
+
+				<span class="help-block">摇一摇显示的总人数设置</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">投票主题设置</label>
+			<div class="col-sm-9 col-lg-8">
+						<input type="text" name="votetitle" value="{$reply['votetitle']}" class="form-control" >
+
+				<span class="help-block">投票主题设置</span>
+			</div>
+		</div>
+        <div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">投票结果刷新时间</label>
+			<div class="col-sm-9 col-lg-8">
+						<input type="text" name="voterefreshtime" value="{$reply['voterefreshtime']}" class="form-control">
+
+				<span class="help-block">投票结果刷新时间</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 col-lg-4 control-label">投票页面版权信息</label>
+			<div class="col-sm-9 col-lg-8">
+						<input type="text" name="votepower" value="{$reply['votepower']}" class="form-control">
+
+				<span class="help-block">投票页版权信息</span>
+			</div>
+		</div>
+        
+	</div>
+</div>
+<script type="text/javascript">
+/*验证表单可以实现 validateReplyForm 方法.*/
+/*
+	function validateReplyForm(formobj, $, _, util, $scope, $http) {
+		if (!formobj['quit-command'].value) {
+			util.message('请输入退出指令');
+			return false;
+		}
+	}
+*/
+</script>
+

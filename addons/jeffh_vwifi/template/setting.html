@@ -1,0 +1,33 @@
+{template 'common/header'}
+<form enctype="multipart/form-data" class="form-horizontal form" method="post" action="">
+<div class="panel panel-success">
+	<div class="panel-heading"><h4>参数设置<small>微WiFi无线热点系统</small></h4></div>
+	<div class="panel-body">
+		<div class="form-group">
+				<label for="input" class="col-xs-12 col-sm-3 col-md-2 control-label">API ID</label>
+				<div class="col-sm-9 col-xs-12">
+					<input type="text" class="form-control" placeholder="" name="api_id" value="{$settings['api_id']}">
+				</div>
+		</div>
+		<div class="form-group">
+				<label for="input" class="col-xs-12 col-sm-3 col-md-2 control-label">API KEY</label>
+				<div class="col-sm-9 col-xs-12">
+					<input type="text" class="form-control" placeholder="" name="api_key" value="{$settings['api_key']}">
+				</div>
+		</div>
+		<div class="form-group">
+				<label for="input" class="col-xs-12 col-sm-3 col-md-2 control-label">Node ID</label>
+				<div class="col-sm-9 col-xs-12">
+					<input type="text" class="form-control" placeholder="" name="node" value="{$settings['node']}">
+				</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<button type="submit" class="btn btn-primary col-lg-1" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</div>
+		</div>
+	</div>
+</div>
+</form>
+{template 'common/footer'}

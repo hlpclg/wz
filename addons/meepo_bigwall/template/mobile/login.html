@@ -1,0 +1,70 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>微信上墙|微信墙|微信大屏幕</title>
+
+<script type="text/javascript" src="{RES}js/jquery.js"></script>
+<script type="text/javascript" src="{RES}files/js/semantic.min.js"></script>
+<link rel="stylesheet" href="{RES}files/css/semantic.min.css" type="text/css">
+<script type="text/javascript"> 
+if(document.all){
+	alert("ie浏览器无法正常解析本页，请使用谷歌内核的流量器浏览。如（360浏览器，猎豹浏览器等）");
+	window.history.back(-1); 
+	//window.navigate("top.jsp"); 
+	}
+document.onkeydown = function(evt){
+　 var evt = window.event?window.event:evt;
+　if (evt.keyCode==13) {
+	$('#login-submit').click();
+　}
+}
+$(function(){
+	$('#login-submit').click(function(){
+		var pass = $('#login-pass').val();
+		$.post("{php echo $this->createMobileUrl('checklogin',array('rid'=>$rid))}", { pass:pass},
+			  function(data){
+				if(data == 1){
+					$('#login-form').addClass("has-success");
+					window.location="{php echo $this->createMobileUrl('index',array('rid'=>$rid))}";
+					}else{
+						$('#login-form').addClass("has-error");
+						$('#login-form').transition('shake');
+						}
+			  });
+		});
+});
+</script>
+<link rel="stylesheet" href="http://lib.sinaapp.com/js/bootstrap/v3.0.0/css/bootstrap.min.css" type="text/css">
+<link href="{RES}files/css/flat-ui.css?t={php echo time();}" rel="stylesheet">
+<link href="{RES}css/login.css?t={php echo time();}" rel="stylesheet">
+</head>
+<body>
+<div class="container" style="width:60%">
+        <div class="login-screen">
+          <div class="login-icon col-xs-3 hidden-sm hidden-xs">
+            <img src="{RES}files/images/icons/png/Gift-Box.png" alt="" />
+            
+          </div>
+
+          <div class="login-form" style="background-color:#fff">
+            <div class="form-group">
+				<h4 style="color:pink">请输入活动的开场密码：</h4>
+            </div>
+
+            <div class="form-group" id="login-form">
+              <input type="password" class="form-control login-field" value="" placeholder="Password(默认:admin)" id="login-pass" />
+              <label class="login-field-icon fui-lock" for="login-pass"></label>
+            </div>
+
+            <a class="btn btn-primary btn-lg btn-block" href="javascript:void(0);" id="login-submit" style="background-color:pink">登 录</a>
+            <a class="login-link" href="http://www.012wz.com/" target="_blank"><strong>Powered by:{$ridwall['votepower']}</strong></a>
+			<style>
+			  #login-submit:hover{background-color:blue}
+			</style>
+          </div>
+        </div>
+</div>
+</body>
+</html>

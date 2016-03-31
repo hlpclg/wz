@@ -1,0 +1,25 @@
+{template 'header'}
+<form method="post">
+<div class="mobile-div img-rounded">
+	<div class="mobile-hd" style="border-bottom:0; font-weight: bold; font-size:15px; color:#FF0000">抢楼奖品兑换</div>
+	<div class="mobile-content">
+		<p>奖品名称：<span  style="color:#0099FF">{php echo $item['awardname']}</span></p>
+		<p>中奖时间：{php echo date('Y-m-d H:i:s', $item['dateline'])}</p>
+		<p style="color:#FF0000">特别说明：本页面仅供商家验证使用 ！</p>			
+	</div>
+</div>
+{if $item['status'] == 0}
+<div class="mobile-submit">
+	<input type="hidden" name="id" value="{$item['id']}">
+	<input type="hidden" name="rid" value="{$item['rid']}">	
+	<input type="hidden" name="from_user" value="{$from_user}">		
+	<input type="password" name="password" style="margin-bottom:10px; height:50px;" placeholder="请输入兑换密码">
+	<div>
+	<p>&nbsp;</p>
+	<div>
+	<button type="submit" class="btn btn-success btn-large" style="width:100%;" name="submit" value="提交">商家验证</button>
+	<input type="hidden" name="token" value="{$_W['token']}" />
+</div>
+{/if}
+</form>
+{template 'footer'}

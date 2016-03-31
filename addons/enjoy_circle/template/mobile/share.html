@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>{$actdetail[title]}-回答</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link href="../addons/enjoy_circle/public/css/style.css" rel="stylesheet">
+    <script src="../addons/enjoy_circle/public/js/zepto.js"></script>
+    <script src="../addons/enjoy_circle/public/js/weixin.js"></script>
+</head>
+<body class="p_b50">
+<div class='grey-bg' ></div>
+<p id="user_name" class="data-name" style="display:none">{$ulist['nickname']}</p>
+
+    <div id="main">
+        <div id="list" class="p_0">
+        <ul class="con-box">
+
+            <li>
+                <div class="po-avt-wrap">
+                    <img class="po-avt data-avt" src="{php echo tomedia($this->th($item['avatar'],'',$user[avatar]))}">
+                </div>
+                <div class="po-cmt" rel="{$item[tid]}" id="id_list{$item[tid]}">
+                    <div class="po-hd">
+                        <p class="po-name"><span class="data-name">{php echo $this->th($item['nickname'],$user['nickname'],'')}</span></p>
+                        <p class="post">{php echo $this->th($item['title'],$user['nickname'],'')}{if !empty($item[pic])}<img src="{php echo tomedia($this->th($item['pic'],'',$user[avatar]))}">{/if}</p>
+                        <p class="time">{$item['time']}</p>
+                       <!--  {if $mycom<1}<img class="c-icon" id="c-icon{$item[tid]}" src="../addons/enjoy_circle/public/images/c.png"><a class="review">评论</a>{/if}
+                   -->
+                    </div>
+                    <div class="r"></div>
+                    <div class="cmt-wrap">
+ 					<!-- <div class="like"><img src="../addons/enjoy_circle/public/images/l.png">{$item[zan]}</div>-->
+                        <div class="cmt-list">
+                        <form action="" method="post">
+                        <textarea name="comment" rows="5" cols="30" placeholder="回复可见{$actdetail[title]}" style="padding:2%;margin-bottom:2%;width:96%;height:10rem;line-height:2rem;border:1px solid #aaa;"></textarea><br>
+						<input name="tid" value="{$tid}" type="hidden">
+                        <input name="submit" type="submit" style="border:0px;color: #fff;background: #333;display: block;z-index: 10;padding: 0 20px;height: 30px;line-height: 30px" value="回复" />
+                        <input type="hidden" name="token" value="{$_W['token']}" />
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+   
+        </ul>    
+    </div>
+ 
+    </div>
+
+	<!--评论输入-->
+	<div class="bottom_review ">
+		<input type="text" value="" class="txt_review" /><div class="btn_box"><a class="submit_btn">发送</a></div>
+	</div>
+	
+	<script type="text/javascript" >
+	$(document).ready(function(){
+		$(document).click(function (e) {
+			var drag = $(".bottom_review"),
+				dragel = $(".bottom_review")[0],
+				target = e.target;
+			if (dragel !== target && !$.contains(dragel, target)) {
+				drag.hide();
+			}
+		});
+		// 评论按钮显示
+		$(document).on("click", ".po-cmt .c-icon", function(event) {
+					$(this).parents(".po-hd").find(".review").show();
+		});
+		// 评论输入激活
+		$(document).on("click", ".review", function(event) {
+					var  index = $(this).parents(".po-cmt").attr("rel");
+					$(this).hide();
+					$(".bottom_review").show();
+					$(".bottom_review").attr("rel",index);
+		});
+
+		// 评论点击
+		$(document).on("click", ".review", function(event) {
+					$(this).hide();
+					$(".txt_review").val("");	
+					$(".bottom_review").show();
+					$(".txt_review").focus();
+		});
+		
+		// 弹出灰层点击隐藏
+		$(".grey-bg").click(function(){
+			 $(".pop_del").hide();
+	         $(this).hide();
+		})
+		
+		// 评论详情删除点击
+		$(document).on("click", ".p_img_del", function(event) {
+			$(this).parents(".po-cmt").find(".post").remove();
+			$(this).hide();
+			// ajax code---------------
+			// ajax_fn.detail_del_ajax(id,data);
+			// ajax code---------------			 
+		});
+		
+		//提交评论数据 AJAX
+		$(".submit_btn").click(function(){
+				
+			var id = $(this).parents(".bottom_review").attr("rel");
+			var username =  $("#user_name").text();
+			var data = $(".txt_review").val();
+			$("#id_list"+id).find(".cmt-wrap div").addClass("cmt-list");
+			$("#id_list"+id).find(".r").show();
+			
+			$("#id_list"+id).find(".cmt-list").append("<p><span>"+username+"：</span>"+data+"</p>");
+			
+			// ajax code---------------
+			 ajax_fn.review_ajax(id,data);
+			// ajax code---------------
+			$(".bottom_review").hide();
+		})
+		
+		//评论删除弹出层
+		$(document).on("click", ".cmt-list p", function(event) {
+			var id = $(this).parents(".cmt-list").attr("id");
+			var index = $(this).index() ;
+			$.popConfirm.show(id+" "+index);
+			
+		})
+		
+			
+		// 评论删除点击删除 AJAX
+		$(document).on("click", ".pop_del", function(event) {
+				var rel = $(this).attr("rel");
+				var arry = rel.split(" ");
+			    $("#"+arry[0] +" p").eq(arry[1]).remove();
+				$.popConfirm.hide();
+				
+				// ajax code---------------
+				// ajax_fn.del_ajax(id);
+				// ajax code---------------
+				
+				//清理样式
+				cmtList(arry[0]);
+		});
+	});
+
+
+	var  ajax_fn = {
+
+		//删除 AJAX 	
+		del_ajax:function(d_id){
+			     $.ajax({
+					 type: "GET",
+					 url: "test.json",
+					 data: {"id":d_id},
+					 dataType: "json",
+					 success: function(data){
+						
+					 }
+				 });
+	  
+			
+		},
+		//回复 AJAX 
+		review_ajax:function(d_id,d_cont){
+				  $.ajax({
+					 type: "GET",
+					 url: "{php echo $this->createMobileUrl('comment')}",
+					 data: {"id":d_id, "cont":d_cont},
+					 dataType: "json",
+					 success: function(data){
+						$("#c-icon"+d_id).hide();
+					 }
+				 });
+		},
+		//回复 AJAX 
+		detail_del_ajax:function(d_id,d_cont){
+				  $.ajax({
+					 type: "GET",
+					 url: "test.json",
+					 data: {"id":d_id, "cont":d_cont},
+					 dataType: "json",
+					 success: function(data){
+						
+					 }
+				 });
+		}
+	}
+
+
+
+	//清理样式
+	function cmtList(obj){
+		 if($("#"+obj +" p").length == 0){
+			 $("#"+obj ).removeClass("cmt-list");
+			$("#"+obj ).parents(".po-cmt").find(".r").hide();
+		}
+	}
+
+	//弹出层
+	$.popConfirm={
+	    yesfn:function(){
+
+	    },
+	    show:function(index){
+	      var html="";
+
+	        html="<div class='pop_del' rel='"+index+"'>删除</div>"
+
+	        $("body").append(html);
+	        $(".grey-bg").show();
+	    },
+	    hide:function(){
+	        $(".pop_del").hide();
+	        $(".grey-bg").hide();
+	    }
+	}
+
+	//下拉加载
+	$.pagescroll = {
+	    check:true,
+	    addHTML:"",
+	    cls:null,
+	    index:2,
+	    ajax_fn:function(){
+
+	    },
+	    // 初始化
+	    init:function(cls) {
+	        this.cls = cls;
+	        $(".lodding").show();
+	        $(window).bind('scroll',function(){$.pagescroll.show()});
+	    },
+	    // 加载
+	    show:function() {
+
+	        if($(window).scrollTop()+$(window).height()+200>=$(document).height()){
+	            $.pagescroll.ajaxRead();
+	        }
+	    },
+	    ajaxRead:function() {
+
+	        if($.pagescroll.check){
+	            $.pagescroll.check = false;
+	            $('.lodding').show();
+	            $.pagescroll.ajax_fn();
+
+	        }
+	    },
+	    // 填充数据
+	    setHtml:function(data) {
+	        if(data == 0){
+	            $.pagescroll.loadedEnd("已经全部显示");
+	            return;
+	        }
+	        $(".lodding").hide();
+	        $(this.cls).append(data);
+	        $.pagescroll.check = true;
+	    },
+	    // 加载结束
+	    loadedEnd:function(msg){
+	        $('.lodding').html(msg);
+	        $('.lodding').addClass("正在加载..");
+	    },
+	    // 加载错误
+	    error:function(msg){
+	        $.pagescroll.check = false;
+	    }
+	};
+		// 下拉AJAX	
+        $.pagescroll.ajax_fn=function(){
+
+            $.ajax({
+                type: "post",
+                url: "js/json.js",
+                dataType: "json",
+                success: function (data) {
+                    var tempArr = [],HTML;
+                    $.pagescroll.index = $.pagescroll.index -1;
+                    if($.pagescroll.index == 0){
+                        $.pagescroll.setHtml("");
+                        return false;
+                    }
+                    $.each( data, function(index, content)
+                    {
+                        var inHtml = ["<p ><span>"+content.name+"</span>"+content.info+"</p>"].join("");
+                        tempArr.push(inHtml);
+
+                    });
+                    HTML = tempArr.join('');
+                    $.pagescroll.setHtml(HTML);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                }
+            });
+
+       }
+
+        /*  page lodding  */
+       $.pagescroll.init(".cmt-list");
+	   
+	
+	   
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

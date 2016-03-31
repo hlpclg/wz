@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>新年祈福签</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+    html,body,div{margin:0;padding:0}
+    html{overflow:hidden;width:100%}
+    body{background:url({MODULE_URL}static/image/bg.jpg?m=1) top center no-repeat;background-size:cover;position:relative;width:100%;overflow:hidden}
+    img{width:100%}
+    .frist{position:absolute;display:none;float:left;z-index:1;background:rgba(0,0,0,.5);width:0;height:0;left:50%;top:50%}
+    .frist .qian{padding-top:40%;transform-origin:50% 80%}
+    .frist .yao{padding-top:10%;width:80%;margin-left:auto;margin-right:auto}
+    .main{position:relative;margin-left:auto;margin-right:auto;max-width:320px;height:100%}
+    .main .footer{color:#fff;font-size:12px;text-align:center;position:absolute;bottom:10%}
+    .main .footer div{width:30%;margin-left:1%;display:inline-block;}
+    .main .footer a{color: #FFF; text-decoration: none;}
+    .yaoyiyao{animation:yao 3s  forwards}@keyframes yao{0%{}10%,20%,30%,40%,50%,60%,70%,90%,80%{transform:rotate(-30deg)}5%,15%,25%,35%,45%,55%,65%,75%,85%,95%,100%{transform:rotate(30deg)}}
+    .ruchang{animation:rc 1s forwards}@keyframes rc{0%{}100%{height:100%;width:100%;top:0;left:0}}
+    #qianwenpic {display: none;}
+    </style>
+    <script type="text/javascript">
+        var _czc = _czc || [];
+        _czc.push(["_setAccount", "{$cnzzid}"]);
+    </script>
+</head>
+<body>
+    <div class="frist" >
+        <div class="qian">
+            <img src="{MODULE_URL}static/image/qian.png" />
+        </div>
+        <div class="yao">
+            <img src="{MODULE_URL}static/image/yao.jpg" />
+        </div>
+    </div>
+    <div class="main">
+        <img src="{MODULE_URL}static/image/banner.png" />
+        <img id="bgq" style="margin-top:-100px;position:absolute;top:50%;" src="{MODULE_URL}static/image/qian.png" style="visibility:hidden" />
+        <div class="footer">
+            <div><img src="{MODULE_URL}static/image/btn01.jpg" /></div>
+            <div><img src="{MODULE_URL}static/image/btn02.jpg" /></div>
+            <div><img src="{MODULE_URL}static/image/btn03.jpg" /></div>
+            <p>{$_W['account']['name']} 出品</p>
+        </div>
+    </div>
+    <div id="qianwenpic"></div>
+    <audio style="display:none;" id="musicBox" preload src="{MODULE_URL}static/image/yaoyiyao1.mp3"></audio>  
+    <script src="{MODULE_URL}static/js/prefixfree.min.js"></script>
+    <script src="./resource/js/lib/jquery-1.11.1.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<?php
+    $_share['title'] = !empty($_share['title']) ? $_share['title'] : $_W['account']['name'];
+    $_share['desc'] = preg_replace('/\s/i', '', str_replace('   ', '', cutstr(str_replace('&nbsp;', '', ihtmlspecialchars(strip_tags($_share['desc']))), 60)));
+    if(empty($_share['link'])) {
+        $_share['link'] = '';
+        $query_string = $_SERVER['QUERY_STRING'];
+        if(!empty($query_string)) {
+            //加上分享人的uid
+            parse_str($query_string, $query_arr);
+            unset($query_arr['wxref']);
+            $query_arr['u'] = $_W['member']['uid'];
+            $query_string = http_build_query($query_arr);
+            $_share['link'] = $_W['siteroot'].'app/index.php?'. $query_string;
+        }
+    }
+?>
+    <script type="text/javascript">
+        // 分享
+        var sharedata = {php echo json_encode($_share);};
+        sharedata.success = function(){
+            $.getJSON('{php echo $this->createMobileUrl('index');}');
+        }
+        // jssdk config 对象
+        jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+        // 是否启用调试
+        jssdkconfig.debug = false;
+        jssdkconfig.jsApiList = [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ'
+        ];
+        wx.config(jssdkconfig);
+        $(function() {
+            u = $(window).width(),
+            a = $(window).height();
+            $(document.body).css({
+                overflow: "hidden",
+                width: u,
+                height: a,
+                "max-height": a
+            }), document.addEventListener("touchmove", function(e) {
+                e.preventDefault()
+            });
+            $('.footer > div').click(function(){
+                $('#bgq').fadeOut();
+                $('.footer').fadeOut();
+                $('.frist').css("display","block").addClass("ruchang");
+                init();
+            });
+            var f = 0;
+            var lj = {php echo json_encode($morepic);} || {};
+            var SHAKE_THRESHOLD = 3000;
+            var last_update = 0;
+            var x = y = z = last_x = last_y = last_z = 0;
+            function init() {
+                if (window.DeviceMotionEvent) {
+                    window.addEventListener('devicemotion', deviceMotionHandler, false);
+                    _czc.push(['_trackEvent', '{php echo $this->module['title']}', '摇晃求签', '{$_W['account']['name']}']);
+                }
+                else {
+                    alert('not support mobile event');
+                }
+            }
+            function deviceMotionHandler(eventData) {
+                if(f>0){
+                    return false;
+                }
+                var acceleration = eventData.accelerationIncludingGravity;
+                var curTime = new Date().getTime();
+                if ((curTime - last_update) > 100) {
+                    var diffTime = curTime - last_update;
+                    last_update = curTime;
+                    x = acceleration.x;
+                    y = acceleration.y;
+                    z = acceleration.z;
+                    var speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
+                    if (speed > SHAKE_THRESHOLD) {
+                        f = 0;
+                        $('#musicBox')[0].play();
+                        $('.qian').addClass("yaoyiyao");
+                        var j = Math.floor( Math.random() * {$imgcount} );
+                        var $qian = $('#qianwenpic');
+                        $qian.html('<img src="'+lj[j]['url']+'" style="width:100%" />');
+                        sharedata.title = lj[j]['title'] || '{$_share['title']}';
+                        wxData(sharedata);
+                        setTimeout( function(){
+                            $('.frist, .main').hide();
+                            $qian.show();
+                            // window.location.href = lj[ j ];
+                        },3000);
+                        f++;
+                    }
+                    last_x = x;
+                    last_y = y;
+                    last_z = z;
+                }
+            }
+            function wxData(sharedata){
+                wx.ready(function() {
+                    wx.onMenuShareAppMessage(sharedata);
+                    wx.onMenuShareTimeline(sharedata);
+                    wx.onMenuShareQQ(sharedata);
+                    wx.onMenuShareWeibo(sharedata);
+                });
+            }
+            wxData(sharedata);
+        });
+        _czc.push(['_trackEvent', '{php echo $this->module['title']}', '页面浏览', '{$_W['account']['name']}']);
+    </script>
+    <div style="display:none;">
+        <script src="http://s11.cnzz.com/stat.php?id={$cnzzid}&web_id={$cnzzid}" language="JavaScript"></script>
+    </div>
+</body>
+</html>

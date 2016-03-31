@@ -1,0 +1,104 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+	<li class="active"><a href="javascript:history.go(-1);">返回上一页</a></li>
+</ul>
+<div class="clearfix">
+    <div class="panel panel-info">
+        <div class="panel-heading">筛选</div>
+        <div class="panel-body">
+            <form action="" method="get" class="form-horizontal" role="form">
+                <input type="hidden" name="a" value="entry" />
+                <input type="hidden" name="c" value="site" />
+                <input type="hidden" name="m" value="enjoy_circle" />
+                <input type="hidden" name="do" value="fans" />
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 control-label">昵称</label>
+                    <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12">
+                        <input class="form-control"  style="display: inline-block;width:80%" name="nickname" type="text" value="{$_GPC['nickname']}">
+                    
+                        <button class="btn btn-default" style="display: inline-block;"><i class="fa fa-search"></i> 搜索</button>
+                    </div>
+                </div>   
+            </form>
+            <form action="" method="get" class="form-horizontal" role="form">
+                <input type="hidden" name="a" value="entry" />
+                <input type="hidden" name="c" value="site" />
+                <input type="hidden" name="m" value="enjoy_circle" />
+                <input type="hidden" name="do" value="fans" />
+                <div class="form-group">
+                     <label class="col-xs-12 col-sm-2 col-md-2 control-label">黑名单</label>
+                    <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12">
+                    <input class="form-control" name="unusual" type="hidden" value="1">
+                    <input class="form-control"  style="display: inline-block;width:80%" type="text" disabled value="查询已经拉黑的用户">
+                        <button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            汇总统计
+        </div>
+        <div class="table-responsive panel-body">
+            <table class="table table-hover">
+                <tr>
+                    <th style="width:30%;">实际参加人数:{$countfans}人</th>
+                    <th style="width:40%;">黑名单用户:{$countblack}人</th>
+                </tr>
+
+            </table>
+        </div>
+    </div>  
+    
+    
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            粉丝活动记录
+        </div>
+        <div class="table-responsive panel-body">
+            <table class="table table-hover">
+                <tr>
+                    <th style="width:10%;">头像</th>
+                    <th style="width:10%;">昵称</th>
+                    <th style="width:25%;">OPENID</th>
+                    <th style="width:5%;">性别</th>
+                    <th style="width:10%;">地区</th>
+                    <th style="width:10%;">IP</th>
+                    <th style="width:10%;">评论</th>
+                    <th style="width:10%;">是否黑名单</th>
+      
+                    <th style="width:10%;">操作</th>
+                </tr>
+                {loop $fans $row}
+                <tr>
+                    <td><img src="{$row['avatar']}" alt="" width="64" class="img-rounded" /></td>
+                    <td>{$row['nickname']}</td>
+                    <td>{$row['openid']}</td>
+                    <td>{if $row['gender']==1}男{else}女{/if}</td>
+                    <td>{$row['state']}/{$row['city']}</td>
+                    <td>{$row['ip']}</td>
+                    <td>{$row['topic']}</td>
+                    <td>{if $row['black']==1}<span class="label label-danger">是</span>{else}<span class="label label-success">否</span>{/if}</td>
+      <td>
+
+	<a href="{php echo $this->createWebUrl('fans', array('op' => 'black', 'black' => $row[black],'uid'=>$row['uid']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="">
+	{if $row['black']==1}
+	撤销
+	{else}
+	拉黑
+	{/if}
+	</a>
+	<a href="{php echo $this->createWebUrl('fans', array('op' => 'delete','uid'=>$row['uid']))}" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="bottom" title="删除用户"><i class="fa fa-times"></i></a>
+                    </td>
+                </tr>
+                {/loop}
+            </table>
+        </div>
+        <div class="panel-body text-right">
+          {$pager}
+        </div>
+
+    </div>
+</div>
+{template 'common/footer'}

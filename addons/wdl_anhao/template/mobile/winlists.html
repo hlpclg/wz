@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no">  
+<title>我的参与记录</title>
+<link rel="stylesheet" type="text/css" href="/addons/wdl_anhao/template/mobile/css/base.css">
+<link rel="stylesheet" type="text/css" href="/addons/wdl_anhao/template/mobile/css/query.css">
+</head>
+<body>
+<div id="sheet">
+	<div class="announce">
+		<h1>如您中奖，发送对应的暗号到公众号即可填写领奖信息。</h1>
+	</div>
+	<div class="results">
+		<div class="thread fn-clear">
+			<ul class="fn-clear">
+				<li class="secret">暗号</li>
+				<li class="mine">我的参与编号</li>
+				<li class="luck">是否中奖</li>
+				<li class="detail">更多</li>
+			</ul>
+		</div>
+		<div class="rows">
+			<table cellpadding="0" cellspacing="0" width="100%">
+				<tbody>
+				{loop $huyaa $row}
+				<tr onclick=location.href="http://wanqizaixian3.gotoip2.com/app/index.php?i=4&j=4&c=entry&id={$row[rid]}&from_user={$from_user1}&do=wdl_anhao&m=wdl_anhao&wxref=mp.weixin.qq.com">
+				<a href="http://wanqizaixian3.gotoip2.com/app/index.php?i=4&j=4&c=entry&id={$row[rid]}&from_user={$from_user1}&do=wdl_anhao&m=wdl_anhao&wxref=mp.weixin.qq.com">
+					<td class="secret">
+						<label>{$row[wdl_anhao]}</label>
+					</td>
+					<td class="mine">
+			{$row[suiji]} {if $row[suiji1]=='0'}{else}{$row[suiji1]}{/if} {if $row[suiji2]=='0'}{else}{$row[suiji2]}{/if}
+			{if $row[suiji3]=='0'}{else}{$row[suiji3]}{/if} {if $row[suiji4]=='0'}{else}{$row[suiji4]}{/if} {if $row[suiji5]=='0'}{else}{$row[suiji5]}{/if}					
+					</td>
+					<td class="luck">
+					{if $row['state']==1}
+					<a style="color:#00ff00;font-weight:bold;">中奖</a>{else}<a style="color:red">未中奖</a>{/if}
+			
+			
+
+					</td>
+					<td class="detail fn-left">
+						
+					<em class="arrow"></em>
+					
+					</td>
+				</a>
+							
+				</tr>
+				{/loop}
+				
+
+				
+				
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</body></html>

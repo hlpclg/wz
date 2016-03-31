@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<link href="../addons/water_super/template/css/footer.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/css/base.css" rel="stylesheet" type="text/css">
+<title>{$systeminfo['shopname']}</title>
+<link rel="stylesheet" type="text/css" href="../addons/water_super/template/css/card.css" media="all">
+</head>
+<body id="card" ondragstart="return false;" onselectstart="return false;">
+<div class="cardexplain">
+	<div style="height:10px;"></div>
+	<ul class="round operate navlist">
+		<li>	
+				<a href = "{php echo $this->createMobileUrl('index', array())}" target = "_black">
+					<div class = "list-titel no-img">
+						<img alt=" " src="../addons/water_super/template/images/quetion.png">意见反馈
+						<img alt="" src="../addons/water_super/template/images/e_my_icon_next@2x.png" class="icon-right-card">
+					</div>
+				</a>
+		</li>  
+		<li>
+				<a href = "{php echo $this->createMobileUrl('changjwt', array())}">
+					<div class = "list-titel no-img">
+						<img alt=" " src="../addons/water_super/template/images/normal_quetion.png">常见问题
+						<img alt="" src="../addons/water_super/template/images/e_my_icon_next@2x.png" class="icon-right-card">
+					</div>
+				</a>
+		</li> 
+		<li>
+				<a href = "{php echo $this->createMobileUrl('index', array())}"  target = "_black">
+					<div class = "list-titel no-img">
+						<img alt=" " src="../addons/water_super/template/images/weibo.png">天天洗衣微博
+						<img alt="" src="../addons/water_super/template/images/e_my_icon_next@2x.png" class="icon-right-card">
+					</div>
+				</a>
+		</li> 
+		<li>
+				<a href = "tel:{$systeminfo['kefutel']}">
+					<div class = "list-titel no-img">
+						<img alt=" " src="../addons/water_super/template/images/service.png">
+						
+							<a href="tel:{$systeminfo['kefutel']}">服务热线<b style="padding-left:20px">{$systeminfo['kefutel']}</b></a>
+						
+						
+						
+					</div>
+				</a>
+		</li> 
+		<li>
+				<a href = "{php echo $this->createMobileUrl('xieyi', array())}">
+					<div class = "list-titel no-img">
+						<img alt=" " src="../addons/water_super/template/images/user.png">用户协议
+						<img alt="" src="../addons/water_super/template/images/e_my_icon_next@2x.png" class="icon-right-card">
+					</div>
+				</a>
+		</li> 
+	</ul>
+</div>
+  
+    <!-- ／我的订单 -->
+   <div style="display:none">
+	统计
+</div>
+    <!-- 展开与收缩 -->
+  </body>
+  </html>

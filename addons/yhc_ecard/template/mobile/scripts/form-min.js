@@ -1,0 +1,1 @@
+hideWxMenu();function updateAvatar(){wx.chooseImage({count:1,sizeType:["compressed"],sourceType:["album","camera"],success:function(a){var b=a.localIds;$("#avatar").attr("src",b[0]);wx.uploadImage({localId:b[0],isShowProgressTips:1,success:function(d){var c=d.serverId;$("input[name=serverid]").val(c)}})}})};

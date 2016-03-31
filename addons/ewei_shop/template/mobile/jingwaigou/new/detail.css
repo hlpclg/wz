@@ -1,0 +1,84 @@
+body {margin:0px; background:#f3f3f3; font-family:sans-serif; -moz-appearance:none; -webkit-appearance: none;}
+ul,li {padding:0px; margin:0px;}
+.good_topbar { width:100%;position:fixed; top:0px; height:40px;z-index: 8;line-height:35px;}
+.good_topbar .left { float:left; width:30px;height:30px;margin-left:10px;margin-top:5px;}
+.good_topbar .right { float:right; width:80px;height:30px;margin-left:10px;margin-top:5px;}
+
+.good_topbar .btn { background:rgba(237,237,237,0.5); width:30px;height:30px;margin-left:5px;border-radius:30px;float:left;background:#efefef;color:#333;line-height:30px;text-align:center; }
+
+.good_img {height:300px; width:100%; background:#ccc;}
+.good_img img {height:100%; width:100%;}
+.good_info1 {height:auto; width:94%; background:#fff; padding:0px 3%; border-bottom:1px solid #e2e2e2;}
+.good_info1 .info1 {height:38px; width:100%; border-bottom:1px dashed #f3f3f3; padding:11px 0px;}
+.good_info1 .info1 .name {height:38px; width:65%; border-right:1px solid #e3e3e3; float:left; font-size:14px; color:#000;}
+.good_info1 .info1 .sub1 {height:38px; width:30%; background:#ff6500; float:right; border-radius:5px; color:#fff; text-align:center; line-height:38px;}
+.good_info1 .info1 .sub1 i {height:16px; width:16px; margin-right:2px; background:#fff; border-radius:5px; color:#ff6500; line-height:18px; font-size:14px;}
+.good_info1 .info2  {height:38px; width:100%; border-bottom:1px dashed #f3f3f3; padding:11px 0px;color:#666;}
+.good_info1 .price {height:45px; width:100%; padding-top:15px; font-size:18px; color:#ff6500; line-height:16px;}
+.good_info1 .price span {font-size:12px; color:#999;}
+.good_info1 .other {border-top:1px dashed #f3f3f3;  height:34px; width:100%;  line-height:34px; font-size:14px; color:#999;}
+.good_info1 .other .left { float:left; text-align:right;}
+.good_info1 .other .right { float:right; text-align:right;}
+
+.good_speci {height:44px; width:94%; overflow: hidden; background:#fff; padding:0px 3%; margin-top:14px; border-bottom:1px solid #e2e2e2; border-top:1px solid #e2e2e2; line-height:44px; color:#666; font-size:14px;}
+
+.good_shop {height:130px; width:94%; background:#fff; padding:0px 3%; margin-top:14px; border-bottom:1px solid #e2e2e2; border-top:1px solid #e2e2e2;}
+.good_shop .shop1 {height:50px; width:100%; padding:10px 0px; border-bottom:1px solid #e2e2e2;}
+.good_shop .shop1 img {height:50px; width:50px; margin-right:10px; float:left;}
+.good_shop .shop1 .shop_info {height:50px; width:auto; float:left; font-size:16px; color:#666; line-height:25px;}
+.good_shop .shop1 .shop_info span {font-size:14px; color:#ccc;}
+.good_shop .shop2 {height:59px; width:100%; padding:10px 0px;}
+.good_shop .shop2 .sub1 {height:37px; width:47%; float:left; border:1px solid #ccc; border-radius:5px; text-align:center; line-height:37px; font-size:16px; color:#999;}
+.good_shop .shop2 .sub2 {height:37px; width:47%; float:right; border:1px solid #ccc; border-radius:5px; text-align:center; line-height:37px; font-size:16px; color:#999;}
+
+.good_info2 {height:auto; width:100%; background:#fff;  border-top:1px solid #e2e2e2;}
+.good_info2 .menu {height:40px; width:100%; background:#fafafa;}
+.good_info2 .menu .nav {height:40px; width:25%; border-right:1px solid #e3e3e3; float:left; font-size:14px; color:#666; text-align:center; line-height:40px; border-bottom:1px solid #e3e3e3;}
+.good_info2 .menu .navon {color:#ff6500; height:37px; line-height:35px; background:#fff; border-top:3px solid #ff6500; border-bottom:0px;}
+.good_info2 .tab_con {height:auto; width:94%; padding:10px 3%;padding-bottom:30px;min-height:100px;background:#fff;}
+.good_info2 .tab_con .con {height:auto; display:none;color:#333;word-break:break-all;padding-bottom: 35px;}
+.good_info2 .tab_con .con .param { padding:10px; border-bottom:1px solid #ccc}
+.good_info2 .tab_con .con img { width:100%;}
+.copyright {height:14px; width:100%; font-size:14px; line-height:14px; padding:10px 0px; margin-bottom:50px; text-align:center; color:#aaa;}
+
+.good_bottom {height:50px; width:100%; background:#ff6801; position:fixed; bottom:0px; left:0px;}
+.good_bottom span {font-size:14px; line-height:10px;}
+.good_bottom .buy {height:50px; width:35%; background:#ff6801; float:left; font-size:16px; line-height:50px; text-align:center; color:#fff;}
+.good_bottom .add {height:50px; width:35%; background:#fd9a34; float:left; font-size:16px; line-height:50px; text-align:center; color:#fff;}
+.good_bottom .cart {height:42px; width:15%; background:#fdfdfd; float:left; padding-top:7px; border-top:1px solid #e1e1e1; text-align:center; font-size:20px; color:#666;line-height:10px; position:relative;}
+.good_bottom .cart b {height:16px; width:16px; background:#f30; border-radius:8px; position:absolute; top:2px; right:5px; font-size:12px; color:#fff; line-height:16px; font-weight:100;}
+.good_bottom .like {height:42px; width:14%; background:#fdfdfd; float:left; padding-top:7px; border-top:1px solid #e1e1e1; border-right:1px solid #e1e1e1; text-align:center; font-size:20px; color:#666; line-height:10px;}
+
+/**以下是图片轮播代码**/
+.good_img{overflow:hidden;position:relative;}
+.main_image{width:100%;position:relative;top:0;left:0;}
+.main_image ul{;position:absolute;top:0;left:0}
+.main_image li{float:left;}
+.main_image li img{display:block;width:100%; height:100%;}
+.main_image li a{display:block;width:100%;}
+
+div.flicking_con{position:absolute;bottom:9px;z-index:1;width:100%;height:12px;}
+div.flicking_con .inner { width:100%;height:9px;text-align:center;}
+div.flicking_con a{position:relative; width:9px;height:9px;background:url('../static/images/dot.png') 0 0 no-repeat;display:inline-block;text-indent:-1000px}
+div.flicking_con a.on{background-position:0 -9px}
+
+   .comment { padding:5px; border-bottom:1px solid #ccc;overflow:hidden;}
+                    .comment .info { padding:5px;height:35px;width:100%;}
+                    .comment .info .head { float:left; width:30px;height:30px;}
+                    .comment .info .head img { width:100%;height:100%; }
+                    .comment .info .nickname { float:left;width:100%;margin-left:-30px;margin-right:-100px;height:30px;line-height:30px;}
+                    .comment .info .nickname .inner { margin-left:35px;margin-right:100px;overflow:hidden; }
+                    .comment .info .level { width:100px;float:right;margin-left:-100px; text-align:right;height:30px;line-height:30px;color:#ff6600}
+                    .comment .info .level i {width:13px;}
+                   
+                    .comment .content { overflow:hidden;color:#555;font-size:13px;padding-left:5px;}
+                    .comment .time { padding:5px; color:#666;font-size:13px;padding-left:5px;}
+                    .comment .imgs { overflow:hidden;padding-top:5px;padding-left:5px;}
+                    .comment .imgs img { padding:1px;border:1px solid #ccc;float:left;margin-right:5px;}
+                   #comment_loading { width:94%;padding:10px;color:#666;text-align: center;} 
+        #recommand_container  {height:auto; min-height:100px; width:100%; background:#fff; overflow:hidden;padding-bottom:15px;TEXT-ALIGN: center;} 
+    #recommand_container .good {height:160px; width:46%; padding:0px 2% 10px; float:left;}
+    #recommand_container .good img {height:120px; width:120px;}
+    #recommand_container .good .name {height:20px; width:100%; font-size:15px; line-height:20px; color:#666; overflow:hidden;TEXT-ALIGN: center;}
+    #recommand_container .good .price {height:20px; width:100%; color:#f03; font-size:14px;}
+    #recommand_container .good .price span {color:#aaa; font-size:12px; text-decoration:line-through;}

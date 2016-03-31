@@ -1,0 +1,82 @@
+{template 'common/header'}
+{template 'common'}
+<ul class="nav nav-tabs">
+    <li><a href="{php echo $this->createWebUrl('manage');}">红包活动管理</a></li>
+    <li><a href="{php echo url('platform/reply/post',array('m'=>'weisrc_dragonboat'));}">添加红包规则</a></li>
+    <li{if $operation == 'display'} class="active"{/if}><a href="{php echo $this->createWebUrl('salelog', array('op' => 'display', 'rid' => $rid))}">消费管理</a></li>
+</ul>
+{if $operation == 'display'}
+<div class="main">
+    <div class="panel panel-info">
+        <div class="panel-heading">筛选</div>
+        <div class="panel-body">
+            <form action="./index.php" method="get" class="form-horizontal" role="form">
+                <input type="hidden" name="c" value="site" />
+                <input type="hidden" name="a" value="entry" />
+                <input type="hidden" name="m" value="weisrc_dragonboat" />
+                <input type="hidden" name="do" value="salelog" />
+                <input type="hidden" name="op" value="display" />
+                <input type="hidden" name="rid" value="{$rid}" />
+                <div class="form-group">
+                    <label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">sn编码</label>
+                    <div class="col-sm-2 col-lg-2">
+                        <input class="form-control" name="keyword" type="text" value="{$_GPC['keyword']}">
+                    </div>
+                    <div class="col-sm-3 col-lg-2"><button class="btn btn-default"><i class="fa fa-search"></i> 搜索</button></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div style="position:relative">
+            <div class="panel-body table-responsive">
+                <table class="table table-hover" style="position:relative">
+                    <thead class="navbar-inner">
+                    <tr>
+                        <th style="width: 10%;">sn码</th>
+                        <th style="width: 15%;">用户名</th>
+                        <th style="width: 15%;">电话</th>
+                        <th style="width: 15%;">申请消费数量</th>
+                        <th style="width: 20%;">申请时间</th>
+                        <th style="width: 10%;">状态</th>
+                        <th style="width: 15%;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {loop $list $row}
+                    <tr>
+                        <td>{$row['sn']}</td>
+                        <td style="white-space:normal;">
+                            {if !empty($row['username'])}{$row['username']}{else}未登记{/if}
+                        </td>
+                        <td>
+                            {if !empty($row['tel'])}{$row['tel']}{else}未登记{/if}
+                        </td>
+                        <td>
+                            {$row['credit']}
+                        </td>
+                        <td>{php echo date('Y/m/d H:i',$row['dateline']);}</td>
+                        <td>
+                            {if $row['status'] == 0}
+                            <span class="label label-default">待处理</span>
+                            {else}
+                            <span class="label label-success">已兑换</span>
+                            {/if}
+                        </td>
+                        <td>
+                            {if $row['status']==0}
+                            <a class="btn btn-default btn-sm" href="{php echo $this->createWebUrl('salelog', array('id' => $row['id'], 'op' => 'setstatus', 'rid' => $rid))}" title="操作"><i class="fa fa-cog"> 操作</i></a>&nbsp;&nbsp;
+                            {/if}
+                            <a class="btn btn-default btn-sm" href="{php echo $this->createWebUrl('salelog', array('id' => $row['id'], 'op' => 'delete', 'rid' => $rid))}" onclick="return confirm('此操作不可恢复，确认删除？');return false;" title="删除"><i class="fa fa-times"></i></a>
+                        </td>
+                    </tr>
+                    {/loop}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {$pager}
+</div>
+{/if}
+{template 'common/footer'}

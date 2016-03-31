@@ -1,0 +1,36 @@
+
+<?php
+$_tpl_dir_path = "addons/quicktemplate/quick_shop/pink/";
+?>
+<link type="text/css" rel="stylesheet" href="{$_tpl_dir_path}css/bootstrap.min.css" />
+<style>
+/****************************footer*******************************/
+#footer{ background:#f7f7f7; border-color:#ccc;}
+#footer li a{ color:#3e3e3e;}
+#footer li a i.num_icon{ background:#e74143; color:#fff;}
+#footer li.on a{ color:#ff6525;}
+/**************************footer******************************/
+html,  body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, dialog, figure, footer, header, hgroup, nav, section, button
+{
+	margin: 0;	padding: 0;
+}
+#footer{ font-size: 12px; }
+#footer{ width:100%; height:58px; border-style:solid; border-width:1px 0px 0px; position:fixed; left:0px; bottom:0px; z-index:999; padding-top:4px;}
+#footer li{ width:25%; height:100%; float:left;}
+#footer li a{ width:100%; height:100%; display:block; text-align:center; overflow:hidden;position:relative; z-index:10;}
+#footer li a span{ width:100%; height:auto; overflow:hidden; margin-top:-4px; display:block;}
+#footer li a em{ margin-top:6px;  }
+#footer li a i.num_icon{width:20px; height:20px; display:block; position:absolute; top:0px; z-index:20; right:50%; margin-right:-30px; border-radius:50%;-webkit-border-radius:50%;-moz-border-radius:50%;-ms-border-radius:50%;-o-border-radius:50%; text-align:center; list-style:none; line-height:20px; font-style:normal;}
+
+</style>
+
+    <!--footer-->
+    <footer id="footer">
+    	<ul>
+        <li{if strtolower($_GPC['do'])=='list' or empty($_GPC['do'])} class="on"{/if}><a href="{php echo wurl('entry/module/List', array('m'=>'quick_shop', 'weid'=>$_W['weid']))}"><em class="icon-home icon-3x"></em><span>商城</span></a></li>
+        <li{if strtolower($_GPC['do'])=='mycart'} class="on"{/if}><a href="{php echo murl('entry/module/MyCart', array('m'=>'quick_shop', 'weid'=>$_W['weid']))}"><em class="icon-shopping-cart icon-3x"></em><span>购物车</span>{if $carttotal > 0}<i class="num_icon">{$carttotal}</i>{/if}</a></li>
+        <li{if strtolower($_GPC['do'])=='myorder'} class="on"{/if}><a href="{php echo murl('entry/module/MyOrder', array('m'=>'quick_shop', 'weid'=>$_W['weid'], 'allstatus'=>1))}"><em class="icon-user icon-3x"></em><span>我的订单</span></a></li>
+        <li{if strtolower($_GPC['do'])=='center'} class="on"{/if}><a href="{php echo murl('entry/module/center', array('m'=>'quick_center', 'weid'=>$_W['weid']))}"><em class="icon-th-large icon-3x"></em><span>我的账本</span></a></li>
+        </ul>
+    </footer>
+    <!--footer end-->

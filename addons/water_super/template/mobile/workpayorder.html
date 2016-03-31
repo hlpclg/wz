@@ -1,0 +1,206 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>e袋洗</title>
+<link href="../addons/water_super/template/cssn/footer.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/base.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/wap.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/myOrder.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../addons/water_super/template/jsn/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/page.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/touchslider.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/klass.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/photoswipe.jquery-3.0.5.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/jsAddress.js"></script>
+<script>
+	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	WeixinJSBridge.call('hideOptionMenu');
+	});
+</script>
+</head>
+<body>
+<div class="p10 white_bg orange_color" style="font-size:1.1em;border-bottom:1px solid #f9f9f9">
+  账户余额：0.0</div>
+<!--充值卡充值-->
+ <div class="" style="overflow:scroll-y;padding-bottom:50px; background:#fff;padding-top:2px;">
+  <ul class="round borderD" style="border-radius:0;color:#666">
+    <li style="padding-left:0; padding-bottom:10px"><span class=" p10 none" style="font-size:1.1em">现金付款</span></li>
+    <li class="nob" style="padding-left:0;border-top:1px solid #f9f9f9;padding:10px 0">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="kuang">
+        <tbody>
+           <form action="" onsubmit="return check_form_1();" method="POST">
+          <tr>
+            <td width="60%"> 
+              	<input type="hidden" value="0" name="fee_2" id="charge_money_2">
+                <input type="text" name="fee" id="charge_money_1" placeholder="请输入客户付款金额" class="px" style="border:0;margin-left:5px;padding-left:5px;line-height:26px;width:94%; font-size:16px">
+
+            </td>
+             <td>
+               <div style="padding:0px 0">
+        		<button type="submit" value="确定" id="submit_pay" class="coupon-btn"> 确定</button>   
+    		</div> 
+            </td> 
+          </tr>
+              </form>
+        </tbody>
+      </table>
+      
+    </li>
+  </ul>
+<!-- <div class="p10 white_bg" id="input_jquery">
+  <form action="mobile.php?m=wap&amp;act=payment&amp;do=card_charge&amp;" onsubmit="return check_form_1();" method="POST">
+      <li class="order_item ">
+      <div class=" borderD" style="padding:0px 0 20px 0">
+          <img src="../addons/water_super/template/imagesn/icon-weixin-pay.png" style="width:30px">现金支付 <span class="pull-right orange_color">
+            <input id="weixin_pay" type="radio" name="paytype" value="2" class="check_box" checked="">
+          </span>
+      
+      </div>
+    </li>
+        <table class="table-price" style="margin:0;padding: 0;width: 100%">
+      <tbody style="margin:0;padding: 0">
+      <tr style="margin:0;padding: 0" >
+        <td style="margin:0;padding: 0;width: 100%">
+            
+        </td>
+      </tr>
+    </tbody></table>   
+    <div class="myOrder_list pay_order_list">
+      <div class="p10"></div>
+    </div>
+    <div style="padding:0px 0">
+        <button type="submit" value="确定" id="submit_pay" class="coupon-btn"> 确定</button>   
+    </div>     
+</form></div>  -->
+<!--end在线充值-->
+<div id="codFloat" style="display:none" class="cod">
+    <div class="wx_mask"></div>
+      <div class="wx_confirm ">
+          <div class="wx_confirm_inner" id="wx_confirm_float">
+            <div class="wx_confirm_hd">
+                <div class="wx_confirm_tit" id="show_mes">提示信息</div>
+            </div>
+          </div>
+      </div>
+    </div>
+ </div>
+  
+<!-- <div id = "move_up" style = "height:1000px;display:none;">
+</div> -->
+<!--end充值卡-->
+<!--充值金额选择-->
+<script type="text/javascript">
+  $("#charge_1000").click(function(){
+    var fee_2 = $("#charge_money_2").val();
+    if(fee_2){
+      $(".select_charge").attr("class","charge_money");
+    }
+    $("#charge_money_2").val('2000');
+    $("#charge_1000").attr("class","charge_money select_charge");
+    $("#charge_money_1").attr("placeholder","输入其他金额");
+    $("#charge_money_1").val('');
+    return false;
+  });
+  $("#charge_500").click(function(){
+    var fee_2 = $("#charge_money_2").val();
+    if(fee_2){
+      $(".select_charge").attr("class","charge_money");
+    }
+    $("#charge_money_2").val('1000');
+    $("#charge_500").attr("class","charge_money select_charge");
+    $("#charge_money_1").attr("placeholder","输入其他金额");
+    $("#charge_money_1").val('');
+    return false;
+  });
+  $("#charge_300").click(function(){
+    var fee_2 = $("#charge_money_2").val();
+    if(fee_2){
+      $(".select_charge").attr("class","charge_money");
+    }
+    $("#charge_money_2").val('500');
+    $("#charge_300").attr("class","charge_money select_charge");
+    $("#charge_money_1").attr("placeholder","输入其他金额");
+    $("#charge_money_1").val('');
+    return false;
+  });
+  $("#charge_money_1").click(function(){
+    var fee_2 = $("#charge_money_2").val();
+    if(fee_2){
+      $(".select_charge").attr("class","charge_money");
+    }
+    $("#charge_money_2").val('0');
+    $("#charge_money_1").attr("class","charge_money select_charge");
+  });
+</script>
+<script>
+//上移一段距离
+/*$("#charge_money_3").click(function(){
+  $("#move_up").show();
+  window.scroll(0,20);
+  setTimeout($("#move_up").hide(),1000);
+});*/
+  $(document).ready(
+    function (){
+      $("#showcard").click(
+        function(){
+          var submitData = {
+              sncode : $("#charge_money_3").val()
+          };
+        if($("#charge_money_3").val().trim() == ""){
+          alert_1("请输入充值卡密码");
+          return false;
+        }
+        $.post("mobile.php?m=wap&act=icard&do=chongzhika_charge&",submitData,
+            function (data){
+              if(data.message.state == 1){
+                alertToUrl(
+                  data.message.msg,
+                  "mobile.php?m=wap&act=icard&do=my_icard&");
+              }else{
+                alert_1(data.message.msg);
+              }
+        },"json")
+    });
+  });
+  function hide_res(){
+      $("#codFloat").hide();
+    }
+  function show_res(){
+      setTimeout("hide_res()",2000);
+   }
+  function alert_1(title) {
+    $("#show_mes").html(title);
+      $("#codFloat").show();
+      show_res();
+  }
+  function alertToUrl(title, url) {
+    if (title == '') {
+          window.location.href = url;
+        }else{
+          alert_1(title);
+          setTimeout("window.location.href='" + url + "'", 500);
+        }
+  }
+function check_form_1(){
+  var charge_money_1 = $("#charge_money_1").val().trim();
+  var charge_money_2 = $("#charge_money_2").val().trim();
+  if(!charge_money_1  && charge_money_2 == "0"){
+    alert_1("请您选择或输入充值金额");
+    return false;
+  }
+  var re = /^\d+\.{0,1}\d{0,9}$/;
+  if(charge_money_2 == "0" && (charge_money_1<=0 || charge_money_1>999999999 || !re.test(charge_money_1))){
+    alert_1("请您输入合理金额");
+    return false;    
+  }
+  $("#submit_pay").attr("disabled",true);
+}
+</script>
+</body></html>

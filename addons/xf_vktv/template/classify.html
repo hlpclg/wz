@@ -1,0 +1,102 @@
+{template 'common/header'}
+<ul class="nav nav-tabs">
+  <li {if $op == 'display'}class="active"{/if}>
+    <a href="{php echo $this->createWebUrl('classify', array('op' => 'display'))}">分店管理</a>
+  </li>
+  <li {if $op == 'post'}class="active"{/if}>
+    <a href="{php echo $this->createWebUrl('classify', array('op' => 'post'))}">新增分店</a>
+  </li>
+</ul>
+{if $op == 'post'}
+<div>
+<h4 align=center></h4>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data" >
+	<input type="hidden" name="id" value="{$item['id']}">
+  
+	<table class="tb">
+		<tr>
+			<th>排序</th>
+			<td>
+				<input type='text' name='sort' value="{$item['sort']}"/> 
+			</td>
+		</tr>
+		<tr>
+			<th>分店名称</th>
+			<td><input type='text' name='ser_window' value="{$item['ser_window']}"/> </td>
+		</tr>
+		<tr>
+			<th>所属KTV:</th>
+			<td>
+				<select name='department_id'>
+					<option value='-1'>请选择</option>
+					{loop $departments $dep}
+					<option value='{$dep['id']}' {if $item['department_id'] == $dep['id']}selected{/if}>{$dep['department']}</option>
+					{/loop}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<th>咨询电话:</th>
+			<td><input type='text' name='phone' value="{$item['phone']}"/> </td>
+		</tr>
+		<tr>
+			<th>分店图片:</th>
+			<td>{php echo tpl_form_field_image('ser_picurl', $item['ser_picurl'])}</td>
+		</tr>
+		<tr>
+			<th>分店介绍</th>
+			<td>
+				<textarea style="height:400px; width:100%;" class="span7 richtext-clone" name="ser_info" cols="70" id="reply-add-text">{$item['ser_info']}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<th></th>
+			<td>
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+	</table>
+</form>
+</div>
+  <script type="text/javascript">
+<!--
+  var category = {php echo json_encode($children)};
+  kindeditor($('.richtext-clone'));
+//-->
+</script>
+{elseif $op == 'display'}
+<div style="padding:15px;">
+  <table class="table table-hover">
+    <thead class="navbar-inner">
+      <tr>
+        <th>序号</th>
+        <th>显示顺序</th>
+        <th>分店名称</th>
+        <th>KTV</th>
+        <th >操作</th>
+  </tr>
+</thead>
+{loop $list $item}
+<tr>
+  <td>{$item['id']}</td>
+  <td>{$item['sort']}</td>
+  <td>{$item['ser_window']}</td>
+  <td>{$item['department']}</td>
+  <td>
+    <a href="{php echo $this->createWebUrl('classify',array('id' => $item['id'] ,'op' => 'post'))}">编辑
+    </a>
+    <a href="{php echo $this->createWebUrl('classify',array('id' => $item['id'],'op' => 'delete'))}">删除
+    </a>
+  </td>
+</tr>
+{/loop}
+</table>
+</div>
+
+
+
+
+{/if}
+
+{template 'common/footer'}

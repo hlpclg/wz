@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>名片夹</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+    <link rel="stylesheet" href="../addons/yhc_ecard/template/mobile/styles/all-min.css">
+    {php echo register_jssdk(false);} 
+</head>
+<body class="pocket">
+    <div class="header">
+        <form method="post">
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">搜索</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input" type="text" placeholder="请输入关键字" name="keyword" value="{$keyword}">
+                    </div>
+                    <div class="weui_cell_ft">
+                        <input type="submit" href="javascript:;" class="weui_btn weui_btn_mini weui_btn_primary" value="搜索">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="weui_cells weui_cells_access">
+        {loop $list $item}
+        {if $item["type"]=="pocket"}
+        <a class="weui_cell" href="{php echo $this->createMobileUrl("pocketView" , array("id" => $item["id"]),true)}">
+        {else}
+        <a class="weui_cell" href="{php echo $this->createMobileUrl("collectView" , array("id" => $item["id"]),true)}">
+        {/if}
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>{$item["name"]}</p>
+            </div>
+            <div class="weui_cell_ft">
+            </div>
+        </a>
+        {/loop}
+    </div>
+    <div class="add"><a href="{php echo $this->createMobileUrl("pocketForm")}" class="icon-base">&#xe600;</a></div>
+
+    <script src="https://res.wx.qq.com/open/libs/zepto/1.1.6/zepto.js"></script>
+    <script src="../addons/yhc_ecard/template/mobile/scripts/base-min.js"></script>
+    <script>
+    hideWxMenu();
+    </script>
+</body>
+</html>

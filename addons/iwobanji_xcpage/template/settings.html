@@ -1,0 +1,23 @@
+{template 'common/header'}
+<div class="main">
+	<form class="form-horizontal form" id="form2" action="" method="post">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				模块参数配置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-2 col-md-2 col-lg-1 control-label">配置项1</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="option1" value="{php echo $this->module['config']['option1']}" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group col-sm-12">
+			<input name="token" type="hidden" value="{$_W['token']}" />
+			<input type="submit" class="btn btn-primary col-lg-1" name="submit" value="提交" />
+		</div>
+	</form>
+</div>
+{template 'common/footer'}

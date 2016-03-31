@@ -1,0 +1,86 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<title>参加有奖</title>
+<link href="/addons/wdl_anhao/template/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/addons/wdl_anhao/template/js/jquery1.42.min.js"></script>
+<script type="text/javascript" src="/addons/wdl_anhao/template/js/jquery.SuperSlide.2.1.1.js"></script>
+
+</head>
+
+<body>
+
+	<div id="slideBox" class="slideBox">
+
+	<div class="bd">
+		<ul>
+				<li><a href="{$reply['address']}" target="_blank"><img src="{$_W['attachurl']}{$reply['headimage']}" /></a></li>
+		  <li><a href="{$reply['address1']}" target="_blank"><img src="{$_W['attachurl']}{$reply['headimage1']}" /></a></li>
+		  <li><a href="{$reply['address2']}" target="_blank"><img src="{$_W['attachurl']}{$reply['headimage2']}" /></a></li>
+					
+		</ul>
+	</div>
+
+			<!-- 下面是前/后按钮代码 -->
+			<a class="prev" href="javascript:void(0)"></a>
+			<a class="next" href="javascript:void(0)"></a>
+
+</div>
+
+		<script type="text/javascript">
+		jQuery(".slideBox").slide({mainCell:".bd ul",autoPlay:true});
+		</script>
+<div class="content">
+<br>
+<div class="zjgz">
+<p class="s2"><strong>参与方法</strong></p>
+<p style="font-size:16px; color:#fff">A、关注微信号“<span style="display:inline; color:blue; font-size:20px;">武汉嗨生活</span>”←“长按复制”</p>
+<p style="font-size:16px; color:#fff">B、发送暗号“<span style="display:inline; color:blue; font-size:20px;">{$renshupanduan['title']}</span>”获得专属编号，赢得精美礼品</p>
+</div>
+
+<div class="zjgz">
+<p class="s2"><strong>中奖规则</strong></p>
+<p>为保证本活动公开透明，中奖结果将根据第二天体彩排列5开奖号码决定，与体彩开奖结果越接近的编号为中奖,中奖者获得对应奖品。</p>
+</div>
+<div class="set">
+<p class="s3"><strong>奖项设置</strong></p>
+<table width="100%" border="0">
+  <tr>
+    <td width="24%" align="center">一等奖：</td>
+    <td width="25%">{$first['fieldcontent']}</td>
+    <td width="16%">人数：</td>
+    <td width="35%">{$first['fieldname']}人</td>
+  </tr>
+  <tr>
+    <td align="center">二等奖：</td>
+    <td>{$second['fieldcontent']}</td>
+    <td>人数：</td>
+    <td>{$second['fieldname']}人</td>
+  </tr>
+  <tr>
+    <td align="center">三等奖：</td>
+    <td>{$san['fieldcontent']}</td>
+    <td>人数：</td>
+    <td>{$san['fieldname']}人</td>
+  </tr>
+</table>
+</div>
+<div class="xz">
+	<p class=xzs><strong>细则</strong></p>
+	<p>
+		1)在活动规定的时间内发送暗号，会随机获得一注排列5的数字作为抽奖号
+		<br>2)活动时间截至后，开奖以当天的体彩数字为准。中国体彩排列5开奖时间为每晚8：30~9：30
+		<br>3)更多活动详情，请点击菜单“微暗号”进行了解
+	</p>
+</div>
+
+</div>
+</body>
+
+</html>

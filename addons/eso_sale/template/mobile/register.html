@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+<head>
+<title>分销员注册</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../addons/eso_sale/style/css/style.css?r={php echo time()}"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+<meta name="mobileOptimized" content="width" />
+<meta name="handheldFriendly" content="true" />
+<meta http-equiv="Cache-Control" content="max-age=0" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+</head>
+<body>
+	
+<section class="main animated fadeInDown">
+	<div class="main-box">
+		
+		<h1 class="fxyreg"></h1>
+		<p class="rb-row"><input type="text" id="realname" placeholder="姓名" class="input" value="{$profile['realname']}"/></p>
+		<p class="rb-row"><input type="tel" id="mobile" placeholder="手机" class="input" value="{$profile['mobile']}"/></p>
+		<!--<p class="rb-row"><input type="password" id="password" placeholder="密码" class="input" value="{$profile['pwd']}"/></p>-->
+		{if $opp=='complate'}
+		<p class="rb-row"><input type="text" id="banktype" placeholder="银行名称" class="input" value="{$profile['banktype']}"/></p>
+		<p class="rb-row"><input type="tel" id="bankcard" placeholder="银行卡号" class="input" value="{$profile['bankcard']}"/></p>
+		<p class="rb-row"><input type="text" id="alipay" placeholder="支付宝号" class="input" value="{$profile['alipay']}"/></p>
+		<p class="rb-row"><input type="text" id="wxhao" placeholder="微信支付号码" class="input" value="{$profile['wxhao']}"/></p>
+		{/if}
+	
+		<div class="rb-row registerRuleBox border-box">
+			<!--<p class="rb-row registerRuleCheck"><input type="checkbox" checked id="agree"/>&nbsp;我同意以上注册协议</p>
+			<div class="recommend-tips">
+				<h6>提示</h6>
+				<p>请输入正确的姓名以及电话，否则可能无法结佣。</p>
+			</div>-->
+			{if !empty($profile)}
+				<p class="rb-submit"><input type="button" value="确定" class="btn" id="J_submitReg"/></p>
+			{else}
+				<p class="rb-submit"><input type="button" value="确定" class="btn" id="J_submitReg"/></p>
+			{/if}
+			<!--<hr>
+			<h1>注册条款</h1>
+			<div class="rule-text">
+				{$rule['terms']}
+			</div>-->
+			
+		</div>
+</section>
+<footer class="foot"><a>&copy; {$_W['account']['name']}</a></footer>
+
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="../addons/eso_sale/style/js/com.js"></script>
+<script>
+//注册粉丝信息
+$("#J_submitReg").live("click", function () {
+	var reg = /^1[3458]\d{9}$/;
+	var bank = /^\d*$/g;
+	//if($("#agree").attr('checked')=='checked'){
+		
+	//}else{
+		//TopBox.alert("请同意注册协议!");
+		//return;
+	//}
+
+	realname = $("#realname").val();
+	mobile 	 = $("#mobile").val();
+	password = $("#password").val();
+	alipay 	 = '';
+	wxhao 	 = '';
+	banktype = '';
+	bankcard = '';
+	if('{$opp}'=='complate'){
+		alipay = $("#alipay").val();
+		wxhao = $("#wxhao").val();
+		banktype = $("#banktype").val();
+		bankcard = $("#bankcard").val();
+	}
+
+	if (realname == "") {
+		TopBox.alert("姓名不能为空!");
+		return;
+	} else if (!reg.test(mobile)) {
+		TopBox.alert("手机格式不正确!");
+		return;
+	//}else if (password == "") {
+		//TopBox.alert("密码不能为空!");
+		//return;
+	//}else if (password.length < 6) {
+		//TopBox.alert("密码至少为6位!");
+		//return;
+	}else {
+		
+		$.ajax({
+			type: "POST",
+			url: "{php echo $this->mturl('register',array('op'=>'add'))}",
+			data: { realname:realname, mobile:mobile, banktype:banktype, bankcard:bankcard, password:password, alipay:alipay, wxhao:wxhao },
+			dataType: "text",
+			
+			success: function (d) {
+				d = d.replace(/\s+/g,""); 
+				if (d == "1") {
+					TopBox.alert("粉丝注册成功.", function () { window.location.href = '{php echo $this->mturl('fansindex')}'; });
+				} else if (d == "2") {
+					TopBox.alert("修改资料成功.", function () { window.location.href = '{php echo $this->mturl('fansindex')}'; });
+				} else if (d == "0") {
+					TopBox.alert("粉丝注册失败.");
+				} else if (d == "-2") {
+					TopBox.alert("请勿重复注册粉丝.");
+				} else if (d == "-3") {
+					TopBox.alert("已存在该手机号码.");
+				} else {
+					TopBox.alert("信息填写不正确.");
+				}
+			},
+			
+			error: function (xml, text, thrown) {
+				TopBox.alert("出错啦!");
+			}
+		});
+
+	}
+});
+
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+
+    if(navigator.appName == 'Microsoft Internet Explorer'){
+        if(navigator.userAgent.indexOf("MSIE 5.0")>0 || navigator.userAgent.indexOf("MSIE 6.0")>0 || navigator.userAgent.indexOf("MSIE 7.0")>0) {
+            alert('您使用的 IE 浏览器版本过低, 推荐使用 Chrome 浏览器或 IE8 及以上版本浏览器.');
+        }
+    }
+
+    // jssdk config 对象
+    jssdkconfig = {php echo json_encode($_W['account']['jssdkconfig']);} || {};
+    // 是否启用调试
+    jssdkconfig.debug = false;
+    //
+    jssdkconfig.jsApiList = [
+        'checkJsApi',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+        'hideMenuItems',
+        'showMenuItems',
+        'hideAllNonBaseMenuItem',
+        'showAllNonBaseMenuItem',
+        'translateVoice',
+        'startRecord',
+        'stopRecord',
+        'onRecordEnd',
+        'playVoice',
+        'pauseVoice',
+        'stopVoice',
+        'uploadVoice',
+        'downloadVoice',
+        'chooseImage',
+        'previewImage',
+        'uploadImage',
+        'downloadImage',
+        'getNetworkType',
+        'openLocation',
+        'getLocation',
+        'hideOptionMenu',
+        'showOptionMenu',
+        'closeWindow',
+        'scanQRCode',
+        'chooseWXPay',
+        'openProductSpecificView',
+        'addCard',
+        'chooseCard',
+        'openCard'
+    ];
+
+    var wxData = {
+        //"appId": "{$_W['account']['key']}",
+        "imgUrl" : '{$_W['siteroot']}/source/modules/eso_sale/style/images/icon.jpg',
+        "link" : '{php echo $_W['siteroot']."app/".$this->mturl('fansindex',array('id'=>$id))}',
+        "desc" : '看你能捞多少佣金',
+        "title" : '全民销客-{$_W['account']['name']}'
+    };
+
+    wx.config(jssdkconfig);
+    wx.ready(function () {
+        wx.onMenuShareAppMessage(wxData);
+        wx.onMenuShareTimeline(wxData);
+        wx.onMenuShareQQ(wxData);
+        wx.onMenuShareWeibo(wxData);
+    });
+</script>
+</body>
+</html>

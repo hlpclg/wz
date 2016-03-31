@@ -1,0 +1,1 @@
+$("body").delegate(".js_scan","click",function(){wx.scanQRCode({needResult:1,scanType:["qrCode"],success:function(b){var a=b.resultStr;if(a.substring(0,6)=="BEGIN:"){showAlert("该版本尚未支持该功能.")}else{location.href=a}}})});

@@ -1,0 +1,16 @@
+<script>
+	function cron() {
+		$.post("{php echo $this->createWebUrl('cron');}", function(){
+			setTimeout(cron, 120000);
+		});
+	}
+	function log_update() {
+		$.post("{php echo $this->createWebUrl('cron', array('op' => 'print'));}", function(){
+			setTimeout(log_update, 10000);
+		});
+	}
+	$(function(){
+		cron();
+		log_update();
+	});
+</script>

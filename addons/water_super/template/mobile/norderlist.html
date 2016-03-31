@@ -1,0 +1,253 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>e袋洗</title>
+
+<link href="../addons/water_super/template/cssn/footer.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/base.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/wap.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/myOrder.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../addons/water_super/template/jsn/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/jscommon.js"></script>
+</head>
+<body style="padding-bottom:54px;">
+  <!-- 我的订单 -->
+  <div class="channel-nav three-nav">
+    <ul>
+      <li class="active"><a href="mobile.php?m=wap&amp;act=order&amp;do=order_list&amp;status=1">服务中</a></li>
+      <li class=""><a href="mobile.php?m=wap&amp;act=order&amp;do=order_list&amp;status=2">已完成</a></li>
+    </ul>
+  </div>
+  <div class="myOrder">
+    <!-- 订单服务中 -->
+    <div class="myOrder_list" id="p10">
+      <ul id="add_order">
+                  <li class="order_item mobile-font">
+                  <a href="">
+                                        <div class="order_status_div">
+                    <img src="../addons/water_super/template/imagesn/take.png" class=""><span class="">已安排取件</span>
+                    </div>
+                    
+                    </a><div class="item_list_ordersn mobile-font"><a href="mobile.php?m=wap&amp;act=order&amp;do=order_details&amp;usert_type=1&amp;order_id=1586082&amp;order_status=%E6%9C%8D%E5%8A%A1%E4%B8%AD">
+                        <div class="item_list_box">
+                          订单编号：15051515860820                        </div>
+                      </a>
+                    </div>
+                    <!-- 订单服务付款金额 -->
+                    <div class="item_list_money navlist">
+                      <div class="item_list_box"><div class="">订单总额：<b class="orange_color">0元</b></div></div>
+                    </div>
+                     <div class="item_list_time navlist"><div class="item_list_box">服务时间：2015-05-21 10:00-12:00</div></div>
+                    
+                    <!-- 订单提交按钮 -->
+                    <div class="borderD"></div>
+                    <div class="item_list_btn">
+                      <div class="wx_confirm_btns"> 
+                                 
+                          <button id="codGoPayCancel" type="cancel" onclick="javascript:cancelorder(1586082,0)">取消订单</button>
+                                               
+                        <button id="codGoPay" class="orange-bg" type="submit" style="border: 1px solid #eee;color: rgb(186,186,186); background: #fff;">       暂无法支付  </button>
+                      </div>
+                    </div>    
+                  </li>
+                                              </ul>
+    </div>
+  </div>
+  <div id="prompt" style="text-align:center;line-height:40px;color:#999;display:none">订单加载中...</div>
+  <div id="codFloat_1" style="display:none;overflow:auto" class="cod">
+      <div class="wx_mask"></div>
+      <div class="wx_confirm">
+        <div class="wx_confirm_inner" style="height:267px;height:auto;overflow:auto">
+          <div class="wx_confirm_hd">
+            <div class="wx_confirm_tit">下单成功</div>
+          </div>
+          <div class="wx_confirm_bd">
+            <div class="">
+              <div class="confirm_order" style="color:#ffcc33;">
+                <p><em>服务日期：</em><span id="washing_date_tip" style="color:#ffcc33"></span></p>
+                <p><em>服务时段：</em><span id="washing_time_tip" style="color:#ffcc33"></span></p>
+                                <!-- <p style="text-align:left;color:#f41414;padding: 0 10px">提示：北京地区因订单猛增可能会有取送延迟，敬请谅解。</p> -->
+                <!-- <p style="text-align:center;color:#999">有取送延迟，敬请谅解。</p> -->
+             </div>
+            </div>
+          </div>
+
+          <div class="wx_confirm_bd">                   
+            <div class="wx_confirm_btns" style="padding-right:0">                       
+              <button type="submit" id="codGoPay" onclick="javascript:cancelno()" style="width:100%;margin-right:0">确认</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div> 
+    <!-- ／我的订单 -->
+    <div id="message_title" style="display:none" class="cod">
+        <div class="wx_mask"></div>
+            <div class="wx_confirm ">
+               <div class="wx_confirm_inner" id="wx_confirm_float">
+                  <div class="wx_confirm_hd">
+                     <div class="wx_confirm_tit" id="show_mes">fsfdsrfsdrf</div>
+                  </div>
+               </div>
+          </div>
+       </div>
+    
+  <!--  -->
+    <script type="text/javascript">
+    var pindex = 2;
+    var show_more = "0";
+
+    function add_title(msg){
+      $("#prompt").html(msg);
+    }
+    function add_order_1(add_o,str){
+      str = str + add_o;
+      $("#add_order").html(str);
+      show_more = 1;
+      $("#prompt").hide();
+    }
+    function showmore($pindexpindexpindex){
+      $("#prompt").show();
+      var str = $("#add_order").html(); 
+      submitData = {
+                  pindex : pindex
+                };
+      $.post("mobile.php?m=wap&act=order&do=add_order&",submitData,
+                function (data){
+                  if (data.message.state == 1) {
+                    add_order_1(data.message.add_order,str);
+                  }else if(data.message.state == 0){
+                    add_title(data.message.msg);
+                  }
+              },"json")
+    }
+    //alert('asfas');
+    window.onscroll=function(){
+    //  alert('1213124');
+      var a = document.body.clientHeight;
+      var b = document.documentElement.scrollTop==0? document.body.scrollTop : document.documentElement.scrollTop;
+      var c = document.documentElement.scrollTop==0? document.body.scrollHeight : document.documentElement.scrollHeight;
+     //alert(a);alert(document.body.scrollTop );alert(document.documentElement.scrollHeight);
+      if(a+b+10>=c && show_more == 1){
+        show_more = 0;
+        showmore(pindex);
+        pindex ++;
+      }
+    }
+    function cancelorder(orderid,status){
+    	$("#orderid").val(orderid);
+    	$("#status").val(status);
+    	$("#codFloat").show();
+
+    }
+    function cancelorderok(){
+    	var order_id = $("#orderid").val();
+    	$("#codGoPay_2").attr("disabled",true); 
+    	$("#codGoPayCancel_2").attr("disabled",true); 
+       $("#codFloat").hide();
+        var submit_data = {order_id : order_id};
+        $('#show_mes').html('取现成功');
+        $('#message_title').show();return;
+      $.post("mobile.php?m=wap&act=order&do=cancel_order&",submit_data,
+          function(data){
+              $('#show_mes').html(data.message.msg);
+              $('#message_title').show();
+              //var   url= "mobile.php?m=wap&act=order&do=order_list&";
+              //setTimeout("window.location.href='" + url + "'", 2000);
+        },"json");
+    }
+    function cancelno(){
+    	$("#codFloat").hide();
+      $("#codFloat_1").hide();
+    	return false;
+    }
+    function payorder(order_id,status){
+      var paytype = $("#paytype_"+order_id).val();
+      var url = "mobile.php?m=wap&act=payment&do=order_pay&";
+      var link = url+"status="+status+"&order_id="+order_id+"&paytype="+paytype;
+      window.location.href=link;
+    }
+   
+    </script>
+    <!-- /选择框表单--> 
+    <div id="codFloat" style="display:none" class="cod">
+        <div class="wx_mask"></div>
+        <div class="wx_confirm">
+            <div class="wx_confirm_inner">
+                <div class="wx_confirm_hd">
+                    <div class="wx_confirm_tit">是否确认取消订单？</div>
+                </div>
+                <div class="wx_confirm_bd">
+                    
+                    <div class="wx_confirm_btns">                        
+                        <button type="cancel" onclick="javascript:cancelno()" id="codGoPayCancel_2">返回</button>
+                        <button type="submit" onclick="javascript:cancelorderok()" id="codGoPay_2">确认</button>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="orderid" name="orderid" value="">
+            <input type="hidden" id="status" name="status" value="">
+        </div>
+    </div> 
+  <!-- 优惠券立即分享 -->
+  <div id="share" style="display:none" class="cod">
+    <div class="wx_mask"></div>
+    <div class="wx_confirm">
+        <div class="wx_confirm_inner">
+            <div class="wx_confirm_hd bigfont">
+                <p>恭喜你获得张优惠券</p>
+            </div>
+            <div class="wx_confirm_bd">
+                
+                <div class="wx_confirm_btns">                        
+                    <button type="cancel" id="share_cancel">下次再说</button>
+                    <button type="submit" id="share_now">立即分享</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+     <div id="share_img" style="display:none;height:100%">
+        <img src="../addons/water_super/template/imagesn/share_img2.png" style="position:absolute;top:0;z-index:111111;width:80%;left:10%;">
+      </div>
+    <script type="text/javascript">
+          var order_can_share= "";
+          if(order_can_share){
+                 $("#share").show();
+          }
+          $("#share_cancel").click(function(){
+                $("#share").hide();
+          });
+          $("#share_img").click(function(){
+              $(this).hide();
+          })
+          $("#share_now").click(function(){
+                    $("#share_img").toggle();
+                    $("#share").hide();
+          });
+         
+
+    </script>
+    
+    <!-- 页脚导航-->
+<footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                	<a href="mobile.php?m=wap&amp;act=homepage&amp;do=index&amp;"><span class=" home-index">洗衣</span></a>
+                	<a href="mobile.php?m=wap&amp;act=order&amp;do=order_list&amp;"><span class=" Order-index-active">订单</span></a>
+                	<a href="mobile.php?m=wap&amp;act=icard&amp;do=my_icard&amp;"><span class="card-index">我的</span></a>
+              </div>
+        </div>
+    </div>
+</footer>  
+</body></html>

@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.012wz.com" versionCode="0.6,0.7">
+	<application setting="false">
+		<name><![CDATA[微旅游]]></name>
+		<identifie><![CDATA[lvyou]]></identifie>
+		<version><![CDATA[1.0]]></version>
+		<type><![CDATA[business]]></type>
+		<ability><![CDATA[微动力要的微旅游]]></ability>
+		<description><![CDATA[]]></description>
+		<author><![CDATA[微动力]]></author>
+		<url><![CDATA[]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+			<message type="text" />
+		</handles>
+		<rule embed="false" />
+	</platform>
+	<bindings>
+		<cover>
+			<entry title="微旅游入口" do="index" state="" direct="false" />
+		</cover>
+		<menu>
+			<entry title="旅游简介" do="jianjie" state="" direct="false" />
+			<entry title="旅游海报" do="haibao" state="" direct="false" />
+			<entry title="景区管理" do="jingqu" state="" direct="false" />
+			<entry title="景点管理" do="jingdian" state="" direct="false" />
+			<entry title="风景相册" do="xiangce" state="" direct="false" />
+			<entry title="游客印象" do="yinxiang" state="" direct="false" />
+			<entry title="专家点评" do="dianping" state="" direct="false" />
+		</menu>
+	</bindings>
+	<install>
+<![CDATA[
+CREATE TABLE `ims_weilvyou_dianping` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL,
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `xingming` varchar(30) NOT NULL DEFAULT '',
+  `zhiwei` varchar(50) NOT NULL DEFAULT '',
+  `jianjie1` varchar(255) NOT NULL DEFAULT '',
+  `jianjie2` varchar(255) NOT NULL DEFAULT '',
+  `sort` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `img` varchar(255) NOT NULL DEFAULT '',
+  `dateline` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_weilvyou_haibao` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `img1` varchar(255) NOT NULL DEFAULT '',
+  `img2` varchar(255) NOT NULL DEFAULT '',
+  `img3` varchar(255) NOT NULL DEFAULT '',
+  `img4` varchar(255) NOT NULL DEFAULT '',
+  `img5` varchar(255) NOT NULL DEFAULT '',
+  `dateline` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_weilvyou_jianjie` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `top_img` varchar(255) NOT NULL DEFAULT '' COMMENT '头部图片',
+  `location_x` float unsigned NOT NULL,
+  `location_y` float unsigned NOT NULL,
+  `address` varchar(255) NOT NULL DEFAULT '' COMMENT '详细地址',
+  `jianjie_1` text NOT NULL COMMENT '服务理念简介',
+  `jianjie_2` text NOT NULL COMMENT '旅游区简介',
+  `jianjie_3` text NOT NULL COMMENT '服务配套',
+  `mobile` varchar(30) NOT NULL DEFAULT '',
+  `dateline` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_weilvyou_jingdian` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `jid` int(10) unsigned NOT NULL DEFAULT '0',
+  `weid` int(10) unsigned DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `jianjie1` varchar(255) DEFAULT NULL,
+  `jianjie2` varchar(255) DEFAULT NULL,
+  `jianjie3` varchar(255) DEFAULT NULL,
+  `sort` mediumint(8) unsigned DEFAULT '0',
+  `img` varchar(255) DEFAULT NULL,
+  `dateline` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_weilvyou_jingqu` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0',
+  `sort` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `jianjie` varchar(255) NOT NULL DEFAULT '',
+  `dateline` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_weilvyou_xiangce` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `weid` int(10) unsigned NOT NULL DEFAULT '0',
+  `sort` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `jianjie` varchar(255) NOT NULL DEFAULT '',
+  `img` varchar(255) DEFAULT '',
+  `dateline` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_weilvyou_yinxiang` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `jid` int(10) unsigned NOT NULL DEFAULT '0',
+  `weid` int(10) unsigned NOT NULL DEFAULT '0',
+  `from_user` varchar(60) NOT NULL DEFAULT '',
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `sort` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `num` int(10) unsigned NOT NULL DEFAULT '1',
+  `dateline` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+]]></install>
+	<uninstall>
+<![CDATA[
+DROP TABLE `ims_weilvyou_dianping`, `ims_weilvyou_haibao`, `ims_weilvyou_jianjie`, `ims_weilvyou_jingdian`, `ims_weilvyou_jingqu`, `ims_weilvyou_xiangce`, `ims_weilvyou_yinxiang`;
+]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>

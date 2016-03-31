@@ -1,0 +1,52 @@
+{template 'common/header'}
+<div class="main">
+	<form action="" method="post" class="form-horizontal form" enctype="multipart/form-data">
+		<h4 >旅游海报</h4>
+		<table  class="tb">
+			<tbody>
+				<tr>
+					<td>海报名称</td>
+					<td>
+						<input type="text" id="" class="span7" placeholder="" name="title" value="{$item['title']}"></td>
+				</tr>
+				<tr>
+					<td>海报1</td>
+					<td>
+						{php echo tpl_form_field_image('img1', $item['img1']);}
+					</td>
+				</tr>
+				<tr>
+					<td>海报2</td>
+					<td>
+						{php echo tpl_form_field_image('img2', $item['img2']);}
+					</td>
+				</tr>
+				<tr>
+					<td>海报3</td>
+					<td>
+						{php echo tpl_form_field_image('img3', $item['img3']);}
+					</td>
+				</tr>
+				<tr>
+					<td>海报4</td>
+					<td>
+						{php echo tpl_form_field_image('img4', $item['img4']);}
+					</td>
+				</tr>
+				<tr>
+					<td>海报5</td>
+					<td>
+						{php echo tpl_form_field_image('img5', $item['img5']);}
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+						<input type="hidden" name="id" value="{$item['id']}" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+{template 'common/footer'}

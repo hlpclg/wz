@@ -1,0 +1,52 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		配置内容
+	</div>
+	<div class="panel-body">
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">转发URL</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="forward_url" class="form-control" value="{$reply['url']}" />
+				<div class="help-block">设置转发URL</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">转发Token</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="forward_token" class="form-control" value="{$reply['token']}" />
+				<div class="help-block">设置转发Token</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">是否开启</label>
+			<div class="col-sm-9 col-xs-12">
+				<label class="radio-inline">
+					<input type="radio" name="is_status" value="1" {if !empty($reply['status'])} checked="checked" {/if} />开启
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="is_status" value="0" {if empty($reply['status'])} checked="checked" {/if} />关闭
+				</label>
+				<div class="help-block">设置活动状态当前的状态。</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">开始打印关键字</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="start_keyword" class="form-control" value="{if empty($reply['start_keyword'])}打印{else}{$reply['start_keyword']}{/if}" />
+				<div class="help-block">设置开始打印关键字,当用户触发该关键字后,会自动开始打印照片。</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-3 col-md-2 control-label">结束打印关键字</label>
+			<div class="col-sm-9 col-xs-12">
+				<input type="text" name="end_keyword" class="form-control" value="{if empty($reply['end_keyword'])}结束打印{else}{$reply['end_keyword']}{/if}" />
+				<div class="help-block">设置结束打印关键字,当用户触发该关键字后,会自动退出打印中心。</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

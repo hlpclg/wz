@@ -1,0 +1,15 @@
+<div class="ddb-nav-footer ng-scope" common-footer="">
+    <a class="nav-item" href="{php echo $this->createMobileUrl('waprestlist', array(), true)}"><i class="fa fa-home"></i>
+        <div class="nav-text">首页</div>
+    </a>
+    <a class="nav-item ng-scope"  href="{php echo $this->createMobileUrl('search', array(), true)}"><i class="fa fa-search"></i>
+        <div class="nav-text">搜索</div>
+    </a>
+    <a class="nav-item ng-scope"  href="{php echo $this->createMobileUrl('collection', array(), true)}" ng-if="!current_shop.is_single">
+        <i class="fa fa-star"></i>
+        <div class="nav-text">收藏</div>
+    </a>
+    <a class="nav-item" href="{php echo $this->createMobileUrl('order', array(), true)}"><i class="fa fa-user"></i>
+        <div class="nav-text">我的</div>
+    </a>
+</div>

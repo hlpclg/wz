@@ -1,0 +1,113 @@
+{template 'header'}
+<style>
+
+   .group, .group div, .group ul, .group li, .group a, .group p, .group img {
+    margin:0px;
+    padding:0px;
+  }
+
+  body {
+    background-color:rgb(235,235,235);
+  }
+
+  #banner {
+    height:30px;
+    line-height:30px;
+  }
+
+  .group {
+    list-style-type:none;
+    width:100%;
+    background-color:rgb(255,255,255);
+    margin-bottom:30px;
+  }
+  .group li {
+    border-bottom: 1px solid rgb(240,240,240);
+    line-height:50px;
+    height:50px;
+  }
+  .group li:last-child {
+    border-bottom: 0px solid rgb(235,235,235);
+  }
+  .group div {
+    font: bold 50px/1.5;
+    height:50px;
+    line-height:50px;
+  }
+  .group div {
+    padding-left:5%;
+  }
+  .group div img {
+    width:32px;
+    height:32px;
+  }
+  .group div a {
+    padding-left:3%;
+    color:rgb(0,0,0);
+    text-decoration:none;
+  }
+
+  .group div .mybadge {
+    float:right;
+    padding-right:10px;
+    font: bold 50px/1.5;
+  }
+  #profile {
+    background:rgb(255,255,255);
+    width:100%;
+    height:96px;
+    margin-bottom:30px;
+    position:relative;
+  }
+
+  #profile img {
+    line-height:72px;
+    width:72px;
+    height:72px;
+    left:18px;
+    top:10px;
+    position:absolute;
+  }
+
+  #profile #credit {
+    position:absolute;
+    left:140px;
+    top:50px;
+  }
+
+  #profile #nickname{
+    position:absolute;
+    left:140px;
+    top:30px;
+  }
+
+</style>
+
+<div id="banner">
+</div>
+
+{if !$isSubMenu}
+<div id="profile">
+  <img src="../addons/quickauth/padding.png">
+  <span id="nickname">www.zheyitianShi.Com(012WZ)</span>
+  <span id="credit">积分:133</span>
+</div>
+{/if}
+<div id="menu">
+  {loop $groups $list}
+  <ul class='group'>
+    {loop $list $item}
+    <li>
+    <div>
+      {if !empty($item['thumb'])}
+      <img src="{php echo $this->res($item['thumb'])}" />
+      {/if}
+      <a href="{$item['url']}">{$item['title']}</a>
+      <span class="mybadge">{$item['callback_str']}</span>
+    </div>
+    </li>
+    {/loop}
+  </ul>
+  {/loop}
+</div>
+{template 'footer'}

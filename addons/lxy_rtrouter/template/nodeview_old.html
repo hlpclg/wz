@@ -1,0 +1,202 @@
+{template 'common/header'}
+<div class="main">
+<ul class="nav nav-tabs">
+ <li{if $_GPC['do'] == 'nodelist'} class="active"{/if}><a href="{php echo  $this->createWebUrl('nodelist');}">节点列表</a>
+  </li>
+  <li{if $_GPC['do'] == 'routeradd'} class="active"{/if}><a href="{php echo $this->createWebUrl('routeradd');}">添加路由器</a>
+  </li>
+</ul>
+<form action="" class="form-horizontal form" method="post" enctype="multipart/form-data">
+  <h4>节点配置</h4>
+  <table class="tb">
+     <tr>
+		  <th colspan="2"><h5>基本信息</h5></th>
+	  </tr>
+      <tr>
+		  <th width="108">节点名：</th>
+		<td width="1190">&nbsp;{$item['name']}</td>
+	  </tr>
+      <tr>
+		  <th>备注：</th>
+		<td><input type="text" id="description" name="description" value="{$item['description']}"  class="span5" /></td>
+	  </tr>
+      <tr>
+		  <th>节点创建时间：</th>
+		<td>&nbsp;{php echo date('Y-m-d H:i:s',$item['create_time'])}</td>
+	  </tr>
+      <tr>
+		  <th>节点更新时间：</th>
+		<td>&nbsp;{php echo date('Y-m-d H:i:s',$item['update_time'])}</td>
+	  </tr>
+      
+    
+   
+      <tr>
+		  <th colspan="2"><h5>认证方式</h5></th>
+	  </tr>
+      <tr>
+		  <th>开启弹出页面：</th>
+		<td>                    <label class="radio inline"><input type="radio" name="is_portal" value="1" {if $item['is_portal']=='1'} checked="checked" {/if}> 开</label>&nbsp;&nbsp;&nbsp;
+                                                <label class="radio inline"><input type="radio" name="is_portal" value="0" {if $item['is_portal']=='0'} checked="checked" {/if} > 关</label></td>
+	  </tr>
+        <tr>
+		  <th>弹出页面链接地址：</th>
+			<td><input type="text" id="login_url" name="login_url" value="{$item['login_url']}"  class="span7" />
+		认证登陆（主动弹出）页面地址，即主动弹出认证页面</td>
+	  </tr>
+      <tr>
+		  <th>认证成功链接地址：</th>
+			<td><input type="text" id="success_url" name="success_url" value="{$item['success_url']}"  class="span7" /></td>
+	  </tr>
+      
+      
+      <tr>
+		  <th>多种登录方式：</th>
+		<td> 新浪微博<input type="checkbox" name="weibo_login" id="weibo_login" value="{$item['weibo_login']}" {if $item['weibo_login']==1}checked="checked" {/if}/> 
+		腾讯QQ
+        
+        <input type="checkbox" name="qq_login" id="qq_login" value="{$item['qq_login']}" {if $item['qq_login']==1}checked="checked" {/if}/></td>
+	  </tr>
+      
+      
+      <tr>
+		  <th>开启微信认证：</th>
+		<td>
+		  <input type="checkbox" name="weixin_login" id="weixin_login" value="{$item['weixin_login']}" {if $item['weixin_login']==1}checked="checked" {/if}/>
+      </td>
+	  </tr>
+      
+      <tr id="trwxid" {if $item['weixin_login']!=1}style="display:none"{/if}>
+		  <th>绑定的微信号：</th>
+		<td><input type="text" id="wx_id" name="wx_id" value="{$item['wx_id']}"  class="span5" /></td>
+	  </tr>
+      <tr id="trwxname" {if $item['weixin_login']!=1}style="display:none"{/if}>
+		  <th>绑定的微信名称：</th>
+		<td><input type="text" id="wx_name" name="wx_name" value="{$item['wx_name']}"  class="span5" />
+	    (展示在店名之下和认证提示页面中) </td>
+	  </tr>
+      <tr id="trsjlogin" {if $item['weixin_login']!=1}style="display:none"{/if}>
+		  <th>仅手机登陆：</th>
+		<td>
+           <input type="checkbox" name="wx_phone_only" id="wx_phone_only" value="{$item['wx_phone_only']}" {if $item['wx_phone_only']==1}checked="checked" {/if}/>
+                                                 (选中后，生成的微信接口无法获取动态口令，电脑等无微信客户端的设备则无法认证上网)</td>
+	  </tr>
+      <tr>
+		  <th colspan="2"><h5>
+		    <label>高级功能</label>
+		     
+	      (启用高级功能，请确保您清楚其含义)</h5></th>
+	  </tr>
+      <tr>
+		  <th>未认证可微信聊天：</th>
+		<td><input type="text" id="wx_unauth_timeout" name="wx_unauth_timeout" value="{$item['wx_unauth_timeout']}"  class="span5" />
+	    分钟 (5-1440分钟，不填为默认5分钟) </td>
+	  </tr>
+         
+      <tr>
+		  <th>未认证断线时间：</th>
+		<td>	    <input type="text" id="wx_reject_timeout" name="wx_reject_timeout" value="{$item['wx_reject_timeout']}"  class="span5" />
+	    分钟 (1-1440分钟，不填为默认3分钟) </td>
+	  </tr>
+      <tr>
+		  <th>试用有效期：</th>
+		<td><input type="text" id="probation_timeout" name="probation_timeout" value="{$item['probation_timeout']}"  class="span5" />
+	    分钟 (1-1440分钟，不填为试用有效期0分钟) </td>
+	  </tr>
+      <tr>
+		  <th>登陆有效期：</th>
+		<td><input type="text" id="login_timeout" name="login_timeout" value="{$item['login_timeout']}"  class="span5" />
+	    分钟 (1-1440分钟,不填为有效期1440分钟) </td>
+	  </tr>
+      <tr>
+		  <th>试用认证成功页面地址：</th>
+		<td><input type="text" id="probation_url" name="probation_url" value="{$item['probation_url']}"  class="span5" />
+		  试用认证成功页面地址。如果用户在前端页面调用试用接口，认证成
+	    功后返回该地址。</td>
+	  </tr>    
+      
+      
+      <tr>
+		  <th>IOS/WP不主动弹窗：</th>
+		<td><input type="checkbox" name="hide_cp" id="hide_cp" value="{$item['hide_cp']}" {if $item['hide_cp']==1}checked="checked" {/if}/>
+	    <label for="hide_cp">(IOS终端(iPhone, iPod, iPad)和WP终端(Windows Phone,需要RippleOS固件 3.1及以上版本支持)将不会主动弹窗)</label></td>
+	  </tr>
+        <tr>
+					<th>二次连接认证方式：</th>
+					<td><label for="auth2nd"></label>
+					  <select name="auth2nd" id="auth2nd">
+					    <option value="0" {if $item['auth2nd']==0}selected="selected"{/if}>与首次连接方式一致</option>
+                        <option value="1" {if $item['auth2nd']==1}selected="selected"{/if}>二次连接无需认证</option>
+                        <option value="2" {if $item['auth2nd']==2}selected="selected"{/if}>二次连接简单认证</option>
+		            </select>
+				    (需要RippleOS固件3.1版本支持.提示:开启&quot;二次连接无需认证&quot;,3.0及以下版本会出现IOS不主动弹窗)</td>
+				</tr>
+                <tr>
+		  <th>白名单：</th>
+		<td><textarea name="white_list" class="span7" id="white_list">{$item['white_list']}</textarea>
+	    使用英文逗号(,)分隔主机名或IP地址，例如：qq.com,weibo</td>
+	  </tr>
+        <tbody>
+		<tr>
+			<th></th>
+			<td>
+				<button type="submit" class="btn btn-primary span3" name="submit" value="提交">提交</button>
+				<input type="hidden" name="token" value="{$_W['token']}" />
+			</td>
+		</tr>
+        </tbody>
+	</table>
+</form>
+
+<script>
+    $("#weixin_login").click(function () {
+		setvisible();
+    });
+		function setvisible()
+	{
+		var servertype=$("#weixin_login").attr("checked");
+        if(servertype!="checked")
+		{
+			$("#weixin_login").val(0);
+			$("#trwxid").hide();
+			$("#trwxname").hide();
+			$("#trsjlogin").hide();
+		}
+		else
+		{
+			$("#weixin_login").val(1);
+			$("#trwxid").show();
+			$("#trwxname").show();
+			$("#trsjlogin").show();
+			}
+	}
+	
+	    $("#weixin_login").click(function () {
+		setvisible();
+    });
+	
+
+	$(function(){ 
+	
+	var $check_box_click = function(){ 
+		if ($(this).attr("checked") == "checked")
+		 { 
+			$(this).val(1); 
+			} 
+		else 
+		{ 
+			$(this).val(0); 
+		} 
+	};
+	
+	$("#weibo_login").click($check_box_click);
+	$("#qq_login").click($check_box_click);
+	$("#wx_phone_only").click($check_box_click);
+
+	
+});
+	
+</script>
+ 
+
+{template 'common/footer'}

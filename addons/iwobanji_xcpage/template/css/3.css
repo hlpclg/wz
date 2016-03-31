@@ -1,0 +1,478 @@
+
+
+
+.transparent {
+  /* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+
+  /* IE 5-7 */
+  filter: alpha(opacity=60);
+
+  /* Netscape */
+  -moz-opacity: 0.6;
+
+  /* Safari 1.x */
+  -khtml-opacity: 0.6;
+
+  /* Good browsers */
+  opacity: 0.6;
+}
+
+/* `Spacing
+----------------------------------------------------------------------------------------------------*/
+ 
+.container_12 { 
+	padding:0 10px 0;
+	margin-bottom:0;
+} 
+
+.row {
+    
+	padding:0px 10px; 
+	border-bottom: solid 1px #ddd;
+	background:#fff;
+}
+
+ol {
+  list-style: decimal;
+}
+
+
+
+/* Buttons
+----------------------------------------------------------------------------------------------------*/ 
+
+.btn {
+	-webkit-box-shadow:rgba(255, 255, 255, 0.2) 0 1px 0 inset, rgba(0, 0, 0, 0.0470588) 0 1px 1px;
+	background-color:#F5F5F5;
+	background-image:-webkit-linear-gradient(top, #FFFFFF, #E6E6E6);
+	background-repeat:repeat no-repeat;
+	border-bottom-left-radius:4px;
+	border-bottom-right-radius:4px;
+	border-color:rgba(0, 0, 0, 0.0980392) rgba(0, 0, 0, 0.0980392) #A2A2A2;
+	border-style:solid;
+	border-top-left-radius:4px;
+	border-top-right-radius:4px;
+	border-width:1px;
+	box-shadow:rgba(255, 255, 255, 0.2) 0 1px 0 inset, rgba(0, 0, 0, 0.0470588) 0 1px 1px;
+	color:#333333;
+	cursor:pointer;
+	display:inline-block;
+	font-size:14px;
+	line-height:20px;
+	margin-bottom:0px;
+	padding:4px 12px;
+	text-align:center;
+	text-shadow:rgba(255, 255, 255, 0.74902) 0 1px 1px;
+	vertical-align:middle;
+	font-weight: 300;
+}
+
+.btn-large {
+	border-bottom-left-radius:6px;
+	border-bottom-right-radius:6px;
+	border-top-left-radius:6px;
+	border-top-right-radius:6px;
+	font-size:16px;
+	padding:9px 19px;
+}
+
+.btn-block {
+	box-sizing:border-box;
+	display:block;
+	padding-left:0;
+	padding-right:0;
+	width:100%;
+}
+
+.back {
+	text-align: center;
+	margin-top:25px;
+	margin-bottom:-26px;	
+
+}
+
+.back a {
+	color:#bbb;	
+	background:#f5f5f5;
+	border: solid 1px #ddd;
+	border-bottom:0;
+	-webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px;
+	padding:5px 10px;
+	text-decoration: none;
+}
+
+.back a:hover {
+	background:#fff;
+}
+
+/* Header
+----------------------------------------------------------------------------------------------------*/ 
+
+/* Footer
+----------------------------------------------------------------------------------------------------*/ 
+
+/* Slider
+----------------------------------------------------------------------------------------------------*/ 
+
+#cover {
+	background:#333 url("images/background_main.jpg") repeat-x top center;
+	color:#fff;
+	padding:0;
+}
+
+#cover .flexslider {
+	width:199px;
+	margin:200px auto;
+	float: right; 
+	background: none;
+	border:0;	
+	padding:90px 151px 25px 0;
+	
+	box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none; -o-box-shadow: none;
+}
+
+#cover .slides, #cover .slides ul, #cover .slides li {
+
+	padding:0;	
+}
+ 
+
+#cover .cover_container {	 
+	background: url("images/bg_hand.png") no-repeat bottom right;	
+}
+
+#cover #ipad {
+	background: url("images/bg_ipad.png") no-repeat bottom right;	
+	padding-top:30px;
+}
+
+#cover #ipad .flexslider {
+	width:335px;  
+	float: right; 
+	background: none;
+	border:0;	
+	padding:60px 42px 0 0;
+	margin:0 0 -20px 0;
+	box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none; -o-box-shadow: none;
+}
+
+#cover #ipad #title {
+	padding:11px 0 0 50px; 
+}
+
+#cover #title {
+	float: left;
+	width:390px;
+	padding:20px 0 0 50px;
+	text-shadow:  1px 1px 1px rgba(0,0,0,0.2);	
+}
+
+#cover #title h2 {
+	color:#fff;
+	font-size:17px;
+	font-weight:300;
+	text-shadow:  2px 2px 2px rgba(0,0,0,0.2);	
+}
+
+
+#cover #title h1 {
+	color:#fff;
+	font-size:40px;
+	font-weight:300;
+	text-shadow:  2px 2px 2px rgba(0,0,0,0.2);	
+}
+
+#cover #title p {
+	font-size:14px;
+	margin:0 0 20px
+}
+
+#cover #title h3 {
+	color:#fff;
+	font-size:13px;
+	font-weight:300;
+	margin:5px auto;
+	text-shadow:  2px 2px 2px rgba(0,0,0,0.2);	
+}
+
+#cover #title h3 a {
+    display: block;
+    width: 142px;
+    height: 39px;
+    text-indent: -1000px;
+    background: url("images/btn_gettheapp.png") top left no-repeat;
+    overflow: hidden;
+    border: 0;
+}
+
+#cover .ydtps a {
+    color:#ffffff;
+    width: 142px;
+
+}
+
+#cover .ydtps {
+    color:#ffffff;
+    width: 440px;
+
+}
+
+#cover #title h3 a:hover {
+    background: url("images/btn_gettheapp.png") bottom left no-repeat;
+}
+
+#cover #title h4 {
+	color:#fff;
+	font-size:30px;
+	font-weight:300;
+	text-shadow:  2px 2px 2px rgba(0,0,0,0.2);	
+}
+
+#cover #title h5 {
+	color:#fff;
+	font-size:22px;
+	font-weight:300;
+	text-shadow:  2px 2px 2px rgba(0,0,0,0.2);	
+}
+
+#cover .xgdzz a {
+	color:#fff;
+	font-size:30px;
+	font-weight:300;
+	text-shadow:  2px 2px 2px rgba(0,0,0,0.2);	
+}
+
+#cover #title span {
+}
+
+#cover .plain #title { 
+	padding:20px 0 10px;
+	width:800px
+}
+		
+/* Intro
+----------------------------------------------------------------------------------------------------*/ 
+
+#intro { 
+	background:#f1f1f1 url("images/bg_shadow_top.png") no-repeat top center;
+	padding:30px 0;
+}
+
+#intro h3 {  
+	text-align: center; 
+	margin:0;
+	font-size:25px;
+}
+
+#intro h6 {  
+	text-align: center; 
+	margin:0;
+	color:#999;
+}
+
+/* Gallery
+----------------------------------------------------------------------------------------------------*/ 
+
+#gallery h6 {  
+	margin:0; 
+}
+
+#gallery img {  
+	padding:3px;
+	border: solid 1px #ddd;
+	background:#fff;
+}
+
+/* Team
+----------------------------------------------------------------------------------------------------*/ 
+
+#team h6 {  
+	margin:0; 
+}
+
+#team img {  
+	padding:3px;
+	border: solid 1px #ddd;
+	background:#fff;
+}
+
+/* Checklist
+----------------------------------------------------------------------------------------------------*/ 
+
+#checklist .box {  
+	
+	padding:0;
+} 
+
+#checklist img {  
+	float: left;
+	margin:0px 20px 20px 0
+}
+
+#checklist img.phone {  
+	float: right;
+	margin:0 5px 0 5px;
+}
+
+#checklist h5 {  
+	margin:0;
+	padding:0;
+}  
+
+/* Pricing
+----------------------------------------------------------------------------------------------------*/ 
+
+#pricing .box {
+	background:#fff;
+	border: solid 1px #ddd;
+	-webkit-border-radius: 7px; -moz-border-radius: 7px; -o-border-radius: 7px; border-radius: 7px;
+}
+
+#pricing h1, #pricing h2, #pricing h3 {
+	padding:5px; 
+	margin:0;
+	text-align: center;
+}
+
+#pricing h1 {
+	font-size:20px;	 
+	padding:15px;
+} 
+
+#pricing h3 {
+	border-top: solid 1px #ddd;
+	border-bottom: solid 1px #ddd;
+	font-size:45px;	 
+	font-weight:bold;
+	background:#f7f7f7 url("images/bg_pricing.png") repeat-x bottom left;   
+}
+
+#pricing ul { 
+	list-style: none;
+	padding:0;
+	margin:0;
+	background:#fff;
+	font-weight: 300;
+}
+
+#pricing ul li {  
+	border-top: solid 1px #f1f1f1;
+	padding:6px;
+	text-align: center;
+	color:#bbb;
+}
+
+#pricing div.button { 
+	padding:10px;
+	border-top: solid 1px #f1f1f1;	
+	background:#f7f7f7;
+	border-bottom-right-radius:4px;
+	border-top-right-radius:4px;
+	border-bottom-left-radius:4px;
+	border-top-left-radius:4px;
+}
+
+#pricing div.button a {
+	-webkit-box-shadow:rgba(255, 255, 255, 0.2) 0 1px 0 inset, rgba(0, 0, 0, 0.0470588) 0 1px 1px;
+	background-color:#2c71c6;
+	background-image:-webkit-linear-gradient(top, #4489df, #165bb0);
+	background-repeat:repeat no-repeat;
+	border-bottom-left-radius:4px;
+	border-bottom-right-radius:4px;
+	border-color:#2f5d97;
+	border-style:solid;
+	border-top-left-radius:4px;
+	border-top-right-radius:4px;
+	border-width:1px;
+	box-shadow:rgba(255, 255, 255, 0.2) 0 1px 0 inset, rgba(0, 0, 0, 0.0470588) 0 1px 1px;
+	color:#fff;
+	text-shadow:rgba(0, 0, 0, 0.74902) 0 -1px 1px;
+ 
+}
+
+/* Content
+----------------------------------------------------------------------------------------------------*/ 
+
+#content {}
+
+#content p { margin:0 0 20px}
+
+
+/* TabsBox
+----------------------------------------------------------------------------------------------------*/ 
+
+#tabsbox {
+	border-color: #333;	
+	background:#f1f1f1 url("images/bg_shadow_top.png") no-repeat top center;
+}
+
+#tabsbox ul.ui-tabs-nav {
+	list-style: none;
+	margin:0 0 0 350px;	
+	float: left;
+	-moz-box-shadow: 0 0 10px #eee;
+	-webkit-box-shadow: 0 0 10px #eee;
+	box-shadow: 0 0 10px #eee;
+	height:60px
+}
+
+#tabsbox ul.ui-tabs-nav li {
+	background: #f4f4f4 url("images/bg_tab.png") repeat-x top left;
+	border: solid 1px #ddd;
+	border-left:0;
+	border-right:0;
+	
+}
+
+#tabsbox ul.ui-tabs-nav li.last { 
+	border-top-right-radius:4px;
+	border-bottom-right-radius:4px;	
+	border-right: solid 1px #ddd;
+}
+
+#tabsbox ul.ui-tabs-nav li.first { 
+	border-top-left-radius:4px;
+	border-bottom-left-radius:4px;	
+	border-left: solid 1px #ddd;
+}
+
+#tabsbox ul li.ui-state-default { 
+	margin:0 0 0 0;	
+	float: left;
+}
+
+#tabsbox .ui-state-default a {
+	padding:7px 20px;
+	display: block;
+	text-decoration: none;
+	color:#898989;
+	font-weight: 300
+}
+
+#tabsbox .ui-state-active a { 
+	background: #eaeaea url("images/bg_tab_active.png") repeat-x top left;
+	color:#333;
+}
+
+#tabsbox ul.ui-tabs-nav li.last a { 
+	border-top-right-radius:4px;
+	border-bottom-right-radius:4px;	
+	border-left: solid 1px #ddd;
+}
+
+#tabsbox ul.ui-tabs-nav li.first a { 
+	border-top-left-radius:4px;
+	border-bottom-left-radius:4px;	
+	border-right: solid 1px #ddd;
+	text-shadow:  0 1px 0 #fff;	
+}
+
+#tabsbox .prefix_1-5 {
+	margin-left:130px;	
+}
+.awbjcode{float:left; width:110px; height:130px; padding-right:7px; background:url("../images/awbjcode.jpg") left top no-repeat;}
+.wxcode{float:left; width:73px; height:88px; padding-right:6px; background:url("../images/wxcode.jpg") left top no-repeat;}
+.urlcode{float:left; width:73px; height:88px; padding-right:6px; background:url("../images/urlcode.jpg") left top no-repeat;}
+.azcode{float:left; width:73px; height:88px; padding-right:6px; background:url("../images/azcode.jpg") left top no-repeat;}
+.pgcode{float:left; width:73px; height:88px; padding-right:0px; background:url("../images/pgcode.jpg") left top no-repeat;}

@@ -1,0 +1,53 @@
+{if empty($item)}
+{php $namesuffix = '-new[(wrapitemid)]';}
+{php $itemid = '(itemid)';}
+{else}
+{php $namesuffix = '['.$item['id'].']';}
+{php $itemid = 'dqq-item-' . $item['id'];}
+{/if}
+
+<div class="panel panel-default">
+    <div class="panel-body">
+    	<div class="form-group">
+        	<label class="col-xs-12 col-sm-3 col-md-2 control-label" >操作</label>
+            <div class="col-sm-9 col-xs-12"  id="award-inkind">
+                <p class="form-control-static">{if empty($item)}<a href="javascript:;" onclick="doDeleteItem('{$itemid}')">删除</a>{else}<a href="{php echo create_url('index/module/delete', array('name' => 'dqq', 'id' => $item['id']))}" onclick="doDeleteItem('{$itemid}', this.href)">删除</a>{/if}</p>
+				<label for="radio_0_{$itemid}" ><input type="hidden" name="award-inkind{$namesuffix}" id="radio_0_{$itemid}" value="0" /> </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">奖品名称</label>
+            <div class="col-sm-9 col-xs-12">
+            	<input type="text" value="{$item['title']}" style="width:275px;" name="award-title{$namesuffix}" class='form-control'>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">奖品数量</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" value="{$item['total']}" style="width:275px;" name="total{$namesuffix}" class='form-control'>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">中奖率</label>
+            <div class="col-sm-9 col-xs-12">
+                <div class="input-group col-md-6">
+                	<div class='input-group-addon'>中奖率</div>
+                    <input type="text" value="{$item['probalilty']}" name="award-probalilty{$namesuffix}" class='form-control'>
+                    <div class='input-group-addon'>%</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">奖品描述</label>
+            <div class="col-sm-9 col-xs-12">
+				<textarea style="height:80px;" name="award-description{$namesuffix}" class="form-control" cols="70" id="">{$item['description']}</textarea>
+            </div>
+        </div>
+             <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">中奖积分</label>
+            <div class="col-sm-9 col-xs-12">
+				<input type="text" value="{$item['get_jf']}" style="width:75px;" name="get_jf{$namesuffix}" class="form-control">
+            </div>
+        </div>
+    </div>
+</div>

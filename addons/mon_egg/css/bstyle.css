@@ -1,0 +1,142 @@
+@charset "utf-8"; 
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+   margin: 0;
+   padding: 0;
+   border: 0;
+   font-size: 100%;
+   font: inherit;
+   vertical-align: baseline;
+   outline: none;
+}
+html { height: 100%;  width:100%;} 
+body { height: 100%; width:100%; font-family: Microsoft YaHei,Helvitica,Verdana,Tohoma,Arial,san-serif; -webkit-text-size-adjust: none; }
+ 
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+ol, ul { list-style: none; }
+ 
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+strong { font-weight: bold; } 
+ 
+a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0);}
+input, textarea, select,button { -webkit-border-radius:0;-webkit-appearance:none; outline: none; }
+ 
+table { border-collapse: collapse; border-spacing: 0; }
+img { border: 0; max-width: 100%; }
+ 
+a { text-decoration: none; outline:none }
+a:hover {text-decoration: none; outline:none }
+a:active{text-decoration: none; outline:none }
+.left{ float:left;}
+.right{ float:right}
+
+.clr{clear:both;}
+.clearfix:before, .container:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+
+
+::-webkit-input-placeholder {color:#999;}
+:-moz-placeholder { color:#999;}
+::-moz-placeholder {color:#999;}
+:-ms-input-placeholder {color:#999;}
+
+.pop{ position: fixed;	top:0;	left:0;right:0;	bottom:0;background:rgba(0, 0, 0, 0.7);z-index:1000;height: 100%; width:100%;}
+.pop .box{
+border-radius:20px;
+background-color:#fff;
+position: fixed;
+z-index: 1001;
+left: 20px;
+right: 20px;
+top: 100px;
+box-shadow:  0 1px 5px rgba(0, 0, 0, 0.32),0 -3px 0px 0px rgba(0, 0, 0, 0.15) inset;
+}
+#zjl .box{top: 50px; }
+.pop .box .closeb {
+cursor: pointer;
+position: absolute;
+display: block;
+border-radius: 50%;
+width: 30px;
+height: 30px;
+text-indent: -9999px;
+top: 5px;
+right: 5px;
+}
+.pop .box .closeb:after {
+position: absolute;
+content: '.';
+display: block;
+width: 20px;
+height: 1px;
+background: #B9B9B9;
+-webkit-transform: rotate(45deg);
+top: 14px;
+left: 5px;
+}
+.pop .box .closeb:before {
+position: absolute;
+content: '.';
+display: block;
+width: 20px;
+height: 1px;
+background: #B9B9B9;
+-webkit-transform: rotate(-45deg);
+top: 14px;
+left: 5px;
+}
+.pop .box h1{ color:#333; text-align:center;padding: 10px 0;font-size: 16px;}
+.pop .box h2{ color:#ee635f; font-size:12px; text-align:center;padding:0 5px 5px 5px;word-wrap: break-word;}
+.pop .box .inputqy{ margin:5px 15px;overflow: hidden;}
+.pop .box .inputqy input{
+box-sizing: border-box;
+padding: 10px;
+background-color: #FCFCFC;
+color: #666;
+border-radius: 40px;
+width: 100%;
+margin: 5px auto;
+font-size: 14px;
+border: 1px #E9E9E9 solid;
+}
+.pop .box .but_con{margin:10px 15px 20px 15px; overflow:hidden;}
+.pop .box .w49{ width:49%;}
+.pop .button_yes{
+width: 100%;
+text-align: center;
+display: inline-block;box-sizing: border-box;
+font-size: 16px;
+font-weight:bold;
+color: #fff;
+border-radius: 40px;
+padding: 10px 0;
+border: 1px solid #ee635f;
+background-color:#ee635f;
+cursor: pointer;
+}
+.pop .button_yes:active { border: 1px solid #DA443F; background-color: #DA443F;  }
+.pop .button_no{
+width: 100%;
+text-align: center;
+display: inline-block;box-sizing: border-box;
+font-size: 16px;
+color: #999;
+border-radius: 40px;
+padding: 10px 0;
+border: 1px solid #ccc;
+background-color:transparent;
+cursor: pointer;}
+.pop .button_no:active{background-image: linear-gradient(to top, #dedede, #f2f2f2);}
+.pop .jpimg{ text-align:center}
+.pop .jpimg img{max-height: 240px;
+max-width: 100%;
+border-radius: 10px;
+margin-bottom: 5px;}
+.pop .jptext{ text-align:center; font-size:14px}
+.pop .jptext .ncz{ margin:20px 0;display: block;color:#ee635f;}
+
+
+.copyright{ color:#f9dc97; font-size:14px; text-align:center;margin:20px 0;}
+
+
+

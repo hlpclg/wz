@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>{$systeminfo['shopname']}</title>
+<link href="../addons/water_super/template/cssn/index.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/base.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/order.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../addons/water_super/template/jsn/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/page.js"></script>
+<script type='text/javascript' src="../addons/water_super/template/jsn/touchslider.min.js"></script>
+<script type='text/javascript' src="../addons/water_super/template/jsn/klass.min.js"></script>
+<script type='text/javascript' src="../addons/water_super/template/jsn/photoswipe.jquery-3.0.5.min.js"></script>
+<script type='text/javascript' src="../addons/water_super/template/jsn/jsAddress.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/jscommon.js"></script>
+</head>
+<body class="Bg-white">
+<?php $todayrq = date("Y-m-d"); 
+      $todayrqh = date("Y年m月d日");
+?>
+  <div class="headerPlace">
+         
+  </div>  
+     <div class="headerPlace">
+    <div class="choose-time">
+        <span class = "" ><a href="javascript:toCreateAddress();" style="padding:6px 12px;">添加地址</a></span>
+      </div>
+      </div>
+ {if !empty($addressList)}
+    <div class="no-order-list">
+      <table>
+        <tr>
+          <td style="vertical-align:middle;text-align:center">
+            <p>亲爱的小主，</p>
+            <p>猛戳上方“添加地址”按钮下单吧，</p>
+            <p>填满人家的心嘛！～～～</p>
+            <img src = "../addons/water_super/template/images/lanzi.png"  class = "">
+          </td>
+        </tr>
+      </table>
+      
+    </div>
+{else}
+
+  <div >
+    <section class="">
+      <div id="J_shipDateTemplateWrapper">        
+        <div class="m_input J_shipTimeContainer" style="padding-top: 10px">      
+          <label for="id_separate_order_time"  class="c94" >服务日期</label>  
+ 
+          <div class="selectBox  selectcont y_hover">       
+            <select class="select01 datepicker J_shippingDateSelect select_J_ytag" name="washing_date" id="washing_date">
+            
+                           <?php 
+							$hour=date("H");
+	                    	for ($i = 0; $i < 7; $i++) {
+								if(($i == 0 && $hour < 20) || $i != 0){
+									$vrq = date('Y-m-d',strtotime("$todayrq +$i day"));
+									$shrq = date('Y年m月d日',strtotime("$todayrq +$i day"));
+									echo '<option class="J_ytag" value="'.$vrq.'">'.$shrq.'</option>';
+								}
+		                   }
+            			?>   
+                          </select>
+            <div class="Selected  selectBx" id="washing_date_div">              
+              { echo $todayrqh;}           </div>  
+          </div>    
+        </div>         
+      </div>
+    </section>
+    <!-- 服务时段-->
+    <section>
+      <div id="J_shipDateTemplateWrapper">        
+        <div class="m_input J_shipTimeContainer borderS" style="padding-bottom:8px">
+          <label for="id_separate_order_coupon"  class="c94">服务时段</label>    
+          <div class="selectBox  selectcont y_hover">       
+            <select class="select01 range J_shippingDateSelect select_J_ytag" name="washing_time" id="washing_time">
+
+            </select>
+            <div class="Selected  selectBx" id="washing_time_div">  
+            </div>  
+          </div>    
+        </div>         
+      </div>
+    </section>
+  </div>
+  <div class="borderD" style="margin:5px 0"></div>
+
+   <div id = "all_address">  
+        <table class="order-place-table"  cellpadding="0" cellspacing="0">   
+        {loop $addressList $item}  
+               <tr class = "address_list" id = "address_list_{$item['id']}">
+              <td style="width:20px" class="ump-coupon-item" align="middle">
+                <b>
+                  <input class = "radio"  type = "radio"   name = "address"  id = "radio_{$item['id']}"  onclick = "select_address({$item['id']});"/>
+                  <label for="radio_{$item['id']}"></label>
+                </b>
+              </td>
+              <td>
+                <span onclick = "select_address({$item['id']})"  ontouchstart="">{$item['customername']}   {$item['tel']}</span>
+                
+                <p onclick = "select_address({$item['id']})"  ontouchstart="">{$item['customercity']}  {$item['customerarea']}  {$item['xiangxdz']}</p>
+                <div style="text-align:right">
+                  <span><b><a href="javascript:toUpdateAddress({$item['id']});" class="edit-btn">编辑</a></span>
+                  <span><a href="javascript:onclose1({$item['id']});" class="delete-btn">删除</a></span>
+                    
+                </div>
+
+              </td>
+            </tr>
+            {/loop}
+            </table>
+   </div>         
+  <div class="white-bg">
+    <form action = "{php echo $this->createMobileUrl('order1Step', array());}"  onsubmit = "check_form()" method = "POST" class="m_input" style="padding-top:5px">
+      <input  type = "hidden" name = "address_id" id ="order_address_id" value = "" />
+      <input  type = "hidden" name = "washing_time" id ="order_washing_time" value = "" />
+      <input  type = "hidden" name = "washing_date" id ="order_washing_date"  value = "" />
+      <input type="hidden" name="token" value="{$_W['token']}" />
+      <span  id = "order_place"  class="btn_order back-link" > 立即下单</span>
+      <div id="codFloat" style="display:none" class="cod">
+      <div class="wx_mask"></div>
+      <div class="wx_confirm">
+        <div class="wx_confirm_inner"  style="height:160px;">
+          <div class="wx_confirm_hd">
+            <div class="wx_confirm_tit">确认订单服务时间</div>
+          </div>
+          <div class="wx_confirm_bd">
+            <div class="">
+              <div class="confirm_order" style="color:#F7BA5B;">
+                <p><em>服务日期：</em><span id="washing_date_tip" style="color:#F7BA5B"></span></p>
+                <p><em>服务时段：</em><span id="washing_time_tip" style="color:#F7BA5B"></span></p>
+                                <!--  <p><em>详细地址：</em><span></span></p>-->
+             </div>
+            </div>
+          </div>
+
+          <div class="wx_confirm_bd">                   
+            <div class="wx_confirm_btns">                       
+              <button type="cancel" id="codGoPayCancel">取消</button>
+              <button type="submit" id="codGoPay">确认</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div> 
+    </form>
+  </div>
+{/if}
+    
+  
+<script>
+  function check_form(){
+     var washing_date = $("#washing_date option:selected").val(); 
+       var washing_time=$("#washing_time option:selected").val();
+      
+      $('#order_washing_date').val(washing_date);
+      $('#order_washing_time').val(washing_time);
+      
+    $("#codGoPay").attr("disabled",true);
+  }
+   $('#order_place').click(function(event) {
+          $("#codFloat").show();
+          $("#washing_date_tip").html($("#washing_date option:selected").html());
+          $("#washing_time_tip").html($("#washing_time option:selected").html());
+          return false;
+        });
+   $('#codGoPayCancel').click(function(event) {
+          $("#codFloat").hide();
+          return false;
+        });
+  function select_address($address_id){
+    $('#order_address_id').val($address_id);
+    $('#radio_'+$address_id).attr("checked",true);
+    $(".address_sel").attr("class","address_list"); 
+    $("#address_list_"+$address_id).attr("class","address_list address_sel"); 
+  }
+</script>
+<!-- 设置默认地址-->
+<script>
+  var $default_id = "";
+  //alert($default_id);
+  if($default_id > 0){
+    $('#radio_'+$default_id).attr("checked",true); 
+    $("#address_list_"+$default_id).attr("class","address_list address_sel"); 
+    $('#order_address_id').val($default_id);
+    //alert("dasdfsa");
+  }else{
+    var first_id = "{$firstaddress['id']}";
+    if(first_id){
+      $("#address_list_"+first_id).attr("class","address_list address_sel"); 
+      $(".radio").get(0).checked = true;
+      $("#order_address_id").val(first_id);
+    }
+
+  }
+</script>
+<!-- 时间选择--> 
+<!-- 选择框表单--> 
+<script>
+  var $address_count  = "{$addresscount}"
+  if($address_count>0){
+    $(function() {
+        selectcont('.select01', '.selectBx');
+    });
+  }
+</script>
+
+<!-- /选择框表单--> 
+<script>
+  var myDate = new Date();
+
+  var washing_date = "";
+  var washing_time = "";
+  var $address_count  = "{$addresscount}"
+
+  if(washing_date){
+    toggle_date(washing_date, washing_time);
+  }else if($address_count>0){
+    toggle_date("{$todayrq}", washing_time);
+  }
+
+  $(".datepicker").change(function(){
+    $address_count  = "{$addresscount}"
+    if($address_count>0){
+       toggle_date($(this).val(), '');
+    }
+  });
+
+  function toggle_date(date, time){
+    var count=$("#washing_date option").length;
+    for(var i=0;i<count;i++){
+      if($("#washing_date").get(0).options[i].value == date){
+        $("#washing_date").get(0).options[i].selected = true;
+        break;
+      }
+    }
+    var hour=myDate.getHours();
+    if(date=="{$todayrq}" && hour < 0){
+      showstr=showrange(date);
+    }else{
+      showstr='<option value="08:00-20:00">08:00-20:00</option>';
+    }
+    $(".range").html(showstr);
+    if(time == ''){
+      $("#washing_time_div").html($("#washing_time").get(0).options[0].text);
+    }else{
+      $("#washing_time_div").html(time);
+
+      var count=$("#washing_time option").length;
+      for(var i=0;i<count;i++){
+        if($("#washing_time").get(0).options[i].text == time){
+          $("#washing_time").get(0).options[i].selected = true;
+          break;
+        }
+      }
+    }
+  }
+  function showrange(date){
+    var hour=myDate.getHours();
+    var showstr='';
+    if(hour<10 || hour>=22){
+      showstr+='<option value="10:00-12:00">10:00-12:00</option>';
+    }
+    if(hour<12 || hour>=22){
+      showstr+='<option value="12:00-14:00">12:00-14:00</option>';
+    }
+    if(hour<14 || hour>=22){
+      showstr+='<option value="14:00-16:00">14:00-16:00</option>';
+    }
+    if(hour<16 || hour>=22){
+      showstr+='<option value="16:00-18:00">16:00-18:00</option>';
+    }
+    if(hour<18 || hour>=22){
+      showstr+='<option value="18:00-20:00">18:00-20:00</option>';
+    }
+    if(hour<20 || hour>=22){
+      showstr+='<option value="20:00-22:00">20:00-22:00</option>';
+    }
+    if(hour<22 || date!="{$todayrqh}"){
+      showstr+='<option value="22:00-24:00">22:00-24:00</option>';
+    } 
+    return showstr;
+  }
+</script>
+{php $deleteurl = $this->createMobileUrl('createAddress',array('op'=>'delete'));}
+{php $addurl = $this->createMobileUrl('createAddress',array('op'=>'post'));}
+{php $updateurl = $this->createMobileUrl('createAddress',array('op'=>'post'));}
+<script>
+  function  toCreateAddress(){
+    $address_count = "{$addresscount}";
+    if($address_count>0){ 
+       var washing_date = $("#washing_date option:selected").val(); 
+         var washing_time=$("#washing_time option:selected").val();
+        var default_id = $('#order_address_id').val(); 
+    }else{
+      var washing_date = '';
+      var washing_time = '';
+      var default_id = '';
+    }
+      var sign = "create";
+      window.location.href='{php echo $addurl}';
+  }
+  function toUpdateAddress($address_id){
+    var washing_date = $("#washing_date option:selected").val(); 
+      var washing_time=$("#washing_time option:selected").val();
+      var default_id = $('#order_address_id').val();
+      var sign = "update";
+      window.location.href='{php echo $updateurl}'+'&id='+default_id;
+  }
+  function toDeleteAddress(){
+    var washing_date = $("#washing_date option:selected").val(); 
+      var washing_time=$("#washing_time option:selected").val();
+    var default_id = $('#order_address_id').val();
+    var delete_id = $("#delete_id").val();
+    var sign = "delete";
+    $("#gotodelete").attr("disabled",true);
+        window.location.href='{php echo $deleteurl}'+'&id='+delete_id;
+    }
+</script>
+
+<!-- 确定删除 -->
+  <div id="error_tip" style="display:none" class="cod">
+        <div class="wx_mask"></div>
+        <div class="wx_confirm">
+            <div class="wx_confirm_inner">
+                <div class="wx_confirm_hd">
+                    <div class="wx_confirm_tit" id="tip_div">确定删除吗？</div>
+                </div>
+                <input type = "hidden" id ="delete_id">
+                <div class="wx_confirm_bd">
+                    <div class="wx_confirm_btn manage-btn">
+                        <button type="button" onclick="javascript:onclose2();" class="okbtn" id="codGoPay">取消</button>
+                        <button type="button" onclick="javascript:toDeleteAddress();" class="okbtn blue-btn" id="gotodelete">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   <script type="text/javascript">
+   function onclose1($address_id){
+    $("#error_tip").show();
+    $("#delete_id").val($address_id);
+    return false;
+  }
+   function onclose2(){
+    $("#error_tip").hide();
+    return false;
+  }
+   </script>
+</body>
+</html>

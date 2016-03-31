@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>{if !empty($share_data['sname'])}{$share_data['sname']}{else}拼团商城{/if}</title>
+		{php echo register_jssdk();}
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-store">
+		<meta http-equiv="Expires" content="0">
+		<link href="../addons/feng_fightgroups/template/css/style_826b4a.css?v=2544" rel="stylesheet">
+		<LINK href="../addons/feng_fightgroups/template/css/style_366c9ef.css?v=5441" rel="stylesheet">
+		<LINK href="../addons/feng_fightgroups/template/css/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script type="text/javascript">
+			var nextPage = 2; //下一次加载的页码,因为之前已经通过index.php加载了第一页的内容
+			flag = 2 //标志变量,为了避免重复加载相同的数据,用于判断是否和nextPage相等,true时允许加载数据.
+			$(document).ready(function() {
+//				alert("测试:文档加载完毕");
+				$(window).scroll(function() {
+					var scrollTop = $(this).scrollTop();
+					var scrollHeight = $(document).height();
+					var windowHeight = $(this).height();
+					if (scrollTop + windowHeight == scrollHeight) {
+						//此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+//						alert("测试:滑到底端了");
+						if(flag==nextPage){
+							flag++;
+							getMoreRecru(nextPage);
+						}
+						//var page = Number($("#redgiftNextPage").attr('currentpage')) + 1;
+						//redgiftList(page);
+						//$("#redgiftNextPage").attr('currentpage', page + 1);
+					}
+				});
+				//在页面上展示下一页
+
+				function getMoreRecru(page) {
+					var ajxurl = "{php echo $this->createMobileUrl('indexajax').'&pages='}" + page;
+					$.ajax({
+						type: "GET",
+						url: ajxurl,
+						dataType: 'json',
+						beforeSend: function(XMLHttpRequest) {
+							$("#loading").html('正在加载中...').fadeIn();
+						},
+						success: function(data) {
+//							alert(data.success);
+							if (data.success) {
+								if (data.list.length > 0) {
+									for (var i in data.list) {
+										var info = data.list[i];
+										var goff = 0
+										if(parseFloat(info.gprice) != 0 && parseFloat(info.mprice)!= 0){
+											goff = ((parseFloat(info.gprice).toFixed(2)/parseFloat(info.mprice).toFixed(2))*10).toFixed(1)+"折";
+										}else{
+											goff = "未打折";
+										}
+										var more = '<div><div class="tuan_g"><a href="{php echo $this->createMobileUrl('gooddetails')}&id=' + info.id + '"><div class="tuan_g_img"><img src="'+info.gimg+'"><span class="tuan_mark tuan_mark2"> <b style="position: relative;top: .5em;">'+goff+'</b></span> </div><div class="tuan_g_info"><p class="tuan_g_name">'+info.gname+'</p><p class="tuan_g_cx">'+info.gdesc+'</p></div><div class="tuan_g_core"><div class="tuan_g_price"><span>'+info.groupnum +'人团</span><b>¥'+info.gprice+'</b></div><div class="tuan_g_btn">伙拼开团</div></div><div class="tuan_g_mprice">市场价：<del>¥'+info.mprice+'</del></div></a></div></div>';
+										
+										$("#more").append(more);
+									
+									}
+									nextPage += 1;
+									
+									$("#loading").fadeOut();
+								} else {
+									$('#loading').html('没有更多内容了...').fadeIn();
+									flag--;
+								}
+							} else {
+								$('#loading').html('没有更多内容了...').fadeIn();
+								flag--;
+							}
+						},
+						error:function(){
+						alert("数据加载失败");
+						flag--;
+					}
+					});
+				}
+				
+				
+			});
+		</script>
+
+	</head>
+
+	<body id="main" style="overflow-x: hidden;">
+		<div class="container" style="display: block;" avalonctrl="root">
+			<section class="main-view" style="display: block;" data-unuse="1">
+				<div id="tuan" class="tuan" style="padding-top: 10px; display: block;" data-unuse="1">
+					{loop $goodses $goodsid $goods}
+					<div>
+						<div class="tuan_g" data-vtuan="0" data-cat="1" data-num="12058">
+							<a href="{php echo $this->createMobileUrl('gooddetails', array('id'=>$goods['id']));}">
+								<div class="tuan_g_img">
+									<img src="{php echo tomedia($goods['gimg']);}">
+									<span class="tuan_mark tuan_mark2">
+                                <b style="position: relative;top: .5em;">
+                                	{if floatval($goods['gprice'])-0 > 0.000001 && floatval($goods['mprice'])> 0.000001}  
+										{php echo sprintf("%.1f", ($goods['gprice']/$goods['mprice'])*10)."折";} 
+									{else}  
+	  									{php echo "未打折";}
+									{/if}
+                                	</b>
+									</span>
+								</div>
+								<div class="tuan_g_info">
+									<p class="tuan_g_name">{$goods['gname']}</p>
+									<p class="tuan_g_cx">{$goods['gdesc']}</p>
+								</div>
+								<div class="tuan_g_core">
+									<div class="tuan_g_price">
+										<span>{$goods['groupnum']}人团</span>
+										<b>¥{$goods['gprice']}</b>
+									</div>
+									<div class="tuan_g_btn">去开团</div>
+								</div>
+								<div class="tuan_g_mprice">市场价：
+									<del>¥{$goods['mprice']}</del>
+								</div>
+							</a>
+						</div>
+
+					</div>
+					{/loop}
+				</div>
+				<div id="more" class="tuan" style="padding-top: 10px; display: block;min-height: 0;">
+					
+				</div>
+				<div id="loading" style="width:100%;height: 50px;text-align: center;z-index: 999;display: none;">
+		上拉加载更多
+		</div>
+			</section>
+		</div>
+		
+	<!--目前单击我的订单的执行的函数-->	
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#myorder").click(function() {
+			var url = "{php echo $this->createMobileUrl('myorder',array('op' => '0'))}"; //我的订单页的url.  op=0时获取全部订单的信息
+			window.location.href=url;
+		});
+	});
+</script>
+		<FOOTER class="footer">
+
+			<NAV>
+
+				<UL>
+
+					<LI>
+
+						<A class="nav-controller active" href="#"><I 
+
+					  class="fa fa-home"></I>首页</A>
+
+					</LI>
+
+					<LI>
+
+						<A class="nav-controller" href="{php echo $this->createMobileUrl('mygroup',array('op'=>0));}"><I class="fa fa-group"></I>我的拼团</A>
+
+					</LI>
+
+					<LI>
+
+						<A  id="myorder" class="nav-controller" href="javascript:;"><I class="fa fa-list"></I>我的订单</A>
+
+					</LI>
+
+					<LI>
+
+						<A class="nav-controller" href="{php echo $this->createMobileUrl('person');}">
+
+							<I class="fa fa-user"></I>个人中心</A>
+
+					</LI>
+
+				</UL>
+
+			</NAV>
+
+		</FOOTER>
+	<div id="footer">
+		
+	</div>
+		
+
+	</body>
+<script>
+	wx.ready(function (){
+	var shareData = {
+		title: "{$share_data['share_title']}",
+		desc: "{$share_data['share_desc']}",
+		link: "{$to_url}",
+		imgUrl: "{$_W['attachurl']}{$share_data['share_image']}",
+	};
+//分享朋友
+	wx.onMenuShareAppMessage({
+	    title: shareData.title,
+	  	desc: shareData.desc,
+	  	link: shareData.link,
+	  	imgUrl:shareData.imgUrl,
+	  	trigger: function (res) {
+	  	},
+	  	success: function (res) {
+	    	window.location.href =adurl;
+	  	},
+	  	cancel: function (res) {
+	  	},
+	  	fail: function (res) {
+	    	alert(JSON.stringify(res));
+	  	}
+	});
+//朋友圈
+	wx.onMenuShareTimeline({
+	  	title: shareData.title,
+	  	link: shareData.link,
+	  	imgUrl:shareData.imgUrl,
+	  	trigger: function (res) {
+	  	},
+	  	success: function (res) {
+	    	window.location.href =adurl;
+	  	},
+	  	cancel: function (res) {
+	  	},
+	  	fail: function (res) {
+	    	alert(JSON.stringify(res));
+	  	}
+	});
+});
+</script>
+</html>

@@ -1,0 +1,158 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>e袋洗</title>
+<link href="../addons/water_super/template/cssn/base.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/item.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/order.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/myOrder.css" rel="stylesheet" type="text/css">
+<link href="../addons/water_super/template/cssn/footer.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../addons/water_super/template/jsn/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/page.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/klass.min.js"></script>
+<script type="text/javascript" src="../addons/water_super/template/jsn/jsAddress.js"></script>
+ <script src="../addons/water_super/template/jsn/selectAddress.js"></script>
+</head>
+<body class="Bg-white">
+ <div class="headerPlace header-address">
+      <div class="choose-time">
+        <span class="">添加地址</span>
+      </div>
+  </div> 
+<!--添加新地址-->  
+     
+    <form method="post" action="" onsubmit="return checkform();">
+        <!-- 个人基本信息-->
+        <section class="section_4">     
+            <div class="m_input m_input_5">     
+                <label for="name">姓名</label>   
+                <div class="input"><input placeholder="请填写姓名" value="董" id="username" name="username"></div>    
+            </div>    
+            <div class="m_input m_input_5">
+                <label for="mobile">手机号码</label>      
+                 <div class="input">
+                      <input placeholder="请填写手机号码" value="15318981071" id="tel" type="tel" name="tel" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">
+                </div>
+            </div>
+        </section>
+        <!-- 地址-->
+        <!-- 地址-->
+        <div class="borderD" style="margin:5px 0"></div>
+	        <section class="address_div">    
+	            <div class="m_input select y_hover">     
+	                <label for="">选择城市 </label>
+	                <div class="select y_hover"> <select id="cmbCity" class="J_city select_J_ytag" name="city"><option value="北京" selected="true">北京</option><option value="上海">上海</option><option value="深圳">深圳</option><option value="天津">天津</option><option value="武汉">武汉</option><option value="西安">西安</option><option value="南京">南京</option><option value="杭州">杭州</option><option value="苏州">苏州</option><option value="宁波">宁波</option><option value="成都">成都</option><option value="广州">广州</option><option value="青岛">青岛</option><option value="福州">福州</option><option value="无锡">无锡</option><option value="请选择城市">请选择城市</option></select> </div>    
+	            </div>    
+	            <div class="m_input select y_hover">    
+	                <label for="">选择区域</label>   
+	                <div class="select y_hover">
+                    <select id="cmbArea" class="J_area select_J_ytag" name="area"><option value="朝阳" selected="true">朝阳</option><option value="海淀">海淀</option><option value="东城">东城</option><option value="西城">西城</option><option value="丰台">丰台</option><option value="石景山">石景山</option><option value="昌平（回龙观）">昌平（回龙观）</option><option value="昌平（天通苑）">昌平（天通苑）</option><option value="通州">通州</option><option value="亦庄">亦庄</option><option value="昌平（城区）">昌平（城区）</option><option value="房山（良乡）">房山（良乡）</option><option value="大兴（黄村）">大兴（黄村）</option><option value="顺义（县城）">顺义（县城）</option></select>     
+	                </div>    
+	            </div>    
+	            <div class="m_input m_input_4">      
+	                <label for="id_pay">详细地址 </label>  
+	                <div class="input"><textarea placeholder="请填写详细地址" id="address" name="address">经济技术开发区</textarea></div>    
+	            </div>    
+	        </section>
+        <!-- 确定-->
+          <div class="white-bg">
+            <div class="m_input"><button type="submit" class="btn_order y_hover J_ytag " id="save_address" value="保存">保存</button></div> 
+          </div>  
+        <input name="sign" type="hidden" value="update">
+        <input name="washing_date" type="hidden" value="">
+        <input name="washing_time" type="hidden" value="">
+        <input name="default_id" type="hidden" value="">
+    </form>
+<!--／添加新地址-->
+	<div id="error_tip" style="display:none" class="cod">
+        <div class="wx_mask"></div>
+        <div class="wx_confirm">
+            <div class="wx_confirm_inner">
+                <div class="wx_confirm_hd">
+                    <div class="wx_confirm_tit" id="tip_div">请将地址信息填写完整</div>
+                </div>
+                <div class="wx_confirm_bd">
+                    <div class="wx_confirm_btn">
+                        <button type="button" onclick="javascript:onclose1();" class="okbtn" id="codGoPay" style="width:97%">我知道了</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="show_1"></div>
+    <div id="show_2"></div>
+
+<script type="text/javascript">
+var cityArr = ["\u5317\u4eac","\u4e0a\u6d77","\u6df1\u5733","\u5929\u6d25","\u6b66\u6c49","\u897f\u5b89","\u5357\u4eac","\u676d\u5dde","\u82cf\u5dde","\u5b81\u6ce2","\u6210\u90fd","\u5e7f\u5dde","\u9752\u5c9b","\u798f\u5dde","\u65e0\u9521","\u8bf7\u9009\u62e9\u57ce\u5e02"];
+var areaArr = [["\u671d\u9633","\u6d77\u6dc0","\u4e1c\u57ce","\u897f\u57ce","\u4e30\u53f0","\u77f3\u666f\u5c71","\u660c\u5e73\uff08\u56de\u9f99\u89c2\uff09","\u660c\u5e73\uff08\u5929\u901a\u82d1\uff09","\u901a\u5dde","\u4ea6\u5e84","\u660c\u5e73\uff08\u57ce\u533a\uff09","\u623f\u5c71\uff08\u826f\u4e61\uff09","\u5927\u5174\uff08\u9ec4\u6751\uff09","\u987a\u4e49\uff08\u53bf\u57ce\uff09"],["\u6768\u6d66\u533a","\u5b9d\u5c71\u533a","\u95f8\u5317\u533a","\u666e\u9640\u533a","\u8679\u53e3\u533a","\u9759\u5b89\u533a","\u9ec4\u6d66\u533a","\u5f90\u6c47\u533a","\u957f\u5b81\u533a","\u95f5\u884c\u533a","\u6d66\u4e1c\u65b0\u533a"],["\u5357\u5c71\u533a","\u798f\u7530\u533a","\u7f57\u6e56\u533a","\u5b9d\u5b89\u533a","\u9f99\u5c97\u533a","\u9f99\u534e\u533a","\u5e03\u5409\u533a","\u5742\u7530\u533a","\u6a2a\u5c97\u533a","\u89c2\u6f9c\u533a","\u76d0\u7530\u533a"],["\u5357\u5f00\u533a","\u6cb3\u897f\u533a","\u548c\u5e73\u533a","\u7ea2\u6865\u533a","\u6cb3\u5317\u533a","\u6cb3\u4e1c\u533a","\u4e1c\u4e3d\u533a\uff08\u73af\u5185\uff09","\u5317\u8fb0\u533a\uff08\u73af\u5185\uff09"],["\u6d2a\u5c71\u533a"],["\u9ad8\u65b0\u533a","\u83b2\u6e56\u533a","\u7891\u6797\u533a","\u96c1\u5854\u533a"],["\u79e6\u6dee\u533a","\u9f13\u697c\u533a","\u5efa\u90ba\u533a"],["\u897f\u6e56"],["\u5de5\u4e1a\u56ed\u533a"],["\u6c5f\u4e1c\u533a"],["\u6b66\u4faf\u533a","\u53cc\u6d41\u53bf"],["\u5929\u6cb3\u533a","\u8d8a\u79c0\u533a","\u8354\u6e7e\u533a\uff08\u8001\u57ce\u533a\uff09"],["\u5e02\u5357\u533a"],["\u53f0\u6c5f\u533a"],["\u5d07\u5b89\u533a","\u5357\u957f\u533a","\u6ee8\u6e56\u533a"],["\u8bf7\u5148\u9009\u62e9\u57ce\u5e02"]];
+
+$(function(){
+    var city = '北京';
+  var area = '朝阳';
+    if(city.trim() == '' || area.trim() == ''){
+    city = '请选择城市';
+    area = '请先选择城市';
+  }
+
+  selectinit(city,area,'cmbCity','cmbArea');
+  $("#save_address").attr("disabled",false); 
+})
+
+
+function checkform(){
+	var username = $("#username").val().trim();
+	var tel = $("#tel").val().trim();
+	var address = $("#address").val().trim();
+
+  var city = $('#cmbCity').val();
+  var area = $('#cmbArea').val();
+
+	if(username == ""){
+		$("#error_tip").show();
+		$("#tip_div").html("请填写姓名");
+		return false;
+	}
+	var re = /^[0-9]{11}$/;
+  if (tel == '') {
+    $("#tip_div").html("请填写手机号码");
+    $("#error_tip").show();
+    return false;
+  }else if (!re.test(tel)) {
+    $("#tip_div").html("请正确填写手机号码");
+    $("#error_tip").show();
+    return false;
+  };
+
+    if(!city || city == "" || city == '请选择城市'){
+        $("#error_tip").show();
+        $("#tip_div").html("请选择城市");
+        return false;
+    }
+
+     if(!area || area == "" || area == '请先选择城市'){
+         $("#error_tip").show();
+         $("#tip_div").html("请选择区域");
+         return false;
+    }
+
+	if(address == ""){
+		$("#tip_div").html("请填写详细地址");
+		$("#error_tip").show();
+		return false;
+	}
+
+	$("#save_address").attr("disabled",true); 
+}
+function onclose1(){
+	$("#error_tip").hide();
+	return false;
+}
+</script>
+
+</body></html>

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>{$actdetail[title]}</title>
+     {php echo register_jssdk(false);}
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link href="../addons/enjoy_circle/public/css/style.css" rel="stylesheet">
+    <script src="../addons/enjoy_circle/public/js/zepto.js"></script>
+    <script src="../addons/enjoy_circle/public/js/main.js"></script>
+</head>
+<body class="p_b50">
+<div class='grey-bg' ></div>
+
+    <header>
+        <img id="bg" src="{php echo tomedia($actdetail['bgpic'])}">
+        <p id="user_name" class="data-name">{$user['nickname']}</p>
+        <img id="avt" class="data-avt" src="{$user['avatar']}">
+    </header>
+    <div id="main">
+        <div id="list">
+        <ul class="con-box">
+        {loop $topics $item}
+            <li>
+                <div class="po-avt-wrap">
+                    <img class="po-avt data-avt" src="{php echo tomedia($this->th($item['avatar'],'',$user[avatar]))}">
+                </div>
+                <div class="po-cmt" rel="{$item[tid]}" id="id_list{$item[tid]}">
+                    <div class="po-hd">
+                        <p class="po-name"><span class="data-name">{php echo $this->th($item['nickname'],$user['nickname'],'')}</span></p>
+                        <p class="post">{php echo $this->th($item['title'],$user['nickname'],'')}{if !empty($item[pic])}<img src="{php echo tomedia($this->th($item['pic'],'',$user[avatar]))}">{/if}</p>
+                        <p class="time">{$item['time']}</p>
+                    {if $item[mycom]<1}<img class="c-icon" {if $ulist[subscribe]==0&&$actdetail[subscribe]==1} onclick="sub()"{else}id="c-icon{$item[tid]}"
+                    {/if} src="../addons/enjoy_circle/public/images/c.png"><a class="review">评论</a>{/if}
+                   
+                    <!--<img class="c-icon" id="c-icon{$item[tid]}" src="../addons/enjoy_circle/public/images/c.png"><a class="review">评论</a> -->
+                    </div>
+                    <div class="r"></div>
+                    <div class="cmt-wrap">
+  						<div class="like"><img src="../addons/enjoy_circle/public/images/l.png">{php echo $this->th($item[zan],$user['nickname'],'')}</div>
+                        <div class="cmt-list user-review-list" id="id{$item[tid]}">
+                        {loop $item[comments] $i}
+							<p my_review="{$i[review]}" cid="{$i[cid]}" id="p_{$i[cid]}" onclick="todelpop('p_{$i[cid]}')"><span>{php echo $this->th($i[nickname],$user['nickname'],'')}：</span>{php echo $this->th($i[comment],$user['nickname'],'')}</p>
+							{/loop}
+                        </div>
+                       
+                    </div>
+                      <p style="margin-top:0.5rem"><a class="ad-link" {if $ulist[subscribe]==0&&$actdetail[subscribe]==1}onclick="sub()"{else} href="{php echo $this->createMobileUrl('more',array('tid'=>$item['tid'],'uid'=>$user[uid]))}" {/if}>更多评论</a></p>
+                </div>
+            </li>
+            {/loop}
+          <!--   {if $ulist['subscribe']==1}
+            <a href="{php echo $this->createMobileUrl('choice',array('uid'=>$user[uid]))}" style="position: fixed;bottom:50%;right:10px;width:10%;height:auto;border-radius: 5px;background-color: #26337e;color: #ffffff;text-align: center;display: inline-block;line-height:30px;font-size: 14px;">选<br>择<br>话<br>题</a> 
+            
+            {/if}--> 
+            <!-- <li>
+                <div class="po-avt-wrap">
+                    <img class="po-avt" src="../addons/enjoy_circle/public/images/a1.jpg">
+                </div>
+                <div class="po-cmt" rel="id2_list2" id="id2_list2">
+                    <div class="po-hd">
+                        <p class="po-name">苍井空</p>
+                        <p class="post">早上好，还是好困~<img src="../addons/enjoy_circle/public/images/c1.jpg"></p>
+                        <p class="time">2分钟前</p><img class="c-icon" src="../addons/enjoy_circle/public/images/c.png"><a class="review">评论</a>
+                    </div>
+                    <div class="r"></div>
+                    <div class="cmt-wrap">
+                        <div class="cmt-list" id="id2">
+                        <p ><span>陈赫：</span>怪我咯~</p>
+                        <p ><span>陈冠希：</span>怪我咯~</p>
+                        <p ><span class="data-name">enjoy</span><span>：</span>怪我咯~</p>
+                        <p ><span>苍井空</span>回复<span class="data-name">enjoy</span><span>：</span>知道就好！</p>
+                        </div>
+                    </div>
+                </div>
+            </li> -->
+
+<!-- <li>
+                
+                <div class="po-cmt">
+                   <img src="{php echo tomedia($actdetail[ewm])}">
+                   <p class="btnShare">长按关注&nbsp;<a href="{$actdetail['sucai']}" style="text-decoration:underline;">{$_W['account']['name']}</a>，传递快乐！</p>
+                </div>
+            </li>  -->
+                        <li>
+                <div class="po-avt-wrap">
+                    <img class="po-avt" src="../addons/enjoy_circle/public/images/a5.png">
+                </div>
+                <div class="po-cmt">
+                    <div class="po-hd">
+                         <p class="ads">推广<img src="../addons/enjoy_circle/public/images/ads.png"></p>
+                        <p class="po-name">微信圈</p>
+                        <div class="post">关注{$_W['account']['name']}，查看更多
+                            <p><a class="ad-link" href="{$actdetail['sucai']}">查看详情 <img src="../addons/enjoy_circle/public/images/link.png"></a></p>
+                            <img src="{php echo tomedia($actdetail[ewm])}"></div>
+                        <p class="time">很久前</p><!--  <img class="c-icon" src="../addons/enjoy_circle/public/images/c.png">-->
+                    </div>
+                    <div class="r"></div>
+                    <div class="cmt-wrap">
+                        <div class="like"><img src="../addons/enjoy_circle/public/images/l.png">范冰冰，李晨，刘强东，...</div>
+                        <div class="cmt-list">
+                        <p><span>范冰冰：</span>新玩意？</p>
+                        <p><span>李晨</span>回复<span>范冰冰 ：</span>听说长按关注后可以查看更多话题。</p>
+                        </div>
+                    </div>
+                </div>
+            </li>   
+
+
+        </ul>    
+    </div>
+ 
+    </div>
+
+     <!--弹框-->
+    <div class="mask close" style="overflow: hidden; display: none;">
+    </div>
+    <div id="shareGuideWx" class="guideBox guideBox-2" style="overflow: hidden; display: none;">
+        <div class="inner">
+           <a href="{$actdetail[exurl]}"> <img style="width:50%;padding-top:20%" src="{php echo tomedia($actdetail[expic])}"  alt="">
+            <p style="font-size:2rem;color:#d93710;text-align:center;">{$actdetail[extitle]}</p></a>
+        </div>
+        <!--/inner-->
+    </div>
+    <div id="shareGuideWx1" class="guideBox guideBox-2" style="overflow: hidden; display: none;">
+        <div class="inner">
+           <img style="width:50%;padding-top:20%" src="{php echo tomedia($actdetail[ewm])}"  alt="">
+            <p style="font-size:2rem;color:#d93710;text-align:center;">长按识别二维码关注<br>
+            <a style="text-decoration:underline;" href="{$actdetail[sucai]}">{$_W[account][name]}</a></p>
+        </div>
+        <!--/inner-->
+    </div>
+     <div id="share">
+            <a {if $ulist[subscribe]==0&&$actdetail[subscribe]==1}onclick="sub()"{else}
+            href="{php echo $this->createMobileUrl('entry',array('uid',$ulist['uid']))}" 
+            {/if}>生成朋友圈</a><a id="sharez">惊呆小伙伴</a>
+            <p>（此朋友圈纯属虚构）</p>
+        </div>
+        <div id="guide" class="hide"></div>
+    
+	<div class="lodding"></div>
+	<!--评论输入-->
+	<div class="bottom_review">
+		<input type="text" value="" class="txt_review" /><div class="btn_box"><a class="submit_btn">发送</a></div>
+	</div>
+	
+	<script type="text/javascript" >
+	function sub(){
+		showThiBox('#shareGuideWx1');
+        $('.mask').addClass('close');
+		
+	}
+	$(document).ready(function(){
+		$(document).click(function (e) {
+			var drag = $(".bottom_review"),
+				dragel = $(".bottom_review")[0],
+				target = e.target;
+			if (dragel !== target && !$.contains(dragel, target)) {
+				drag.hide();
+			}
+		});
+		$("#sharez").click(function(){
+			$("#guide").show();
+		})
+		// 评论按钮显示
+		$(document).on("click", ".po-cmt .c-icon", function(event) {
+					$(this).parents(".po-hd").find(".review").show();
+		});
+		// 评论输入激活
+		$(document).on("click", ".review", function(event) {
+					var  index = $(this).parents(".po-cmt").attr("rel");
+					$(this).hide();
+					$(".txt_review").val("");	
+					$(".bottom_review").show();
+					$(".txt_review").focus();
+					$(".bottom_review").attr("rel",index);
+					setTimeout(function(){
+						fixedinput();
+					},500)
+					 
+		});
+
+		
+		// 弹出灰层点击隐藏
+		$(".grey-bg").click(function(){
+			 $(".pop_del").hide();
+	         $(this).hide();
+		})
+		
+		// 评论详情删除点击
+		$(document).on("click", ".p_img_del", function(event) {
+			$(this).parents(".po-cmt").find(".post").remove();
+			
+			// ajax code---------------
+			 ajax_fn.detail_del_ajax(id,data);
+			// ajax code---------------			 
+			// $(this).hide();
+		});
+		
+		//提交评论数据 AJAX
+		$(".submit_btn").click(function(){
+				
+			var id = $(this).parents(".bottom_review").attr("rel");
+			var username =  $("#user_name").text();
+			var data = $(".txt_review").val();
+			$("#id_list"+id).find(".cmt-wrap div").addClass("cmt-list");
+			$("#id_list"+id).find(".r").show();
+
+			 ajax_fn.review_ajax(id,data);
+			$(".bottom_review").hide();
+		})
+		
+	
+		
+			
+		// 评论删除点击删除 AJAX
+		$(document).on("click", ".pop_del", function(event) {
+				var rel = $(this).attr("rel");
+				var arry = rel.split(" ");
+				var cid = $(this).attr("cid_box");
+			    $("#"+arry[0] +" p").eq(arry[1]).remove();
+			
+				popConfirm.hide();
+				
+				// ajax code---------------
+				ajax_fn.del_ajax(cid);
+				// ajax code---------------
+				
+				//清理样式
+				cmtList(arry[0]);
+		});
+	});
+
+
+	var  ajax_fn = {
+
+		//删除 AJAX 	
+		del_ajax:function(d_id){
+			     $.ajax({
+					 type: "GET",
+					 url: "{php echo $this->createMobileUrl('delcomment')}",
+					 data: {"cid":d_id},
+					 dataType: "json",
+					 success: function(data){
+						 var tid=data['tid'];
+						 $("#c-icon"+tid).show();
+					 }
+				 });
+	  
+			
+		},
+		//回复 AJAX 
+		review_ajax:function(d_id,d_cont){
+				  $.ajax({
+					 type: "GET",
+					 url: "{php echo $this->createMobileUrl('comment')}",
+					 data: {"id":d_id, "cont":d_cont},
+					 dataType: "json",
+					 success: function(data){	
+						 var fuc=data.fuc
+							var cid=data['cid'];
+							var tid=data['tid'];
+							var username =data['nickname'];
+							var data =data['comment'];
+							//var fuc =data.fuc;
+							
+							var my_review ="1";
+							$("#id_list"+d_id).find(".user-review-list").append("<p my_review='"+my_review+"' cid='"+cid+"' id='p_"+cid+"' onclick="+fuc+"><span>"+username+"：</span>"+data+"</p>");
+							$("#c-icon"+tid).hide();
+					 }
+				 });
+		},
+		//删除AJAX 
+		detail_del_ajax:function(d_id,d_cont){
+			var cid=$(this).attr("cid");
+				  $.ajax({
+					 type: "GET",
+					 url: "{php echo $this->createMobileUrl('delcomment')}",
+					 data: {"cid":cid},
+					 dataType: "json",
+					 success: function(data){
+						
+						
+					 }
+				 });
+		}
+	}
+
+
+	
+		//评论删除弹出层
+		function todelpop(pid){
+
+			if($("#"+pid).attr("my_review") == 1){
+				var id = $("#"+pid).parents(".user-review-list").attr("id");
+				var index = $("#"+pid).index() ;
+				popConfirm.show(id+" "+index);
+				var cid = $("#"+pid).attr("cid");
+				$(".pop_del").attr("cid_box",cid);
+
+			}
+		}
+		
+
+	//清理样式
+	function cmtList(obj){
+		 if($("#"+obj +" p").length == 0){
+			 $("#"+obj ).removeClass("cmt-list");
+			$("#"+obj ).parents(".po-cmt").find(".r").hide();
+		}
+	}
+
+	//弹出层
+	var popConfirm={
+	    yesfn:function(){
+
+	    },
+	    show:function(index){
+	      var html="";
+
+	        html="<div class='pop_del' rel='"+index+"'>删除</div>"
+
+	        $("body").append(html);
+	        $(".grey-bg").show();
+	    },
+	    hide:function(){
+	        $(".pop_del").hide();
+	        $(".grey-bg").hide();
+	    }
+	}
+
+	//下拉加载
+	var pagescroll = {
+	    check:true,
+	    addHTML:"",
+	    cls:null,
+	    index:2,
+	    ajax_fn:function(){
+
+	    },
+	    // 初始化
+	    init:function(cls) {
+	        this.cls = cls;
+	        $(".lodding").show();
+	        $(window).bind('scroll',function(){pagescroll.show()});
+	    },
+	    // 加载
+	    show:function() {
+
+	        if($(window).scrollTop()+$(window).height()+200>=$(document).height()){
+	            pagescroll.ajaxRead();
+	        }
+	    },
+	    ajaxRead:function() {
+
+	        if(pagescroll.check){
+	            pagescroll.check = false;
+	            $('.lodding').show();
+	            pagescroll.ajax_fn();
+
+	        }
+	    },
+	    // 填充数据
+	    setHtml:function(data) {
+	        if(data == 0){
+	            pagescroll.loadedEnd("已经全部显示");
+	            return;
+	        }
+	        $(".lodding").hide();
+	        $(this.cls).append(data);
+	        pagescroll.check = true;
+	    },
+	    // 加载结束
+	    loadedEnd:function(msg){
+	        $('.lodding').html(msg);
+	        $('.lodding').addClass("正在加载..");
+	    },
+	    // 加载错误
+	    error:function(msg){
+	        pagescroll.check = false;
+	    }
+	};
+		// 下拉AJAX	
+        pagescroll.ajax_fn=function(){
+
+            $.ajax({
+                type: "post",
+               // url: "../addons/enjoy_circle/public/js/json.js",
+                dataType: "json",
+                success: function (data) {
+                    var tempArr = [],HTML;
+                    pagescroll.index = pagescroll.index -1;
+                    if(pagescroll.index == 0){
+                        pagescroll.setHtml("");
+                        return false;
+                    }
+                    $.each( data, function(index, content)
+                    {
+                        var inHtml = [" <li>",
+								"                <div class=\"po-avt-wrap\">",
+								"                    <img class=\"po-avt\" src="+content.poAvt+">",
+								"                </div>",
+								"                <div class=\"po-cmt\" rel="+content.id+" id="+content.id+">",
+								"                    <div class=\"po-hd\">",
+								"                        <p class=\"po-name\">"+content.poName+"</p>",
+								"                        <p class=\"post\">"+content.post.text+"<img src="+content.post.img+"></p>",
+								"                        <p class=\"time\">"+content.time+"</p><img class=\"c-icon\"  id=\"c-icon{$item[tid]}\" src=\"../addons/enjoy_circle/public/images/c.png\"><a class=\"review\">评论</a>",
+								"                    </div>",
+								"                    <div class=\"r\" style='display:none'></div>",
+								"                    <div class=\"cmt-wrap\" >",
+								"					 <div id=" +content.id+'cmtwarp' +"></div>",
+								"                    </div>",
+								"                </div>",
+								"            </li>"].join("");
+                        tempArr.push(inHtml);
+
+                    });
+                    HTML = tempArr.join('');
+                    pagescroll.setHtml(HTML);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                   // console.log(errorThrown);
+                }
+            });
+
+       }
+
+        /*  page lodding  */
+       pagescroll.init(".con-box");
+       function showThiBox(elem) {
+           var w, h, mt, ml;
+           $('.mask').show(0);
+           $(elem).show(0);
+           w = $(elem).width();
+           h = $(elem).height();
+           mt = h / 2;
+           ml = w / 2;
+           //$(elem).css({'margin-top': -mt, 'margin-left': -ml});
+       }
+       wx.ready(function () {
+    	    sharedata = {
+    	    	title : "{$sharetitle}",
+    	   		link :  "{$sharelink}",
+    	   		desc : "{$sharecontent}",
+    	    	imgUrl:"{php echo tomedia($actdetail[share_icon])}",
+    	      success: function(){
+    	    	// ajax返回加机会
+    	    	  showThiBox('#shareGuideWx');
+    	          $('.mask').addClass('close');
+    	      },
+    	      cancel: function(){
+    	    	//  alert(2);
+    	      }
+    	    };
+    	    wx.onMenuShareAppMessage(sharedata);
+    	    wx.onMenuShareTimeline(sharedata);
+    	    wx.onMenuShareQQ(sharedata);
+    	    wx.onMenuShareWeibo(sharedata);
+    	  });
+	
+		  if(testiphone()){
+		   $(window).scroll(function(){
+			$(".bottom_review").css({"position":"absolute"});
+			  // 重点就是下面这一条语句的实现
+			 $(".bottom_review").css({top: window.innerHeight + window.scrollY - 40 });    
+		  });    
+		  }
+		  
+		  function fixedinput(){
+			  if(testiphone()){		
+				$(".bottom_review").css({"position":"absolute"});
+				 $(".bottom_review").css({top: window.innerHeight + window.scrollY - 40 });    	
+			 }
+		  }
+		  
+		  function testiphone(){
+		  
+			var u = navigator.userAgent, app = navigator.appVersion;
+			var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+			var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+			return isiOS;
+		  }
+    </script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+{template 'common/header'}
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=6E7C75E41980283b39d3c61e81f16a39"></script>
+<link rel="stylesheet" type="text/css" href="../addons/str_takeout/template/resource/css/main.css">
+<header>
+	<div class="search">
+		<input type="text" value="" id="searchTxt" placeholder="搜索店名">
+	</div>
+</header>
+<div id="position" style="background:#eeeeee;color:#888888;padding-left:10px;line-height:30px;font-size:12px;display:none">定位中...</div>
+<div id="allmap"></div>
+<div id="lat" class="hide"></div>
+<div id="lng" class="hide"></div>
+<div class="container">
+	<section>
+		<ul class="store_list">
+			<div id="storeList"></div>
+			<li class="text-center" style="color:#ff510c" id="more" data-page="1"><i class="fa fa-plus-circle"></i> 加载更多数据</li>
+		</ul>
+	</section>
+	<footer class="order_btns">
+		<div class="fixed">
+			<a href="" class="on"><i class="ico_takeout"></i>叫外卖</a>
+			<a href="{php echo $this->createMobileUrl('myorder');}"><i class="ico_order"></i>我的订单</a>
+		</div>
+	</footer>
+</div>
+
+<script type="text/javascript">
+	function getFlatternDistance(lat1,lng1,lat2,lng2){
+		var EARTH_RADIUS = 6378137.0;	//单位M
+		var PI = Math.PI;
+
+		function getRad(d){
+			return d*PI/180.0;
+		}
+
+		var f = getRad((lat1 + lat2)/2);
+		var g = getRad((lat1 - lat2)/2);
+		var l = getRad((lng1 - lng2)/2);
+		
+		var sg = Math.sin(g);
+		var sl = Math.sin(l);
+		var sf = Math.sin(f);
+		
+		var s,c,w,r,d,h1,h2;
+		var a = EARTH_RADIUS;
+		var fl = 1/298.257;
+		
+		sg = sg*sg;
+		sl = sl*sl;
+		sf = sf*sf;
+		
+		s = sg*(1-sl) + (1-sf)*sl;
+		c = (1-sg)*(1-sl) + sf*sl;
+		
+		w = Math.atan(Math.sqrt(s/c));
+		r = Math.sqrt(s*c)/w;
+		d = 2*w*a;
+		h1 = (3*r -1)/2/c;
+		h2 = (3*r +1)/2/s;
+		
+		return d*(1 + fl*(h1*sf*(1-sg) - h2*(1-sf)*sg));
+	}
+	var map = new BMap.Map("allmap");
+	var point = new BMap.Point(116.331398,39.897445);
+	map.centerAndZoom(point,12);
+
+	var geolocation = new BMap.Geolocation();
+	geolocation.getCurrentPosition(function(r){
+		if(this.getStatus() == BMAP_STATUS_SUCCESS){
+			var mk = new BMap.Marker(r.point);
+			//console.info('您的位置：'+r.point.lng+','+r.point.lat);
+			$('.url').each(function(){
+				var loca_x =$(this).attr('data-locax');
+				var loca_y =$(this).attr('data-locay');
+				if(loca_x && loca_y) {
+					var dist = getFlatternDistance(parseFloat(r.point.lat), parseFloat(r.point.lng), parseFloat(loca_x), parseFloat(loca_y));
+					dist = dist > 1000 ? ((dist/1000).toFixed(2) +' KM') : (parseInt(dist) + " M");
+					$(this).find('.ml13').html('<i class="ico_addres"></i>距离：' + dist);
+				}
+				$(this).removeClass('no-position');
+			});
+			$('#lat').html(r.point.lat);
+			$('#lng').html(r.point.lng);
+			$('#position').hide();
+		}
+		else {
+			$('#position').hide();
+		}
+	},{enableHighAccuracy: true});
+
+	function init(){
+		var lat = $('#lat').html();
+		var lng = $('#lng').html();
+		if(lat && lng) {
+			$('.no-position').each(function(){
+				var loca_x =$(this).attr('data-locax');
+				var loca_y =$(this).attr('data-locay');
+				if(loca_x && loca_y) {
+					var dist = getFlatternDistance(parseFloat(lat), parseFloat(lng), parseFloat(loca_x), parseFloat(loca_y));
+					dist = dist > 1000 ? ((dist/1000).toFixed(2) +' KM') : (parseInt(dist) + " M");
+					$(this).find('.ml13').html('<i class="ico_addres"></i>距离：' + dist);
+				}
+			});
+		}
+		$('#position').hide();
+	}
+
+	$(function(){
+		var pattern = /[`~!@#$%^&*()=|{}':;',\\.<>《》\/?~！@#￥……&*（）—|{}【】‘；：”“'。，、？]/;
+		$('#searchTxt').on('keydown', function(e){
+			if(e.keyCode == 13){
+				var search_content = $.trim($("#searchTxt").val());
+				var pattern = /[`~!@#$%^&*()=|{}':;',\\.<>《》\/?~！@#￥……&*（）—|{}【】‘；：”“'。，、？]/;
+				if(pattern.test(search_content)){
+					alert('搜索关键字不能包含特殊字符');
+					return false;
+				}			
+				$.post('{php echo $this->createMobileUrl("index")}', {'key' : search_content, 'page' : 1}, function(data){
+					var data = $.parseJSON(data);
+					if(data.code == 1) {
+						$('#position').show();
+						$('#storeList').html(data.str);
+						$('#more').attr('data-page', data.page);
+						$('#more').html('<i class="fa fa-plus-circle"></i> 加载更多数据');
+						init();
+					} else {
+						$('#more').attr('data-page', -1);
+						$('#storeList').html(data.str);
+						$('#more').html('<i class="fa fa-info-circle"></i> 没有符合条件的记录');
+					}
+				});
+			}
+		});
+		$.post('{php echo $this->createMobileUrl("index")}', {'key' : '', 'page' : 1}, function(data){
+			var data = $.parseJSON(data);
+			if(data.code == 1) {
+				$('#position').show();
+				$('#page').attr('data-id', data.page);
+				$('#storeList').append(data.str);
+			}
+		});
+		$(document).on('click', '#more', function(){
+			var page = $(this).attr('data-page');
+			page = parseInt(page);
+			if(page == '-1') return false;
+			var key = $.trim($("#searchTxt").val());
+			$.post('{php echo $this->createMobileUrl("index")}', {'key' : key, 'page' : page + 1}, function(data){
+				var data = $.parseJSON(data);
+				if(data.code == 1) {
+					$('#position').show();
+					$('#storeList').append(data.str);
+					$('#more').attr('data-page', data.page);
+					init();
+				} else {
+					$('#more').attr('data-page', -1);
+					$('#more').html('<i class="fa fa-info-circle"></i> 已加载全部数据');
+				}
+			});
+		});
+
+		$(document).on('click', '.url', function(){
+			location.href = $(this).attr('data-url');
+			return false; 
+		});
+	});
+</script>
+{template 'common'}
+{template 'common/footer'}

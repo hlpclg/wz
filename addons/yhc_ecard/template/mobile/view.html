@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{$item["name"]}的名片</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+    <link rel="stylesheet" href="../addons/yhc_ecard/template/mobile/styles/all-min.css">
+     {php echo register_jssdk(false);} 
+</head>
+<body class="view">
+    <div class="header">
+        <img src="{$avatar}" class="avatar">
+        <p class="name">{$item['name']}</p>
+        {if !empty($item["company"])}<p class="corp">公司：{$item['company']}</p>{/if}
+        {if !empty($item["position"])}<p class="position">职位：{$item['position']}</p>{/if}
+        <a href="javascript:;" class="qr icon-base js_qr" data-url="{php echo $this->createMobileUrl("qr",array("url" => $url),true)}">&#xe602;</a>
+    </div>
+    <div class="weui_cells">
+        {if !empty($item["mobile"])}<div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">移动电话</label></div>
+            <div class="weui_cell_bd weui_cell_primary"><a href="tel:{$item['mobile']}">{$item['mobile']}</a>
+            </div>
+        </div>{/if}
+        {if !empty($item["phone"])}<div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">工作电话</label></div>
+            <div class="weui_cell_bd weui_cell_primary"><a href="tel:{$item['phone']}">{$item['phone']}</a>
+            </div>
+        </div>{/if}
+        {if !empty($item["address"])}<div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">工作地址</label></div>
+            <div class="weui_cell_bd weui_cell_primary">{$item['address']}
+            </div>
+        </div>{/if}
+        {if !empty($item["email"])}<div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">电子邮箱</label></div>
+            <div class="weui_cell_bd weui_cell_primary"><a href="mailto:{$item['email']}">{$item['email']}</a>
+            </div>
+        </div>{/if}
+        {if !empty($item["website"])}<div class="weui_cell">
+            <div class="weui_cell_hd"><label class="weui_label">网站</label></div>
+            <div class="weui_cell_bd weui_cell_primary"><a href="{$item['website']}">{$item['website']}</a>
+            </div>
+        </div>{/if}
+    </div>
+    {if $mode == "anonymousCollect"}
+    {if $openid != $item["openid"]}
+    <div class="page button spacing">
+        <a href="javascript:;" class="weui_btn weui_btn_primary" onclick="collect()">收藏</a>
+    </div>
+    <script>
+    function collect(){
+        $.ajax({
+            url : "{php echo $this->createMobileUrl("collect",array("seq" => $_GPC['seq']),true)}",
+            type : "post",
+            dataType : "json",
+            data : $("#form").serialize(),
+            success : function(json){
+                if(json.success){
+                    showToast("已收藏" , function(){
+                        location.href = "{php echo $this->createMobileUrl("pocketList")}";
+                    });
+                }
+            }
+        });
+    }
+    </script>
+    {/if}
+    {elseif $mode == "pocketAnonymous"}
+    <div class="page button spacing">
+        <a href="{php echo $this->createMobileUrl("pocketForm",array("seq" => $_GPC['seq']),true)}" class="weui_btn weui_btn_primary">收藏</a>
+    </div>
+    {elseif $mode == "collectView"}
+    <div class="page button spacing">
+    </div>
+    {elseif $mode == "pocketEdit"}
+    <div class="page button spacing">
+        <a href="{php echo $this->createMobileUrl("pocketForm",array("id" => $item["id"]),true)}" class="weui_btn weui_btn_primary">修改</a>
+        <a href="javascript:;" class="weui_btn weui_btn_warn" onclick="callApi.call(this , true)" data-confirm="是否删除该名片？" data-url="{php echo $this->createMobileUrl("pocketDelete" , array('id' => $item["id"]) , true)}">删除</a>
+    </div>
+    {/if}
+    <script src="https://res.wx.qq.com/open/libs/zepto/1.1.6/zepto.js"></script>
+    <script src="../addons/yhc_ecard/template/mobile/scripts/base-min.js"></script>
+    <script>
+    function callApi (confirm) {
+
+        var thix = this,
+            $mod = $(thix);
+
+        if(confirm){
+            showConfirm("请确认" , $mod.data("confirm") , function(){
+                callApi.call(thix);
+            });
+            return;
+        }
+
+        var url = $mod.data("url");
+        $.ajax({
+            url : url,
+            dataType : "json",
+            success : function(json){
+                location.href = "{$url}";
+            }
+        })
+    }
+    wx.ready(function () {
+        sharedata = {
+            title: '{$item['name']}的名片',
+            desc: '{$item['company']}',
+            link: '{$url}',
+            imgUrl: '{$avatar}'
+        };
+        wx.onMenuShareAppMessage(sharedata);
+    });
+    </script>
+</body>
+</html>

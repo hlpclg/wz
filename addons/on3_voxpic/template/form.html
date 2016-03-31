@@ -1,0 +1,49 @@
+	<div class="panel panel-default">
+			<div class="panel-heading">
+				留声墙基础设置
+			</div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span> 活动标题</label>
+					<div class="col-sm-9 col-xs-12">
+						<input class="form-control" type="text" name="dat[title]" value="{$dat['title']}" />
+						<span class="help-block">活动标题</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span> 欢迎语</label>
+					<div class="col-sm-9 col-xs-12">
+						<textarea style="height:200px;" class="form-control richtext" name="dat[welcome]" cols="70" id="txt1">{$dat['welcome']}</textarea>
+						<span class="help-block">首次进入欢迎语以及活动说明细则</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span> 提示语I</label>
+					<div class="col-sm-9 col-xs-12">
+						<textarea style="height:200px;" class="form-control richtext" name="dat[txt_note]" cols="70" id="txt1">{$dat['txt_note']}</textarea>
+						<span class="help-block">发送照片描述的提示语</span>
+					</div>
+				</div>
+								<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span> 提示语II</label>
+					<div class="col-sm-9 col-xs-12">
+						<textarea style="height:200px;" class="form-control richtext" name="dat[voc_note]" cols="70" id="txt1">{$dat['voc_note']}</textarea>
+						<span class="help-block">发送语音的提示语</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span> 软文链接</label>
+					<div class="col-sm-9 col-xs-12">
+						<input class="form-control" type="text" name="dat[url]" value="{$dat['url']}" />
+						<span class="help-block">活动软文链接</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-12 col-sm-3 col-md-2 control-label"><span class="text-danger">*</span> 退出关键字</label>
+					<div class="col-sm-9 col-xs-12">
+						<input class="form-control" type="text" name="dat[quit]" value="{$dat['quit']}" />
+						<span class="help-block">退出时输入的关键字</span>
+					</div>
+				</div>
+			</div>
+	</div>

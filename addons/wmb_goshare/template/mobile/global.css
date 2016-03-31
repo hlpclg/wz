@@ -1,0 +1,185 @@
+/*--base css--*/
+/* * {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+   -webkit-touch-callout: none;
+}
+*/
+
+article, aside, details, figcaption, figure, footer, header, hgroup,  nav, section, summary {
+    display: block; }
+
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%; }
+
+a:focus {
+    outline: thin dotted; }
+
+a:active, a:hover {
+    outline: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%; }
+
+img {
+    border: 0;
+    vertical-align: middle; }
+
+button, input, select, textarea {
+    font-size: 100%;
+    margin: 0; }
+
+button, input {
+    line-height: normal; }
+
+button, select {
+    text-transform: none; }
+
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer; }
+
+button[disabled], html input[disabled] {
+    cursor: default; }
+
+input[type="checkbox"], input[type="radio"] {
+    box-sizing: border-box;
+    padding: 0; }
+
+input[type="search"] {
+    -webkit-appearance: textfield;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box; }
+
+input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none; }
+
+button::-moz-focus-inner, input::-moz-focus-inner {
+    border: 0;
+    padding: 0; }
+
+
+textarea {
+    overflow: auto;
+    vertical-align: top;
+    resize: vertical; }
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0; }
+/*default element style*/
+input:focus, textarea:focus {
+    outline: none; }
+
+body, pre, button, input, select, textarea {
+    /*\5FAE\8F6F\96C5\9ED1=microsoft yahei,\5b8b\4f53=song ti*/
+    font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif; }
+
+.cerform_itxt, textarea {
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    -webkit-appearance: none; }
+
+body {
+    font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+    color: #000;
+    font-size: 12px;
+    line-height: 1.5;
+    margin:0;
+    padding:0;
+
+}
+
+a {
+    text-decoration: none;
+    color: #1f6998; }
+
+a:active {
+    color: #1f6997; }
+
+/*页面样式*/
+
+.container_p {
+    font-size: 14px;
+    line-height: 25px;
+    margin: 0;
+    padding: 10px 10px 20px 10px;
+    line-height: 20px;
+    border-top:1px solid #fff;
+    border-bottom:1px solid #d0d7dd;
+    color:#4f4f4f;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.container_p2 {
+    font-size: 14px;
+    line-height: 25px;
+    margin:0;
+    padding:10px;
+    line-height: 20px;
+    border-top:1px solid #fff;
+    color:#4f4f4f;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.container_p3 {
+    font-size: 14px;
+    line-height:30px;
+    margin:0;
+    padding:0 10px;
+    color:#4f4f4f;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+.act_rule_phone {
+    background: linear-gradient(to bottom, #ffffff 0px, #fafafa 6%, #efefef 50%, #e1e1e1 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #d7d7d8;
+    border-radius: 4px;
+    color: #474747;
+    float: right;
+    height: 28px;
+    line-height: 28px;
+    margin-top: 3px;
+    padding-left: 25px;
+    padding-right: 10px;
+    position: relative;
+    text-decoration: none;
+}
+.act_rule_phone_img {
+    background: url(pic_r_5.png) no-repeat scroll 0 0;
+    background-size:11px 11px;
+    -webkit-background-size:11px 11px;
+    height: 11px;
+    left: 10px;
+    position: absolute;
+    top: 9px;
+    width: 11px;
+}
+.b_img{
+    position:relative;
+    padding:40px 0 20px 0;
+    border-bottom:1px solid #d0d7dd;
+    height:84px;
+}
+.b_img_i{
+    position:absolute;
+    width:76px;
+    height:84px;
+    margin-left:-38px;left:50%;
+}
+.b_img_i0{
+    position:absolute;
+    width:48px;
+    height:48px;
+    margin-left:-38px;left:50%;
+    margin-top:18px;
+}
+.warm_txt{
+    color: #cc0000;
+    font-weight: bold;
+    font-size:18px;
+    left: 50%;
+    line-height: 84px;
+    margin-left: 15px;
+    position: absolute;
+}
+

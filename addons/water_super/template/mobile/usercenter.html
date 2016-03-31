@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<meta content="" name="pgv">
+<title>{$systeminfo['shopname']}</title>
+<link rel="stylesheet" type="text/css" href="../addons/water_super/template/css/card.css" media="all">
+<link href="../addons/water_super/template/css/footer.css" rel="stylesheet" type="text/css">
+</head>
+<body id="card" ondragstart="return false;" onselectstart="return false;">
+ <div>
+<style>
+
+.edaixi_logo {
+    position: absolute;
+    top: 16%;
+    left: 4%;
+    height: 70px;
+}
+</style>
+	<div class="card" id="icard" style="font-size:0;margin-bottom: 8px">
+		<img src = "{$_W['attachurl']}{$systeminfo['cardlogo']}" class="card-bg-card">
+  <!-- <img src="http://cdnwx.edaixi.com/1437612619/framework/style/images/my_icard.png" class="card-bg-card"> -->
+  <!-- <img src="http://cdnwx.edaixi.com/1437612619/framework/style/images/edaixi_logo.png" class="edaixi_logo"> -->
+    <h1 class="tex">会员卡号{if empty($member['mobile'])}{$userinfo['cardnumber']}{else}{$member['mobile']}{/if}</h1>
+
+	</div> 
+</div> 
+
+<div class="cardexplain">
+	<ul class="round operate navlist" style="border-radius:0 0 10px 10px;border-top:0">
+		<li>
+	      	<div class = "list-titel no-img">
+				<img alt=" " src="../addons/water_super/template/images/money_icon2.png">当前余额 
+	        	<b style="color:#f7ba5b;font-weight:300" class="no-img">￥{$yue}</b>
+					<a href = "{php echo $this->createMobileUrl('recharge', array())}" class="link-chongzhi" style="padding:5px 0;">充值</a>
+	        </div>
+		</li> 
+		<li>
+	      	<div class = "list-titel no-img">
+				<img alt=" " src="../addons/water_super/template/images/bank_icon2.png">当前积分 
+	        	<b style="color:#f7ba5b;font-weight:300" class="no-img">${$jifen}</b>
+					<!-- <a href = "{php echo $this->createMobileUrl('chongzhi', array())}" class="link-chongzhi" style="padding:5px 0;">充值</a> -->
+	        </div>
+		</li> 		 
+<!-- 		<li>
+        <a href = "{php echo $this->createMobileUrl('youhuiquan', array())}">
+          <div class = "list-titel no-img">						 
+    				<img alt="" src="../addons/water_super/template/images/e_my_icon_coupon@2x.png">优惠券
+    				<img alt="" src="../addons/water_super/template/images/e_my_icon_next@2x.png" class="icon-right-card">
+          </div>
+        </a>
+		</li> -->
+<!-- 		<li>
+          <div class = "list-titel no-img">
+		    <img alt="" src="../addons/water_super/template/images/e_my_icon_next@2x.png" class="icon-right-card">
+            <img alt="" src="../addons/water_super/template/images/e_my_icon_card@2x.png">
+            <span style="background:none">升级VIP会员</span>
+          </div>
+    	</li> -->
+		<li>
+			<a href = "{php echo $this->createMobileUrl('Uaddress');}">
+        	<div class = "list-titel no-img">
+  				<img alt="" src="../addons/water_super/template/images/address_icon2.png">常用地址
+  				<img alt="" src="../addons/water_super/template/images/e_my_icon_next@2x.png" class="icon-right-card">
+        	</div>
+      		</a>
+		</li>
+		<li>
+				<div class = "list-titel no-img">
+					<img alt=" " src="../addons/water_super/template/images/hotline_icon2.png">客服微信<b style="padding-left:20px">{$systeminfo['kefuwx']}</b>
+				</div>
+		</li> 
+		<li>
+				<a href = "tel:{$systeminfo['kefutel']}">
+					<div class = "list-titel no-img">
+						<img alt=" " src="../addons/water_super/template/images/service.png">
+						
+							<a href="tel:{$systeminfo['kefutel']}">服务热线<b style="padding-left:20px">{$systeminfo['kefutel']}</b></a>
+						
+						
+						
+					</div>
+				</a>
+		</li>
+		<li>
+			<a href = "{$systeminfo['yjfkurl']}">
+        	<div class = "list-titel no-img">
+  				<img alt="" src="../addons/water_super/template/images/opinion_icon2.png">意见反馈
+  				<img alt="" src="../addons/water_super/template/images/e_my_icon_next@2x.png" class="icon-right-card">
+        	</div>
+      		</a>
+		</li>		 
+	</ul>
+</div>
+  
+    <!-- ／我的订单 -->
+   <footer>
+  <div class="fix-bottom"></div>
+    <div class="bottomBox">
+        <div class="indexMsg">
+            <div class="indexMenu">
+                	<a href="{php echo $this->createMobileUrl('index', array())}"><span class=" home-index">首页</span></a>
+                	<a href="{php echo $this->createMobileUrl('ordering', array('openid' => $item['id']))}"><span class=" Order-index">订单</span></a>
+                	<a href="{php echo $this->createMobileUrl('usercenter', array('openid' => $item['id']))}"><span class="card-index-active">我的</span></a>
+              </div>
+        </div>
+    </div>
+</footer>
+   <div style="display:none">
+	统计
+</div>
+    <!-- 展开与收缩 -->
+  </body>
+  </html>
